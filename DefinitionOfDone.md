@@ -7,4 +7,5 @@
 - glossary is up to date
 - functionality has been tested/validated and does not interfere existing functionality
 - code has been merged and pushed to the master/main branch
+- Code identifiers are created with standards language naming conventions in mind
 
