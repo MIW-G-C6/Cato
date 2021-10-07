@@ -104,9 +104,9 @@ footer li {
 }
 
 footer .copyright {
-    margin-top:15px;
+    margin-top:5px;
     text-align: center;
     font-size: 13px;
-    color: aqua;
+    color: #000d96;
     margin-bottom: 0;
 }
