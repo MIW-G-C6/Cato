@@ -4,40 +4,75 @@
   <meta charset="UTF-8">
   <title th:replace="${title}">Dit is de algemene titel</title>
     <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
-  <link rel="stylesheet" type="text/css" th:href="@{/css/general.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/general.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script>
+        function navMenuExtend() {
+            let nav = document.getElementById("navLinks");
+            let profile = document.getElementById("profileLinks");
+            if (profile.style.display === "flex") {
+                profile.style.display = "none";
+            }
+            if (nav.style.display === "flex") {
+                nav.style.display = "none";
+            } else {
+                nav.style.display = "flex";
+            }
+        }
+
+        function profileMenuExtend() {
+            let profile = document.getElementById("profileLinks");
+            let nav = document.getElementById("navLinks");
+            if (nav.style.display === "flex") {
+                nav.style.display = "none";
+            }
+            if (profile.style.display === "flex") {
+                profile.style.display = "none";
+            } else {
+                profile.style.display = "flex";
+            }
+        }
+    </script>
 </head>
 <body>
+<div class="topnavbar" th:fragment="navbar">
+    <a href="javascript:void(0)" class="menuIcon" onclick="navMenuExtend()">
+        <i class="fa fa-bars"></i>
+    </a>
 
-<div id="page-container">
-    <div th:fragment="navbar">
-        <ul class="nav">
-            <li class="nav-item">
-                <a class="navbar-brand" th:href="@{/}"><img th:src="@{/css/images/cat_test_logo.png}" height="30" width="30" alt="Home"></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" th:href="@{/groups}">Groups</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" th:href="@{/taskLists}">Tasklists</a>
-            </li>
-        </ul>
-    </div>=
+    <a class="home" th:href="@{/}"><img th:src="@{/css/images/cat_test_logo.png}" height="30" width="30" alt="Home">CaTo</a>
 
-    <div class="container">
+    <a href="javascript:void(0)" class="profileIcon" onclick="profileMenuExtend()">
+        <i class="fa fa-user"></i>
+    </a>
 
-    </div>
+    <div class="menu">
+        <div id="navLinks">
+            <a class="nav-link" th:href="@{/groups}">Groups</a>
+            <a class="nav-link" th:href="@{/taskLists}">Tasklists</a>
+        </div>
 
-    <div th:fragment="footer">
-        <footer>
-            <ul class="list-inline">
-                <li class="list-inline-item"><a th:href="@{/}">Home</a></li>
-                <li class="list-inline-item"><a th:href="@{/about}">About</a></li>
-                <li class="list-inline-item"><a th:href="@{/contact}">Contact</a></li>
-            </ul>
-            <p class="copyright">&copy; 2021 HeartCoded</p>
-        </footer>
+        <div id="profileLinks">
+            <a href="#">Placeholder</a>
+        </div>
     </div>
 </div>
+
+<div class="container">
+
+</div>
+
+<div th:fragment="footer">
+    <footer>
+        <ul class="list-inline">
+            <li class="list-inline-item"><a th:href="@{/}">Home</a></li>
+            <li class="list-inline-item"><a th:href="@{/about}">About</a></li>
+            <li class="list-inline-item"><a th:href="@{/contact}">Contact</a></li>
+        </ul>
+        <p class="copyright">&copy; 2021 HeartCoded</p>
+    </footer>
+</div>
+
 
 <div th:fragment="bottomScripts">
     <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
