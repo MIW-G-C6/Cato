@@ -41,6 +41,13 @@ public class TaskController {
         return "taskForm";
     }
 
+    @GetMapping("/task/delete/{taskId}")
+    protected String deleteTask(@PathVariable("taskId") Integer taskId) {
+        Integer temp = taskRepository.getById(taskId).getTaskList().getTaskListId();
+        taskRepository.deleteById(taskId);
+        return "redirect:/taskLists/" + temp;
+    }
+
     @PostMapping("/taskLists/{taskListId}/new")
     protected String saveOrUpdateTask(
             @PathVariable ("taskListId") Integer taskListId,

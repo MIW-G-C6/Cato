@@ -15,6 +15,7 @@
         </tr>
         <tr th:each="task : ${taskList.taskList}">
             <td th:text="${task.description}"></td>
+            <td><a th:href="@{'/task/delete/' + ${task.taskId}}">Delete task</a></td>
         </tr>
     </table>
 </div>
