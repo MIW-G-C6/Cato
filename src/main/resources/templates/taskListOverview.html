@@ -12,8 +12,9 @@
     </tr>
     <tr th:each="taskList : ${allTaskList}">
         <td th:text="${taskList.clientName}"></td>
+        <td><a th:href="@{/taskLists/{taskListId}(taskListId=${taskList.taskListId})}">View</a></td>
     </tr>
 </table>
-
+<a th:href="@{/}">Back</a>
 </body>
 </html>

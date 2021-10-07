@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Task List Details</title>
+</head>
+<body>
+
+<h1>Task List of <span th:text="${taskList.clientName}"></span></h1>
+
+<div class="container">
+    <table>
+        <tr>
+            <th>Task Description</th>
+        </tr>
+        <tr th:each="task : ${taskList.taskList}">
+            <td th:text="${task.description}"></td>
+        </tr>
+    </table>
+</div>
+
+<a th:href="@{/taskLists/{taskListId}/new(taskListId=${taskListId})}">New</a>
+<a th:href="@{/taskLists}">Back</a>
+</body>
+</html>
