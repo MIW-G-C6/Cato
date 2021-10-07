@@ -8,21 +8,18 @@
 
 <div th:replace="fragments/general :: navbar"></div>
 
+<h1>Task List of <span th:text="${taskList.clientName}"></span></h1>
+
 <div class="container">
-    <h1>Task List of <span th:text="${taskList.clientName}"></span></h1>
-
-    <div class="container">
-        <table>
-            <tr>
-                <th>Task Description</th>
-            </tr>
-            <tr th:each="task : ${taskList.taskList}">
-                <td th:text="${task.description}"></td>
-                <td><a th:href="@{'/task/delete/' + ${task.taskId}}">Delete task</a></td>
-            </tr>
-        </table>
-    </div>
-
+    <table>
+        <tr>
+            <th>Task Description</th>
+        </tr>
+        <tr th:each="task : ${taskList.taskList}">
+            <td th:text="${task.description}"></td>
+            <td><a th:href="@{'/task/delete/' + ${task.taskId}}">Delete task</a></td>
+        </tr>
+    </table>
     <a th:href="@{/taskLists/{taskListId}/new(taskListId=${taskListId})}">New</a>
     <a th:href="@{/taskLists}">Back</a>
 </div>
