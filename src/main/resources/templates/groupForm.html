@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add new group</title>
+</head>
+<body>
+<h1>Add a new group</h1>
+<form th:action="@{/groups/new}" method="post" th:object="${group}">
+    <div>
+        <label for="groupName">Group name:</label>
+        <input type="text" id="groupName" th:field="*{groupName}">
+    </div>
+    <div>
+        <button type="submit" class="btn btn-primary">Save group</button>
+    </div>
+</form>
+<p>
+    <a th:href="@{/groups/}">Group overview</a>
+</p>
+</body>
+</html>
