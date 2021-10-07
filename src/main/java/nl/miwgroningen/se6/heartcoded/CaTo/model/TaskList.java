@@ -17,7 +17,7 @@ public class TaskList {
     @GeneratedValue
     private Integer taskListId;
 
-    @OneToMany(mappedBy = "taskListId")
+    @OneToMany(mappedBy = "taskList")
     private List<Task> taskList;
 
     private String clientName;

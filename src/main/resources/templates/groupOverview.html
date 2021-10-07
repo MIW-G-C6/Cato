@@ -5,7 +5,6 @@
     <title>Title</title>
 </head>
 <body>
-
 <div th:replace="fragments/general :: navbar"></div>
 
 <div class="container">
@@ -16,8 +15,12 @@
         </tr>
         <tr th:each="group : ${allGroups}">
             <td th:text="${group.groupName}"></td>
+            <td><a th:href="@{'/groups/delete/' + ${group.groupId}}">Delete group</a></td>
         </tr>
     </table>
+    <p>
+        <a th:href="@{/groups/new}">Add a new group</a>
+    </p>
 </div>
 
 <div th:replace="fragments/general :: footer"></div>

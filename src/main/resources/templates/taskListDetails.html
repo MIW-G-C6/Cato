@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head th:replace="fragments/general :: baseHeader(~{:: title})" >
+    <meta charset="UTF-8">
+    <title>Task List Details</title>
+</head>
+<body>
+
+<div th:replace="fragments/general :: navbar"></div>
+
+<div class="container">
+    <h1>Task List of <span th:text="${taskList.clientName}"></span></h1>
+
+    <div class="container">
+        <table>
+            <tr>
+                <th>Task Description</th>
+            </tr>
+            <tr th:each="task : ${taskList.taskList}">
+                <td th:text="${task.description}"></td>
+                <td><a th:href="@{'/task/delete/' + ${task.taskId}}">Delete task</a></td>
+            </tr>
+        </table>
+    </div>
+
+    <a th:href="@{/taskLists/{taskListId}/new(taskListId=${taskListId})}">New</a>
+    <a th:href="@{/taskLists}">Back</a>
+</div>
+
+<div th:replace="fragments/general :: footer"></div>
+<div th:replace="fragments/general :: bottomScripts"></div>
+</body>
+</html>

@@ -20,7 +20,7 @@ public class Task {
     private String description;
 
     @ManyToOne
-    private TaskList taskListId;
+    private TaskList taskList;
 
     public Integer getTaskId() {
         return taskId;
@@ -38,11 +38,11 @@ public class Task {
         this.description = description;
     }
 
-    public TaskList getTaskListId() {
-        return taskListId;
+    public TaskList getTaskList() {
+        return taskList;
     }
 
-    public void setTaskListId(TaskList taskListId) {
-        this.taskListId = taskListId;
+    public void setTaskList(TaskList taskListId) {
+        this.taskList = taskListId;
     }
 }
