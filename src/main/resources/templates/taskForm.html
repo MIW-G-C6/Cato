@@ -15,7 +15,10 @@
     <form th:action="@{/taskLists/{taskListId}/new(taskListId=${taskListId})}" method="post" th:object="${task}">
         <div>
             <label for="description">Description</label>
-            <input type="text" id="description" required pattern=".*\S+.*" oninvalid="this.setCustomValidity('Description of task cannot be empty')" th:field="*{description}">
+            <input type="text" id="description" required pattern=".*\S+.*"
+                   oninvalid="this.setCustomValidity('Description of task cannot be empty')"
+                   oninput="this.setCustomValidity('')"
+                   th:field="*{description}">
         </div>
         <div>
             <button type="submit" class="btn btn-primary">Save</button>
