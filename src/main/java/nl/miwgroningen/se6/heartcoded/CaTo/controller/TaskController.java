@@ -4,6 +4,8 @@ import nl.miwgroningen.se6.heartcoded.CaTo.model.Task;
 import nl.miwgroningen.se6.heartcoded.CaTo.model.TaskList;
 import nl.miwgroningen.se6.heartcoded.CaTo.repository.TaskListRepository;
 import nl.miwgroningen.se6.heartcoded.CaTo.repository.TaskRepository;
+import nl.miwgroningen.se6.heartcoded.CaTo.service.TaskListService;
+import nl.miwgroningen.se6.heartcoded.CaTo.service.TaskService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -22,30 +24,30 @@ import java.util.Optional;
 @Controller
 public class TaskController {
 
-    TaskRepository taskRepository;
-    TaskListRepository taskListRepository;
+    private TaskService taskService;
+    private TaskListService taskListService;
 
-    public TaskController(TaskRepository taskRepository, TaskListRepository taskListRepository) {
-        this.taskRepository = taskRepository;
-        this.taskListRepository = taskListRepository;
+    public TaskController(TaskService taskService, TaskListService taskListService) {
+        this.taskService = taskService;
+        this.taskListService = taskListService;
     }
 
     @GetMapping("/taskLists/{taskListId}/new")
     protected String showTaskForm(@PathVariable("taskListId") Integer taskListId, Model model) {
-        Optional<TaskList> taskList = taskListRepository.findById(taskListId);
+        Optional<TaskList> taskList = taskListService.findById(taskListId);
         if (taskList.isEmpty()) {
             return "redirect:/taskLists";
         }
         model.addAttribute("task", new Task());
-        model.addAttribute("taskList", taskListRepository.getById(taskListId));
+        model.addAttribute("taskList", taskListService.getById(taskListId));
         return "taskForm";
     }
 
     @GetMapping("/task/delete/{taskId}")
     protected String deleteTask(@PathVariable("taskId") Integer taskId) {
-        Integer temp = taskRepository.getById(taskId).getTaskList().getTaskListId();
-        taskRepository.deleteById(taskId);
-        return "redirect:/taskLists/" + temp;
+        Integer taskListId = taskService.getTaskListIdByTaskId(taskId);
+        taskService.deleteById(taskId);
+        return "redirect:/taskLists/" + taskListId;
     }
 
     @PostMapping("/taskLists/{taskListId}/new")
@@ -54,8 +56,8 @@ public class TaskController {
             @ModelAttribute("task") Task task, BindingResult result) {
 
         if (!result.hasErrors()) {
-            task.setTaskList(taskListRepository.getById(taskListId));
-            taskRepository.save(task);
+            task.setTaskList(taskListService.getById(taskListId));
+            taskService.save(task);
         }
         return "redirect:/taskLists/{taskListId}";
     }

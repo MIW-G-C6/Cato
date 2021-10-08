@@ -3,6 +3,8 @@ package nl.miwgroningen.se6.heartcoded.CaTo.controller;
 import nl.miwgroningen.se6.heartcoded.CaTo.model.TaskList;
 import nl.miwgroningen.se6.heartcoded.CaTo.repository.TaskListRepository;
 import nl.miwgroningen.se6.heartcoded.CaTo.repository.TaskRepository;
+import nl.miwgroningen.se6.heartcoded.CaTo.service.TaskListService;
+import nl.miwgroningen.se6.heartcoded.CaTo.service.TaskService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,23 +22,21 @@ import java.util.Optional;
 @Controller
 public class TaskListController {
 
-    TaskRepository taskRepository;
-    TaskListRepository taskListRepository;
+    private final TaskListService taskListService;
 
-    public TaskListController(TaskRepository taskRepository, TaskListRepository taskListRepository) {
-        this.taskRepository = taskRepository;
-        this.taskListRepository = taskListRepository;
+    public TaskListController(TaskListService taskListService) {
+        this.taskListService = taskListService;
     }
 
     @GetMapping("/taskLists")
     protected String showTaskListOverview(Model model) {
-        model.addAttribute("allTaskList", taskListRepository.findAll());
+        model.addAttribute("allTaskList", taskListService.findAll());
         return "taskListOverview";
     }
 
     @GetMapping("/taskLists/{taskListId}")
     protected String showTaskListDetails(@PathVariable("taskListId") Integer taskListId, Model model) {
-        Optional<TaskList> taskList = taskListRepository.findById(taskListId);
+        Optional<TaskList> taskList = taskListService.findById(taskListId);
         if (taskList.isEmpty()) {
             return "redirect:/taskLists";
         }
