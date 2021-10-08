@@ -6,39 +6,19 @@
     <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
     <link rel="stylesheet" type="text/css" th:href="@{/css/general.css}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <script>
-        function navMenuExtend() {
-            let nav = document.getElementById("navLinks");
-            let profile = document.getElementById("profileLinks");
-            if (profile.style.display === "flex") {
-                profile.style.display = "none";
-            }
-            if (nav.style.display === "flex") {
-                nav.style.display = "none";
-            } else {
-                nav.style.display = "flex";
-            }
-        }
 
-        function profileMenuExtend() {
-            let profile = document.getElementById("profileLinks");
-            let nav = document.getElementById("navLinks");
-            if (nav.style.display === "flex") {
-                nav.style.display = "none";
-            }
-            if (profile.style.display === "flex") {
-                profile.style.display = "none";
-            } else {
-                profile.style.display = "flex";
-            }
-        }
-    </script>
 </head>
 <body>
 <div class="topnavbar" th:fragment="navbar">
-    <a href="javascript:void(0)" class="menuIcon" onclick="navMenuExtend()">
-        <i class="fa fa-bars"></i>
-    </a>
+    <div id="mySidenav" class="sidenav">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        <a class="nav-link" th:href="@{/groups}">Groups</a>
+        <a class="nav-link" th:href="@{/taskLists}">Tasklists</a>
+    </div>
+
+    <div id="main">
+        <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776;</span>
+    </div>
 
     <a class="home" th:href="@{/}"><img th:src="@{/css/images/cat_test_logo.png}" height="30" width="30" alt="Home">CaTo</a>
 
@@ -46,16 +26,28 @@
         <i class="fa fa-user"></i>
     </a>
 
-    <div class="menu">
-        <div id="navLinks">
-            <a class="nav-link" th:href="@{/groups}">Groups</a>
-            <a class="nav-link" th:href="@{/taskLists}">Tasklists</a>
-        </div>
-
-        <div id="profileLinks">
-            <a href="#">Placeholder</a>
-        </div>
+    <div id="profileLinks">
+        <a href="#">Placeholder</a>
     </div>
+
+    <script>
+        function openNav() {
+            document.getElementById("mySidenav").style.width = "250px";
+        }
+
+        function closeNav() {
+            document.getElementById("mySidenav").style.width = "0";
+        }
+
+        function profileMenuExtend() {
+            let profile = document.getElementById("profileLinks");
+            if (profile.style.display === "flex") {
+                profile.style.display = "none";
+            } else {
+                profile.style.display = "flex";
+            }
+        }
+    </script>
 </div>
 
 <div class="container">
