@@ -32,17 +32,24 @@
                 profile.style.display = "flex";
             }
         }
+
+        function focusLoss() {
+            let profile = document.getElementById("profileLinks");
+            let nav = document.getElementById("navLinks");
+            profile.style.display = "none";
+            nav.style.display = "none";
+        }
     </script>
 </head>
 <body>
 <div class="topnavbar" th:fragment="navbar">
-    <a href="javascript:void(0)" class="menuIcon" onclick="navMenuExtend()">
+    <a href="javascript:void(0)" class="menuIcon" onclick="navMenuExtend()" onblur="focusLoss()">
         <i class="fa fa-bars"></i>
     </a>
 
     <a class="home" th:href="@{/}"><img th:src="@{/css/images/cat_test_logo.png}" height="30" width="30" alt="Home">CaTo</a>
 
-    <a href="javascript:void(0)" class="profileIcon" onclick="profileMenuExtend()">
+    <a href="javascript:void(0)" class="profileIcon" onclick="profileMenuExtend()" onblur="focusLoss()">
         <i class="fa fa-user"></i>
     </a>
 
