@@ -78,6 +78,7 @@ footer {
     width: 100%;
     padding: 10px 0;
     color: black;
+    background-image: linear-gradient(#dce5f3, white, white);
 }
 
 footer ul {
