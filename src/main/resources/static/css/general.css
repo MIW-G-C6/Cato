@@ -5,7 +5,6 @@ a.nav-link{
 .topnavbar {
     display: flex;
     flex-flow: wrap;
-    overflow: hidden;
     position: relative;
     background-color: #429beb;
 }
@@ -13,7 +12,7 @@ a.nav-link{
 .topnavbar #navLinks {
     display: none;
     flex-direction: column;
-    position: fixed;
+    position: absolute;
     top: 58px;
     left: 0;
     width: fit-content;
@@ -23,7 +22,7 @@ a.nav-link{
 .topnavbar #profileLinks {
     display: none;
     flex-direction: column;
-    position: fixed;
+    position: absolute;
     top: 58px;
     right: 0;
     width: fit-content;

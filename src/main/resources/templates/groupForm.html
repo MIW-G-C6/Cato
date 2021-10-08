@@ -13,7 +13,10 @@
     <form th:action="@{/groups/new}" method="post" th:object="${group}">
         <div>
             <label for="groupName">Group name:</label>
-            <input type="text" id="groupName" required pattern=".*\S+.*" oninvalid="this.setCustomValidity('Group name cannot be empty')" th:field="*{groupName}">
+            <input type="text" id="groupName" required pattern=".*\S+.*"
+                   oninvalid="this.setCustomValidity('Group name cannot be empty')"
+                   oninput="this.setCustomValidity('')"
+                   th:field="*{groupName}">
         </div>
         <div>
             <button type="submit" class="btn btn-primary">Save group</button>
