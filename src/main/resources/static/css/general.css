@@ -7,7 +7,7 @@ a.nav-link{
     flex-flow: wrap;
     overflow: hidden;
     position: relative;
-    background-color: #197cb5;
+    background-color: #429beb;
 }
 
 .topnavbar #navLinks {
@@ -43,7 +43,7 @@ a.nav-link{
     width: 58px;
     justify-content: center;
     align-items: center;
-    background-color: #000d96;
+    background-color: #197cb5;
 }
 
 .topnavbar a.profileIcon {
@@ -51,7 +51,7 @@ a.nav-link{
     width: 58px;
     justify-content: center;
     align-items: center;
-    background-color: #000d96;
+    background-color: #197cb5;
 }
 
 .topnavbar a:hover {
