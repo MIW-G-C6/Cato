@@ -44,7 +44,7 @@ public class GroupController {
 
     @PostMapping("/groups/new")
     protected String saveOrUpdateGroup(@ModelAttribute("group") Group group, BindingResult result) {
-        if(!result.hasErrors()) {
+        if (!result.hasErrors()) {
             groupService.saveGroup(group);
         }
         return "redirect:/groups/new";
