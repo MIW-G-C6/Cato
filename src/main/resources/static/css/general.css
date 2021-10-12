@@ -135,3 +135,10 @@ footer .copyright {
     color: #000d96;
     margin-bottom: 0;
 }
+
+button {
+    padding: 0px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
