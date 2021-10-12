@@ -13,6 +13,9 @@ import javax.persistence.ManyToOne;
 
 @Entity
 public class Task {
+
+    private static final String[] PRIORITY_OPTIONS = {"Low", "Medium", "High"};
+
     @Id
     @GeneratedValue
     private Integer taskId;
@@ -21,6 +24,8 @@ public class Task {
 
     @ManyToOne
     private TaskList taskList;
+
+    private String priority;
 
     public Integer getTaskId() {
         return taskId;
@@ -44,5 +49,17 @@ public class Task {
 
     public void setTaskList(TaskList taskListId) {
         this.taskList = taskListId;
+    }
+
+    public String getPriority() {
+        return priority;
+    }
+
+    public void setPriority(String priority) {
+        this.priority = priority;
+    }
+
+    public String[] getPriorityOptions() {
+        return PRIORITY_OPTIONS;
     }
 }

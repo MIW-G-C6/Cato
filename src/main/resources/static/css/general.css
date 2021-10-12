@@ -93,7 +93,7 @@ a.nav-link{
     width: 90vw;
     margin: 0 auto;
     padding: 30px 20px;
-    min-height: calc(100vh - 58px - 83px);
+    min-height: calc(60vh - 58px - 83px);
 }
 
 footer {

@@ -5,6 +5,8 @@ import nl.miwgroningen.se6.heartcoded.CaTo.repository.TaskListRepository;
 import nl.miwgroningen.se6.heartcoded.CaTo.repository.TaskRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 /**
  * @author Paul Romkes <p.r.romkes@gmail.com
  *
@@ -18,6 +20,10 @@ public class TaskService {
 
     public TaskService(TaskRepository taskRepository) {
         this.taskRepository = taskRepository;
+    }
+
+    public Optional<Task> findById(Integer taskId) {
+        return taskRepository.findById(taskId);
     }
 
     public Task getById(Integer taskId) {
