@@ -32,4 +32,8 @@ public class GroupService {
     public void saveGroup (Group group) {
         groupRepository.save(group);
     }
+
+    public Group getById(Integer groupId) {
+        return groupRepository.getById(groupId);
+    }
 }

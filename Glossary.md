@@ -28,6 +28,8 @@
 
 **groupDashboard** - page of the group where one can see all the clients, their most urgent tasks, a link to their clientDashboard and other groupmembers of a certain group.
 
+**groupOptions**-page where the groupAdministrator can add or remove group members and change their roles in the group. Also the groupname can be changed here.
+
 **clientDashboard** - page where one can see the tasklist and calendar of a certain client
 
 

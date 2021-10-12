@@ -14,7 +14,7 @@
             <th>Group name</th>
         </tr>
         <tr th:each="group : ${allGroups}">
-            <td th:text="${group.groupName}"></td>
+            <td><a th:href="@{/groups/{groupId}(groupId=${group.groupId})}" th:text="${group.groupName}"></a></td>
             <td><a th:href="@{'/groups/delete/' + ${group.groupId}}">Delete group</a></td>
         </tr>
     </table>
