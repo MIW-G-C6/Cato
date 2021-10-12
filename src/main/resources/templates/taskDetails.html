@@ -12,6 +12,7 @@
 
 <div class="container">
     <div>The priority for this task is: <span th:text="${task.priority}"></span></div>
+    <a th:href="@{/taskLists/{taskListId}/update/{taskId}(taskListId=${taskList.taskListId}, taskId=${task.taskId})}">Edit task</a>
 </div>
 
 <div th:replace="fragments/general :: footer"></div>
