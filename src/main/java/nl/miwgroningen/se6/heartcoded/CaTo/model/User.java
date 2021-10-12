@@ -25,7 +25,8 @@ public class User {
     @Column(unique = true, nullable = false)
     private String email;
 
-    public User(String name, String email) {
+    public User(Integer userId, String name, String email) {
+        this.userId = userId;
         this.name = name;
         this.email = email;
     }

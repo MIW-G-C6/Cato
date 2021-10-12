@@ -18,6 +18,7 @@
         <tr th:each="user : ${allUsers}">
             <td th:text="${user.name}"></td>
             <td th:text="${user.email}"></td>
+            <td><a th:href="@{'/users/delete/' + ${user.userId}}">Delete user</a></td>
         </tr>
     </table>
     <p>
