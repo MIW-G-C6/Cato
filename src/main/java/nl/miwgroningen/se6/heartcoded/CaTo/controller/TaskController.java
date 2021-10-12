@@ -32,6 +32,16 @@ public class TaskController {
         this.taskListService = taskListService;
     }
 
+    @GetMapping("/taskLists/{taskListId}/{taskId}")
+    protected String showTaskDetails(@PathVariable("taskListId") Integer taskListId, @PathVariable("taskId") Integer taskId, Model model) {
+        Optional<Task> task = taskService.findById(taskId);
+        if (task.isEmpty()) {
+            return "redirect:/taskListId/" + taskListId;
+        }
+        model.addAttribute("task", task.get());
+        return "taskDetails";
+    }
+
     @GetMapping("/taskLists/{taskListId}/new")
     protected String showTaskForm(@PathVariable("taskListId") Integer taskListId, Model model) {
         Optional<TaskList> taskList = taskListService.findById(taskListId);
