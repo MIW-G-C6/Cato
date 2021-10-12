@@ -1,8 +1,6 @@
 package nl.miwgroningen.se6.heartcoded.CaTo.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 
 /**
@@ -13,56 +11,44 @@ import javax.persistence.Id;
 
 @Entity
 public class GroupHasUsers {
-
     @Id
     @GeneratedValue
-    private Integer groupHasUsersId;
+    private Integer groupId;
 
-    private String groupName;
+    private Integer userId;
 
-    private String email;
+    private String userRole;
 
-    private String role;
-
-    public GroupHasUsers(Integer groupHasUsersId, String groupName, String email, String role) {
-        this.groupHasUsersId = groupHasUsersId;
-        this.groupName = groupName;
-        this.email = email;
-        this.role = role;
+    public GroupHasUsers(Integer groupId, Integer userId, String userRole) {
+        this.groupId = groupId;
+        this.userId = userId;
+        this.userRole = userRole;
     }
 
     public GroupHasUsers() {
     }
 
-    public Integer getGroupHasUsersId() {
-        return groupHasUsersId;
+    public Integer getGroupsId() {
+        return groupId;
     }
 
-    public void setGroupHasUsersId(Integer groupHasUsersId) {
-        this.groupHasUsersId = groupHasUsersId;
+    public void setGroupsId(Integer groupsId) {
+        this.groupId = groupsId;
     }
 
-    public String getGroupName() {
-        return groupName;
+    public Integer getUserId() {
+        return userId;
     }
 
-    public void setGroupName(String groupName) {
-        this.groupName = groupName;
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
-    public String getEmail() {
-        return email;
+    public String getUserRole() {
+        return userRole;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
+    public void setUserRole(String userRole) {
+        this.userRole = userRole;
     }
 }
