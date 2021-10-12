@@ -27,7 +27,7 @@ public class UserService {
         List<User> allUsers = new ArrayList<>();
 
         for (User user : findUsers) {
-            allUsers.add(new User(user.getName(), user.getEmail()));
+            allUsers.add(new User(user.getUserId(), user.getName(), user.getEmail()));
         }
         return allUsers;
     }
