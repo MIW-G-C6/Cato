@@ -23,3 +23,12 @@
 **User** - this can be a superadmin, caregiver or client
 
 **Notification** - pushbericht
+
+**groupOverview** - page where one can see all the groups where one is a member off and have an option to create a new group.
+
+**groupDashboard** - page of the group where one can see all the clients, their most urgent tasks, a link to their clientDashboard and other groupmembers of a certain group.
+
+**clientDashboard** - page where one can see the tasklist and calendar of a certain client
+
+
+
