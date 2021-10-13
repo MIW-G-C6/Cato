@@ -40,5 +40,18 @@ public class GroupHasUsersController {
         return "groupOptions";
     }
 
+    @GetMapping("/options/edit/{groupId}")
+    protected String showGroupEdit(@PathVariable("groupId") Integer groupId, Model model) {
+        model.addAttribute("thisGroup", groupService.getById(groupId));
+        model.addAttribute("allGroupHasUsersByGroupId", groupHasUsersService.getAllByGroupId(groupId));
+        return "groupEdit";
+    }
 
+    @PostMapping("/options/edit/{groupId}")
+    protected String updateGroup(@ModelAttribute("group") Group group, BindingResult result) {
+        if (!result.hasErrors()) {
+            groupService.saveGroup(group);
+        }
+        return "redirect:/groups/options/{groupId}";
+    }
 }

@@ -22,6 +22,23 @@
       <td><a th:href="@{'/groups/delete/' + ${thisGroup.groupId}}">Delete group</a></td>
     </div>
   </form>
+  <div>
+    <table>
+      <tr>
+        <th>User ID</th>
+        <th>User</th>
+        <th>Role</th>
+      </tr>
+      <tr th:each="thisGroupHasUser : ${allGroupHasUsersByGroupId}">
+        <td th:text="${thisGroupHasUser.user.userId}"></td>
+        <td th:text="${thisGroupHasUser.user.name}"></td>
+        <td>
+          <select th:field="*{thisGroupHasUser.userRole}">
+            <option th:each="userRole : ${thisGroupHasUser.groupRoleOptions}" th:value="${userRole}" th:text="${userRole}"></option>
+          </select></td>
+      </tr>
+    </table>
+  </div>
 </div>
 
 <div th:replace="fragments/general :: footer"></div>

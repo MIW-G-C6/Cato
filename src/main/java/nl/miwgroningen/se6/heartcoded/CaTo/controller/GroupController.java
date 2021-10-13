@@ -63,20 +63,4 @@ public class GroupController {
         }
         return "redirect:/groups/new";
     }
-
-    @GetMapping("/groups/options/edit/{groupId}")
-    protected String showGroupEdit(@PathVariable("groupId") Integer groupId, Model model) {
-        model.addAttribute("thisGroup", groupService.getById(groupId));
-        return "groupEdit";
-    }
-
-    @PostMapping("/groups/options/edit/{groupId}")
-    protected String updateGroup(@ModelAttribute("group") Group group, BindingResult result) {
-        if (!result.hasErrors()) {
-            groupService.saveGroup(group);
-        }
-        return "redirect:/groups/options/{groupId}";
-    }
-
-
 }

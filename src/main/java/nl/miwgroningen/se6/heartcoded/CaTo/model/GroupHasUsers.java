@@ -12,9 +12,8 @@ import javax.persistence.*;
 @Entity
 @IdClass(GroupHasUsersId.class)
 public class GroupHasUsers {
-//    @Id
-//    @GeneratedValue
-//    private Integer groupHasUsersId;
+
+    private static final String[] GROUP_ROLE_OPTIONS = {"Group member", "Client", "Group admin"};
 
     @Id
     @ManyToOne
@@ -57,5 +56,9 @@ public class GroupHasUsers {
 
     public void setUserRole(String userRole) {
         this.userRole = userRole;
+    }
+
+    public static String[] getGroupRoleOptions() {
+        return GROUP_ROLE_OPTIONS;
     }
 }
