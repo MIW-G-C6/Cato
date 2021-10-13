@@ -147,6 +147,14 @@ tr:hover {
     background-color: #ddd;
 }
 
+.edit {
+    text-align: center;
+}
+
+.delete {
+    text-align: center;
+}
+
 /*contains general layout for all titles*/
 h1 {
     padding: 10px;
