@@ -1,6 +1,7 @@
 package nl.miwgroningen.se6.heartcoded.CaTo.controller;
 
 import nl.miwgroningen.se6.heartcoded.CaTo.model.Group;
+import nl.miwgroningen.se6.heartcoded.CaTo.model.GroupHasUsers;
 import nl.miwgroningen.se6.heartcoded.CaTo.service.GroupHasUsersService;
 import nl.miwgroningen.se6.heartcoded.CaTo.service.GroupService;
 import org.springframework.stereotype.Controller;
@@ -37,8 +38,30 @@ public class GroupHasUsersController {
     @GetMapping("/options/{groupId}")
     protected String showGroupOptions(@PathVariable("groupId") Integer groupId, Model model) {
         model.addAttribute("thisGroup", groupService.getById(groupId));
+        model.addAttribute("allGroupHasUsersByGroupId", groupHasUsersService.getAllByGroupId(groupId));
         return "groupOptions";
     }
 
+    @PostMapping("/options/{groupId}")
+    protected String updateUserRole(@ModelAttribute("groupHasUser") GroupHasUsers groupHasUsers, BindingResult result) {
+        if (!result.hasErrors()) {
+            groupHasUsersService.saveGroupHasUsers(groupHasUsers);
+        }
+        return "redirect/groups/options/{groupId}";
+    }
 
+    @GetMapping("/options/edit/{groupId}")
+    protected String showGroupEdit(@PathVariable("groupId") Integer groupId, Model model) {
+        model.addAttribute("thisGroup", groupService.getById(groupId));
+        model.addAttribute("allGroupHasUsersByGroupId", groupHasUsersService.getAllByGroupId(groupId));
+        return "groupEdit";
+    }
+
+    @PostMapping("/options/edit/{groupId}")
+    protected String updateGroup(@ModelAttribute("group") Group group, BindingResult result) {
+        if (!result.hasErrors()) {
+            groupService.saveGroup(group);
+        }
+        return "redirect:/groups/options/{groupId}";
+    }
 }

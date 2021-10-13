@@ -13,6 +13,22 @@
     <h1><span th:text="${thisGroup.groupName}"></span> </h1>
     <a th:href="@{/groups/options/edit/{groupId}(groupId=${thisGroup.groupId})}">Edit group</a>
     <a th:href="@{/groups/{groupId}(groupId=${thisGroup.groupId})}" >Back</a>
+
+        <div>
+            <table>
+                <tr>
+                    <th>User ID</th>
+                    <th>User</th>
+                    <th>Role</th>
+                </tr>
+                <tr th:each="thisGroupHasUser : ${allGroupHasUsersByGroupId}" >
+                    <td th:text="${thisGroupHasUser.user.userId}"></td>
+                    <td th:text="${thisGroupHasUser.user.name}"></td>
+                    <td th:text="${thisGroupHasUser.userRole}"></td>
+                </tr>
+            </table>
+        </div>
+    <a th:href="@{/groups/options/{groupId}(groupId=${thisGroup.groupId})/addmember}">Add new groupmember</a>
 </div>
 
 <div th:replace="fragments/general :: footer"></div>
