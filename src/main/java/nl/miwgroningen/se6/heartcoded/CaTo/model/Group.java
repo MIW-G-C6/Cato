@@ -3,6 +3,8 @@ package nl.miwgroningen.se6.heartcoded.CaTo.model;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import java.util.List;
 
 /**
  * @author Shalena Omapersad <shalenao@hotmail.com>
@@ -19,8 +21,8 @@ public class Group {
 
     private String groupName;
 
-    //TODO
-    // Variabele list of group members
+    @OneToMany(mappedBy = "group")
+    private List<GroupHasUsers> groupHasUsersList;
 
     public Integer getGroupId() {
         return groupId;

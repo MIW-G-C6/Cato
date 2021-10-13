@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head th:replace="fragments/general :: baseHeader(~{:: title})" >
+    <meta charset="UTF-8">
+    <title>Task Details</title>
+</head>
+<body>
+
+<div th:replace="fragments/general :: navbar"></div>
+
+<h1>Task details for task: <span th:text="${task.description}"></span></h1>
+
+<div class="container">
+    <div>The priority for this task is: <span th:text="${task.priority}"></span></div>
+    <a th:href="@{/taskLists/{taskListId}/update/{taskId}(taskListId=${taskList.taskListId}, taskId=${task.taskId})}">Edit task</a>
+</div>
+
+<div th:replace="fragments/general :: footer"></div>
+<div th:replace="fragments/general :: bottomScripts"></div>
+</body>
+</html>

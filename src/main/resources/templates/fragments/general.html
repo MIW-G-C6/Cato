@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="https://www.thymeleaf.org" >
+<html lang="en" xmlns:th="https://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head th:fragment="baseHeader(title)">
   <meta charset="UTF-8">
   <title th:replace="${title}">Dit is de algemene titel</title>
@@ -42,6 +42,7 @@
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
         <a class="nav-link" th:href="@{/groups}">Groups</a>
         <a class="nav-link" th:href="@{/taskLists}">Tasklists</a>
+        <a class="nav-link" th:href="@{/users}">Users</a>
     </div>
 
     <div id="main">
@@ -55,7 +56,12 @@
     </a>
 
     <div id="profileLinks">
-        <a href="#">Placeholder</a>
+        <li class="nav-item" sec:authorize="isAnonymous()">
+            <a class="nav-link" th:href="@{/login}">Log in</a>
+        </li>
+        <li class="nav-item" sec:authorize="isAuthenticated()">
+            <a class="nav-link" th:href="@{/logout}">Log out</a>
+        </li>
     </div>
 </div>
 
