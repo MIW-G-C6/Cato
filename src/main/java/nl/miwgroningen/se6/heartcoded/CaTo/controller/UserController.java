@@ -36,17 +36,17 @@ public class UserController {
         return "userOverview";
     }
 
-    @GetMapping("/users/new")
+    @GetMapping("/registration")
     protected String showUserForm(Model model) {
         model.addAttribute("user", new User());
         model.addAttribute("allUsers", userService.findAllUsers());
-        return "userForm";
+        return "registrationForm";
     }
 
-    @PostMapping("/users/new")
+    @PostMapping("/registration")
     protected String saveOrUpdateUser(@ModelAttribute("user") User user, BindingResult result) {
         if(result.hasErrors()) {
-            return "userForm";
+            return "registrationForm";
         }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userService.saveUser(user);
@@ -67,6 +67,6 @@ public class UserController {
         }
         model.addAttribute("user", user.get());
         model.addAttribute("allUsers", userService.findAllUsers());
-        return "userForm";
+        return "registrationForm";
     }
 }

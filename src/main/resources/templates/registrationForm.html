@@ -11,7 +11,7 @@
 <div class="container">
   <h1>Register as a new user</h1>
 
-  <form th:action="@{/users/new}" method="post" th:object="${user}">
+  <form th:action="@{/registration}" method="post" th:object="${user}">
     <input type="hidden" th:field="*{userId}">
     <div>
       <label for="name">Name:</label>

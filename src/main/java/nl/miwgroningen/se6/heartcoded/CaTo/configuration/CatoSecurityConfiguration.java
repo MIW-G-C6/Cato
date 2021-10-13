@@ -11,6 +11,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 
 /**
@@ -33,7 +34,7 @@ public class CatoSecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.inMemoryAuthentication()
-                .withUser("admin")
+                .withUser("admin@example.com")
                 .password(passwordEncoder().encode("admin"))
                 .roles("USER", "ADMIN");
         auth.authenticationProvider(authenticationProvider());
@@ -43,12 +44,17 @@ public class CatoSecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers("/css/**", "/webjars/**").permitAll()
-                .antMatchers("/","/users/new").permitAll()
+                .antMatchers("/","/registration").permitAll()
                 .antMatchers("/about", "/contact").permitAll()
                 .anyRequest().authenticated().and()
                 .formLogin()
+                .loginPage("/login")
+                .permitAll()
                 .and()
-                .logout().logoutSuccessUrl("/");
+                .logout()
+                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                .logoutSuccessUrl("/")
+                .permitAll();
     }
 
     @Bean

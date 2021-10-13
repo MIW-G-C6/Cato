@@ -111,5 +111,4 @@ public class User implements UserDetails {
     public void setName(String name) {
         this.name = name;
     }
-
 }
