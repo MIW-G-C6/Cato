@@ -1,8 +1,6 @@
 package nl.miwgroningen.se6.heartcoded.CaTo.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 
 /**
@@ -12,57 +10,52 @@ import javax.persistence.Id;
  */
 
 @Entity
+@IdClass(GroupHasUsersId.class)
 public class GroupHasUsers {
+//    @Id
+//    @GeneratedValue
+//    private Integer groupHasUsersId;
 
     @Id
-    @GeneratedValue
-    private Integer groupHasUsersId;
+    @ManyToOne
+    private Group group;
 
-    private String groupName;
+    @Id
+    @ManyToOne
+    private User user;
 
-    private String email;
+    private String userRole;
 
-    private String role;
-
-    public GroupHasUsers(Integer groupHasUsersId, String groupName, String email, String role) {
-        this.groupHasUsersId = groupHasUsersId;
-        this.groupName = groupName;
-        this.email = email;
-        this.role = role;
+    public GroupHasUsers(Group group, User user, String userRole) {
+        this.group = group;
+        this.user = user;
+        this.userRole = userRole;
     }
 
     public GroupHasUsers() {
     }
 
-    public Integer getGroupHasUsersId() {
-        return groupHasUsersId;
+    public Group getGroup() {
+        return group;
     }
 
-    public void setGroupHasUsersId(Integer groupHasUsersId) {
-        this.groupHasUsersId = groupHasUsersId;
+    public void setGroup(Group group) {
+        this.group = group;
     }
 
-    public String getGroupName() {
-        return groupName;
+    public User getUser() {
+        return user;
     }
 
-    public void setGroupName(String groupName) {
-        this.groupName = groupName;
+    public void setUser(User user) {
+        this.user = user;
     }
 
-    public String getEmail() {
-        return email;
+    public String getUserRole() {
+        return userRole;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
+    public void setUserRole(String userRole) {
+        this.userRole = userRole;
     }
 }

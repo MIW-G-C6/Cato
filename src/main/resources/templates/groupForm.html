@@ -10,13 +10,20 @@
 
 <div class="container">
     <h1>Add a new group</h1>
-    <form th:action="@{/groups/new}" method="post" th:object="${group}">
+    <form th:action="@{/groups/new}" method="post">
         <div>
-            <label for="groupName">Group name:</label>
+            <label for="groupName">Group name: </label>
             <input type="text" id="groupName" required pattern=".*\S+.*"
                    oninvalid="this.setCustomValidity('Group name cannot be empty')"
                    oninput="this.setCustomValidity('')"
-                   th:field="*{groupName}">
+                   th:field="${group.groupName}">
+
+        </div>
+        <div>
+            <label>Assign group admin by user ID: </label>
+            <select th:field="${user}">
+                <option th:each="eachUser : ${allUsers}" th:value="${eachUser.userId}" th:text="${eachUser.userId}"></option>
+            </select>
         </div>
         <div>
             <button type="submit" class="btn btn-primary">Save group</button>

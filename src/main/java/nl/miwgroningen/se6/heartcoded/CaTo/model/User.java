@@ -1,5 +1,8 @@
 package nl.miwgroningen.se6.heartcoded.CaTo.model;
 
+import javax.persistence.*;
+import java.util.List;
+
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -10,7 +13,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
+
 
 /**
  * @author Shalena Omapersad <shalenao@hotmail.com>
@@ -31,6 +34,9 @@ public class User implements UserDetails {
 
     @Column(unique = true)
     private String email;
+
+    @OneToMany(mappedBy = "user")
+    private List<GroupHasUsers> groupHasUsersList;
 
     public User(Integer userId, String name, String email) {
         this.userId = userId;
@@ -81,6 +87,7 @@ public class User implements UserDetails {
         this.password = password;
     }
 
+
     public Integer getUserId() {
         return userId;
     }
@@ -104,4 +111,5 @@ public class User implements UserDetails {
     public void setName(String name) {
         this.name = name;
     }
+
 }
