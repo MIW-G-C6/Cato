@@ -2,11 +2,16 @@ a.nav-link{
     color: ghostwhite;
 }
 
+body {
+    background: url("images/layered-waves-haikei.svg") no-repeat top left;
+    background-size: cover;
+}
+
+/*contains general layout for top navigation bar*/
 .topnavbar {
     display: flex;
     flex-flow: wrap;
     position: relative;
-    background-color: #197cb5;
 }
 
 .topnavbar #profileLinks {
@@ -17,8 +22,52 @@ a.nav-link{
     right: 0;
     width: fit-content;
     background-color: #333;
+    transition: 0.3s;
 }
 
+.topnavbar a {
+    color: white;
+    padding: 14px 16px;
+    margin: 20px;
+    text-decoration: none;
+    font-size: 17px;
+    display: flex;
+
+}
+
+.topnavbar a.profileIcon {
+    display: flex;
+    color: black;
+    width: 58px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 100%;
+    border: 1px solid lightgrey;
+    transition: 0.3s;
+}
+
+.topnavbar a.profileIcon:hover {
+    background-color: #cafad9;
+}
+
+.topnavbar a:hover {
+    color: white;
+}
+
+.topnavbar #main {
+    transition: margin-left .5s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 93px;
+}
+
+.topnavbar #home {
+    margin-right: auto;
+    color: black;
+}
+
+/*contains general layout for side navigation bar*/
 .sidenav {
     height: 100%;
     width: 0;
@@ -37,16 +86,19 @@ a.nav-link{
     padding: 8px 8px 8px 32px;
     text-decoration: none;
     font-size: 25px;
-    color: #818181;
+    color: white;
     display: block;
     transition: 0.3s;
 }
 
 .sidenav a:hover {
-    color: #f1f1f1;
+    background-color: #818181;
+    color: black;
 }
 
 .sidenav .closebtn {
+    display: flex;
+    padding: 14px 16px;
     position: absolute;
     top: 0;
     right: 25px;
@@ -54,48 +106,53 @@ a.nav-link{
     margin-left: 50px;
 }
 
-#main {
-    transition: margin-left .5s;
-}
-
 @media screen and (max-height: 450px) {
     .sidenav {padding-top: 15px;}
     .sidenav a {font-size: 18px;}
 }
 
-.topnavbar a {
-    color: white;
-    padding: 14px 16px;
-    text-decoration: none;
-    font-size: 17px;
-    display: flex;
-}
-
-.topnavbar a.profileIcon {
-    display: flex;
-    width: 58px;
-    justify-content: center;
-    align-items: center;
-    background-color: #000d96;
-}
-
-.topnavbar a:hover {
-    background-color: #ddd;
-    color: black;
-}
-
-.home {
-    margin-right: auto;
-    color: white;
-}
-
+/*contains general layout for content container*/
 .container {
-    width: 90vw;
+    width: 80vw;
     margin: 0 auto;
     padding: 30px 20px;
-    min-height: calc(60vh - 58px - 83px);
+    min-height: calc(100vh - 98px - 73px);
 }
 
+/*contains general layout for all tables*/
+table {
+    font-family: Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td, th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #04AA6D;
+    color: white;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+tr:hover {
+    background-color: #ddd;
+}
+
+/*contains general layout for all titles*/
+h1 {
+    padding: 10px;
+}
+
+/*contains general layout for footer*/
 footer {
     margin-top: auto;
     position: relative;
