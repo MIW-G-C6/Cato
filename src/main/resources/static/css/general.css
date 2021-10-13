@@ -12,6 +12,7 @@ body {
     display: flex;
     flex-flow: wrap;
     position: relative;
+    background-color: #e8ffef;
 }
 
 .topnavbar #profileLinks {
@@ -38,7 +39,7 @@ body {
 .topnavbar a.profileIcon {
     display: flex;
     color: black;
-    width: 58px;
+    width: 72px;
     justify-content: center;
     align-items: center;
     border-radius: 100%;
@@ -64,8 +65,11 @@ body {
 
 .topnavbar #home {
     margin-right: auto;
-    color: black;
+    color: #303c42;
+    font-family: "Georgia i";
+    font-size: 30px;
 }
+
 
 /*contains general layout for side navigation bar*/
 .sidenav {
@@ -116,7 +120,7 @@ body {
     width: 80vw;
     margin: 0 auto;
     padding: 30px 20px;
-    min-height: calc(100vh - 98px - 73px);
+    min-height: calc(100vh - 120px - 73px);
 }
 
 /*contains general layout for all tables*/
