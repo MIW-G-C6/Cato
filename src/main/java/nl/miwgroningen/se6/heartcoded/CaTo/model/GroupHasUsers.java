@@ -10,38 +10,45 @@ import javax.persistence.*;
  */
 
 @Entity
+@IdClass(GroupHasUsersId.class)
 public class GroupHasUsers {
-    @Id
-    @GeneratedValue
-    private Integer groupId;
+//    @Id
+//    @GeneratedValue
+//    private Integer groupHasUsersId;
 
-    private Integer userId;
+    @Id
+    @ManyToOne
+    private Group group;
+
+    @Id
+    @ManyToOne
+    private User user;
 
     private String userRole;
 
-    public GroupHasUsers(Integer groupId, Integer userId, String userRole) {
-        this.groupId = groupId;
-        this.userId = userId;
+    public GroupHasUsers(Group group, User user, String userRole) {
+        this.group = group;
+        this.user = user;
         this.userRole = userRole;
     }
 
     public GroupHasUsers() {
     }
 
-    public Integer getGroupsId() {
-        return groupId;
+    public Group getGroup() {
+        return group;
     }
 
-    public void setGroupsId(Integer groupsId) {
-        this.groupId = groupsId;
+    public void setGroup(Group group) {
+        this.group = group;
     }
 
-    public Integer getUserId() {
-        return userId;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public String getUserRole() {

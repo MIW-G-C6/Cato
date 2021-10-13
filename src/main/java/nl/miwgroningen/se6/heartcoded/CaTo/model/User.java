@@ -1,6 +1,7 @@
 package nl.miwgroningen.se6.heartcoded.CaTo.model;
 
 import javax.persistence.*;
+import java.util.List;
 
 /**
  * @author Shalena Omapersad <shalenao@hotmail.com>
@@ -22,6 +23,9 @@ public class User {
     @Column(unique = true, nullable = false)
     private String email;
 
+    @OneToMany(mappedBy = "user")
+    private List<GroupHasUsers> groupHasUsersList;
+
     public User(Integer userId, String name, String email) {
         this.userId = userId;
         this.name = name;
@@ -30,6 +34,7 @@ public class User {
 
     public User() {
     }
+
 
     public Integer getUserId() {
         return userId;
