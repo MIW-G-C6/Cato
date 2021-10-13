@@ -4,8 +4,8 @@ import java.io.Serializable;
 
 /**
  * @author Paul Romkes <p.r.romkes@gmail.com
- * <p>
- * Dit is wat het programma doet
+ *
+ * is a model to make sure the groupHasUsers works together with User and Group
  */
 
 public class GroupHasUsersId implements Serializable {

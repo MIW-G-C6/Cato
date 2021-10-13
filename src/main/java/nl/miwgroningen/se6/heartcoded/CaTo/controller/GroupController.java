@@ -7,7 +7,8 @@ import nl.miwgroningen.se6.heartcoded.CaTo.repository.GroupRepository;
 import nl.miwgroningen.se6.heartcoded.CaTo.service.GroupHasUsersService;
 import nl.miwgroningen.se6.heartcoded.CaTo.service.GroupService;
 import nl.miwgroningen.se6.heartcoded.CaTo.service.UserService;
-import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -55,28 +56,12 @@ public class GroupController {
 
     @PostMapping("/groups/new")
     protected String saveOrUpdateGroup(@ModelAttribute("group") Group group,
-                                       @ModelAttribute("groupHasUsers") GroupHasUsers groupHasUsers,
-                                       @ModelAttribute("user") User user, BindingResult result) {
+                                       @ModelAttribute("groupHasUsers") GroupHasUsers groupHasUsers, BindingResult result) {
         if (!result.hasErrors()) {
             groupService.saveGroup(group);
+            User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             groupHasUsersService.saveGroupHasUsers(new GroupHasUsers(group, user, "groupAdmin"));
         }
         return "redirect:/groups/new";
     }
-
-    @GetMapping("/groups/options/edit/{groupId}")
-    protected String showGroupEdit(@PathVariable("groupId") Integer groupId, Model model) {
-        model.addAttribute("thisGroup", groupService.getById(groupId));
-        return "groupEdit";
-    }
-
-    @PostMapping("/groups/options/edit/{groupId}")
-    protected String updateGroup(@ModelAttribute("group") Group group, BindingResult result) {
-        if (!result.hasErrors()) {
-            groupService.saveGroup(group);
-        }
-        return "redirect:/groups/options/{groupId}";
-    }
-
-
 }
