@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author Shalena Omapersad <shalenao@hotmail.com>
@@ -30,6 +31,10 @@ public class UserService {
             allUsers.add(new User(user.getUserId(), user.getName(), user.getEmail()));
         }
         return allUsers;
+    }
+
+    public Optional<User> findById(Integer userId) {
+        return userRepository.findById(userId);
     }
 
     public void deleteUserById(Integer userId) {
