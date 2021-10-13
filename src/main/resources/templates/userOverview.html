@@ -14,16 +14,18 @@
         <tr>
             <th>Name</th>
             <th>Email</th>
+            <th>Edit</th>
+            <th>Delete</th>
         </tr>
         <tr th:each="user : ${allUsers}">
             <td th:text="${user.name}"></td>
             <td th:text="${user.email}"></td>
-            <td><a th:href="@{'/users/update/' + ${user.userId}}">Edit</a></td>
-            <td><a th:href="@{'/users/delete/' + ${user.userId}}">Delete</a></td>
+            <td class="edit"><a th:href="@{'/users/update/' + ${user.userId}}"><img th:src="@{/css/images/edit-icon.svg}" height="30" width="30"></a></td>
+            <td class="delete"><a th:href="@{'/users/delete/' + ${user.userId}}"><img th:src="@{/css/images/delete-icon.svg}" height="30" width="30"></a></td>
         </tr>
     </table>
     <p>
-        <a th:href="@{/users/new}">Add new user</a>
+        <a th:href="@{/registration}"><button type="button" class="btn btn-primary">Add new user</button></a>
     </p>
 
 </div>

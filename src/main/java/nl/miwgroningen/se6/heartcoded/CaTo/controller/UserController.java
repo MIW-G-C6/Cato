@@ -11,8 +11,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import java.util.Optional;
-
 /**
  * @author Shalena Omapersad <shalenao@hotmail.com>
  *
@@ -36,21 +34,21 @@ public class UserController {
         return "userOverview";
     }
 
-    @GetMapping("/users/new")
+    @GetMapping("/registration")
     protected String showUserForm(Model model) {
         model.addAttribute("user", new User());
         model.addAttribute("allUsers", userService.findAllUsers());
-        return "userForm";
+        return "registrationForm";
     }
 
-    @PostMapping("/users/new")
-    protected String saveOrUpdateUser(@ModelAttribute("user") User user, BindingResult result) {
+    @PostMapping("/registration")
+    protected String saveUser(@ModelAttribute("user") User user, BindingResult result) {
         if(result.hasErrors()) {
-            return "userForm";
+            return "registrationForm";
         }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userService.saveUser(user);
-        return "redirect:/users/new";
+        return "redirect:/registration";
     }
 
     @GetMapping("/users/delete/{userId}")
@@ -61,12 +59,9 @@ public class UserController {
 
     @GetMapping("/users/update/{userId}")
     protected String showUpdateUserForm(@PathVariable("userId") Integer userId, Model model) {
-        Optional<User> user = userService.findById(userId);
-        if(user.isEmpty()) {
-            return "redirect:/users";
-        }
-        model.addAttribute("user", user.get());
-        model.addAttribute("allUsers", userService.findAllUsers());
-        return "userForm";
+        User user = userService.getById(userId);
+        model.addAttribute("user", user);
+        model.addAttribute("allUsers", userService.findUsers());
+        return "editUserForm";
     }
 }

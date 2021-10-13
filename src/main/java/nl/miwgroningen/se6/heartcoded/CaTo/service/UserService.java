@@ -33,8 +33,14 @@ public class UserService {
         return allUsers;
     }
 
-    public Optional<User> findById(Integer userId) {
-        return userRepository.findById(userId);
+    public User getById(Integer userId) {
+        User user = new User();
+        User userTemp = userRepository.getById(userId);
+        user.setUserId(userTemp.getUserId());
+        user.setName(userTemp.getName());
+        user.setEmail(userTemp.getEmail());
+
+        return user;
     }
 
     public void deleteUserById(Integer userId) {
@@ -43,10 +49,6 @@ public class UserService {
 
     public void saveUser(User user) {
         userRepository.save(user);
-    }
-
-    public User getById(Integer userId) {
-        return userRepository.getById(userId);
     }
 
     public Optional<User> findUserByEmail(String email) {
