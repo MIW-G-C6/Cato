@@ -30,6 +30,7 @@ public class User implements UserDetails {
 
     private String name;
 
+    @Column(updatable = false)
     private String password;
 
     @Column(unique = true)
@@ -42,6 +43,7 @@ public class User implements UserDetails {
         this.userId = userId;
         this.name = name;
         this.email = email;
+        this.password = "";
     }
 
     public User() {

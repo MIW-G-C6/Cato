@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * @author Shalena Omapersad <shalenao@hotmail.com>
@@ -23,6 +22,10 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
+    public List<User> findUsers() {
+        return userRepository.findAll();
+    }
+
     public List<User> findAllUsers() {
         List<User> findUsers = userRepository.findAll();
         List<User> allUsers = new ArrayList<>();
@@ -33,8 +36,14 @@ public class UserService {
         return allUsers;
     }
 
-    public Optional<User> findById(Integer userId) {
-        return userRepository.findById(userId);
+    public User getById(Integer userId) {
+        User user = new User();
+        User userTemp = userRepository.getById(userId);
+        user.setUserId(userTemp.getUserId());
+        user.setName(userTemp.getName());
+        user.setEmail(userTemp.getEmail());
+
+        return user;
     }
 
     public void deleteUserById(Integer userId) {
@@ -45,7 +54,4 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public User getById(Integer userId) {
-        return userRepository.getById(userId);
-    }
 }
