@@ -79,13 +79,19 @@ public class GroupHasUsersController {
     }
 
     @RequestMapping(value = "/options/{groupId}/editmember")
-    protected String doAddUser(@PathVariable("groupId") Integer groupId, Model model, String email) {
+    protected String doAddUser(@PathVariable("groupId") Integer groupId, Model model, String email,
+                               @ModelAttribute ("makeGroupHasUsers") GroupHasUsers makeGroupHasUsers, BindingResult result) {
         if (email != null) {
             Optional<User> user = userService.findUserByEmail(email);
             if (!user.isEmpty()) {
-                groupHasUsersService.saveGroupHasUsers(new GroupHasUsers(groupService.getById(groupId), user.get(), GroupHasUsers.getGroupRoleOptions()[0]));
+                makeGroupHasUsers.setGroup(groupService.getById(groupId));
+                makeGroupHasUsers.setUser(user.get());
+                if (!result.hasErrors()) {
+                    groupHasUsersService.saveGroupHasUsers(makeGroupHasUsers);
+                }
             }
         }
+        model.addAttribute("groupUserRole", new GroupHasUsers());
         model.addAttribute("thisGroup", groupService.getById(groupId));
         model.addAttribute("groupHasUsers", groupHasUsersService.getAllByGroupId(groupId));
         return "groupEditMember";

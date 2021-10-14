@@ -13,13 +13,18 @@
 <div th:replace="fragments/general :: navbar"></div>
 
 <div class="container">
-  <form th:action="@{/groups/options/{groupId}/editmember/(groupId=${thisGroup.groupId})}" method="get">
+  <form th:action="@{/groups/options/{groupId}/editmember/(groupId=${thisGroup.groupId})}" method="get" th:object="${makeGroupHasUsers}">
     <div>
       <label>User email</label>
       <input type="text" name="email">
-<!--      <select th:field="${groupHasUsers}">-->
-<!--              <option th:each="role : ${groupHasUsers}"></option>-->
-<!--      </select>-->
+    </div>
+    <div>
+      <label for="userRole">Role</label>
+      <select th:field="*{userRole}">
+              <option id="userRole" th:each="role : ${groupUserRole.groupRoleOptions}" th:value="${role}" th:text="${role}"></option>
+      </select>
+    </div>
+      <div>
       <button type="submit" class="btn btn-primary">Add member</button>
     </div>
   </form>
