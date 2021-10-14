@@ -57,8 +57,9 @@ public class GroupHasUsersController {
     }
 
     @GetMapping("/options/{groupId}/delete/{userId}")
-    protected String deleteUserFromGroup(@PathVariable("userId") Integer userId) {
-        groupHasUsersService.deleteByUserId(userId);
+    protected String deleteUserFromGroup(@PathVariable("groupId") Integer groupId,
+                                         @PathVariable("userId") Integer userId) {
+        groupHasUsersService.deleteByUserId(userId, groupId);
         return "redirect:/groups/options/{groupId}";
     }
 

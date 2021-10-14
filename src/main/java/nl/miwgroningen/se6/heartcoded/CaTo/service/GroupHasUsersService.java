@@ -1,5 +1,6 @@
 package nl.miwgroningen.se6.heartcoded.CaTo.service;
 
+import nl.miwgroningen.se6.heartcoded.CaTo.model.Group;
 import nl.miwgroningen.se6.heartcoded.CaTo.model.GroupHasUsers;
 import nl.miwgroningen.se6.heartcoded.CaTo.model.User;
 import nl.miwgroningen.se6.heartcoded.CaTo.repository.GroupHasUsersRepository;
@@ -40,8 +41,9 @@ public class GroupHasUsersService {
     }
 
     @Transactional
-    public void deleteByUserId(Integer userId) {
+    public void deleteByUserId(Integer userId, Integer groupId) {
         User user = userRepository.getById(userId);
-        groupHasUsersRepository.deleteByUser(user);
+        Group group = groupRepository.getById(groupId);
+        groupHasUsersRepository.deleteByUserAndGroup(user, group);
     }
 }
