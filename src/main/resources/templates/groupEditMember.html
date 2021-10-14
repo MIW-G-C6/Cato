@@ -13,14 +13,15 @@
 <div th:replace="fragments/general :: navbar"></div>
 
 <div class="container">
-  <form th:name="addMember" th:action="@{/groups/options/{groupId}(groupId=${thisGroup.groupId})}">
+  <form th:action="@{/groups/options/{groupId}/editmember/(groupId=${thisGroup.groupId})}" method="get">
     <div>
       <label>User email</label>
-      <input type="text" name="userEmail" >
+      <input type="text" name="email">
 
-      <button type="submit" class="btn btn-primary">Search</button>
+      <button type="submit" class="btn btn-primary">Add member</button>
     </div>
   </form>
+  <a th:href="@{/groups/options/{groupId}(groupId=${thisGroup.groupId})}">Back</a>
 </div>
 
 <div th:replace="fragments/general :: footer"></div>

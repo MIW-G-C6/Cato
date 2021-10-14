@@ -10,9 +10,11 @@ body {
 /*contains general layout for top navigation bar*/
 .topnavbar {
     display: flex;
-    flex-flow: wrap;
+    /*flex-flow: wrap;*/
     position: relative;
     background-color: #e8ffef;
+    justify-content: flex-start;
+    height: 72px;
 }
 
 .topnavbar #profileLinks {
@@ -32,16 +34,21 @@ body {
     margin: 20px;
     text-decoration: none;
     font-size: 17px;
-    display: flex;
+    display: block;
 
 }
 
-.topnavbar a.profileIcon {
+.topnavbar #profileMenu {
     display: flex;
-    color: black;
-    width: 72px;
     justify-content: center;
     align-items: center;
+    margin-left: auto;
+}
+.topnavbar a.profileIcon {
+    display: block;
+    color: black;
+    width: 55px;
+    text-align: center;
     border-radius: 100%;
     border: 1px solid lightgrey;
     transition: 0.3s;
@@ -63,8 +70,13 @@ body {
     width: 93px;
 }
 
+.topnavbar #homeDiv {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .topnavbar #home {
-    margin-right: auto;
     color: #303c42;
     font-family: "Georgia i";
     font-size: 30px;
@@ -120,7 +132,7 @@ body {
     width: 80vw;
     margin: 0 auto;
     padding: 30px 20px;
-    min-height: calc(100vh - 120px - 73px);
+    min-height: calc(100vh - 72px - 73px);
 }
 
 /*contains general layout for all tables*/
