@@ -12,7 +12,23 @@
     <div th:object="${thisGroup}">
 
         <a th:href="@{/groups/options/{groupId}(groupId=${thisGroup.groupId})}">Groupadmin options</a>
+
     </div>
+
+    <div>
+        <h2>All available task lists</h2>
+        <table>
+            <tr>
+                <th>Client</th>
+            </tr>
+            <tr th:each="taskList : ${allTaskLists}">
+                <td th:text="${taskList.client.name}"></td>
+                <td><a th:href="@{/taskLists/{taskListId}(taskListId=${taskList.taskListId})}">View</a></td>
+            </tr>
+        </table>
+    </div>
+
+    <button class="btn btn-primary" onclick="javascript:history.back()">Back</button>
 
 
 </div>

@@ -32,7 +32,8 @@ public class GroupHasUsersController {
     private UserService userService;
     private TaskListService taskListService;
 
-    public GroupHasUsersController(GroupService groupService, GroupHasUsersService groupHasUsersService, UserService userService, TaskListService taskListService) {
+    public GroupHasUsersController(GroupService groupService, GroupHasUsersService groupHasUsersService,
+                                   UserService userService, TaskListService taskListService) {
         this.groupService = groupService;
         this.groupHasUsersService = groupHasUsersService;
         this.userService = userService;
@@ -42,6 +43,7 @@ public class GroupHasUsersController {
     @GetMapping("/{groupId}")
     protected String showGroupDashboard(@PathVariable("groupId") Integer groupId, Model model) {
     model.addAttribute("thisGroup", groupService.getById(groupId));
+    model.addAttribute("allTaskLists", taskListService.findAllByGroupId(groupId));
     return "groupDashboard";
     }
 
@@ -85,7 +87,8 @@ public class GroupHasUsersController {
 
     @RequestMapping(value = "/options/{groupId}/editmember")
     protected String doAddUser(@PathVariable("groupId") Integer groupId, Model model, String email,
-                               @ModelAttribute ("makeGroupHasUsers") GroupHasUsers makeGroupHasUsers, BindingResult result) {
+                               @ModelAttribute ("makeGroupHasUsers") GroupHasUsers makeGroupHasUsers,
+                               BindingResult result) {
         if (email != null) {
             Optional<User> user = userService.findUserByEmail(email);
             if (!user.isEmpty()) {
@@ -104,7 +107,7 @@ public class GroupHasUsersController {
     }
 
     protected void createNewTaskList(GroupHasUsers groupHasUsers) {
-        if (groupHasUsers.getUserRole().equals(GroupHasUsers.getGroupRoleOptions()[1])) { //if user is a client
+        if (groupHasUsers.getUserRole().equals(GroupHasUsers.getGroupRoleOptions()[1])) {   //if user is a client
 
             TaskList taskList = taskListService.findByUser(groupHasUsers.getUser());
             if (taskList == null) {
