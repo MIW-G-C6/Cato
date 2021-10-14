@@ -1,9 +1,6 @@
 package nl.miwgroningen.se6.heartcoded.CaTo.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.List;
 
 /**
@@ -21,7 +18,7 @@ public class Group {
 
     private String groupName;
 
-    @OneToMany(mappedBy = "group")
+    @OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
     private List<GroupHasUsers> groupHasUsersList;
 
     public Integer getGroupId() {

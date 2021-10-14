@@ -28,9 +28,10 @@ public class GroupHasUsersController {
     private GroupHasUsersService groupHasUsersService;
     private UserService userService;
 
-    public GroupHasUsersController(GroupService groupService, GroupHasUsersService groupHasUsersService) {
+    public GroupHasUsersController(GroupService groupService, GroupHasUsersService groupHasUsersService, UserService userService) {
         this.groupService = groupService;
         this.groupHasUsersService = groupHasUsersService;
+        this.userService = userService;
     }
 
     @GetMapping("/{groupId}")
@@ -70,28 +71,16 @@ public class GroupHasUsersController {
         return "redirect:/groups/options/{groupId}";
     }
 
-    @GetMapping("/options/{groupId}/editmember")
-    protected String showGroupAddMember(@PathVariable("groupId") Integer groupId, Model model) {
+    @RequestMapping(value = "/options/{groupId}/editmember")
+    protected String doAddUser(@PathVariable("groupId") Integer groupId, Model model, String email) {
+        if (email != null) {
+            Optional<User> user = userService.findUserByEmail(email);
+            if (!user.isEmpty()) {
+                groupHasUsersService.saveGroupHasUsers(new GroupHasUsers(groupService.getById(groupId), user.get(), GroupHasUsers.getGroupRoleOptions()[0]));
+            }
+        }
         model.addAttribute("thisGroup", groupService.getById(groupId));
         model.addAttribute("groupHasUsers", groupHasUsersService.getAllByGroupId(groupId));
         return "groupEditMember";
-    }
-
-    @RequestMapping(value="/addMember", method=RequestMethod.POST)
-    public void userEmail(@RequestParam("userEmail") String userEmail) {
-        System.out.println("ik ben er!!!!!!!!!!!!!");
-        Optional<User> user = userService.findUserByEmail(userEmail);
-        System.out.println(user.get().getName());
-    }
-
-    @PostMapping("/options/{groupId}/editmember")
-    protected String saveOrUpdateGroupMember(
-            @ModelAttribute("groupHasUsers") GroupHasUsers groupHasUsers,
-            @ModelAttribute("group") Group group,
-            @ModelAttribute("user") User user, BindingResult result) {
-        if (!result.hasErrors()) {
-            groupHasUsersService.saveGroupHasUsers(new GroupHasUsers(group, user, groupHasUsers.getUserRole()));
-        }
-        return "redirect:/groups/options/{groupId}";
     }
 }

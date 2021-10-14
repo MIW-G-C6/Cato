@@ -36,7 +36,7 @@ public class User implements UserDetails {
     @Column(unique = true)
     private String email;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<GroupHasUsers> groupHasUsersList;
 
     public User(Integer userId, String name, String email) {
