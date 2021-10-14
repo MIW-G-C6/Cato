@@ -61,7 +61,7 @@ public class UserController {
     protected String showUpdateUserForm(@PathVariable("userId") Integer userId, Model model) {
         User user = userService.getById(userId);
         model.addAttribute("user", user);
-        model.addAttribute("allUsers", userService.findUsers());
+        model.addAttribute("allUsers", userService.findAllUsers());
         return "editUserForm";
     }
 }

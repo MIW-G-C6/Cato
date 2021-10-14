@@ -22,10 +22,6 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public List<User> findUsers() {
-        return userRepository.findAll();
-    }
-
     public List<User> findAllUsers() {
         List<User> findUsers = userRepository.findAll();
         List<User> allUsers = new ArrayList<>();
