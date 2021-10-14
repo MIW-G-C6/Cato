@@ -132,7 +132,7 @@ body {
     width: 80vw;
     margin: 0 auto;
     padding: 30px 20px;
-    min-height: calc(100vh - 120px - 73px);
+    min-height: calc(100vh - 72px - 73px);
 }
 
 /*contains general layout for all tables*/
