@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author Shalena Omapersad <shalenao@hotmail.com>
@@ -20,10 +21,6 @@ public class UserService {
 
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
-    }
-
-    public List<User> findUsers() {
-        return userRepository.findAll();
     }
 
     public List<User> findAllUsers() {
@@ -54,4 +51,7 @@ public class UserService {
         userRepository.save(user);
     }
 
+    public Optional<User> findUserByEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
 }
