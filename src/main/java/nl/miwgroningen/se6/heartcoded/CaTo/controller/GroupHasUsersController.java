@@ -11,6 +11,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.text.html.Option;
 import java.util.Optional;
 
@@ -28,16 +30,20 @@ public class GroupHasUsersController {
     private GroupService groupService;
     private GroupHasUsersService groupHasUsersService;
     private UserService userService;
+    private TaskListService taskListService;
 
-    public GroupHasUsersController(GroupService groupService, GroupHasUsersService groupHasUsersService, UserService userService) {
+    public GroupHasUsersController(GroupService groupService, GroupHasUsersService groupHasUsersService,
+                                   UserService userService, TaskListService taskListService) {
         this.groupService = groupService;
         this.groupHasUsersService = groupHasUsersService;
         this.userService = userService;
+        this.taskListService = taskListService;
     }
 
     @GetMapping("/{groupId}")
     protected String showGroupDashboard(@PathVariable("groupId") Integer groupId, Model model) {
     model.addAttribute("thisGroup", groupService.getById(groupId));
+    model.addAttribute("allTaskLists", taskListService.findAllByGroupId(groupId));
     return "groupDashboard";
     }
 
@@ -81,7 +87,8 @@ public class GroupHasUsersController {
 
     @RequestMapping(value = "/options/{groupId}/editmember")
     protected String doAddUser(@PathVariable("groupId") Integer groupId, Model model, String email,
-                               @ModelAttribute ("makeGroupHasUsers") GroupHasUsers makeGroupHasUsers, BindingResult result) {
+                               @ModelAttribute ("makeGroupHasUsers") GroupHasUsers makeGroupHasUsers,
+                               BindingResult result) {
         if (email != null) {
             Optional<User> user = userService.findUserByEmail(email);
             if (!user.isEmpty()) {
@@ -90,6 +97,7 @@ public class GroupHasUsersController {
                 if (!result.hasErrors()) {
                     groupHasUsersService.saveGroupHasUsers(makeGroupHasUsers);
                 }
+                createNewTaskList(makeGroupHasUsers);
             }
         }
         model.addAttribute("groupUserRole", new GroupHasUsers());
@@ -116,5 +124,23 @@ public class GroupHasUsersController {
             groupHasUsersService.saveGroupHasUsers(groupHasUser);
         }
         return "redirect:/groups/options/{groupId}";
+    }
+
+    @GetMapping("{groupId}/clientDashboard/{clientId}")
+    protected String showClientDashboard(@PathVariable("groupId") Integer groupId, @PathVariable("clientId") Integer clientId, Model model) {
+        model.addAttribute("client", userService.getById(clientId));
+        model.addAttribute("taskList", taskListService.findByUser(userService.getById(clientId)));
+        model.addAttribute("allGroupHasUsersByGroupId", groupHasUsersService.getAllByGroupId(groupId));
+        return "clientDashboard";
+    }
+
+    protected void createNewTaskList(GroupHasUsers groupHasUsers) {
+        if (groupHasUsers.getUserRole().equals(GroupHasUsers.getGroupRoleOptions()[1])) {   //if user is a client
+
+            TaskList taskList = taskListService.findByUser(groupHasUsers.getUser());
+            if (taskList == null) {
+                taskListService.save(new TaskList(groupHasUsers.getUser()));
+            }
+        }
     }
 }

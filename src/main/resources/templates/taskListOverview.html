@@ -14,7 +14,7 @@
             <th>Client</th>
         </tr>
         <tr th:each="taskList : ${allTaskList}">
-            <td th:text="${taskList.clientName}"></td>
+            <td th:text="${taskList.client.name}"></td>
             <td><a th:href="@{/taskLists/{taskListId}(taskListId=${taskList.taskListId})}">View</a></td>
         </tr>
     </table>
