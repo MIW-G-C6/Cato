@@ -1,9 +1,12 @@
 package nl.miwgroningen.se6.heartcoded.CaTo.service;
 
 import nl.miwgroningen.se6.heartcoded.CaTo.model.GroupHasUsers;
+import nl.miwgroningen.se6.heartcoded.CaTo.model.User;
 import nl.miwgroningen.se6.heartcoded.CaTo.repository.GroupHasUsersRepository;
 import nl.miwgroningen.se6.heartcoded.CaTo.repository.GroupRepository;
+import nl.miwgroningen.se6.heartcoded.CaTo.repository.UserRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -17,11 +20,14 @@ import java.util.List;
 public class GroupHasUsersService {
 
     GroupRepository groupRepository;
-
+    UserRepository userRepository;
     GroupHasUsersRepository groupHasUsersRepository;
 
-    public GroupHasUsersService(GroupRepository groupRepository, GroupHasUsersRepository groupHasUsersRepository) {
+    public GroupHasUsersService(GroupRepository groupRepository,
+                                UserRepository userRepository,
+                                GroupHasUsersRepository groupHasUsersRepository) {
         this.groupRepository = groupRepository;
+        this.userRepository = userRepository;
         this.groupHasUsersRepository = groupHasUsersRepository;
     }
 
@@ -31,5 +37,11 @@ public class GroupHasUsersService {
 
     public List<GroupHasUsers> getAllByGroupId(Integer groupId) {
         return groupHasUsersRepository.getAllByGroup(groupRepository.getById(groupId));
+    }
+
+    @Transactional
+    public void deleteByUserId(Integer userId) {
+        User user = userRepository.getById(userId);
+        groupHasUsersRepository.deleteByUser(user);
     }
 }

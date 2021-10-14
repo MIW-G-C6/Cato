@@ -56,6 +56,12 @@ public class GroupHasUsersController {
         return "redirect/groups/options/{groupId}";
     }
 
+    @GetMapping("/options/{groupId}/delete/{userId}")
+    protected String deleteUserFromGroup(@PathVariable("userId") Integer userId) {
+        groupHasUsersService.deleteByUserId(userId);
+        return "redirect:/groups/options/{groupId}";
+    }
+
     @GetMapping("/options/edit/{groupId}")
     protected String showGroupEdit(@PathVariable("groupId") Integer groupId, Model model) {
         model.addAttribute("thisGroup", groupService.getById(groupId));

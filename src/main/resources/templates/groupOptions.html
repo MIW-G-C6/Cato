@@ -20,11 +20,13 @@
                     <th>User ID</th>
                     <th>User</th>
                     <th>Role</th>
+                    <th>Remove from group</th>
                 </tr>
                 <tr th:each="thisGroupHasUser : ${allGroupHasUsersByGroupId}" >
                     <td th:text="${thisGroupHasUser.user.userId}"></td>
                     <td th:text="${thisGroupHasUser.user.name}"></td>
                     <td th:text="${thisGroupHasUser.userRole}"></td>
+                    <td class="delete"><a th:href="@{'/groups/options/{groupId}/delete/' + ${thisGroupHasUser.user.userId}(groupId=${thisGroup.groupId})}"><img th:src="@{/css/images/delete-icon.svg}" height="30" width="30"></a></td>
                 </tr>
             </table>
         </div>
