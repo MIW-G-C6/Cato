@@ -14,6 +14,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 
@@ -104,6 +105,14 @@ public class GroupHasUsersController {
         model.addAttribute("thisGroup", groupService.getById(groupId));
         model.addAttribute("groupHasUsers", groupHasUsersService.getAllByGroupId(groupId));
         return "groupEditMember";
+    }
+
+    @GetMapping("{groupId}/clientDashboard/{clientId}")
+    protected String showClientDashboard(@PathVariable("groupId") Integer groupId, @PathVariable("clientId") Integer clientId, Model model) {
+        model.addAttribute("client", userService.getById(clientId));
+        model.addAttribute("taskList", taskListService.findByUser(userService.getById(clientId)));
+        model.addAttribute("allGroupHasUsersByGroupId", groupHasUsersService.getAllByGroupId(groupId));
+        return "clientDashboard";
     }
 
     protected void createNewTaskList(GroupHasUsers groupHasUsers) {
