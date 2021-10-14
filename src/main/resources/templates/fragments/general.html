@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="https://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org">
 <head th:fragment="baseHeader(title)">
   <meta charset="UTF-8">
   <title th:replace="${title}">Dit is de algemene titel</title>
@@ -62,6 +62,9 @@
         <li class="nav-item" sec:authorize="isAuthenticated()">
             <a class="nav-link" th:href="@{/logout}">Log out</a>
         </li>
+<!--        <li class="nav-item" sec:authorize="isAuthenticated()">-->
+<!--            <a class="nav-link" th:href="@{/profilePage/{userId}(userId =${})}">Profile Page</a>-->
+<!--        </li>-->
     </div>
 </div>
 
