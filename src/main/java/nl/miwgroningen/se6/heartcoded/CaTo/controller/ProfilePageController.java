@@ -2,7 +2,6 @@ package nl.miwgroningen.se6.heartcoded.CaTo.controller;
 
 import nl.miwgroningen.se6.heartcoded.CaTo.model.User;
 import nl.miwgroningen.se6.heartcoded.CaTo.service.UserService;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,15 +28,4 @@ public class ProfilePageController {
         model.addAttribute("user", user);
         return "profilePage";
     }
-
-//    @GetMapping("/profilepage/mypage")
-//    protected String showPersonalProfilePage(Model model) {
-//        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//        model.addAttribute("userId", user.getUserId());
-//        return "";
-//    }
-
-
-
-
 }
