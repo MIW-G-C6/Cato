@@ -1,9 +1,7 @@
 package nl.miwgroningen.se6.heartcoded.CaTo.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,7 +18,16 @@ public class TaskList {
     @OneToMany(mappedBy = "taskList")
     private List<Task> taskList;
 
-    private String clientName;
+    @OneToOne
+    private User client;
+
+    public TaskList(User client) {
+        this.client = client;
+        this.taskList = new ArrayList<>();
+    }
+
+    public TaskList() {
+    }
 
     public Integer getTaskListId() {
         return taskListId;
@@ -38,11 +45,11 @@ public class TaskList {
         this.taskList = taskList;
     }
 
-    public String getClientName() {
-        return clientName;
+    public User getClient() {
+        return client;
     }
 
-    public void setClientName(String clientName) {
-        this.clientName = clientName;
+    public void setClient(User client) {
+        this.client = client;
     }
 }

@@ -2,15 +2,18 @@ package nl.miwgroningen.se6.heartcoded.CaTo.controller;
 
 import nl.miwgroningen.se6.heartcoded.CaTo.model.Group;
 import nl.miwgroningen.se6.heartcoded.CaTo.model.GroupHasUsers;
+import nl.miwgroningen.se6.heartcoded.CaTo.model.TaskList;
 import nl.miwgroningen.se6.heartcoded.CaTo.model.User;
 import nl.miwgroningen.se6.heartcoded.CaTo.service.GroupHasUsersService;
 import nl.miwgroningen.se6.heartcoded.CaTo.service.GroupService;
+import nl.miwgroningen.se6.heartcoded.CaTo.service.TaskListService;
 import nl.miwgroningen.se6.heartcoded.CaTo.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 
@@ -27,11 +30,13 @@ public class GroupHasUsersController {
     private GroupService groupService;
     private GroupHasUsersService groupHasUsersService;
     private UserService userService;
+    private TaskListService taskListService;
 
-    public GroupHasUsersController(GroupService groupService, GroupHasUsersService groupHasUsersService, UserService userService) {
+    public GroupHasUsersController(GroupService groupService, GroupHasUsersService groupHasUsersService, UserService userService, TaskListService taskListService) {
         this.groupService = groupService;
         this.groupHasUsersService = groupHasUsersService;
         this.userService = userService;
+        this.taskListService = taskListService;
     }
 
     @GetMapping("/{groupId}")
@@ -89,11 +94,22 @@ public class GroupHasUsersController {
                 if (!result.hasErrors()) {
                     groupHasUsersService.saveGroupHasUsers(makeGroupHasUsers);
                 }
+                createNewTaskList(makeGroupHasUsers);
             }
         }
         model.addAttribute("groupUserRole", new GroupHasUsers());
         model.addAttribute("thisGroup", groupService.getById(groupId));
         model.addAttribute("groupHasUsers", groupHasUsersService.getAllByGroupId(groupId));
         return "groupEditMember";
+    }
+
+    protected void createNewTaskList(GroupHasUsers groupHasUsers) {
+        if (groupHasUsers.getUserRole().equals(GroupHasUsers.getGroupRoleOptions()[1])) { //if user is a client
+
+            TaskList taskList = taskListService.findByUser(groupHasUsers.getUser());
+            if (taskList == null) {
+                taskListService.save(new TaskList(groupHasUsers.getUser()));
+            }
+        }
     }
 }
