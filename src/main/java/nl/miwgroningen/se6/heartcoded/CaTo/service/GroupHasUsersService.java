@@ -1,6 +1,5 @@
 package nl.miwgroningen.se6.heartcoded.CaTo.service;
 
-import nl.miwgroningen.se6.heartcoded.CaTo.model.Group;
 import nl.miwgroningen.se6.heartcoded.CaTo.model.GroupHasUsers;
 import nl.miwgroningen.se6.heartcoded.CaTo.model.User;
 import nl.miwgroningen.se6.heartcoded.CaTo.repository.GroupHasUsersRepository;
@@ -10,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author Paul Romkes <p.r.romkes@gmail.com
@@ -42,8 +42,12 @@ public class GroupHasUsersService {
 
     @Transactional
     public void deleteByUserId(Integer userId, Integer groupId) {
-        User user = userRepository.getById(userId);
-        Group group = groupRepository.getById(groupId);
-        groupHasUsersRepository.deleteByUserAndGroup(user, group);
+        groupHasUsersRepository.deleteByUserAndGroup(userRepository.getById(userId), groupRepository.getById(groupId));
+    }
+
+    public Optional<GroupHasUsers> findByUserIdAndGroupId(Integer userId, Integer groupId) {
+        return groupHasUsersRepository.findGroupHasUsersByUserAndGroup(
+                userRepository.getById(userId),
+                groupRepository.getById(groupId));
     }
 }

@@ -11,8 +11,7 @@
 <div class="container">
 
     <h1><span th:text="${thisGroup.groupName}"></span> </h1>
-    <a th:href="@{/groups/options/edit/{groupId}(groupId=${thisGroup.groupId})}">Edit group</a>
-    <a th:href="@{/groups/{groupId}(groupId=${thisGroup.groupId})}" >Back</a>
+    <a th:href="@{/groups/options/edit/{groupId}(groupId=${thisGroup.groupId})}">Edit group name</a>
 
         <div>
             <table>
@@ -20,17 +19,22 @@
                     <th>User ID</th>
                     <th>User</th>
                     <th>Role</th>
+                    <th>Edit member</th>
                     <th>Remove from group</th>
                 </tr>
                 <tr th:each="thisGroupHasUser : ${allGroupHasUsersByGroupId}" >
                     <td th:text="${thisGroupHasUser.user.userId}"></td>
                     <td th:text="${thisGroupHasUser.user.name}"></td>
                     <td th:text="${thisGroupHasUser.userRole}"></td>
+                    <td class="edit"><a th:href="@{'/groups/options/{groupId}/updatemember/' + ${thisGroupHasUser.user.userId}(groupId=${thisGroup.groupId})}"><img th:src="@{/css/images/edit-icon.svg}" height="30" width="30"></a></td>
                     <td class="delete"><a th:href="@{'/groups/options/{groupId}/delete/' + ${thisGroupHasUser.user.userId}(groupId=${thisGroup.groupId})}"><img th:src="@{/css/images/delete-icon.svg}" height="30" width="30"></a></td>
                 </tr>
             </table>
         </div>
     <a th:href="@{/groups/options/{groupId}/editmember(groupId=${thisGroup.groupId})}">Add new groupmember</a>
+    <div>
+        <a th:href="@{/groups/{groupId}(groupId=${thisGroup.groupId})}">Back</a>
+    </div>
 </div>
 
 <div th:replace="fragments/general :: footer"></div>

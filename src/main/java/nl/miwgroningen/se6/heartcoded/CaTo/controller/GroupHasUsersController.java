@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.swing.text.html.Option;
 import java.util.Optional;
 
 
@@ -95,5 +96,25 @@ public class GroupHasUsersController {
         model.addAttribute("thisGroup", groupService.getById(groupId));
         model.addAttribute("groupHasUsers", groupHasUsersService.getAllByGroupId(groupId));
         return "groupEditMember";
+    }
+
+    @GetMapping("/options/{groupId}/updatemember/{userId}")
+    protected String showGroupUpdateMember(@PathVariable("userId") Integer userId,
+                                           @PathVariable("groupId") Integer groupId, Model model) {
+        Optional<GroupHasUsers> groupHasUsers = groupHasUsersService.findByUserIdAndGroupId(userId, groupId);
+        if (groupHasUsers.isEmpty()) {
+            return "redirect:/groups/options/{groupId}";
+        }
+        model.addAttribute("groupHasUser", groupHasUsers.get());
+        return "groupUpdateMember";
+    }
+
+    @PostMapping("/options/{groupId}/updatemember/{userId}")
+    protected String updateGroupMember(@ModelAttribute("groupHasUser") GroupHasUsers groupHasUser, BindingResult result) {
+        System.out.println("ik ben er");
+        if (!result.hasErrors()) {
+            groupHasUsersService.saveGroupHasUsers(groupHasUser);
+        }
+        return "redirect:/groups/options/{groupId}";
     }
 }
