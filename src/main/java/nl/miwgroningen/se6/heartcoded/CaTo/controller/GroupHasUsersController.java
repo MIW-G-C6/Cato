@@ -2,13 +2,16 @@ package nl.miwgroningen.se6.heartcoded.CaTo.controller;
 
 import nl.miwgroningen.se6.heartcoded.CaTo.model.Group;
 import nl.miwgroningen.se6.heartcoded.CaTo.model.GroupHasUsers;
+import nl.miwgroningen.se6.heartcoded.CaTo.model.User;
 import nl.miwgroningen.se6.heartcoded.CaTo.service.GroupHasUsersService;
 import nl.miwgroningen.se6.heartcoded.CaTo.service.GroupService;
+import nl.miwgroningen.se6.heartcoded.CaTo.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
 
 
 /**
@@ -23,6 +26,7 @@ public class GroupHasUsersController {
 
     private GroupService groupService;
     private GroupHasUsersService groupHasUsersService;
+    private UserService userService;
 
     public GroupHasUsersController(GroupService groupService, GroupHasUsersService groupHasUsersService) {
         this.groupService = groupService;
@@ -43,7 +47,8 @@ public class GroupHasUsersController {
     }
 
     @PostMapping("/options/{groupId}")
-    protected String updateUserRole(@ModelAttribute("groupHasUser") GroupHasUsers groupHasUsers, BindingResult result) {
+    protected String updateUserRole(
+            @ModelAttribute("groupHasUser") GroupHasUsers groupHasUsers, BindingResult result) {
         if (!result.hasErrors()) {
             groupHasUsersService.saveGroupHasUsers(groupHasUsers);
         }
@@ -61,6 +66,31 @@ public class GroupHasUsersController {
     protected String updateGroup(@ModelAttribute("group") Group group, BindingResult result) {
         if (!result.hasErrors()) {
             groupService.saveGroup(group);
+        }
+        return "redirect:/groups/options/{groupId}";
+    }
+
+    @GetMapping("/options/{groupId}/editmember")
+    protected String showGroupAddMember(@PathVariable("groupId") Integer groupId, Model model) {
+        model.addAttribute("thisGroup", groupService.getById(groupId));
+        model.addAttribute("groupHasUsers", groupHasUsersService.getAllByGroupId(groupId));
+        return "groupEditMember";
+    }
+
+    @RequestMapping(value="/addMember", method=RequestMethod.POST)
+    public void userEmail(@RequestParam("userEmail") String userEmail) {
+        System.out.println("ik ben er!!!!!!!!!!!!!");
+        Optional<User> user = userService.findUserByEmail(userEmail);
+        System.out.println(user.get().getName());
+    }
+
+    @PostMapping("/options/{groupId}/editmember")
+    protected String saveOrUpdateGroupMember(
+            @ModelAttribute("groupHasUsers") GroupHasUsers groupHasUsers,
+            @ModelAttribute("group") Group group,
+            @ModelAttribute("user") User user, BindingResult result) {
+        if (!result.hasErrors()) {
+            groupHasUsersService.saveGroupHasUsers(new GroupHasUsers(group, user, groupHasUsers.getUserRole()));
         }
         return "redirect:/groups/options/{groupId}";
     }

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head th:replace="fragments/general :: baseHeader(~{:: title})" >
+  <meta charset="UTF-8">
+  <title>add a groupmember</title>
+</head>
+
+<script>
+
+</script>
+<body>
+
+<div th:replace="fragments/general :: navbar"></div>
+
+<div class="container">
+  <form th:name="addMember" th:action="@{/groups/options/{groupId}(groupId=${thisGroup.groupId})}">
+    <div>
+      <label>User email</label>
+      <input type="text" name="userEmail" >
+
+      <button type="submit" class="btn btn-primary">Search</button>
+    </div>
+  </form>
+</div>
+
+<div th:replace="fragments/general :: footer"></div>
+<div th:replace="fragments/general :: bottomScripts"></div>
+</body>
+</html>
