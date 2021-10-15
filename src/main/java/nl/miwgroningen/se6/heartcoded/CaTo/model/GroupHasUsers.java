@@ -13,7 +13,7 @@ import javax.persistence.*;
 @IdClass(GroupHasUsersId.class)
 public class GroupHasUsers {
 
-    private static final String[] GROUP_ROLE_OPTIONS = {"Group member", "Client", "Group admin"};
+    private static final String[] GROUP_ROLE_OPTIONS = {"Caregiver", "Client", "Group admin"};
 
     @Id
     @ManyToOne

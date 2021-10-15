@@ -60,7 +60,7 @@ public class GroupController {
         if (!result.hasErrors()) {
             groupService.saveGroup(group);
             User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            groupHasUsersService.saveGroupHasUsers(new GroupHasUsers(group, user, "groupAdmin"));
+            groupHasUsersService.saveGroupHasUsers(new GroupHasUsers(group, user, "Group admin"));
         }
         return "redirect:/groups/new";
     }
