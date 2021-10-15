@@ -14,8 +14,8 @@
         <tr>
             <th>Name</th>
             <th>Email</th>
-            <th>Edit</th>
-            <th>Delete</th>
+            <th class="iconheader">Edit</th>
+            <th class="iconheader">Delete</th>
         </tr>
         <tr th:each="user : ${allUsers}">
             <td><a th:href="@{/profilepage/{userId}(userId=${user.userId})}" th:text="${user.name}"></a></td>

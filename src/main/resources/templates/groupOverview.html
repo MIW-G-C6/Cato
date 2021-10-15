@@ -12,14 +12,16 @@
     <table>
         <tr>
             <th>Group name</th>
+            <th class="iconheader">Delete</th>
         </tr>
         <tr th:each="group : ${allGroups}">
             <td><a th:href="@{/groups/{groupId}(groupId=${group.groupId})}" th:text="${group.groupName}"></a></td>
-            <td><a th:href="@{'/groups/delete/' + ${group.groupId}}">Delete group</a></td>
+            <td class="delete"><a th:href="@{'/groups/delete/' + ${group.groupId}}"><img th:src="@{/css/images/delete-icon.svg}" height="30" width="30"></a></td>
         </tr>
     </table>
+    <br>
     <p>
-        <a th:href="@{/groups/new}">Add a new group</a>
+        <a th:href="@{/groups/new}"><button class="btn btn-primary">Add a new group</button></a>
     </p>
 </div>
 

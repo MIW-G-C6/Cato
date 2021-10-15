@@ -10,8 +10,9 @@
 
 <div class="container">
 
-    <h1><span th:text="${thisGroup.groupName}"></span> </h1>
-    <a th:href="@{/groups/options/edit/{groupId}(groupId=${thisGroup.groupId})}">Edit group name</a>
+    <h1><span th:text="${thisGroup.groupName}"></span>  <a th:href="@{/groups/options/edit/{groupId}(groupId=${thisGroup.groupId})}"><img th:src="@{/css/images/edit-icon.svg}" height="30" width="30"></a></h1>
+
+
 
         <div>
             <table>
@@ -19,8 +20,8 @@
                     <th>User ID</th>
                     <th>User</th>
                     <th>Role</th>
-                    <th>Edit member</th>
-                    <th>Remove from group</th>
+                    <th class="iconheader">Edit role</th>
+                    <th class="iconheader">Delete</th>
                 </tr>
                 <tr th:each="thisGroupHasUser : ${allGroupHasUsersByGroupId}" >
                     <td th:text="${thisGroupHasUser.user.userId}"></td>
@@ -31,10 +32,9 @@
                 </tr>
             </table>
         </div>
-    <a th:href="@{/groups/options/{groupId}/editmember(groupId=${thisGroup.groupId})}">Add new groupmember</a>
-    <div>
-        <a th:href="@{/groups/{groupId}(groupId=${thisGroup.groupId})}">Back</a>
-    </div>
+    <br>
+    <a th:href="@{/groups/options/{groupId}/editmember(groupId=${thisGroup.groupId})}"><button class="btn btn-primary">Add new groupmember</button></a>
+    <a class="float-right" th:href="@{/groups/{groupId}(groupId=${thisGroup.groupId})}"><button type="button" class="btn btn-primary">Back</button></a>
 </div>
 
 <div th:replace="fragments/general :: footer"></div>

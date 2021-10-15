@@ -8,21 +8,22 @@
 
 <div th:replace="fragments/general :: navbar"></div>
 
-<h1>Task List of <span th:text="${taskList.client.name}"></span></h1>
-
 <div class="container">
+    <h1>Task List of <span th:text="${taskList.client.name}"></span></h1>
     <table>
         <tr>
             <th>Task Description</th>
+            <th class="iconheader">Delete</th>
         </tr>
         <tr th:each="task : ${taskList.taskList}">
             <td><a th:href="@{/taskLists/{taskListId}/{taskId}(taskListId=${taskList.taskListId}, taskId=${task.taskId})}"
                    th:text="${task.description}"></a></td>
-            <td><a th:href="@{'/task/delete/' + ${task.taskId}}">Delete task</a></td>
+            <td class="delete"><a th:href="@{'/task/delete/' + ${task.taskId}}"><img th:src="@{/css/images/delete-icon.svg}" height="30" width="30"></a></td>
         </tr>
     </table>
-    <a th:href="@{/taskLists/{taskListId}/new(taskListId=${taskListId})}">New</a>
-    <button class="btn btn-primary" onclick="javascript:history.back()">Back</button>
+    <br>
+    <a th:href="@{/taskLists/{taskListId}/new(taskListId=${taskListId})}"><button class="btn btn-primary">Add new task</button></a>
+    <a class="float-right" th:href="@{/taskLists}"><button class="btn btn-primary">Back</button></a>
 </div>
 
 <div th:replace="fragments/general :: footer"></div>

@@ -24,24 +24,24 @@
             <td th:text="${thisGroupHasUser.userRole}"></td>
         </tr>
     </table>
-
+    <br>
     <h2>Task List</h2>
     <table>
         <tr>
             <th>Task Description</th>
             <th>Priority</th>
+            <th class="iconheader">Delete</th>
         </tr>
         <tr th:each="task : ${taskList.taskList}">
             <td><a th:href="@{/taskLists/{taskListId}/{taskId}(taskListId=${taskList.taskListId}, taskId=${task.taskId})}"
                    th:text="${task.description}"></a></td>
             <td th:text="${task.priority}"></td>
-            <td><a th:href="@{'/task/delete/' + ${task.taskId}}">Delete task</a></td>
+            <td class="delete"><a th:href="@{'/task/delete/' + ${task.taskId}}"><img th:src="@{/css/images/delete-icon.svg}" height="30" width="30"></a></td>
         </tr>
     </table>
-    <a class="btn btn-primary" th:href="@{/taskLists/{taskListId}/new(taskListId=${taskList.taskListId})}">New</a>
-
-    <button class="btn btn-primary" onclick="javascript:history.back()">Back</button>
-
+    <br>
+    <a class="btn btn-primary" th:href="@{/taskLists/{taskListId}/new(taskListId=${taskList.taskListId})}">Add new task</a>
+    <a class="float-right" th:href="@{/groups/{groupId}(groupId=${groupId})}"><button class="btn btn-primary">Back</button></a>
 
 </div>
 

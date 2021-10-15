@@ -7,6 +7,12 @@ body {
     background-size: cover;
 }
 
+.loginbody {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+}
+
 /*contains general layout for top navigation bar*/
 .topnavbar {
     display: flex;
@@ -142,6 +148,14 @@ table {
     width: 100%;
 }
 
+/*#tasklisttable {*/
+/*    width: 100%;*/
+/*}*/
+
+.iconheader {
+    width: 133px;
+}
+
 td, th {
     border: 1px solid #ddd;
     padding: 8px;
@@ -173,7 +187,7 @@ tr:hover {
 
 /*contains general layout for all titles*/
 h1 {
-    padding: 10px;
+    padding: 10px 0 10px 0;
 }
 
 /*contains general layout for footer*/
@@ -225,11 +239,12 @@ button {
 }
 
 .form-group {
-    height: 200px;
     width: 50%;
     display: block;
     margin: auto;
-    padding: 20px;
+    /*padding: 20px;*/
+    /*padding-bottom: 90px;*/
+    /*margin-top: 50px;*/
 }
 
 #login-submit {
@@ -248,4 +263,14 @@ input[type=email], input[type=password], input[type=text] {
 .card-body {
     box-shadow: 0 1px 3px 0 rgba(0,0,0,.1), 0 1px 2px 0 rgba(0,0,0,.06);
     width: 50%;
+}
+
+.logotext {
+    font-family: "Georgia i";
+    font-size: 50px;
+    text-align: center;
+}
+
+.logintext {
+    text-align: center;
 }

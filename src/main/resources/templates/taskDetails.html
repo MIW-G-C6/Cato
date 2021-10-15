@@ -8,11 +8,14 @@
 
 <div th:replace="fragments/general :: navbar"></div>
 
-<h1>Task details for task: <span th:text="${task.description}"></span></h1>
 
 <div class="container">
+    <h1>Task details</h1>
+    <div>Task: <span th:text="${task.description}"></span></div>
     <div>The priority for this task is: <span th:text="${task.priority}"></span></div>
-    <a th:href="@{/taskLists/{taskListId}/update/{taskId}(taskListId=${taskList.taskListId}, taskId=${task.taskId})}">Edit task</a>
+    <br>
+    <a th:href="@{/taskLists/{taskListId}/update/{taskId}(taskListId=${taskList.taskListId}, taskId=${task.taskId})}"><button class="btn btn-primary">Edit</button></a>
+    <button type="button" class="btn btn-primary float-right" onclick="javascript:history.back()">Back</button>
 </div>
 
 <div th:replace="fragments/general :: footer"></div>

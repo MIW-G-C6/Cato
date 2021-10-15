@@ -129,6 +129,7 @@ public class GroupHasUsersController {
         model.addAttribute("client", userService.getById(clientId));
         model.addAttribute("taskList", taskListService.findByUser(userService.getById(clientId)));
         model.addAttribute("allGroupHasUsersByGroupId", groupHasUsersService.getAllByGroupId(groupId));
+        model.addAttribute("groupId", groupId);
         return "clientDashboard";
     }
 

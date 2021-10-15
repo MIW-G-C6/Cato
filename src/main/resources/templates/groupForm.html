@@ -21,11 +21,13 @@
         </div>
         <div>
             <button type="submit" class="btn btn-primary">Save group</button>
+            <p class="float-right">
+                <a th:href="@{/groups/}"><button type="button" class="btn btn-primary">Group overview</button></a>
+            </p>
         </div>
     </form>
-    <p>
-        <a th:href="@{/groups/}">Group overview</a>
-    </p>
+
+
 </div>
 
 <div th:replace="fragments/general :: footer"></div>

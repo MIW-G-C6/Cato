@@ -9,14 +9,9 @@
 <div th:replace="fragments/general :: navbar"></div>
 
 <div class="container">
-    <div th:object="${thisGroup}">
-
-        <a th:href="@{/groups/options/{groupId}(groupId=${thisGroup.groupId})}">Groupadmin options</a>
-
-    </div>
-
     <div>
         <h2>All Clients in <span th:text="${thisGroup.groupName}"></span></h2>
+        <br>
         <table>
             <tr>
                 <th>Client</th>
@@ -29,7 +24,10 @@
         </table>
     </div>
 
-    <button class="btn btn-primary" onclick="javascript:history.back()">Back</button>
+    <br>
+    <a th:href="@{/groups/options/{groupId}(groupId=${thisGroup.groupId})}"><button class="btn btn-primary"> Group admin options</button></a>
+    <a class="float-right" th:href="@{/groups}"><button class="btn btn-primary">Back</button></a>
+
 
 
 </div>
