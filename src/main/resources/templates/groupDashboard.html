@@ -16,7 +16,7 @@
     </div>
 
     <div>
-        <h2>All available task lists</h2>
+        <h2>All Clients in <span th:text="${thisGroup.groupName}"></span></h2>
         <table>
             <tr>
                 <th>Client</th>
@@ -25,7 +25,6 @@
                 <td>
                     <a th:href="@{/groups/{groupId}/clientDashboard/{clientId}(groupId=${thisGroup.groupId}, clientId=${taskList.client.userId})}" th:text="${taskList.client.name}"></a>
                 </td>
-                <td><a th:href="@{/taskLists/{taskListId}(taskListId=${taskList.taskListId})}">View</a></td>
             </tr>
         </table>
     </div>

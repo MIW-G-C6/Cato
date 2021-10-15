@@ -49,6 +49,7 @@ public class CatoSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated().and()
                 .formLogin()
                 .loginPage("/login")
+                .defaultSuccessUrl("/groups")
                 .permitAll()
                 .and()
                 .logout()

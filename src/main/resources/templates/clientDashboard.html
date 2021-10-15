@@ -18,7 +18,9 @@
             <th>Role</th>
         </tr>
         <tr th:each="thisGroupHasUser : ${allGroupHasUsersByGroupId}" >
-            <td th:text="${thisGroupHasUser.user.name}"></td>
+            <td>
+                <a th:href="@{/profilepage/{userId}(userId=${thisGroupHasUser.user.userId})}" th:text="${thisGroupHasUser.user.name}"></a>
+            </td>
             <td th:text="${thisGroupHasUser.userRole}"></td>
         </tr>
     </table>
