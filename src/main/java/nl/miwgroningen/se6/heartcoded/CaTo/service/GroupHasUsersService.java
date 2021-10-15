@@ -1,5 +1,6 @@
 package nl.miwgroningen.se6.heartcoded.CaTo.service;
 
+import nl.miwgroningen.se6.heartcoded.CaTo.model.Group;
 import nl.miwgroningen.se6.heartcoded.CaTo.model.GroupHasUsers;
 import nl.miwgroningen.se6.heartcoded.CaTo.model.User;
 import nl.miwgroningen.se6.heartcoded.CaTo.repository.GroupHasUsersRepository;
@@ -8,6 +9,7 @@ import nl.miwgroningen.se6.heartcoded.CaTo.repository.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -49,5 +51,13 @@ public class GroupHasUsersService {
         return groupHasUsersRepository.findGroupHasUsersByUserAndGroup(
                 userRepository.getById(userId),
                 groupRepository.getById(groupId));
+    }
+
+    public List<Group> getAllGroupsByUserId(Integer userId) {
+        ArrayList<Group> groupsByUser = new ArrayList<>();
+        for (GroupHasUsers groupHasUsers : groupHasUsersRepository.getAllByUser(userRepository.getById(userId))) {
+            groupsByUser.add(groupHasUsers.getGroup());
+        }
+        return groupsByUser;
     }
 }

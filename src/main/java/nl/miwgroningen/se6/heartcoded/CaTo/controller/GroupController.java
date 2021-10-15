@@ -35,7 +35,8 @@ public class GroupController {
 
     @GetMapping("/groups")
     protected String showGroupOverview(Model model) {
-        model.addAttribute("allGroups", groupService.findAllGroups());
+        User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        model.addAttribute("allGroups", groupHasUsersService.getAllGroupsByUserId(user.getUserId()));
         return "groupOverview";
     }
 

@@ -14,8 +14,7 @@ public interface GroupHasUsersRepository extends JpaRepository <GroupHasUsers, I
 
     void deleteByUserAndGroup(User user, Group group);
 
-    GroupHasUsers getGroupHasUsersByUserAndGroup(User user, Group group);
-
     Optional<GroupHasUsers> findGroupHasUsersByUserAndGroup(User user, Group group);
 
+    List<GroupHasUsers> getAllByUser(User user);
 }
