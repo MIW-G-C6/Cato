@@ -28,6 +28,9 @@
                    oninput="this.setCustomValidity('')"
                    th:field="*{email}">
         </div>
+        <div th:if="${#fields.hasErrors()}">
+            <p th:each="err : ${#fields.errors('global')}" th:text="${err}" class="error" />
+        </div>
         <div>
             <input type="hidden" id="password"
                    th:field="*{password}">
