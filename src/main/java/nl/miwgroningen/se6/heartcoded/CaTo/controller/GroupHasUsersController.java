@@ -87,36 +87,6 @@ public class GroupHasUsersController {
         return "redirect:/groups/options/{groupId}";
     }
 
-//    @GetMapping("/options/{groupId}/editmember")
-//    protected String showAddUserForm(@PathVariable("groupId") Integer groupId, Model model) {
-//        model.addAttribute("groupUserRole", new GroupHasUsers());
-//        model.addAttribute("thisGroup", groupService.getById(groupId));
-//        model.addAttribute("groupHasUsers", groupHasUsersService.getAllByGroupId(groupId));
-//        return "groupEditMember";
-//    }
-//
-//    @PostMapping("/options/{groupId}/editmember")
-//    protected String addUser(@PathVariable("groupId") Integer groupId, String email,
-//                             @ModelAttribute("makeGroupHasUsers") GroupHasUsers makeGroupHasUsers,
-//                             BindingResult result) {
-//
-//        if (email != null) {
-//            Optional<User> user = userService.findUserByEmail(email);
-//            if (!user.isEmpty()) {
-//                makeGroupHasUsers.setGroup(groupService.getById(groupId));
-//                makeGroupHasUsers.setUser(user.get());
-//                if (!result.hasErrors()) {
-//                    groupHasUsersService.saveGroupHasUsers(makeGroupHasUsers);
-//                    createNewTaskList(makeGroupHasUsers);
-//                }
-//            } else {
-//
-//                System.out.println("email does not exist");
-//            }
-//        }
-//        return "redirect:/options/{groupId}";
-//    }
-
     @RequestMapping(value = "/options/{groupId}/editmember")
     protected String doAddUser(@PathVariable("groupId") Integer groupId, Model model, String email,
                                @ModelAttribute ("makeGroupHasUsers") GroupHasUsers makeGroupHasUsers,
