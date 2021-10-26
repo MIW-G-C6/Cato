@@ -8,10 +8,14 @@ import nl.miwgroningen.se6.heartcoded.CaTo.service.GroupHasUsersService;
 import nl.miwgroningen.se6.heartcoded.CaTo.service.GroupService;
 import nl.miwgroningen.se6.heartcoded.CaTo.service.TaskListService;
 import nl.miwgroningen.se6.heartcoded.CaTo.service.UserService;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
+import javax.naming.Binding;
+import javax.swing.text.html.Option;
 import java.util.Optional;
 
 
@@ -87,6 +91,8 @@ public class GroupHasUsersController {
     protected String doAddUser(@PathVariable("groupId") Integer groupId, Model model, String email,
                                @ModelAttribute ("makeGroupHasUsers") GroupHasUsers makeGroupHasUsers,
                                BindingResult result) {
+        String exception = "";
+
         if (email != null) {
             Optional<User> user = userService.findUserByEmail(email);
             if (!user.isEmpty()) {
@@ -94,10 +100,15 @@ public class GroupHasUsersController {
                 makeGroupHasUsers.setUser(user.get());
                 if (!result.hasErrors()) {
                     groupHasUsersService.saveGroupHasUsers(makeGroupHasUsers);
+                    createNewTaskList(makeGroupHasUsers);
+                    exception = "Successfully added this member to your group";
+//                    return "redirect:/groups/options/{groupId}";
                 }
-                createNewTaskList(makeGroupHasUsers);
+            } else {
+                exception = "No existing account found with this email address";
             }
         }
+        model.addAttribute("exception", exception);
         model.addAttribute("groupUserRole", new GroupHasUsers());
         model.addAttribute("thisGroup", groupService.getById(groupId));
         model.addAttribute("groupHasUsers", groupHasUsersService.getAllByGroupId(groupId));

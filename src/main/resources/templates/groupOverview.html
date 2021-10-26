@@ -11,12 +11,12 @@
     <h1>Overview of my groups</h1>
     <br>
     <div class="group-overview">
-        <h5>All groups<a class="float-right" th:href="@{/groups/new}">create new group</a>
+        <h5>All groups<a class="float-right" th:href="@{/groups/new}">Create new group</a>
         </h5>
         <hr>
         <table>
             <tr th:each="group : ${allGroups}">
-                <td><a th:href="@{/groups/{groupId}(groupId=${group.groupId})}" th:text="${group.groupName}"></a></td>
+                <td><a th:href="@{/groups/{groupId}(groupId=${group.groupId})}"><div th:text="${group.groupName}"></div></a></td>
             </tr>
         </table>
     </div>
