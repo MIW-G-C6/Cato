@@ -2,27 +2,25 @@
 <html lang="en" xmlns:th="https://www.thymeleaf.org">
 <head th:replace="fragments/general :: baseHeader(~{:: title})" >
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>My groups</title>
 </head>
 <body>
 <div th:replace="fragments/general :: navbar"></div>
 
 <div class="container">
     <h1>Overview of my groups</h1>
-    <table>
-        <tr>
-            <th>Group name</th>
-            <th class="iconheader">Delete</th>
-        </tr>
-        <tr th:each="group : ${allGroups}">
-            <td><a th:href="@{/groups/{groupId}(groupId=${group.groupId})}" th:text="${group.groupName}"></a></td>
-            <td class="delete"><a th:href="@{'/groups/delete/' + ${group.groupId}}"><img th:src="@{/css/images/delete-icon.svg}" height="30" width="30"></a></td>
-        </tr>
-    </table>
     <br>
-    <p>
-        <a th:href="@{/groups/new}"><button class="btn btn-primary">Add a new group</button></a>
-    </p>
+    <div class="group-overview">
+        <h5>all groups<a class="float-right" th:href="@{/groups/new}">Create new group</a>
+        </h5>
+        <hr>
+        <table>
+            <tr th:each="group : ${allGroups}">
+                <td><a th:href="@{/groups/{groupId}(groupId=${group.groupId})}" th:text="${group.groupName}"></a></td>
+            </tr>
+        </table>
+    </div>
+    <br>
 </div>
 
 <div th:replace="fragments/general :: footer"></div>
