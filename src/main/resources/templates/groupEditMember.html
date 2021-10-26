@@ -16,7 +16,9 @@
   <form th:action="@{/groups/options/{groupId}/editmember/(groupId=${thisGroup.groupId})}" method="get" th:object="${makeGroupHasUsers}">
     <div>
       <label>User email</label>
-      <input type="text" name="email">
+      <input type="text" name="email" required pattern="\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}\b"
+             oninvalid="this.setCustomValidity('Please enter a valid email address')"
+             oninput="this.setCustomValidity('')">
     </div>
     <div>
       <label for="userRole">Role</label>

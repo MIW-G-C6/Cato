@@ -12,6 +12,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
+import javax.swing.text.html.Option;
 import java.util.Optional;
 
 
@@ -94,8 +96,10 @@ public class GroupHasUsersController {
                 makeGroupHasUsers.setUser(user.get());
                 if (!result.hasErrors()) {
                     groupHasUsersService.saveGroupHasUsers(makeGroupHasUsers);
+                    createNewTaskList(makeGroupHasUsers);
                 }
-                createNewTaskList(makeGroupHasUsers);
+            } else {
+                System.out.println("email does not exist");
             }
         }
         model.addAttribute("groupUserRole", new GroupHasUsers());
