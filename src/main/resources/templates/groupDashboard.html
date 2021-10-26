@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="https://www.thymeleaf.org">
 <head th:replace="fragments/general :: baseHeader(~{:: title})">
     <meta charset="UTF-8">
-    <title></title>
+    <title>Group dashboard</title>
 </head>
 <body>
 
@@ -10,22 +10,23 @@
 
 <div class="container">
     <div>
-        <h2>All Clients in <span th:text="${thisGroup.groupName}"></span></h2>
+        <h2><span th:text="${thisGroup.groupName}"></span></h2>
         <br>
-        <table>
-            <tr>
-                <th>Client</th>
-            </tr>
-            <tr th:each="taskList : ${allTaskLists}">
-                <td>
-                    <a th:href="@{/groups/{groupId}/clientDashboard/{clientId}(groupId=${thisGroup.groupId}, clientId=${taskList.client.userId})}" th:text="${taskList.client.name}"></a>
-                </td>
-            </tr>
-        </table>
+        <div class="client-overview">
+            <h5>All clients<a class="float-right" th:href="@{/groups/options/{groupId}(groupId=${thisGroup.groupId})}">group settings</a>
+            </h5>
+            <hr>
+            <table>
+                <tr th:each="taskList : ${allTaskLists}">
+                    <td>
+                        <a th:href="@{/groups/{groupId}/clientDashboard/{clientId}(groupId=${thisGroup.groupId}, clientId=${taskList.client.userId})}" th:text="${taskList.client.name}"></a>
+                    </td>
+                </tr>
+            </table>
+        </div>
     </div>
 
     <br>
-    <a th:href="@{/groups/options/{groupId}(groupId=${thisGroup.groupId})}"><button class="btn btn-primary"> Group admin options</button></a>
     <a class="float-right" th:href="@{/groups}"><button class="btn btn-primary">Back</button></a>
 
 
