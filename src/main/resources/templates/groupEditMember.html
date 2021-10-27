@@ -28,6 +28,10 @@
               <option id="userRole" th:each="role : ${groupUserRole.groupRoleOptions}" th:value="${role}" th:text="${role}"></option>
       </select>
     </div>
+    <div class="custom-control custom-switch">
+      <input type="checkbox" class="custom-control-input" id="groupAdminSwitch" th:field="*{admin}">
+      <label class="custom-control-label" for="groupAdminSwitch">Group admin</label>
+    </div>
       <div>
       <button type="submit" class="btn btn-primary">Add member</button>
     </div>

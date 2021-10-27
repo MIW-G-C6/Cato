@@ -17,6 +17,10 @@
       <select th:field="*{userRole}">
         <option id="userRole" th:each="userRole : ${groupHasUser.groupRoleOptions}" th:value="${userRole}" th:text="${userRole}"></option>
       </select>
+      <div class="custom-control custom-switch">
+        <input type="checkbox" class="custom-control-input" id="groupAdminSwitch" th:field="*{admin}">
+        <label class="custom-control-label" for="groupAdminSwitch">Group admin</label>
+      </div>
       <button type="submit" class="btn btn-primary">Edit member</button>
       <a th:href="@{/groups/options/{groupId}(groupId=${groupId})}">Back</a>
     </div>
