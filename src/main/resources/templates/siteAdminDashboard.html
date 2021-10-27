@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head th:replace="fragments/general :: baseHeader(~{:: title})" >
+    <meta charset="UTF-8">
+    <title>Site admin dashboard</title>
+</head>
+<body>
+
+<div th:replace="fragments/general :: navbar"></div>
+<div th:replace="fragments/general :: breadCrumbsBar"></div>
+
+<div class="container">
+    <h1>Site admin dashboard</h1>
+    <div class="site-admin-dashboard-box">
+        <div class="user-overview">
+            <h5>All users<a class="float-right" th:href="@{/registration}">Add new user</a></h5>
+            <hr>
+            <table>
+                <tr th:each="user : ${allUsers}">
+                    <td><a th:href="@{/profilepage/{userId}(userId=${user.userId})}" th:text="${user.name}"></a></td>
+                    <td th:text="${user.email}"></td>
+                    <td class="edit"><a th:href="@{'/users/update/' + ${user.userId}}"><img th:src="@{/css/images/edit-icon.svg}" height="30" width="30"></a></td>
+                    <td class="delete"><a th:href="@{'/users/delete/' + ${user.userId}}"><img th:src="@{/css/images/delete-icon.svg}" height="30" width="30"></a></td>
+                </tr>
+
+            </table>
+            <br>
+        </div>
+
+        <div class="group-overview-dashboard">
+            <h5>All groups<a class="float-right" th:href="@{/groups/new}">Create new group</a>
+            </h5>
+            <hr>
+            <table>
+                <tr th:each="group : ${allGroups}">
+                    <td><a th:href="@{/groups/{groupId}(groupId=${group.groupId})}"><div th:text="${group.groupName}"></div></a></td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="client-overview-dashboard">
+            <h5>All clients</h5>
+            <hr>
+            <table>
+                <tr th:each="client : ${allClients}">
+                    <td>
+                        <a th:href="@{/groups/{groupId}/clientDashboard/{clientId}(groupId=${client.group.groupId}, clientId=${client.user.userId})}"><div th:text="${client.user.name}"></div></a>
+                    </td>
+                    <td>
+                        <a th:href="@{/groups/{groupId}(groupId=${client.group.groupId})}"><div th:text="${client.group.groupName}"></div></a>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+
+    </div>
+</div>
+
+<div th:replace="fragments/general :: footer"></div>
+<div th:replace="fragments/general :: bottomScripts"></div>
+</body>
+</html>

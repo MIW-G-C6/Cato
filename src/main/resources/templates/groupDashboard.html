@@ -7,12 +7,13 @@
 <body>
 
 <div th:replace="fragments/general :: navbar"></div>
+<div th:replace="fragments/general :: breadCrumbsBar"></div>
 
 <div class="container">
     <div>
-        <h2><span th:text="${thisGroup.groupName}"></span></h2>
+        <h1><span th:text="${thisGroup.groupName}"></span></h1>
         <br>
-        <div class="client-overview">
+        <div class="cato-table">
             <h5>All clients<a class="float-right" th:href="@{/groups/options/{groupId}(groupId=${thisGroup.groupId})}">group settings</a>
             </h5>
             <hr>
@@ -25,6 +26,7 @@
             </table>
         </div>
     </div>
+
 </div>
 
 <div th:replace="fragments/general :: footer"></div>

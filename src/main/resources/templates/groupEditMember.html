@@ -11,6 +11,7 @@
 <body>
 
 <div th:replace="fragments/general :: navbar"></div>
+<div th:replace="fragments/general :: breadCrumbsBar"></div>
 
 <div class="container">
   <form th:action="@{/groups/options/{groupId}/editmember/(groupId=${thisGroup.groupId})}" method="get" th:object="${makeGroupHasUsers}">
@@ -33,10 +34,9 @@
       <label class="custom-control-label" for="groupAdminSwitch">Group admin</label>
     </div>
       <div>
-      <button type="submit" class="btn btn-primary">Add member</button>
+      <button type="submit" class="catoButton">Save</button>
     </div>
   </form>
-  <a th:href="@{/groups/options/{groupId}(groupId=${thisGroup.groupId})}">Back</a>
 </div>
 
 <div th:replace="fragments/general :: footer"></div>

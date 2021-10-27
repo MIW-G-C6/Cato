@@ -7,6 +7,7 @@
 <body>
 
 <div th:replace="fragments/general :: navbar"></div>
+<div th:replace="fragments/general :: breadCrumbsBar"></div>
 
 <div class="container">
     <h1>Task List of <span th:text="${taskList.client.name}"></span></h1>
@@ -22,8 +23,7 @@
         </tr>
     </table>
     <br>
-    <a th:href="@{/taskLists/{taskListId}/new(taskListId=${taskListId})}"><button class="btn btn-primary">Add new task</button></a>
-    <a class="float-right" th:href="@{/taskLists}"><button class="btn btn-primary">Back</button></a>
+    <a th:href="@{/taskLists/{taskListId}/new(taskListId=${taskListId})}"><button class="catoButton">Add new task</button></a>
 </div>
 
 <div th:replace="fragments/general :: footer"></div>

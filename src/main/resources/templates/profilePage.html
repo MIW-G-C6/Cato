@@ -7,6 +7,7 @@
 <body>
 
 <div th:replace="fragments/general :: navbar"></div>
+<div th:replace="fragments/general :: breadCrumbsBar"></div>
 
 <div class="container">
     <h1>Profile page of <span th:text="${user.name}"></span></h1>
@@ -36,7 +37,7 @@
         <div class="row">
             <div class="col-sm-12">
                 <button>
-                    <a th:href="@{'/users/update/' + ${user.userId}}" class="btn btn-primary">Edit</a>
+                    <a th:href="@{'/users/update/' + ${user.userId}}" class="catoButton">Edit</a>
                 </button>
             </div>
         </div>

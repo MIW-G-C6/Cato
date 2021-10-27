@@ -7,15 +7,14 @@
 <body>
 
 <div th:replace="fragments/general :: navbar"></div>
-
+<div th:replace="fragments/general :: breadCrumbsBar"></div>
 
 <div class="container">
     <h1>Task details</h1>
     <div>Task: <span th:text="${task.description}"></span></div>
     <div>The priority for this task is: <span th:text="${task.priority}"></span></div>
     <br>
-    <a th:href="@{/taskLists/{taskListId}/update/{taskId}(taskListId=${taskList.taskListId}, taskId=${task.taskId})}"><button class="btn btn-primary">Edit</button></a>
-    <button type="button" class="btn btn-primary float-right" onclick="javascript:history.back()">Back</button>
+    <a th:href="@{/taskLists/{taskListId}/update/{taskId}(taskListId=${taskList.taskListId}, taskId=${task.taskId})}"><button class="catoButton">Edit</button></a>
 </div>
 
 <div th:replace="fragments/general :: footer"></div>

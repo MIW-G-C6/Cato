@@ -9,6 +9,12 @@ a.nav-link{
     align-items: center;
 }
 
+.site-admin-dashboard-box {
+    display: flex;
+    flex-flow: row;
+    justify-content: space-between;
+}
+
 /*contains general layout for top navigation bar*/
 .topnavbar {
     display: flex;
@@ -129,6 +135,25 @@ a.nav-link{
     .sidenav a {font-size: 18px;}
 }
 
+.breadCrumbsBar {
+    padding: 10px 10px;
+}
+
+.catoButton {
+    text-decoration: none;
+    display: inline-block;
+    padding: 8px 16px;
+    background-color: #e8ffef;
+    color: black;
+}
+
+.catoButton:hover {
+    background-color: #cafad9;
+    color: black;
+    cursor: pointer;
+}
+
+
 /*contains general layout for content container*/
 .container {
     width: 80vw;
@@ -183,14 +208,28 @@ th {
     text-align: center;
 }
 
+.edit img {
+    height: 20px;
+    width: 20px;
+}
+
 .delete {
     text-align: center;
+}
+
+.delete img {
+    height: 20px;
+    width: 20px;
 }
 
 /*contains general layout for all titles*/
 h1 {
     padding: 10px 0 10px 0;
     font-size: 30px;
+}
+
+h1 a {
+    font-size: 14px;
 }
 
 h5 a {
@@ -280,18 +319,48 @@ input[type=email], input[type=password], input[type=text] {
     text-align: center;
 }
 
+.cato-table {
+    width: 50%;
+}
+
 .group-overview {
     width: 50%;
+}
+
+.group-overview-dashboard {
+    width: 30%
 }
 
 .client-overview {
     width: 50%;
 }
 
+.client-overview-dashboard {
+    width: 20%;
+}
+
 .group-settings {
     width: 50%;
 }
 
+.user-overview {
+    width: 30%;
+}
+
 .error {
     color: red;
+}
+
+.cd-page {
+    display: flex;
+    flex-flow: row;
+}
+
+.cd-groupmember {
+    width: 33%;
+    padding-right: 100px;
+}
+
+.cd-tasklist {
+    width: 40%;
 }
