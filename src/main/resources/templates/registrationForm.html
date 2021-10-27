@@ -22,10 +22,10 @@
     </div>
     <div>
       <label for="email">Email:</label>
-      <input type="email" id="email" required pattern=".*\S+.*"
-             oninvalid="this.setCustomValidity('Email address cannot be empty')"
-             oninput="this.setCustomValidity('')"
-             th:field="*{email}">
+      <input type="email" id="email" required th:field="*{email}">
+    </div>
+    <div th:if="${#fields.hasErrors()}">
+      <p th:each="err : ${#fields.errors('global')}" th:text="${err}" class="error" />
     </div>
     <div>
       <label for="password">Password:</label>

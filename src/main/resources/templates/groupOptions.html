@@ -35,6 +35,7 @@
     <br>
     <a th:href="@{/groups/options/{groupId}/editmember(groupId=${thisGroup.groupId})}"><button class="btn btn-primary">Add new groupmember</button></a>
     <a class="float-right" th:href="@{/groups/{groupId}(groupId=${thisGroup.groupId})}"><button type="button" class="btn btn-primary">Back</button></a>
+    <a th:href="@{'/groups/delete/' + ${thisGroup.groupId}}"><button class="btn btn-primary">Delete group</button></a>
 </div>
 
 <div th:replace="fragments/general :: footer"></div>
