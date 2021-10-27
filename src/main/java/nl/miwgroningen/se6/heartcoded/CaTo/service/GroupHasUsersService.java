@@ -60,4 +60,14 @@ public class GroupHasUsersService {
         }
         return groupsByUser;
     }
+
+    public boolean userInGroupExists(GroupHasUsers groupHasUsers) {
+        if (findByUserIdAndGroupId(
+                groupHasUsers.getUser().getUserId(),
+                groupHasUsers.getGroup().getGroupId())
+                .isPresent()){
+                return true;
+            }
+        return false;
+    }
 }
