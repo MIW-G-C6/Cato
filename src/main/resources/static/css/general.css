@@ -201,6 +201,7 @@ h5 a {
 .footerWave {
     bottom: -55px;
     position: relative;
+    margin-top: -85px;
 }
 
 footer {
