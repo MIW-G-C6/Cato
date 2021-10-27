@@ -95,4 +95,21 @@ public class GroupHasUsersService {
             }
         return false;
     }
+
+    public List<GroupHasUsers> getGroupAdminsByGroupId(Integer groupId) {
+        List<GroupHasUsers> allFromGroup = getAllByGroupId(groupId);
+        List<GroupHasUsers> groupHasUsersIsAdmin = new ArrayList<>();
+
+        for (GroupHasUsers groupHasUsers : allFromGroup) {
+            if (groupHasUsers.isAdmin()) {
+                groupHasUsersIsAdmin.add(groupHasUsers);
+            }
+        }
+        return groupHasUsersIsAdmin;
+    }
+
+    public boolean findOutIfGroupHasUsersIsAdmin(GroupHasUsers groupHasUsers) {
+        return findByUserIdAndGroupId(groupHasUsers.getUser().getUserId(),
+                groupHasUsers.getGroup().getGroupId()).get().isAdmin();
+    }
 }

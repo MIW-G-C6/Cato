@@ -7,12 +7,16 @@
 <body>
 
 <div th:replace="fragments/general :: navbar"></div>
+<div th:replace="fragments/general :: breadCrumbsBar"></div>
 
 <div class="container">
   <form th:action="@{/groups/options/{groupId}/updatemember/{userId}(groupId=${groupId}, userId=${userId})}" method="post" th:object="${groupHasUser}">
     <input type="hidden" th:field="*{user}">
     <input type="hidden" th:field="*{group}">
     <label for="userRole">Role</label>
+    <div th:if="${#fields.hasErrors()}">
+      <p th:each="err : ${#fields.errors('global')}" th:text="${err}" class="error" />
+    </div>
     <div>
       <select th:field="*{userRole}">
         <option id="userRole" th:each="userRole : ${groupHasUser.groupRoleOptions}" th:value="${userRole}" th:text="${userRole}"></option>
@@ -21,10 +25,9 @@
         <input type="checkbox" class="custom-control-input" id="groupAdminSwitch" th:field="*{admin}">
         <label class="custom-control-label" for="groupAdminSwitch">Group admin</label>
       </div>
-      <button type="submit" class="btn btn-primary">Edit member</button>
+      <button type="submit" class="catoButton">Save</button>
     </div>
   </form>
-
 </div>
 
 <div th:replace="fragments/general :: footer"></div>
