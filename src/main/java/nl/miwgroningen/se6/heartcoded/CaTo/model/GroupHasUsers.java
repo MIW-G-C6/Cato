@@ -13,7 +13,7 @@ import javax.persistence.*;
 @IdClass(GroupHasUsersId.class)
 public class GroupHasUsers {
 
-    private static final String[] GROUP_ROLE_OPTIONS = {"Caregiver", "Client", "Group admin"};
+    private static final String[] GROUP_ROLE_OPTIONS = {"Caregiver", "Client"};
 
     @Id
     @ManyToOne
@@ -25,10 +25,13 @@ public class GroupHasUsers {
 
     private String userRole;
 
-    public GroupHasUsers(Group group, User user, String userRole) {
+    private boolean isAdmin;
+
+    public GroupHasUsers(Group group, User user, String userRole, boolean isAdmin) {
         this.group = group;
         this.user = user;
         this.userRole = userRole;
+        this.isAdmin = isAdmin;
     }
 
     public GroupHasUsers() {
@@ -56,6 +59,14 @@ public class GroupHasUsers {
 
     public void setUserRole(String userRole) {
         this.userRole = userRole;
+    }
+
+    public boolean isAdmin() {
+        return isAdmin;
+    }
+
+    public void setAdmin(boolean admin) {
+        isAdmin = admin;
     }
 
     public static String[] getGroupRoleOptions() {
