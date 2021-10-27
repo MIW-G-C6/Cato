@@ -2,10 +2,6 @@ a.nav-link{
     color: ghostwhite;
 }
 
-body {
-    background: url("images/layered-waves-haikei.svg") no-repeat top left;
-    background-size: cover;
-}
 
 .loginbody {
     height: 100vh;
@@ -196,8 +192,7 @@ footer {
     position: relative;
     bottom: 0;
     width: 100%;
-    padding: 10px 0;
-    color: black;
+    background-color: #cafad9;
 }
 
 footer ul {
@@ -213,10 +208,6 @@ footer ul a {
     color: inherit;
     text-decoration: none;
     opacity: 0.8;
-}
-
-footer ul a:hover {
-    opacity: 1;
 }
 
 footer li {
