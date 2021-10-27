@@ -19,18 +19,12 @@
             <table>
                 <tr th:each="taskList : ${allTaskLists}">
                     <td>
-                        <a th:href="@{/groups/{groupId}/clientDashboard/{clientId}(groupId=${thisGroup.groupId}, clientId=${taskList.client.userId})}" th:text="${taskList.client.name}"></a>
+                        <a th:href="@{/groups/{groupId}/clientDashboard/{clientId}(groupId=${thisGroup.groupId}, clientId=${taskList.client.userId})}"><div th:text="${taskList.client.name}"></div></a>
                     </td>
                 </tr>
             </table>
         </div>
     </div>
-
-    <br>
-    <a class="float-right" th:href="@{/groups}"><button class="btn btn-primary">Back</button></a>
-
-
-
 </div>
 
 <div th:replace="fragments/general :: footer"></div>
