@@ -75,6 +75,17 @@ public class GroupHasUsersService {
         return allClients;
     }
 
+    public GroupHasUsers getByClient(User client) {
+        List<GroupHasUsers> allGroupHasUsers = groupHasUsersRepository.getAllByUser(client);
+        GroupHasUsers clientGroupHasUsers = new GroupHasUsers();
+        for (GroupHasUsers groupHasUsers : allGroupHasUsers) {
+            if (groupHasUsers.getUserRole().equals("Client")) {
+                clientGroupHasUsers = groupHasUsers;
+            }
+        }
+        return clientGroupHasUsers;
+    }
+
     public boolean userInGroupExists(GroupHasUsers groupHasUsers) {
         if (findByUserIdAndGroupId(
                 groupHasUsers.getUser().getUserId(),
