@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="https://www.thymeleaf.org">
 <head th:replace="fragments/general :: baseHeader(~{:: title})" >
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Group settings</title>
 </head>
 <body>
 
@@ -10,29 +10,26 @@
 
 <div class="container">
 
-    <h1><span th:text="${thisGroup.groupName}"></span>  <a th:href="@{/groups/options/edit/{groupId}(groupId=${thisGroup.groupId})}"><img th:src="@{/css/images/edit-icon.svg}" height="30" width="30"></a></h1>
-
-        <div>
-            <table>
-                <tr>
-                    <th>User ID</th>
-                    <th>User</th>
-                    <th>Role</th>
-                    <th class="iconheader">Edit role</th>
-                    <th class="iconheader">Delete</th>
-                </tr>
-                <tr th:each="thisGroupHasUser : ${allGroupHasUsersByGroupId}" >
-                    <td th:text="${thisGroupHasUser.user.userId}"></td>
-                    <td th:text="${thisGroupHasUser.user.name}"></td>
-                    <td th:text="${thisGroupHasUser.userRole}"></td>
-                    <td class="edit"><a th:href="@{'/groups/options/{groupId}/updatemember/' + ${thisGroupHasUser.user.userId}(groupId=${thisGroup.groupId})}"><img th:src="@{/css/images/edit-icon.svg}" height="30" width="30"></a></td>
-                    <td class="delete"><a th:href="@{'/groups/options/{groupId}/delete/' + ${thisGroupHasUser.user.userId}(groupId=${thisGroup.groupId})}"><img th:src="@{/css/images/delete-icon.svg}" height="30" width="30"></a></td>
-                </tr>
-            </table>
-        </div>
+    <h1>
+        <span th:text="${thisGroup.groupName}"></span>
+        <a th:href="@{/groups/options/edit/{groupId}(groupId=${thisGroup.groupId})}"><img th:src="@{/css/images/edit-icon.svg}" height="15" width="15" title="edit group name"></a>
+        <a th:href="@{'/groups/delete/' + ${thisGroup.groupId}}"><img th:src="@{/css/images/delete-icon.svg}" height="15" width="15" title="delete group"></a></td>
+    </h1>
     <br>
-    <a th:href="@{/groups/options/{groupId}/editmember(groupId=${thisGroup.groupId})}"><button class="btn btn-primary">Add new groupmember</button></a>
-    <a th:href="@{'/groups/delete/' + ${thisGroup.groupId}}"><button class="btn btn-primary">Delete group</button></a>
+    <div class="cato-table">
+        <h5>Group members<a class="float-right" th:href="@{/groups/options/{groupId}/editmember(groupId=${thisGroup.groupId})}">Add new group member</a>
+        </h5>
+        <hr>
+        <table>
+            <tr th:each="thisGroupHasUser : ${allGroupHasUsersByGroupId}" >
+                <td th:text="${thisGroupHasUser.user.name}"></td>
+                <td width="40%">
+                    <span class="float-left" th:text="${thisGroupHasUser.userRole}"></span>
+                    <a class="float-right" th:href="@{'/groups/options/{groupId}/updatemember/' + ${thisGroupHasUser.user.userId}(groupId=${thisGroup.groupId})}"><img th:src="@{/css/images/edit-icon.svg}" height="20" width="20" title="edit role"></a></td>
+                <td class="delete"><a th:href="@{'/groups/options/{groupId}/delete/' + ${thisGroupHasUser.user.userId}(groupId=${thisGroup.groupId})}"><img th:src="@{/css/images/delete-icon.svg}" height="20" width="20" title="remove user from group"></a></td>
+            </tr>
+        </table>
+    </div>
 </div>
 
 <div th:replace="fragments/general :: footer"></div>

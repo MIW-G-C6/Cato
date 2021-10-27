@@ -2,15 +2,17 @@ a.nav-link{
     color: ghostwhite;
 }
 
-body {
-    background: url("images/layered-waves-haikei.svg") no-repeat top left;
-    background-size: cover;
-}
 
 .loginbody {
     height: 100vh;
     display: flex;
     align-items: center;
+}
+
+.site-admin-dashboard-box {
+    display: flex;
+    flex-flow: row;
+    justify-content: space-between;
 }
 
 /*contains general layout for top navigation bar*/
@@ -184,7 +186,7 @@ td a {
     font-size: 14px;
 }
 
-td:hover {
+tr:hover {
     box-shadow: 0 0 11px rgba(33,33,33,.2);
     background-color: #f5f5f5;
 }
@@ -206,8 +208,18 @@ th {
     text-align: center;
 }
 
+.edit img {
+    height: 20px;
+    width: 20px;
+}
+
 .delete {
     text-align: center;
+}
+
+.delete img {
+    height: 20px;
+    width: 20px;
 }
 
 /*contains general layout for all titles*/
@@ -216,18 +228,27 @@ h1 {
     font-size: 30px;
 }
 
+h1 a {
+    font-size: 14px;
+}
+
 h5 a {
     font-size: 14px;
 }
 
 /*contains general layout for footer*/
+.footerWave {
+    bottom: -55px;
+    position: relative;
+    margin-top: -85px;
+}
+
 footer {
     margin-top: auto;
     position: relative;
-    bottom: 0;
+    z-index: 100;
+    bottom: 10px;
     width: 100%;
-    padding: 10px 0;
-    color: black;
 }
 
 footer ul {
@@ -243,10 +264,6 @@ footer ul a {
     color: inherit;
     text-decoration: none;
     opacity: 0.8;
-}
-
-footer ul a:hover {
-    opacity: 1;
 }
 
 footer li {
@@ -272,9 +289,6 @@ button {
     width: 50%;
     display: block;
     margin: auto;
-    /*padding: 20px;*/
-    /*padding-bottom: 90px;*/
-    /*margin-top: 50px;*/
 }
 
 #login-submit {
@@ -305,10 +319,48 @@ input[type=email], input[type=password], input[type=text] {
     text-align: center;
 }
 
+.cato-table {
+    width: 50%;
+}
+
 .group-overview {
     width: 50%;
 }
 
+.group-overview-dashboard {
+    width: 30%
+}
+
+.client-overview {
+    width: 50%;
+}
+
+.client-overview-dashboard {
+    width: 20%;
+}
+
+.group-settings {
+    width: 50%;
+}
+
+.user-overview {
+    width: 30%;
+}
+
 .error {
     color: red;
+}
+
+.cd-page {
+    display: flex;
+    flex-flow: row;
+}
+
+.cd-groupmember {
+    width: 33%;
+    padding-right: 100px;
+}
+
+.cd-tasklist {
+    width: 40%;
 }

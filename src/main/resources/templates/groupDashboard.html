@@ -10,16 +10,16 @@
 
 <div class="container">
     <div>
-        <h2><span th:text="${thisGroup.groupName}"></span></h2>
+        <h1><span th:text="${thisGroup.groupName}"></span></h1>
         <br>
-        <div class="client-overview">
+        <div class="cato-table">
             <h5>All clients<a class="float-right" th:href="@{/groups/options/{groupId}(groupId=${thisGroup.groupId})}">group settings</a>
             </h5>
             <hr>
             <table>
                 <tr th:each="taskList : ${allTaskLists}">
                     <td>
-                        <a th:href="@{/groups/{groupId}/clientDashboard/{clientId}(groupId=${thisGroup.groupId}, clientId=${taskList.client.userId})}" th:text="${taskList.client.name}"></a>
+                        <a th:href="@{/groups/{groupId}/clientDashboard/{clientId}(groupId=${thisGroup.groupId}, clientId=${taskList.client.userId})}"><div th:text="${taskList.client.name}"></div></a>
                     </td>
                 </tr>
             </table>

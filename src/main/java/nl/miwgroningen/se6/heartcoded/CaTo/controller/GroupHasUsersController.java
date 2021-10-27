@@ -44,9 +44,9 @@ public class GroupHasUsersController {
 
     @GetMapping("/{groupId}")
     protected String showGroupDashboard(@PathVariable("groupId") Integer groupId, Model model) {
-    model.addAttribute("thisGroup", groupService.getById(groupId));
-    model.addAttribute("allTaskLists", taskListService.findAllByGroupId(groupId));
-    return "groupDashboard";
+        model.addAttribute("thisGroup", groupService.getById(groupId));
+        model.addAttribute("allTaskLists", taskListService.findAllByGroupId(groupId));
+        return "groupDashboard";
     }
 
     @GetMapping("/options/{groupId}")
@@ -98,15 +98,19 @@ public class GroupHasUsersController {
             if (!user.isEmpty()) {
                 makeGroupHasUsers.setGroup(groupService.getById(groupId));
                 makeGroupHasUsers.setUser(user.get());
-                if (!result.hasErrors()) {
-                    groupHasUsersService.saveGroupHasUsers(makeGroupHasUsers);
-                    createNewTaskList(makeGroupHasUsers);
-                    exception = "Successfully added this member to your group";
-//                    return "redirect:/groups/options/{groupId}";
+                if (!groupHasUsersService.userInGroupExists(makeGroupHasUsers)) {
+                    if (!result.hasErrors()) {
+                        groupHasUsersService.saveGroupHasUsers(makeGroupHasUsers);
+                        createNewTaskList(makeGroupHasUsers);
+                        exception = "Successfully added this member to your group";
+                    }
+                } else {
+                    exception = "Not able to add the same user twice";
                 }
             } else {
                 exception = "No existing account found with this email address";
             }
+
         }
         model.addAttribute("exception", exception);
         model.addAttribute("groupUserRole", new GroupHasUsers());
@@ -128,8 +132,8 @@ public class GroupHasUsersController {
 
     @PostMapping("/options/{groupId}/updatemember/{userId}")
     protected String updateGroupMember(@ModelAttribute("groupHasUser") GroupHasUsers groupHasUser, BindingResult result) {
-        System.out.println("ik ben er");
         if (!result.hasErrors()) {
+            createNewTaskList(groupHasUser);
             groupHasUsersService.saveGroupHasUsers(groupHasUser);
         }
         return "redirect:/groups/options/{groupId}";
