@@ -9,6 +9,12 @@ a.nav-link{
     align-items: center;
 }
 
+.site-admin-dashboard-box {
+    display: flex;
+    flex-flow: row;
+    justify-content: space-between;
+}
+
 /*contains general layout for top navigation bar*/
 .topnavbar {
     display: flex;
@@ -183,14 +189,28 @@ th {
     text-align: center;
 }
 
+.edit img {
+    height: 20px;
+    width: 20px;
+}
+
 .delete {
     text-align: center;
+}
+
+.delete img {
+    height: 20px;
+    width: 20px;
 }
 
 /*contains general layout for all titles*/
 h1 {
     padding: 10px 0 10px 0;
     font-size: 30px;
+}
+
+h1 a {
+    font-size: 14px;
 }
 
 h5 a {
@@ -284,12 +304,24 @@ input[type=email], input[type=password], input[type=text] {
     width: 50%;
 }
 
+.group-overview-dashboard {
+    width: 20%
+}
+
 .client-overview {
     width: 50%;
 }
 
+.client-overview-dashboard {
+    width: 20%;
+}
+
 .group-settings {
     width: 50%;
+}
+
+.user-overview {
+    width: 30%;
 }
 
 .error {
