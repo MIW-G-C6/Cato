@@ -33,7 +33,9 @@ public class TaskListService {
         List<TaskList> allTaskLists = new ArrayList<>();
         List<Integer> allTaskListIds = taskListRepository.findAllTaskListIdsByGroupId(groupId);
         for (Integer taskListId : allTaskListIds) {
-            allTaskLists.add(taskListRepository.getById(taskListId));
+            if (taskListId != null && taskListRepository.findById(taskListId).isPresent()) {
+                allTaskLists.add(taskListRepository.getById(taskListId));
+            }
         }
         return allTaskLists;
     }
