@@ -61,8 +61,8 @@ public class GroupController {
         if (!result.hasErrors()) {
             groupService.saveGroup(group);
             User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            groupHasUsersService.saveGroupHasUsers(new GroupHasUsers(group, user, "Group admin"));
+            groupHasUsersService.saveGroupHasUsers(new GroupHasUsers(group, user, "Caregiver", true));
         }
-        return "redirect:/groups/new";
+        return "redirect:/groups/" + group.getGroupId();
     }
 }

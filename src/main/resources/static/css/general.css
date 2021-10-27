@@ -2,10 +2,6 @@ a.nav-link{
     color: ghostwhite;
 }
 
-body {
-    background: url("images/layered-waves-haikei.svg") no-repeat top left;
-    background-size: cover;
-}
 
 .loginbody {
     height: 100vh;
@@ -202,13 +198,18 @@ h5 a {
 }
 
 /*contains general layout for footer*/
+.footerWave {
+    bottom: -55px;
+    position: relative;
+    margin-top: -85px;
+}
+
 footer {
     margin-top: auto;
     position: relative;
-    bottom: 0;
+    z-index: 100;
+    bottom: 10px;
     width: 100%;
-    padding: 10px 0;
-    color: black;
 }
 
 footer ul {
@@ -224,10 +225,6 @@ footer ul a {
     color: inherit;
     text-decoration: none;
     opacity: 0.8;
-}
-
-footer ul a:hover {
-    opacity: 1;
 }
 
 footer li {
@@ -253,9 +250,6 @@ button {
     width: 50%;
     display: block;
     margin: auto;
-    /*padding: 20px;*/
-    /*padding-bottom: 90px;*/
-    /*margin-top: 50px;*/
 }
 
 #login-submit {

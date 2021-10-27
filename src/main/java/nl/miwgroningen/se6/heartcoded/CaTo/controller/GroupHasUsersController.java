@@ -95,6 +95,7 @@ public class GroupHasUsersController {
 
         if (email != null) {
             Optional<User> user = userService.findUserByEmail(email);
+            System.out.println(user);
             if (!user.isEmpty()) {
                 makeGroupHasUsers.setGroup(groupService.getById(groupId));
                 makeGroupHasUsers.setUser(user.get());
@@ -128,8 +129,8 @@ public class GroupHasUsersController {
 
     @PostMapping("/options/{groupId}/updatemember/{userId}")
     protected String updateGroupMember(@ModelAttribute("groupHasUser") GroupHasUsers groupHasUser, BindingResult result) {
-        System.out.println("ik ben er");
         if (!result.hasErrors()) {
+            createNewTaskList(groupHasUser);
             groupHasUsersService.saveGroupHasUsers(groupHasUser);
         }
         return "redirect:/groups/options/{groupId}";
