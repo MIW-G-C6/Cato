@@ -12,6 +12,7 @@ import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 
 import javax.naming.Binding;
@@ -92,6 +93,7 @@ public class GroupHasUsersController {
                                @ModelAttribute ("makeGroupHasUsers") GroupHasUsers makeGroupHasUsers,
                                BindingResult result) {
         String exception = "";
+        String validEntry = "";
 
         if (email != null) {
             Optional<User> user = userService.findUserByEmail(email);
@@ -102,7 +104,7 @@ public class GroupHasUsersController {
                     if (!result.hasErrors()) {
                         groupHasUsersService.saveGroupHasUsers(makeGroupHasUsers);
                         createNewTaskList(makeGroupHasUsers);
-                        exception = "Successfully added this member to your group";
+                        validEntry = "Successfully added this member to your group";
                     }
                 } else {
                     exception = "Not able to add the same user twice";
@@ -112,6 +114,7 @@ public class GroupHasUsersController {
             }
 
         }
+        model.addAttribute("validEntry", validEntry);
         model.addAttribute("exception", exception);
         model.addAttribute("groupUserRole", new GroupHasUsers());
         model.addAttribute("thisGroup", groupService.getById(groupId));
@@ -131,11 +134,19 @@ public class GroupHasUsersController {
     }
 
     @PostMapping("/options/{groupId}/updatemember/{userId}")
-    protected String updateGroupMember(@ModelAttribute("groupHasUser") GroupHasUsers groupHasUser, BindingResult result) {
-        if (!result.hasErrors()) {
-            createNewTaskList(groupHasUser);
-            groupHasUsersService.saveGroupHasUsers(groupHasUser);
-        }
+    protected String updateGroupMember(@PathVariable("userId") Integer userId,
+                                        @PathVariable("groupId") Integer groupId,
+                                        @ModelAttribute("groupHasUser") GroupHasUsers groupHasUser, BindingResult result) {
+            if (groupHasUsersService.findOutIfGroupHasUsersIsAdmin(groupHasUser) &&
+                    !groupHasUser.isAdmin() &&
+                    groupHasUsersService.getGroupAdminsByGroupId(groupHasUser.getGroup().getGroupId()).size() == 1) {
+                result.addError(new ObjectError("globalError", "Cannot remove admin rights if last admin in the group"));
+            }
+            if (result.hasErrors()) {
+                return  "groupUpdateMember";
+            }
+        createNewTaskList(groupHasUser);
+        groupHasUsersService.saveGroupHasUsers(groupHasUser);
         return "redirect:/groups/options/{groupId}";
     }
 
