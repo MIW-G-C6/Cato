@@ -198,12 +198,17 @@ h5 a {
 }
 
 /*contains general layout for footer*/
+.footerWave {
+    bottom: -55px;
+    position: relative;
+}
+
 footer {
     margin-top: auto;
     position: relative;
-    bottom: 0;
+    z-index: 100;
+    bottom: 10px;
     width: 100%;
-    background-color: #cafad9;
 }
 
 footer ul {
@@ -244,9 +249,6 @@ button {
     width: 50%;
     display: block;
     margin: auto;
-    /*padding: 20px;*/
-    /*padding-bottom: 90px;*/
-    /*margin-top: 50px;*/
 }
 
 #login-submit {
