@@ -177,6 +177,7 @@ th {
     text-align: left;
     color: black;
     border-bottom: 1px solid lightgrey;
+    font-size: 14px;
 }
 
 .edit {
@@ -280,18 +281,24 @@ input[type=email], input[type=password], input[type=text] {
     text-align: center;
 }
 
-.group-overview {
-    width: 50%;
-}
-
-.client-overview {
-    width: 50%;
-}
-
-.group-settings {
+.cato-table {
     width: 50%;
 }
 
 .error {
     color: red;
+}
+
+.cd-page {
+    display: flex;
+    flex-flow: row;
+}
+
+.cd-groupmember {
+    width: 33%;
+    padding-right: 100px;
+}
+
+.cd-tasklist {
+    width: 40%;
 }
