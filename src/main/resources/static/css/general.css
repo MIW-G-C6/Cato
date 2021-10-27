@@ -290,6 +290,14 @@ input[type=email], input[type=password], input[type=text] {
     width: 50%;
 }
 
+.client-overview {
+    width: 50%;
+}
+
+.group-settings {
+    width: 50%;
+}
+
 .error {
     color: red;
 }
