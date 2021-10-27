@@ -18,7 +18,6 @@
         <option id="userRole" th:each="userRole : ${groupHasUser.groupRoleOptions}" th:value="${userRole}" th:text="${userRole}"></option>
       </select>
       <button type="submit" class="btn btn-primary">Edit member</button>
-      <a th:href="@{/groups/options/{groupId}(groupId=${groupId})}">Back</a>
     </div>
   </form>
 

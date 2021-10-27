@@ -7,9 +7,10 @@
 <body>
 
 <div th:replace="fragments/general :: navbar"></div>
+<div th:replace="fragments/general :: breadCrumbsBar"></div>
 
 <div class="container">
-
+    <div th:insert="fragments/general :: historyButton"></div>
 </div>
 
 <div th:replace="fragments/general :: footer"></div>

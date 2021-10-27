@@ -12,8 +12,6 @@
 
     <h1><span th:text="${thisGroup.groupName}"></span>  <a th:href="@{/groups/options/edit/{groupId}(groupId=${thisGroup.groupId})}"><img th:src="@{/css/images/edit-icon.svg}" height="30" width="30"></a></h1>
 
-
-
         <div>
             <table>
                 <tr>
@@ -34,7 +32,6 @@
         </div>
     <br>
     <a th:href="@{/groups/options/{groupId}/editmember(groupId=${thisGroup.groupId})}"><button class="btn btn-primary">Add new groupmember</button></a>
-    <a class="float-right" th:href="@{/groups/{groupId}(groupId=${thisGroup.groupId})}"><button type="button" class="btn btn-primary">Back</button></a>
     <a th:href="@{'/groups/delete/' + ${thisGroup.groupId}}"><button class="btn btn-primary">Delete group</button></a>
 </div>
 

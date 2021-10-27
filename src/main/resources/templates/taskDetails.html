@@ -15,7 +15,6 @@
     <div>The priority for this task is: <span th:text="${task.priority}"></span></div>
     <br>
     <a th:href="@{/taskLists/{taskListId}/update/{taskId}(taskListId=${taskList.taskListId}, taskId=${task.taskId})}"><button class="btn btn-primary">Edit</button></a>
-    <button type="button" class="btn btn-primary float-right" onclick="javascript:history.back()">Back</button>
 </div>
 
 <div th:replace="fragments/general :: footer"></div>
