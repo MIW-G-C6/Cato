@@ -355,9 +355,14 @@ input[type=email], input[type=password], input[type=text] {
     word-wrap: break-word;
 }
 
-.logotext {
+.logotext a {
     font-family: "Georgia i";
     font-size: 50px;
+    color: #303c42;
+    text-decoration: none;
+}
+
+.logotext {
     text-align: center;
 }
 
