@@ -17,11 +17,13 @@
         <a th:href="@{'/groups/delete/' + ${thisGroup.groupId}}"><img th:src="@{/css/images/delete-icon.svg}" height="15" width="15" title="delete group"></a></td>
     </h1>
     <br>
+
     <div class="cato-table">
         <h5>Group members<a class="float-right" th:href="@{/groups/options/{groupId}/editmember(groupId=${thisGroup.groupId})}">Add new group member</a>
         </h5>
         <hr>
         <table>
+            <tr> <div class="error" th:text="${error}"></div></tr>
             <tr th:each="thisGroupHasUser : ${allGroupHasUsersByGroupId}" >
                 <td th:text="${thisGroupHasUser.user.name}"></td>
                 <td width="40%">

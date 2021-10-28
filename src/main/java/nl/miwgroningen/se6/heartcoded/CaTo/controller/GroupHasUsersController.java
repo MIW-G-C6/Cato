@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.naming.Binding;
 import javax.swing.text.html.Option;
@@ -51,25 +52,28 @@ public class GroupHasUsersController {
     }
 
     @GetMapping("/options/{groupId}")
-    protected String showGroupOptions(@PathVariable("groupId") Integer groupId, Model model) {
+    protected String showGroupOptions(@PathVariable("groupId") Integer groupId, @ModelAttribute("error") String error, Model model) {
         model.addAttribute("thisGroup", groupService.getById(groupId));
         model.addAttribute("allGroupHasUsersByGroupId", groupHasUsersService.getAllByGroupId(groupId));
         return "groupOptions";
     }
 
-    @PostMapping("/options/{groupId}")
-    protected String updateUserRole(
-            @ModelAttribute("groupHasUser") GroupHasUsers groupHasUsers, BindingResult result) {
-        if (!result.hasErrors()) {
-            groupHasUsersService.saveGroupHasUsers(groupHasUsers);
-        }
-        return "redirect/groups/options/{groupId}";
-    }
-
     @GetMapping("/options/{groupId}/delete/{userId}")
     protected String deleteUserFromGroup(@PathVariable("groupId") Integer groupId,
-                                         @PathVariable("userId") Integer userId) {
-        groupHasUsersService.deleteByUserId(userId, groupId);
+                                         @PathVariable("userId") Integer userId,
+                                         RedirectAttributes redirectAttributes) {
+        // checks first if the group member isn't the last group admin. If so, it can't be removed from the group.
+        Optional<GroupHasUsers> groupHasUser = groupHasUsersService.findByUserIdAndGroupId(userId, groupId);
+        if (groupHasUser.isPresent()) {
+            if (groupHasUsersService.findOutIfGroupHasUsersIsAdmin(groupHasUser.get()) &&
+                    groupHasUsersService.getGroupAdminsByGroupId(
+                            groupHasUser.get().getGroup().getGroupId()).size() == 1) {
+                redirectAttributes.addAttribute("error",
+                        "Cannot remove group admin if this is the only group admin");
+            } else {
+                groupHasUsersService.deleteByUserId(userId, groupId);
+            }
+        }
         return "redirect:/groups/options/{groupId}";
     }
 
@@ -135,23 +139,26 @@ public class GroupHasUsersController {
 
     @PostMapping("/options/{groupId}/updatemember/{userId}")
     protected String updateGroupMember(@PathVariable("userId") Integer userId,
-                                        @PathVariable("groupId") Integer groupId,
-                                        @ModelAttribute("groupHasUser") GroupHasUsers groupHasUser, BindingResult result) {
-            if (groupHasUsersService.findOutIfGroupHasUsersIsAdmin(groupHasUser) &&
-                    !groupHasUser.isAdmin() &&
-                    groupHasUsersService.getGroupAdminsByGroupId(groupHasUser.getGroup().getGroupId()).size() == 1) {
-                result.addError(new ObjectError("globalError", "Cannot remove admin rights if last admin in the group"));
-            }
-            if (result.hasErrors()) {
-                return  "groupUpdateMember";
-            }
+                                       @PathVariable("groupId") Integer groupId,
+                                       @ModelAttribute("groupHasUser") GroupHasUsers groupHasUser,
+                                       BindingResult result) {
+        if (groupHasUsersService.findOutIfGroupHasUsersIsAdmin(groupHasUser) &&
+                !groupHasUser.isAdmin() &&
+                groupHasUsersService.getGroupAdminsByGroupId(groupHasUser.getGroup().getGroupId()).size() == 1) {
+            result.addError(new ObjectError("globalError",
+                    "Cannot remove admin rights if this member is the last admin in the group"));
+        }
+        if (result.hasErrors()) {
+            return  "groupUpdateMember";
+        }
         createNewTaskList(groupHasUser);
         groupHasUsersService.saveGroupHasUsers(groupHasUser);
         return "redirect:/groups/options/{groupId}";
     }
 
     @GetMapping("{groupId}/clientDashboard/{clientId}")
-    protected String showClientDashboard(@PathVariable("groupId") Integer groupId, @PathVariable("clientId") Integer clientId, Model model) {
+    protected String showClientDashboard(@PathVariable("groupId") Integer groupId,
+                                         @PathVariable("clientId") Integer clientId, Model model) {
         model.addAttribute("client", userService.getById(clientId));
         model.addAttribute("taskList", taskListService.findByUser(userService.getById(clientId)));
         model.addAttribute("allGroupHasUsersByGroupId", groupHasUsersService.getAllByGroupId(groupId));

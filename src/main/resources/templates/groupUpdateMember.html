@@ -13,10 +13,10 @@
   <form th:action="@{/groups/options/{groupId}/updatemember/{userId}(groupId=${groupId}, userId=${userId})}" method="post" th:object="${groupHasUser}">
     <input type="hidden" th:field="*{user}">
     <input type="hidden" th:field="*{group}">
-    <label for="userRole">Role</label>
     <div th:if="${#fields.hasErrors()}">
       <p th:each="err : ${#fields.errors('global')}" th:text="${err}" class="error" />
     </div>
+    <label for="userRole">Role</label>
     <div>
       <select th:field="*{userRole}">
         <option id="userRole" th:each="userRole : ${groupHasUser.groupRoleOptions}" th:value="${userRole}" th:text="${userRole}"></option>
@@ -26,6 +26,7 @@
         <label class="custom-control-label" for="groupAdminSwitch">Group admin</label>
       </div>
       <button type="submit" class="catoButton">Save</button>
+      <a type="button" th:href="@{/groups/options/{groupId}(groupId=${groupId})}" class="catoButton">Cancel</a>
     </div>
   </form>
 </div>
