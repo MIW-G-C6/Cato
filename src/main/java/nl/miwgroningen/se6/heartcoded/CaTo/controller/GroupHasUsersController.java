@@ -104,7 +104,6 @@ public class GroupHasUsersController {
             } else {
                 result.addError(new ObjectError("globalError", "No existing account found with this email address"));
             }
-
             if (!result.hasErrors()) {
                 groupHasUsersService.saveGroupHasUsers(makeGroupHasUsers);
                 createNewTaskList(makeGroupHasUsers);

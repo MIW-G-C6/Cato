@@ -28,15 +28,12 @@
       <br>
       <div>
         <label>Select a user role</label>
-        <ul>
+        <ul class="cato-radio">
           <li th:each="userRole : ${makeGroupHasUsers.groupRoleOptions}">
             <input type="radio" th:field="${makeGroupHasUsers.userRole}" th:value="${userRole}" required>
-            <label th:for="${userRole}" th:text="${userRole}"></label>
+            <label th:for="${#ids.prev('userRole')}" th:text="${userRole}"></label>
           </li>
         </ul>
-<!--        <select th:field="*{userRole}">-->
-<!--          <option id="userRole" th:each="role : ${groupUserRole.groupRoleOptions}" th:value="${role}" th:text="${role}"></option>-->
-<!--        </select>-->
       </div>
       <br>
       <div class="custom-control custom-switch">
