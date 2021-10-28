@@ -3,7 +3,7 @@
 <head th:replace="fragments/general :: baseHeader(~{:: title})" >
   <meta charset="UTF-8">
   <link rel="stylesheet" type="text/css" th:href="@{/css/groupUpdateMember.css}">
-  <title>Title</title>
+  <title>Edit member</title>
 </head>
 <body>
 
@@ -26,7 +26,7 @@
       <ul class="cato-radio">
         <li th:each="userRole : ${groupHasUser.groupRoleOptions}">
           <input type="radio" th:field="${groupHasUser.userRole}" th:value="${userRole}">
-          <label th:for="${userRole}" th:text="${userRole}"></label>
+          <label th:for="${#ids.prev('userRole')}" th:text="${userRole}"></label>
         </li>
       </ul>
 
