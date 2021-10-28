@@ -10,12 +10,31 @@
 <div th:replace="fragments/general :: breadCrumbsBar"></div>
 
 <div class="container">
-    <h1>Task details</h1>
-    <div>Task: <span th:text="${task.description}"></span></div>
-    <div>The priority for this task is: <span th:text="${task.priority}"></span></div>
-    <br>
-    <a th:href="@{/taskLists/{taskListId}/update/{taskId}(taskListId=${taskList.taskListId}, taskId=${task.taskId})}"><button class="catoButton">Edit</button></a>
-</div>
+    <h1>Task details
+        <a th:href="@{/taskLists/{taskListId}/update/{taskId}(taskListId=${taskList.taskListId}, taskId=${task.taskId})}"><img th:src="@{/css/images/edit-icon.svg}" height="15" width="15" title="edit task"></a>
+        <a th:href="@{'/task/delete/' + ${task.taskId}}"><img th:src="@{/css/images/delete-icon.svg}" height="15" width="15" title="delete task"></a>
+    </h1>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-sm-3">
+                <h6 class="mb-0">Task</h6>
+            </div>
+            <div class="col-sm-9 text-secondary">
+                <span th:text="${task.description}"></span>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-sm-3">
+                <h6 class="mb-0">Priority</h6>
+            </div>
+            <div class="col-sm-9 text-secondary">
+                <span th:text="${task.priority}"></span>
+            </div>
+        </div>
+        <hr>
+    </div>
+  </div>
 
 <div th:replace="fragments/general :: footer"></div>
 <div th:replace="fragments/general :: bottomScripts"></div>

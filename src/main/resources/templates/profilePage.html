@@ -10,39 +10,32 @@
 <div th:replace="fragments/general :: breadCrumbsBar"></div>
 
 <div class="container">
-    <h1>Profile page of <span th:text="${user.name}"></span></h1>
+    <h1><span th:text="${user.name}"></span></h1>
     <br>
-
-    <h5>Profile information</h5>
-
-    <div class="card-body">
-        <div class="row">
-            <div class="col-sm-3">
-                <h6 class="mb-0">Name</h6>
-            </div>
-            <div class="col-sm-9 text-secondary">
-                <span th:text="${user.name}"></span>
-            </div>
+    <div class="profileInfoBar">
+        <div class="profileIcon">
+            <i class="fa fa-user"></i>
         </div>
-        <hr>
-        <div class="row">
-            <div class="col-sm-3">
-                <h6 class="mb-0">Email</h6>
-            </div>
-            <div class="col-sm-9 text-secondary">
-                <span th:text="${user.email}"></span>
-            </div>
-        </div>
-        <hr>
-        <div class="row">
-            <div class="col-sm-12">
-                <button>
-                    <a th:href="@{'/users/update/' + ${user.userId}}" class="catoButton">Edit</a>
-                </button>
-            </div>
+        <div class="stackedHeaderAndInfo">
+            <span style="color: grey">Name</span>
+            <h5><span th:text="${user.name}"></span></h5>
         </div>
     </div>
     <br>
+    <div class="profileInfoBar">
+        <div class="profileIcon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-envelope" viewBox="0 0 16 16">
+                <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2zm13 2.383-4.758 2.855L15 11.114v-5.73zm-.034 6.878L9.271 8.82 8 9.583 6.728 8.82l-5.694 3.44A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.739zM1 11.114l4.758-2.876L1 5.383v5.73z"/>
+            </svg>
+        </div>
+        <div class="stackedHeaderAndInfo">
+            <span style="color: grey">Email</span>
+            <h5><span th:text="${user.email}"></span></h5>
+        </div>
+    </div>
+    <br>
+    <a th:href="@{'/users/update/' + ${user.userId}}"><button class="catoButton">Edit</button></a>
+
 </div>
 
 <div th:replace="fragments/general :: footer"></div>

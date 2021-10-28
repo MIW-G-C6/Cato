@@ -143,14 +143,19 @@ a.nav-link{
     text-decoration: none;
     display: inline-block;
     padding: 8px 16px;
-    background-color: #e8ffef;
     color: black;
+    background-color: transparent;
+    border: 1px solid black;
 }
 
 .catoButton:hover {
     background-color: #cafad9;
     color: black;
     cursor: pointer;
+}
+
+.custom-switch .custom-control-input:checked ~ .custom-control-label::before {
+    background-color: #cafad9;
 }
 
 
@@ -161,6 +166,22 @@ a.nav-link{
     padding: 30px 20px;
     min-height: calc(100vh - 72px - 73px);
 }
+
+.profileInfoBar {
+    display: flex;
+}
+
+.profileIcon {
+    width: 90px;
+    padding: 10px 40px;
+    align-self: center;
+}
+
+.stackedHeaderAndInfo {
+    display: flex;
+    flex-direction: column;
+}
+
 
 /*contains general layout for all tables*/
 table {
@@ -226,6 +247,12 @@ th {
 h1 {
     padding: 10px 0 10px 0;
     font-size: 30px;
+}
+
+h1 img {
+    padding-bottom: 10px;
+    height: 30px;
+    width: 30px;
 }
 
 h1 a {
@@ -307,6 +334,7 @@ input[type=email], input[type=password], input[type=text] {
 .card-body {
     box-shadow: 0 1px 3px 0 rgba(0,0,0,.1), 0 1px 2px 0 rgba(0,0,0,.06);
     width: 50%;
+    word-wrap: break-word;
 }
 
 .logotext {
@@ -363,4 +391,18 @@ input[type=email], input[type=password], input[type=text] {
 
 .cd-tasklist {
     width: 40%;
+}
+
+.title-taskdetails {
+    width: 50%;
+}
+
+.cato-form {
+    width: 50%;
+}
+
+#groupName {
+    padding: 5px 10px;
+    border: none;
+    border-bottom: 1px solid black;
 }
