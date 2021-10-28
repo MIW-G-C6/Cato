@@ -14,6 +14,9 @@
     <input type="hidden" th:field="*{user}">
     <input type="hidden" th:field="*{group}">
     <label for="userRole">Role</label>
+    <div th:if="${#fields.hasErrors()}">
+      <p th:each="err : ${#fields.errors('global')}" th:text="${err}" class="error" />
+    </div>
     <div>
       <select th:field="*{userRole}">
         <option id="userRole" th:each="userRole : ${groupHasUser.groupRoleOptions}" th:value="${userRole}" th:text="${userRole}"></option>
@@ -25,7 +28,6 @@
       <button type="submit" class="catoButton">Save</button>
     </div>
   </form>
-
 </div>
 
 <div th:replace="fragments/general :: footer"></div>

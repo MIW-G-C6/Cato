@@ -35,7 +35,7 @@
                         <span th:text="${task.priority}"></span>
                         <span th:text="priority"></span>
                     </td>
-                    <td class="delete"><a th:href="@{'/task/delete/' + ${task.taskId}}"><img th:src="@{/css/images/delete-icon.svg}" height="20" width="20" title="delete task"></a></td>
+                    <td class="delete"><a th:href="@{'/task/delete/' + ${task.taskId}}"><img th:src="@{/css/images/checkmark-icon.svg}" height="20" width="20" title="Task completed"></a></td>
                 </tr>
             </table>
         </div>

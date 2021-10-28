@@ -1,9 +1,12 @@
 package nl.miwgroningen.se6.heartcoded.CaTo.controller;
 
+import nl.miwgroningen.se6.heartcoded.CaTo.model.GroupHasUsers;
 import nl.miwgroningen.se6.heartcoded.CaTo.model.Task;
 import nl.miwgroningen.se6.heartcoded.CaTo.model.TaskList;
+import nl.miwgroningen.se6.heartcoded.CaTo.model.User;
 import nl.miwgroningen.se6.heartcoded.CaTo.repository.TaskListRepository;
 import nl.miwgroningen.se6.heartcoded.CaTo.repository.TaskRepository;
+import nl.miwgroningen.se6.heartcoded.CaTo.service.GroupHasUsersService;
 import nl.miwgroningen.se6.heartcoded.CaTo.service.TaskListService;
 import nl.miwgroningen.se6.heartcoded.CaTo.service.TaskService;
 import org.springframework.stereotype.Controller;
@@ -26,10 +29,12 @@ public class TaskController {
 
     private TaskService taskService;
     private TaskListService taskListService;
+    private GroupHasUsersService groupHasUsersService;
 
-    public TaskController(TaskService taskService, TaskListService taskListService) {
+    public TaskController(TaskService taskService, TaskListService taskListService, GroupHasUsersService groupHasUsersService) {
         this.taskService = taskService;
         this.taskListService = taskListService;
+        this.groupHasUsersService = groupHasUsersService;
     }
 
     @GetMapping("/taskLists/{taskListId}/{taskId}")
@@ -68,8 +73,13 @@ public class TaskController {
     @GetMapping("/task/delete/{taskId}")
     protected String deleteTask(@PathVariable("taskId") Integer taskId) {
         Integer taskListId = taskService.getTaskListIdByTaskId(taskId);
+        TaskList taskList = taskListService.getById(taskListId);
+        User client = taskList.getClient();
+        GroupHasUsers clientGroupHasUsers = groupHasUsersService.getByClient(client);
+        Integer groupId = clientGroupHasUsers.getGroup().getGroupId();
+
         taskService.deleteById(taskId);
-        return "redirect:/taskLists/" + taskListId;
+        return "redirect:/groups/" + groupId + "/clientDashboard/" + client.getUserId();
     }
 
     @PostMapping("/taskLists/{taskListId}/new")
