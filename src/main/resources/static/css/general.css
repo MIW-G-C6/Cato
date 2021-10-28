@@ -363,6 +363,7 @@ input[type=email], input[type=password], input[type=text] {
 
 .logintext {
     text-align: center;
+    font-family: "Georgia i";
 }
 
 .cato-table {

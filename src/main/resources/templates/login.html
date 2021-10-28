@@ -9,12 +9,11 @@
 <div class="container">
     <div class="form-group">
         <div class="logotext">
-            <img th:src="@{/css/images/CaToLogo.jpg}" height="80" alt="Home">Care Together
+            <img th:src="@{/css/images/CaToLogo.jpg}" height="80" alt="Home">&ensp;Care Together
         </div>
         <br><br>
 
         <h2 class="logintext">Log in</h2>
-        <hr>
         <form th:action="@{/login}" method="post">
             <div th:if="${param.error}">
                 <div class="alert alert-danger">Invalid username or password.
@@ -29,7 +28,7 @@
                     <input type="submit" name="login-submit" id="login-submit" class="form-control btn btn-primary" value="Log in" />
                 </div>
             </div>
-
+            <br>
             <p>
                 New user? <a th:href="@{/registration}">Register here</a>
             </p>
