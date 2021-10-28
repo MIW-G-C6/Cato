@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="https://www.thymeleaf.org">
 <head th:replace="fragments/general :: baseHeader(~{:: title})" >
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Edit personal information</title>
 </head>
 <body>
 
@@ -10,24 +10,22 @@
 <div th:replace="fragments/general :: breadCrumbsBar"></div>
 
 <div class="container">
-    <h1>Edit information</h1>
+    <h1>Edit personal information</h1>
 
-    <form th:action="@{/registration}" method="post" th:object="${user}">
+    <form class="cato-form" th:action="@{/registration}" method="post" th:object="${user}">
+        <div th:if="${#fields.hasErrors()}">
+            <p th:each="err : ${#fields.errors('global')}" th:text="${err}" class="alert alert-danger" />
+        </div>
         <input type="hidden" th:field="*{userId}">
         <div>
-            <label for="name">Name:</label>
-            <input type="text" id="name" required pattern=".*\S+.*"
+            <input class="cato-text-field" placeholder="Name" type="text" id="name" required pattern=".*\S+.*"
                    oninvalid="this.setCustomValidity('Name cannot be empty')"
                    oninput="this.setCustomValidity('')"
                    th:field="*{name}">
         </div>
         <br>
         <div>
-            <label for="email">Email:</label>
-            <input type="email" id="email" required th:field="*{email}">
-        </div>
-        <div th:if="${#fields.hasErrors()}">
-            <p th:each="err : ${#fields.errors('global')}" th:text="${err}" class="error" />
+            <input class="cato-text-field" placeholder="Email" type="email" id="email" required th:field="*{email}">
         </div>
         <div>
             <input type="hidden" id="password"

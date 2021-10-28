@@ -355,9 +355,14 @@ input[type=email], input[type=password], input[type=text] {
     word-wrap: break-word;
 }
 
-.logotext {
+.logotext a {
     font-family: "Georgia i";
     font-size: 50px;
+    color: #303c42;
+    text-decoration: none;
+}
+
+.logotext {
     text-align: center;
 }
 
@@ -430,4 +435,13 @@ input[type=email], input[type=password], input[type=text] {
     padding: 5px 10px !important;
     border: none;
     border-bottom: 1px solid black;
+}
+
+.custom-select {
+    width: 50%;
+}
+
+.cato-radio {
+    list-style-type: none;
+    padding-left: 0;
 }

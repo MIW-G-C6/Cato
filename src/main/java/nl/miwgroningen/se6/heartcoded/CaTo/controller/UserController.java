@@ -78,7 +78,7 @@ public class UserController {
         }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userService.saveUser(user);
-        return "redirect:/users";
+        return "redirect:/profilepage/" + user.getUserId();
     }
 
     @GetMapping("/users/delete/{userId}")
