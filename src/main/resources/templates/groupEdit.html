@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="https://www.thymeleaf.org">
 <head th:replace="fragments/general :: baseHeader(~{:: title})" >
   <meta charset="UTF-8">
-  <title>Edit group</title>
+  <title>Edit group name</title>
 </head>
 <body>
 
@@ -11,12 +11,15 @@
 
 <div class="container">
   <h1>Edit group name</h1>
-  <form th:action="@{/groups/options/edit/{groupId}(groupId=${thisGroup.groupId})}" method="post" th:object="${thisGroup}">
+  <form class="cato-form" th:action="@{/groups/options/edit/{groupId}(groupId=${thisGroup.groupId})}" method="post" th:object="${thisGroup}">
     <div>
       <input type="text" id="groupName" required pattern=".*\S+.*"
              oninvalid="this.setCustomValidity('Name of group cannot be empty')"
              oninput="this.setCustomValidity('')"
              th:field="*{groupName}">
+    </div>
+      <br>
+    <div>
       <button type="submit" class="catoButton">Save</button>
     </div>
   </form>
