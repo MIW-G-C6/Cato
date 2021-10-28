@@ -19,7 +19,9 @@
       <label>User email</label>
       <input type="text" name="email" required>
       <span th:text="${validEntry}"></span>
-      <span class="error" th:text="${exception}"></span>
+      <div th:if="${#fields.hasErrors()}">
+        <p th:each="err : ${#fields.errors('global')}" th:text="${err}" class="error" />
+      </div>
     </div>
     <div>
       <label for="userRole">Role</label>

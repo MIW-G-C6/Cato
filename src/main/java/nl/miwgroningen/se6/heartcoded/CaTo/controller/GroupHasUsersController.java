@@ -8,7 +8,6 @@ import nl.miwgroningen.se6.heartcoded.CaTo.service.GroupHasUsersService;
 import nl.miwgroningen.se6.heartcoded.CaTo.service.GroupService;
 import nl.miwgroningen.se6.heartcoded.CaTo.service.TaskListService;
 import nl.miwgroningen.se6.heartcoded.CaTo.service.UserService;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -16,8 +15,6 @@ import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.naming.Binding;
-import javax.swing.text.html.Option;
 import java.util.Optional;
 
 
@@ -96,7 +93,6 @@ public class GroupHasUsersController {
     protected String doAddUser(@PathVariable("groupId") Integer groupId, Model model, String email,
                                @ModelAttribute ("makeGroupHasUsers") GroupHasUsers makeGroupHasUsers,
                                BindingResult result) {
-        String exception = "";
         String validEntry = "";
 
         if (email != null) {
@@ -104,26 +100,33 @@ public class GroupHasUsersController {
             if (!user.isEmpty()) {
                 makeGroupHasUsers.setGroup(groupService.getById(groupId));
                 makeGroupHasUsers.setUser(user.get());
-                if (!groupHasUsersService.userInGroupExists(makeGroupHasUsers)) {
-                    if (!result.hasErrors()) {
-                        groupHasUsersService.saveGroupHasUsers(makeGroupHasUsers);
-                        createNewTaskList(makeGroupHasUsers);
-                        validEntry = "Successfully added this member to your group";
-                    }
-                } else {
-                    exception = "Not able to add the same user twice";
-                }
+                checkForErrorsAddMember(groupId, makeGroupHasUsers, result, user);
             } else {
-                exception = "No existing account found with this email address";
+                result.addError(new ObjectError("globalError", "No existing account found with this email address"));
             }
 
+            if (!result.hasErrors()) {
+                groupHasUsersService.saveGroupHasUsers(makeGroupHasUsers);
+                createNewTaskList(makeGroupHasUsers);
+                validEntry = "Successfully added this member to your group";
+            }
         }
+
         model.addAttribute("validEntry", validEntry);
-        model.addAttribute("exception", exception);
         model.addAttribute("groupUserRole", new GroupHasUsers());
         model.addAttribute("thisGroup", groupService.getById(groupId));
         model.addAttribute("groupHasUsers", groupHasUsersService.getAllByGroupId(groupId));
         return "groupEditMember";
+    }
+
+    private void checkForErrorsAddMember(Integer groupId, GroupHasUsers makeGroupHasUsers, BindingResult result, Optional<User> user) {
+        if (groupHasUsersService.userInGroupExists(makeGroupHasUsers)) {
+            result.addError(new ObjectError("globalError", "Not able to add the same user twice"));
+        }
+
+        if (isClient(makeGroupHasUsers) && groupHasUsersService.isClientInOtherGroup(user.get(), groupId)) {
+            result.addError(new ObjectError("globalError", "User is already a client in another group"));
+        }
     }
 
     @GetMapping("/options/{groupId}/updatemember/{userId}")
@@ -142,18 +145,26 @@ public class GroupHasUsersController {
                                        @PathVariable("groupId") Integer groupId,
                                        @ModelAttribute("groupHasUser") GroupHasUsers groupHasUser,
                                        BindingResult result) {
-        if (groupHasUsersService.findOutIfGroupHasUsersIsAdmin(groupHasUser) &&
-                !groupHasUser.isAdmin() &&
-                groupHasUsersService.getGroupAdminsByGroupId(groupHasUser.getGroup().getGroupId()).size() == 1) {
-            result.addError(new ObjectError("globalError",
-                    "Cannot remove admin rights if this member is the last admin in the group"));
-        }
+        checkForErrorsUpdateGroupMember(groupId, groupHasUser, result);
         if (result.hasErrors()) {
             return  "groupUpdateMember";
         }
         createNewTaskList(groupHasUser);
         groupHasUsersService.saveGroupHasUsers(groupHasUser);
         return "redirect:/groups/options/{groupId}";
+    }
+
+    private void checkForErrorsUpdateGroupMember(Integer groupId, GroupHasUsers groupHasUser, BindingResult result) {
+        if (isClient(groupHasUser) && groupHasUsersService.isClientInOtherGroup(groupHasUser.getUser(), groupId)) {
+            result.addError(new ObjectError("globalError", "This user is already a client in another group"));
+        }
+
+        if (groupHasUsersService.findOutIfGroupHasUsersIsAdmin(groupHasUser) &&
+                !groupHasUser.isAdmin() &&
+                groupHasUsersService.getGroupAdminsByGroupId(groupHasUser.getGroup().getGroupId()).size() == 1) {
+            result.addError(new ObjectError("globalError",
+                    "Cannot remove admin rights if this member is the last admin in the group"));
+        }
     }
 
     @GetMapping("{groupId}/clientDashboard/{clientId}")
@@ -167,12 +178,16 @@ public class GroupHasUsersController {
     }
 
     protected void createNewTaskList(GroupHasUsers groupHasUsers) {
-        if (groupHasUsers.getUserRole().equals(GroupHasUsers.getGroupRoleOptions()[1])) {   //if user is a client
+        if (isClient(groupHasUsers)) {
 
             TaskList taskList = taskListService.findByUser(groupHasUsers.getUser());
             if (taskList == null) {
                 taskListService.save(new TaskList(groupHasUsers.getUser()));
             }
         }
+    }
+
+    protected boolean isClient(GroupHasUsers groupHasUsers) {
+        return groupHasUsers.getUserRole().equals(GroupHasUsers.getGroupRoleOptions()[1]);
     }
 }

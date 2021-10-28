@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -111,5 +112,18 @@ public class GroupHasUsersService {
     public boolean findOutIfGroupHasUsersIsAdmin(GroupHasUsers groupHasUsers) {
         return findByUserIdAndGroupId(groupHasUsers.getUser().getUserId(),
                 groupHasUsers.getGroup().getGroupId()).get().isAdmin();
+    }
+
+    public boolean isClientInOtherGroup(User user, Integer groupId) {
+        boolean isClient = false;
+        List<GroupHasUsers> allClients = findAllClients();
+
+        for (GroupHasUsers client : allClients) {
+            if (Objects.equals(user.getUserId(), client.getUser().getUserId()) && !Objects.equals(client.getGroup().getGroupId(), groupId)) {
+                isClient = true;
+                break;
+            }
+        }
+        return isClient;
     }
 }

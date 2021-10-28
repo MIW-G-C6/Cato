@@ -135,10 +135,12 @@ a.nav-link{
     .sidenav a {font-size: 18px;}
 }
 
+/*contains design choices for breadcrumbs bar*/
 .breadCrumbsBar {
     padding: 10px 10px;
 }
 
+/*contains design choices for all buttons*/
 .catoButton {
     text-decoration: none;
     display: inline-block;
@@ -158,6 +160,22 @@ a.nav-link{
     background-color: #cafad9;
 }
 
+/*contains layout for columns on about page*/
+.flex-column {
+    float: left;
+    padding: 10px;
+}
+
+#aboutContainer {
+    display: flex;
+
+}
+
+#aboutHeader {
+    display: flex;
+    justify-content: center;
+    padding-bottom: 30px;
+}
 
 /*contains general layout for content container*/
 .container {
@@ -332,7 +350,7 @@ input[type=email], input[type=password], input[type=text] {
 }
 
 .card-body {
-    box-shadow: 0 1px 3px 0 rgba(0,0,0,.1), 0 1px 2px 0 rgba(0,0,0,.06);
+    /*box-shadow: 0 1px 3px 0 rgba(0,0,0,.1), 0 1px 2px 0 rgba(0,0,0,.06);*/
     width: 50%;
     word-wrap: break-word;
 }
@@ -345,6 +363,7 @@ input[type=email], input[type=password], input[type=text] {
 
 .logintext {
     text-align: center;
+    font-family: "Georgia i";
 }
 
 .cato-table {
@@ -403,6 +422,12 @@ input[type=email], input[type=password], input[type=text] {
 
 #groupName {
     padding: 5px 10px;
+    border: none;
+    border-bottom: 1px solid black;
+}
+
+.cato-text-field {
+    padding: 5px 10px !important;
     border: none;
     border-bottom: 1px solid black;
 }
