@@ -23,13 +23,13 @@
 
       <h1>Change role</h1>
 
-      <ul>
+      <ul class="cato-radio">
         <li th:each="userRole : ${groupHasUser.groupRoleOptions}">
           <input type="radio" th:field="${groupHasUser.userRole}" th:value="${userRole}">
           <label th:for="${userRole}" th:text="${userRole}"></label>
         </li>
       </ul>
-      <br>
+
       <div class="custom-control custom-switch">
         <input type="checkbox" class="custom-control-input" id="groupAdminSwitch" th:field="*{admin}">
         <label class="custom-control-label" for="groupAdminSwitch">Group admin</label>

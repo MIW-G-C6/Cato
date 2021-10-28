@@ -441,7 +441,7 @@ input[type=email], input[type=password], input[type=text] {
     width: 50%;
 }
 
-.priority-radio {
+.cato-radio {
     list-style-type: none;
     padding-left: 0;
 }
