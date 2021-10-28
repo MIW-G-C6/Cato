@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="https://www.thymeleaf.org">
 <head th:replace="fragments/general :: baseHeader(~{:: title})" >
     <meta charset="UTF-8">
-    <title>Task Form</title>
+    <title>Add task</title>
 </head>
 <body>
 
@@ -11,30 +11,29 @@
 
 
 <div class="container">
-    <h1>Add a task to task list of <span th:text="${taskList.client.name}"></span></h1>
+    <h1>Add a task for <span th:text="${taskList.client.name}"></span></h1>
 
-    <form th:action="@{/taskLists/{taskListId}/new(taskListId=${taskListId})}" method="post" th:object="${task}">
+    <form class="cato-form" th:action="@{/taskLists/{taskListId}/new(taskListId=${taskListId})}" method="post" th:object="${task}">
         <input type="hidden" th:field="*{taskId}">
         <div>
-            <label for="description">Description</label>
-            <input type="text" id="description" required pattern=".*\S+.*"
-                   oninvalid="this.setCustomValidity('Description of task cannot be empty')"
-                   oninput="this.setCustomValidity('')"
-                   th:field="*{description}">
+            <input class="cato-text-field" type="text" placeholder="Description" id="description" required th:field="*{description}">
         </div>
         <br>
         <div>
-            <label for="priority">Priority</label>
-            <select th:field="*{priority}">
-                <option id="priority" th:each="priority : ${task.priorityOptions}" th:value="${priority}" th:text="${priority}"></option>
-            </select>
+            <ul class="cato-radio">
+                <li th:each="priority : ${task.priorityOptions}">
+                    <input type="radio" th:field="*{priority}" th:value="${priority}" />
+                    <label th:for="${#ids.prev('priority')}" th:text="${priority} + ' priority'"></label>
+                </li>
+            </ul>
         </div>
-        <br>
         <div>
             <button type="submit" class="catoButton">Save</button>
         </div>
+        <script>
+            document.getElementById("priority1").setAttribute("checked", "checked");
+        </script>
     </form>
-
 </div>
 
 <div th:replace="fragments/general :: footer"></div>

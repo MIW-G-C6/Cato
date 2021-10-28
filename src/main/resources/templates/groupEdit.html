@@ -13,7 +13,7 @@
   <h1>Edit group name</h1>
   <form class="cato-form" th:action="@{/groups/options/edit/{groupId}(groupId=${thisGroup.groupId})}" method="post" th:object="${thisGroup}">
     <div>
-      <input type="text" id="groupName" required pattern=".*\S+.*"
+      <input type="text" placeholder="Group name" id="groupName" required pattern=".*\S+.*"
              oninvalid="this.setCustomValidity('Name of group cannot be empty')"
              oninput="this.setCustomValidity('')"
              th:field="*{groupName}">

@@ -2,7 +2,8 @@
 <html lang="en" xmlns:th="https://www.thymeleaf.org">
 <head th:replace="fragments/general :: baseHeader(~{:: title})" >
   <meta charset="UTF-8">
-  <title>Title</title>
+  <link rel="stylesheet" type="text/css" th:href="@{/css/groupUpdateMember.css}">
+  <title>Edit member</title>
 </head>
 <body>
 
@@ -10,25 +11,35 @@
 <div th:replace="fragments/general :: breadCrumbsBar"></div>
 
 <div class="container">
-  <form th:action="@{/groups/options/{groupId}/updatemember/{userId}(groupId=${groupId}, userId=${userId})}" method="post" th:object="${groupHasUser}">
-    <input type="hidden" th:field="*{user}">
-    <input type="hidden" th:field="*{group}">
-    <div th:if="${#fields.hasErrors()}">
-      <p th:each="err : ${#fields.errors('global')}" th:text="${err}" class="error" />
-    </div>
-    <label for="userRole">Role</label>
-    <div>
-      <select th:field="*{userRole}">
-        <option id="userRole" th:each="userRole : ${groupHasUser.groupRoleOptions}" th:value="${userRole}" th:text="${userRole}"></option>
-      </select>
+
+  <div class="group-update-member">
+    <form th:action="@{/groups/options/{groupId}/updatemember/{userId}(groupId=${groupId}, userId=${userId})}" method="post" th:object="${groupHasUser}">
+      <input type="hidden" th:field="*{user}">
+      <input type="hidden" th:field="*{group}">
+
+      <div th:if="${#fields.hasErrors()}">
+        <p th:each="err : ${#fields.errors('global')}" th:text="${err}" class="error" />
+      </div>
+
+      <h1>Change role</h1>
+
+      <ul class="cato-radio">
+        <li th:each="userRole : ${groupHasUser.groupRoleOptions}">
+          <input type="radio" th:field="${groupHasUser.userRole}" th:value="${userRole}">
+          <label th:for="${#ids.prev('userRole')}" th:text="${userRole}"></label>
+        </li>
+      </ul>
+
       <div class="custom-control custom-switch">
         <input type="checkbox" class="custom-control-input" id="groupAdminSwitch" th:field="*{admin}">
         <label class="custom-control-label" for="groupAdminSwitch">Group admin</label>
       </div>
+      <br>
       <button type="submit" class="catoButton">Save</button>
       <a type="button" th:href="@{/groups/options/{groupId}(groupId=${groupId})}" class="catoButton">Cancel</a>
-    </div>
-  </form>
+
+    </form>
+  </div>
 </div>
 
 <div th:replace="fragments/general :: footer"></div>
