@@ -171,7 +171,7 @@ a.nav-link{
 
 }
 
-#aboutHeader {
+.aboutHeader {
     display: flex;
     justify-content: center;
     padding-bottom: 30px;
@@ -182,7 +182,7 @@ a.nav-link{
     width: 80vw;
     margin: 0 auto;
     padding: 30px 20px;
-    min-height: calc(100vh - 72px - 73px);
+    min-height: calc(100vh - 72px - 306px);
 }
 
 .profileInfoBar {
@@ -283,7 +283,7 @@ h5 a {
 
 /*contains general layout for footer*/
 .footerWave {
-    bottom: -55px;
+    bottom: -72px;
     position: relative;
     margin-top: -85px;
 }
