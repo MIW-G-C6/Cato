@@ -380,3 +380,13 @@ input[type=email], input[type=password], input[type=text] {
 .title-taskdetails {
     width: 50%;
 }
+
+.cato-form {
+    width: 50%;
+}
+
+#groupName {
+    padding: 5px 10px;
+    border: none;
+    border-bottom: 1px solid black;
+}
