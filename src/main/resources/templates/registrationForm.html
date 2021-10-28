@@ -12,42 +12,36 @@
 <div class="container">
   <h1>Register as a new user</h1>
 
-  <form th:action="@{/registration}" method="post" th:object="${user}">
+  <form class="cato-form" th:action="@{/registration}" method="post" th:object="${user}">
+    <div th:if="${#fields.hasErrors()}">
+      <p th:each="err : ${#fields.errors('global')}" th:text="${err}" class="alert alert-danger" />
+    </div>
     <input type="hidden" th:field="*{userId}">
     <div>
-      <label for="name">Name:</label>
-      <input type="text" id="name" required pattern=".*\S+.*"
-             oninvalid="this.setCustomValidity('Name cannot be empty')"
-             oninput="this.setCustomValidity('')"
-             th:field="*{name}">
+      <input class="cato-text-field" type="text" placeholder="Enter full name" id="name" required th:field="*{name}">
     </div>
+    <br>
     <div>
-      <label for="email">Email:</label>
-      <input type="email" id="email" required th:field="*{email}">
+      <input class="cato-text-field" type="email" placeholder="Enter email" id="email" required th:field="*{email}">
     </div>
-    <div th:if="${#fields.hasErrors()}">
-      <p th:each="err : ${#fields.errors('global')}" th:text="${err}" class="error" />
-    </div>
+    <br>
     <div>
-      <label for="password">Password:</label>
-      <input type="password" id="password" required pattern=".*\S+.*"
-             oninvalid="this.setCustomValidity('Password cannot be empty')"
-             oninput="this.setCustomValidity('')"
-             th:field="*{password}">
+      <input class="cato-text-field" type="password" placeholder="Enter password" id="password" required th:field="*{password}">
     </div>
+    <br>
     <div>
-      <label for="password">Confirm password:</label>
-      <input type="password" id="confirm_password" required pattern=".*\S+.*">
+      <input class="cato-text-field" type="password" placeholder="Confirm password" id="confirm_password" required>
     </div>
+    <br>
     <div>
       <button type="submit" class="catoButton">Save</button>
     </div>
 
     <script>
-      var password = document.getElementById("password"), confirm_password = document.getElementById("confirm_password");
+      let password = document.getElementById("password"), confirm_password = document.getElementById("confirm_password");
 
       function validatePassword() {
-        if(password.value != confirm_password.value) {
+        if(password.value !== confirm_password.value) {
           confirm_password.setCustomValidity("Passwords Don't Match");
         } else {
           confirm_password.setCustomValidity('');

@@ -430,3 +430,9 @@ input[type=email], input[type=password], input[type=text] {
     border: none;
     border-bottom: 1px solid black;
 }
+
+.cato-text-field {
+    padding: 5px 10px !important;
+    border: none;
+    border-bottom: 1px solid black;
+}
