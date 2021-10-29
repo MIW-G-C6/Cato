@@ -177,11 +177,17 @@ a.nav-link{
 }
 
 /*contains general layout for content container*/
+html, body {
+    display: flex;
+    flex-direction: column;
+    min-height: 97vh;
+}
+
 .container {
     width: 80vw;
     margin: 0 auto;
     padding: 30px 20px;
-    min-height: calc(100vh - 72px - 306px);
+    flex: 1;
 }
 
 .profileInfoBar {
@@ -281,6 +287,13 @@ h5 a {
 }
 
 /*contains general layout for footer*/
+.catoFooter {
+    margin-top: auto;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
+
 .footerWave {
     bottom: -72px;
     position: relative;
