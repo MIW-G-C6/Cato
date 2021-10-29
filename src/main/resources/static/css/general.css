@@ -4,7 +4,6 @@ a.nav-link{
 
 
 .loginbody {
-    height: 100vh;
     display: flex;
     align-items: center;
 }
@@ -336,11 +335,6 @@ button {
     margin: auto;
 }
 
-#login-submit {
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
 
 input[type=email], input[type=password], input[type=text] {
     width: 100%;
