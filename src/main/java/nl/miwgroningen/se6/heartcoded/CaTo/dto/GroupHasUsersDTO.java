@@ -8,21 +8,17 @@ import javax.persistence.ManyToOne;
 
 /**
  * @author Paul Romkes <p.r.romkes@gmail.com
- * <p>
- * Dit is wat het programma doet
+ *
+ * this is a DTO model based on the GroupHasUsers model
  */
 
 public class GroupHasUsersDTO {
 
     private static final String[] GROUP_ROLE_OPTIONS = {"Caregiver", "Client"};
 
-    @Id
-    @ManyToOne
-    private Group group;
+    private GroupDTO group;
 
-    @Id
-    @ManyToOne
-    private User user;
+    private UserDTO user;
 
     private String userRole;
 
