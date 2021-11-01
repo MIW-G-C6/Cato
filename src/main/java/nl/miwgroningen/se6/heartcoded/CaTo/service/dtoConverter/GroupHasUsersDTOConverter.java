@@ -1,4 +1,4 @@
-package nl.miwgroningen.se6.heartcoded.CaTo.dto.dtoConverter;
+package nl.miwgroningen.se6.heartcoded.CaTo.service.dtoConverter;
 
 import nl.miwgroningen.se6.heartcoded.CaTo.dto.GroupHasUsersDTO;
 import nl.miwgroningen.se6.heartcoded.CaTo.model.GroupHasUsers;

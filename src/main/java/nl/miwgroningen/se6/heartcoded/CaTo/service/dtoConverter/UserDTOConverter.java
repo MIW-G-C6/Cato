@@ -1,4 +1,4 @@
-package nl.miwgroningen.se6.heartcoded.CaTo.dto.dtoConverter;
+package nl.miwgroningen.se6.heartcoded.CaTo.service.dtoConverter;
 
 /**
  * @author Paul Romkes <p.r.romkes@gmail.com
@@ -7,4 +7,5 @@ package nl.miwgroningen.se6.heartcoded.CaTo.dto.dtoConverter;
  */
 
 public class UserDTOConverter {
+
 }
