@@ -1,5 +1,6 @@
 package nl.miwgroningen.se6.heartcoded.CaTo.service;
 
+import nl.miwgroningen.se6.heartcoded.CaTo.dto.GroupHasUsersDTO;
 import nl.miwgroningen.se6.heartcoded.CaTo.model.Group;
 import nl.miwgroningen.se6.heartcoded.CaTo.model.GroupHasUsers;
 import nl.miwgroningen.se6.heartcoded.CaTo.model.TaskList;
@@ -8,6 +9,8 @@ import nl.miwgroningen.se6.heartcoded.CaTo.repository.GroupHasUsersRepository;
 import nl.miwgroningen.se6.heartcoded.CaTo.repository.GroupRepository;
 import nl.miwgroningen.se6.heartcoded.CaTo.repository.TaskListRepository;
 import nl.miwgroningen.se6.heartcoded.CaTo.repository.UserRepository;
+import nl.miwgroningen.se6.heartcoded.CaTo.service.dtoConverter.GroupHasUsersDTOConverter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,14 +28,15 @@ import java.util.Optional;
 @Service
 public class GroupHasUsersService {
 
+    GroupHasUsersDTOConverter groupHasUsersDTOConverter;
+
     GroupRepository groupRepository;
     UserRepository userRepository;
     GroupHasUsersRepository groupHasUsersRepository;
     TaskListRepository taskListRepository;
 
-    public GroupHasUsersService(GroupRepository groupRepository, UserRepository userRepository,
-                                GroupHasUsersRepository groupHasUsersRepository,
-                                TaskListRepository taskListRepository) {
+    public GroupHasUsersService(GroupHasUsersDTOConverter groupHasUsersDTOConverter, GroupRepository groupRepository, UserRepository userRepository, GroupHasUsersRepository groupHasUsersRepository, TaskListRepository taskListRepository) {
+        this.groupHasUsersDTOConverter = groupHasUsersDTOConverter;
         this.groupRepository = groupRepository;
         this.userRepository = userRepository;
         this.groupHasUsersRepository = groupHasUsersRepository;

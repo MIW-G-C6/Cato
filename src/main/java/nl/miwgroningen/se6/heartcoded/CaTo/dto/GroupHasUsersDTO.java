@@ -24,29 +24,19 @@ public class GroupHasUsersDTO {
 
     private boolean isAdmin;
 
-    public GroupHasUsersDTO(Group group, User user, String userRole, boolean isAdmin) {
-        this.group = group;
-        this.user = user;
-        this.userRole = userRole;
-        this.isAdmin = isAdmin;
-    }
-
-    public GroupHasUsersDTO() {
-    }
-
-    public Group getGroup() {
+    public GroupDTO getGroup() {
         return group;
     }
 
-    public void setGroup(Group group) {
+    public void setGroup(GroupDTO group) {
         this.group = group;
     }
 
-    public User getUser() {
+    public UserDTO getUser() {
         return user;
     }
 
-    public void setUser(User user) {
+    public void setUser(UserDTO user) {
         this.user = user;
     }
 

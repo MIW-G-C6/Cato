@@ -112,4 +112,8 @@ public class User implements UserDetails {
     public void setName(String name) {
         this.name = name;
     }
+
+    public List<GroupHasUsers> getGroupHasUsersList() {
+        return groupHasUsersList;
+    }
 }

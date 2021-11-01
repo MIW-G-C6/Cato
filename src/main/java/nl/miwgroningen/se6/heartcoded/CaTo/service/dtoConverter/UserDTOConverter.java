@@ -1,11 +1,26 @@
 package nl.miwgroningen.se6.heartcoded.CaTo.service.dtoConverter;
 
+import nl.miwgroningen.se6.heartcoded.CaTo.dto.UserDTO;
+import nl.miwgroningen.se6.heartcoded.CaTo.model.User;
+import org.springframework.stereotype.Service;
+
 /**
  * @author Paul Romkes <p.r.romkes@gmail.com
- * <p>
- * Dit is wat het programma doet
+ *
+ * this converts User models to userDTO's
  */
 
+@Service
 public class UserDTOConverter {
+
+    public UserDTO toDTO(User user) {
+        UserDTO result = new UserDTO();
+        result.setUserId(user.getUserId());
+        result.setName(user.getUsername());
+        result.setEmail(user.getEmail());
+        result.setGroupHasUsersList(user.getGroupHasUsersList());
+        return result;
+    }
+
 
 }
