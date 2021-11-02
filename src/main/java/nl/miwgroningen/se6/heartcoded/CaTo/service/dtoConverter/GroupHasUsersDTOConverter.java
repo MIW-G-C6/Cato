@@ -4,6 +4,8 @@ import nl.miwgroningen.se6.heartcoded.CaTo.dto.GroupHasUsersDTO;
 import nl.miwgroningen.se6.heartcoded.CaTo.model.GroupHasUsers;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 /**
  * @author Paul Romkes <p.r.romkes@gmail.com
  *
@@ -21,16 +23,30 @@ public class GroupHasUsersDTOConverter {
         this.groupDTOConverter = groupDTOConverter;
     }
 
-    public GroupHasUsersDTO toDTO (GroupHasUsers groupHasUsers) {
-        GroupHasUsersDTO groupHasUsersDTO = new GroupHasUsersDTO();
-        groupHasUsersDTO.setGroup(groupDTOConverter.toDTO(groupHasUsers.getGroup()));
-        groupHasUsersDTO.setUser(userDTOConverter.toDTO(groupHasUsers.getUser()));
-        groupHasUsersDTO.setUserRole(groupHasUsers.getUserRole());
-        groupHasUsersDTO.setAdmin(groupHasUsers.isAdmin());
+    protected GroupHasUsersDTO toDTO (GroupHasUsers groupHasUsers) {
+        GroupHasUsersDTO result = new GroupHasUsersDTO();
+        result.setGroup(groupDTOConverter.toDTO(groupHasUsers.getGroup()));
+        result.setUser(userDTOConverter.toDTO(groupHasUsers.getUser()));
+        result.setUserRole(groupHasUsers.getUserRole());
+        result.setAdmin(groupHasUsers.isAdmin());
 
-        return groupHasUsersDTO;
+        return result;
+    }
+
+    protected GroupHasUsers toModel (GroupHasUsersDTO groupHasUsersDTO) {
+        GroupHasUsers result = new GroupHasUsers();
+        result.setGroup(groupDTOConverter.toModel(groupHasUsersDTO.getGroup()));
+        result.setUser(userDTOConverter.toModel(groupHasUsersDTO.getUser()));
+        result.setUserRole(groupHasUsersDTO.getUserRole());
+        result.setAdmin(groupHasUsersDTO.isAdmin());
+
+        return result;
     }
 
 
+//    protected Optional<GroupHasUsersDTO> toOptionalDTO (Optional<GroupHasUsers> groupHasUsers) {
+//        Optional<GroupHasUsersDTO> result;
+//        result
+//    }
 
 }

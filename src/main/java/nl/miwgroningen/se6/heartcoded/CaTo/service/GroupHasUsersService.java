@@ -57,6 +57,13 @@ public class GroupHasUsersService {
     }
 
     public Optional<GroupHasUsers> findByUserIdAndGroupId(Integer userId, Integer groupId) {
+//        Optional<GroupHasUsers> groupHasUsers = groupHasUsersRepository.findGroupHasUsersByUserAndGroup(
+//                userRepository.getById(userId),
+//                groupRepository.getById(groupId))
+//
+//        if (groupHasUsers.isPresent()) {
+//            Optional<GroupHasUsersDTO> result = groupHasUsersDTOConverter.toDTO(groupHasUsers.get());
+//        }
         return groupHasUsersRepository.findGroupHasUsersByUserAndGroup(
                 userRepository.getById(userId),
                 groupRepository.getById(groupId));
