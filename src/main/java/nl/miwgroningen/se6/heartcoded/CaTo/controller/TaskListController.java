@@ -1,19 +1,12 @@
 package nl.miwgroningen.se6.heartcoded.CaTo.controller;
 
 import nl.miwgroningen.se6.heartcoded.CaTo.dto.TaskListDTO;
-import nl.miwgroningen.se6.heartcoded.CaTo.model.GroupHasUsers;
-import nl.miwgroningen.se6.heartcoded.CaTo.model.TaskList;
-import nl.miwgroningen.se6.heartcoded.CaTo.repository.TaskListRepository;
-import nl.miwgroningen.se6.heartcoded.CaTo.repository.TaskRepository;
 import nl.miwgroningen.se6.heartcoded.CaTo.service.TaskListService;
-import nl.miwgroningen.se6.heartcoded.CaTo.service.TaskService;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-import javax.persistence.criteria.CriteriaBuilder;
 import java.util.Optional;
 
 /**

@@ -3,7 +3,6 @@ package nl.miwgroningen.se6.heartcoded.CaTo.service;
 import nl.miwgroningen.se6.heartcoded.CaTo.dto.TaskListDTO;
 import nl.miwgroningen.se6.heartcoded.CaTo.dto.UserDTO;
 import nl.miwgroningen.se6.heartcoded.CaTo.model.TaskList;
-import nl.miwgroningen.se6.heartcoded.CaTo.model.User;
 import nl.miwgroningen.se6.heartcoded.CaTo.repository.TaskListRepository;
 import nl.miwgroningen.se6.heartcoded.CaTo.service.dtoConverter.TaskListDTOConverter;
 import nl.miwgroningen.se6.heartcoded.CaTo.service.dtoConverter.UserDTOConverter;
@@ -31,7 +30,6 @@ public class TaskListService {
         this.taskListDTOConverter = taskListDTOConverter;
         this.userDTOConverter = userDTOConverter;
     }
-
 
     public List<TaskListDTO> findAll() {
         List<TaskList> allTaskLists = taskListRepository.findAll();
