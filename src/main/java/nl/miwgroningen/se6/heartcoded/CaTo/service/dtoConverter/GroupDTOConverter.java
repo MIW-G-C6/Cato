@@ -27,13 +27,7 @@ public class GroupDTOConverter {
         GroupDTO result = new GroupDTO();
         result.setGroupId(group.getGroupId());
         result.setGroupName(group.getGroupName());
-
-        List<GroupHasUsers> groupHasUsersList = group.getGroupHasUsersList();
-        List<GroupHasUsersDTO> groupHasUsersDTOList = new ArrayList<>();
-        for (GroupHasUsers groupHasUsers : groupHasUsersList) {
-            groupHasUsersDTOList.add(groupHasUsersDTOConverter.toDTO(groupHasUsers));
-        }
-        result.setGroupHasUsersDTOList(groupHasUsersDTOList);
+        result.setGroupHasUsersDTOList(toDTOList(group.getGroupHasUsersList()));
 
         return result;
     }
@@ -42,14 +36,24 @@ public class GroupDTOConverter {
         Group result = new Group();
         result.setGroupId(groupDTO.getGroupId());
         result.setGroupName(groupDTO.getGroupName());
+        result.setGroupHasUsersList(toModelList(groupDTO.getGroupHasUsersDTOList()));
 
-        List<GroupHasUsersDTO> groupHasUsersDTOList = groupDTO.getGroupHasUsersDTOList();
+        return result;
+    }
+
+    private List<GroupHasUsersDTO> toDTOList(List<GroupHasUsers> groupHasUsersList) {
+        List<GroupHasUsersDTO> groupHasUsersDTOList = new ArrayList<>();
+        for (GroupHasUsers groupHasUsers : groupHasUsersList) {
+            groupHasUsersDTOList.add(groupHasUsersDTOConverter.toDTO(groupHasUsers));
+        }
+        return groupHasUsersDTOList;
+    }
+
+    private List<GroupHasUsers> toModelList(List<GroupHasUsersDTO> groupHasUsersDTOList) {
         List<GroupHasUsers> groupHasUsersList = new ArrayList<>();
         for (GroupHasUsersDTO groupHasUsersDTO : groupHasUsersDTOList) {
             groupHasUsersList.add(groupHasUsersDTOConverter.toModel(groupHasUsersDTO));
         }
-        result.setGroupHasUsersList(groupHasUsersList);
-
-        return result;
+        return groupHasUsersList;
     }
 }
