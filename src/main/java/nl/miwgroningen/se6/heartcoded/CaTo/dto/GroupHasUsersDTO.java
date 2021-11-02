@@ -28,6 +28,16 @@ public class GroupHasUsersDTO {
         return group;
     }
 
+    public GroupHasUsersDTO(GroupDTO group, UserDTO user, String userRole, boolean isAdmin) {
+        this.group = group;
+        this.user = user;
+        this.userRole = userRole;
+        this.isAdmin = isAdmin;
+    }
+
+    public GroupHasUsersDTO() {
+    }
+
     public void setGroup(GroupDTO group) {
         this.group = group;
     }

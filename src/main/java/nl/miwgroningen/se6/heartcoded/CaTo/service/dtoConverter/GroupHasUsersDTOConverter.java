@@ -53,14 +53,6 @@ public class GroupHasUsersDTOConverter {
         return groupHasUsersDTOList;
     }
 
-    public List<GroupHasUsersDTO> toListDTO(List<GroupHasUsers> groupHasUsersList) {
-        List <GroupHasUsersDTO> result = new ArrayList<>();
-
-        for (GroupHasUsers groupHasUsers : groupHasUsersList) {
-            result.add(toDTO(groupHasUsers));
-        }
-        return result;
-    }
     public List<GroupHasUsers> toModelList(List<GroupHasUsersDTO> groupHasUsersDTOList) {
         List<GroupHasUsers> groupHasUsersList = new ArrayList<>();
         for (GroupHasUsersDTO groupHasUsersDTO : groupHasUsersDTOList) {

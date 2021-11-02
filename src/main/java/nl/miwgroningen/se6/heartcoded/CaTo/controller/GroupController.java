@@ -1,5 +1,8 @@
 package nl.miwgroningen.se6.heartcoded.CaTo.controller;
 
+import nl.miwgroningen.se6.heartcoded.CaTo.dto.GroupDTO;
+import nl.miwgroningen.se6.heartcoded.CaTo.dto.GroupHasUsersDTO;
+import nl.miwgroningen.se6.heartcoded.CaTo.dto.UserDTO;
 import nl.miwgroningen.se6.heartcoded.CaTo.model.Group;
 import nl.miwgroningen.se6.heartcoded.CaTo.model.GroupHasUsers;
 import nl.miwgroningen.se6.heartcoded.CaTo.model.User;
@@ -56,12 +59,12 @@ public class GroupController {
     }
 
     @PostMapping("/groups/new")
-    protected String saveOrUpdateGroup(@ModelAttribute("group") Group group,
+    protected String saveOrUpdateGroup(@ModelAttribute("group") GroupDTO group,
                                        @ModelAttribute("groupHasUsers") GroupHasUsers groupHasUsers, BindingResult result) {
         if (!result.hasErrors()) {
             groupService.saveGroup(group);
-            User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            groupHasUsersService.saveGroupHasUsers(new GroupHasUsers(group, user, "Caregiver", true));
+            UserDTO user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            groupHasUsersService.saveGroupHasUsers(new GroupHasUsersDTO(group, user, "Caregiver", true));
         }
         return "redirect:/groups/" + group.getGroupId();
     }

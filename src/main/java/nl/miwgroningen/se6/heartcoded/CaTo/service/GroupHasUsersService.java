@@ -62,7 +62,7 @@ public class GroupHasUsersService {
     }
 
     public List<GroupHasUsersDTO> getAllByGroupId(Integer groupId) {
-        return groupHasUsersDTOConverter.toListDTO(groupHasUsersRepository.
+        return groupHasUsersDTOConverter.toDTOList(groupHasUsersRepository.
                 getAllByGroup(groupRepository.getById(groupId)));
     }
 
