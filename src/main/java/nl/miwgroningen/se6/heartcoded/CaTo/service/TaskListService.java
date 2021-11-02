@@ -1,9 +1,11 @@
 package nl.miwgroningen.se6.heartcoded.CaTo.service;
 
-import nl.miwgroningen.se6.heartcoded.CaTo.model.Group;
+import nl.miwgroningen.se6.heartcoded.CaTo.dto.TaskListDTO;
+import nl.miwgroningen.se6.heartcoded.CaTo.dto.UserDTO;
 import nl.miwgroningen.se6.heartcoded.CaTo.model.TaskList;
-import nl.miwgroningen.se6.heartcoded.CaTo.model.User;
 import nl.miwgroningen.se6.heartcoded.CaTo.repository.TaskListRepository;
+import nl.miwgroningen.se6.heartcoded.CaTo.service.dtoConverter.TaskListDTOConverter;
+import nl.miwgroningen.se6.heartcoded.CaTo.service.dtoConverter.UserDTOConverter;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -20,40 +22,55 @@ import java.util.Optional;
 public class TaskListService {
 
     private final TaskListRepository taskListRepository;
+    private final TaskListDTOConverter taskListDTOConverter;
+    private final UserDTOConverter userDTOConverter;
 
-    public TaskListService(TaskListRepository taskListRepository) {
+    public TaskListService(TaskListRepository taskListRepository, TaskListDTOConverter taskListDTOConverter, UserDTOConverter userDTOConverter) {
         this.taskListRepository = taskListRepository;
+        this.taskListDTOConverter = taskListDTOConverter;
+        this.userDTOConverter = userDTOConverter;
     }
 
-    public List<TaskList> findAll() {
-        return taskListRepository.findAll();
+    public List<TaskListDTO> findAll() {
+        List<TaskList> allTaskLists = taskListRepository.findAll();
+        List<TaskListDTO> result = new ArrayList<>();
+        for (TaskList taskList : allTaskLists) {
+            result.add(taskListDTOConverter.toDTO(taskList));
+        }
+        return result;
     }
 
-    public List<TaskList> findAllByGroupId(Integer groupId) {
-        List<TaskList> allTaskLists = new ArrayList<>();
+    public List<TaskListDTO> findAllByGroupId(Integer groupId) {
+        List<TaskListDTO> allTaskLists = new ArrayList<>();
         List<Integer> allTaskListIds = taskListRepository.findAllTaskListIdsByGroupId(groupId);
         for (Integer taskListId : allTaskListIds) {
             if (taskListId != null && taskListRepository.findById(taskListId).isPresent()) {
-                allTaskLists.add(taskListRepository.getById(taskListId));
+                allTaskLists.add(taskListDTOConverter.toDTO(taskListRepository.getById(taskListId)));
             }
         }
         return allTaskLists;
     }
 
-    public Optional<TaskList> findById(Integer taskListId) {
-        return taskListRepository.findById(taskListId);
+    public Optional<TaskListDTO> findById(Integer taskListId) {
+        Optional<TaskListDTO> taskListDTO = Optional.empty();
+
+        Optional<TaskList> taskList = taskListRepository.findById(taskListId);
+        if(!taskList.isEmpty()) {
+            taskListDTO = Optional.of(taskListDTOConverter.toDTO(taskList.get()));
+        }
+        return taskListDTO;
     }
 
-    public TaskList getById(Integer taskListId) {
-        return taskListRepository.getById(taskListId);
+    public TaskListDTO getById(Integer taskListId) {
+        return taskListDTOConverter.toDTO(taskListRepository.getById(taskListId));
     }
 
-    public void save(TaskList taskList) {
-        taskListRepository.save(taskList);
+    public void save(TaskListDTO taskList) {
+        taskListRepository.save(taskListDTOConverter.toModel(taskList));
     }
 
-    public TaskList findByUser(User user) {
-        return taskListRepository.findByClient(user);
+    public TaskListDTO findByUser(UserDTO user) {
+        return taskListDTOConverter.toDTO(taskListRepository.findByClient(userDTOConverter.toModel(user)));
     }
 }
 

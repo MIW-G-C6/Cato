@@ -1,7 +1,5 @@
 package nl.miwgroningen.se6.heartcoded.CaTo.dto;
 
-import nl.miwgroningen.se6.heartcoded.CaTo.model.GroupHasUsers;
-
 import java.util.List;
 
 /**
@@ -12,13 +10,13 @@ import java.util.List;
 
 public class UserDTO {
 
-        private Integer userId;
+    private Integer userId;
 
-        private String name;
+    private String name;
 
-        private String email;
+    private String email;
 
-        private List<GroupHasUsers> groupHasUsersList;
+    private List<GroupHasUsersDTO> groupHasUsersDTOList;
 
     public Integer getUserId() {
         return userId;
@@ -44,11 +42,11 @@ public class UserDTO {
         this.email = email;
     }
 
-    public List<GroupHasUsers> getGroupHasUsersList() {
-        return groupHasUsersList;
+    public List<GroupHasUsersDTO> getGroupHasUsersDTOList() {
+        return groupHasUsersDTOList;
     }
 
-    public void setGroupHasUsersList(List<GroupHasUsers> groupHasUsersList) {
-        this.groupHasUsersList = groupHasUsersList;
+    public void setGroupHasUsersDTOList(List<GroupHasUsersDTO> groupHasUsersDTOList) {
+        this.groupHasUsersDTOList = groupHasUsersDTOList;
     }
 }

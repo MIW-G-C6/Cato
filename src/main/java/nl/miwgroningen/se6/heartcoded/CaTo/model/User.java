@@ -116,4 +116,8 @@ public class User implements UserDetails {
     public List<GroupHasUsers> getGroupHasUsersList() {
         return groupHasUsersList;
     }
+
+    public void setGroupHasUsersList(List<GroupHasUsers> groupHasUsersList) {
+        this.groupHasUsersList = groupHasUsersList;
+    }
 }
