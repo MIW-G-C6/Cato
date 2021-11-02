@@ -56,8 +56,15 @@ public class GroupHasUsersService {
         groupHasUsersRepository.deleteByUserAndGroup(userRepository.getById(userId), groupRepository.getById(groupId));
     }
 
-    public Optional<GroupHasUsers> findByUserIdAndGroupId(Integer userId, Integer groupId) {
-        return groupHasUsersRepository.findGroupHasUsersByUserAndGroup(
+    public Optional<GroupHasUsersDTO> findByUserIdAndGroupId(Integer userId, Integer groupId) {
+        Optional<GroupHasUsers> groupHasUsers = groupHasUsersRepository.findGroupHasUsersByUserAndGroup(
+                userRepository.getById(userId),
+                groupRepository.getById(groupId))
+
+        if (groupHasUsers.isPresent()) {
+            Optional<GroupHasUsersDTO> result = groupHasUsersDTOConverter.toDTO(groupHasUsers.get());
+        }
+        return groupHasUsersDTOConverter.toDTO(groupHasUsersRepository.findGroupHasUsersByUserAndGroup(
                 userRepository.getById(userId),
                 groupRepository.getById(groupId));
     }
