@@ -1,19 +1,11 @@
 package nl.miwgroningen.se6.heartcoded.CaTo.dto;
 
-import nl.miwgroningen.se6.heartcoded.CaTo.model.Task;
-import nl.miwgroningen.se6.heartcoded.CaTo.model.User;
-
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
  * @author Paul Romkes <p.r.romkes@gmail.com
- * <p>
- * Dit is wat het programma doet
+ *
+ * DTO version of the taskList model.
  */
 
 public class TaskListDTO {
@@ -23,14 +15,6 @@ public class TaskListDTO {
     private List<TaskDTO> taskList;
 
     private UserDTO client;
-
-    public TaskListDTO(UserDTO client) {
-        this.client = client;
-        this.taskList = new ArrayList<>();
-    }
-
-    public TaskListDTO() {
-    }
 
     public Integer getTaskListId() {
         return taskListId;
