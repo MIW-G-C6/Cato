@@ -1,5 +1,6 @@
 package nl.miwgroningen.se6.heartcoded.CaTo.controller;
 
+import nl.miwgroningen.se6.heartcoded.CaTo.dto.TaskListDTO;
 import nl.miwgroningen.se6.heartcoded.CaTo.model.GroupHasUsers;
 import nl.miwgroningen.se6.heartcoded.CaTo.model.TaskList;
 import nl.miwgroningen.se6.heartcoded.CaTo.repository.TaskListRepository;
@@ -38,7 +39,7 @@ public class TaskListController {
 
     @GetMapping("/taskLists/{taskListId}")
     protected String showTaskListDetails(@PathVariable("taskListId") Integer taskListId, Model model) {
-        Optional<TaskList> taskList = taskListService.findById(taskListId);
+        Optional<TaskListDTO> taskList = taskListService.findById(taskListId);
         if (taskList.isEmpty()) {
             return "redirect:/taskLists";
         }
