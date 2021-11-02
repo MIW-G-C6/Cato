@@ -1,12 +1,10 @@
 package nl.miwgroningen.se6.heartcoded.CaTo.dto;
 
-import nl.miwgroningen.se6.heartcoded.CaTo.dto.GroupHasUsersDTO;
-
 import java.util.List;
 
 /**
  * @author Remco Lantinga <remco_lantinga@hotmail.com>
- * hier komt wat het programma doet
+ * DTO version of model Group
  */
 public class GroupDTO {
 
@@ -14,7 +12,6 @@ public class GroupDTO {
 
     private String groupName;
 
-    //TODO add List<GroupHasUsersDTO>
     private List<GroupHasUsersDTO> groupHasUsersDTOList;
 
     public Integer getGroupId() {
