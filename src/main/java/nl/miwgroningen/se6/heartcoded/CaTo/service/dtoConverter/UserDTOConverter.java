@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserDTOConverter {
 
-    protected UserDTO toDTO(User user) {
+    public UserDTO toDTO(User user) {
         UserDTO result = new UserDTO();
         result.setUserId(user.getUserId());
         result.setName(user.getUsername());
@@ -22,7 +22,7 @@ public class UserDTOConverter {
         return result;
     }
 
-    protected User toModel(UserDTO userDTO) {
+    public User toModel(UserDTO userDTO) {
         User result = new User();
         result.setUserId(userDTO.getUserId());
         result.setName(userDTO.getName());

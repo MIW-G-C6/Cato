@@ -23,7 +23,7 @@ public class GroupHasUsersDTOConverter {
         this.groupDTOConverter = groupDTOConverter;
     }
 
-    protected GroupHasUsersDTO toDTO (GroupHasUsers groupHasUsers) {
+    public GroupHasUsersDTO toDTO (GroupHasUsers groupHasUsers) {
         GroupHasUsersDTO result = new GroupHasUsersDTO();
         result.setGroup(groupDTOConverter.toDTO(groupHasUsers.getGroup()));
         result.setUser(userDTOConverter.toDTO(groupHasUsers.getUser()));
@@ -33,7 +33,7 @@ public class GroupHasUsersDTOConverter {
         return result;
     }
 
-    protected GroupHasUsers toModel (GroupHasUsersDTO groupHasUsersDTO) {
+    public GroupHasUsers toModel (GroupHasUsersDTO groupHasUsersDTO) {
         GroupHasUsers result = new GroupHasUsers();
         result.setGroup(groupDTOConverter.toModel(groupHasUsersDTO.getGroup()));
         result.setUser(userDTOConverter.toModel(groupHasUsersDTO.getUser()));

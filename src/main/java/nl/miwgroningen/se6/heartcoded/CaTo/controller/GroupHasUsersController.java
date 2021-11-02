@@ -61,7 +61,7 @@ public class GroupHasUsersController {
                                          @PathVariable("userId") Integer userId,
                                          RedirectAttributes redirectAttributes) {
         // checks first if the group member isn't the last group admin. If so, it can't be removed from the group.
-        Optional<GroupHasUsers> groupHasUser = groupHasUsersService.findByUserIdAndGroupId(userId, groupId);
+        Optional<GroupHasUsersDTO> groupHasUser = groupHasUsersService.findByUserIdAndGroupId(userId, groupId);
         if (groupHasUser.isPresent()) {
             if (groupHasUsersService.findOutIfGroupHasUsersIsAdmin(groupHasUser.get()) &&
                     groupHasUsersService.getGroupAdminsByGroupId(
@@ -132,7 +132,7 @@ public class GroupHasUsersController {
     @GetMapping("/options/{groupId}/updatemember/{userId}")
     protected String showGroupUpdateMember(@PathVariable("userId") Integer userId,
                                            @PathVariable("groupId") Integer groupId, Model model) {
-        Optional<GroupHasUsers> groupHasUsers = groupHasUsersService.findByUserIdAndGroupId(userId, groupId);
+        Optional<GroupHasUsersDTO> groupHasUsers = groupHasUsersService.findByUserIdAndGroupId(userId, groupId);
         if (groupHasUsers.isEmpty()) {
             return "redirect:/groups/options/{groupId}";
         }

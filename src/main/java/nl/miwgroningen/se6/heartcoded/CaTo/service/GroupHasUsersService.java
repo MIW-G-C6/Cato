@@ -28,12 +28,12 @@ import java.util.Optional;
 @Service
 public class GroupHasUsersService {
 
-    GroupHasUsersDTOConverter groupHasUsersDTOConverter;
+    private final GroupHasUsersDTOConverter groupHasUsersDTOConverter;
 
-    GroupRepository groupRepository;
-    UserRepository userRepository;
-    GroupHasUsersRepository groupHasUsersRepository;
-    TaskListRepository taskListRepository;
+    private final GroupRepository groupRepository;
+    private final UserRepository userRepository;
+    private final GroupHasUsersRepository groupHasUsersRepository;
+    private final TaskListRepository taskListRepository;
 
     public GroupHasUsersService(GroupHasUsersDTOConverter groupHasUsersDTOConverter, GroupRepository groupRepository, UserRepository userRepository, GroupHasUsersRepository groupHasUsersRepository, TaskListRepository taskListRepository) {
         this.groupHasUsersDTOConverter = groupHasUsersDTOConverter;
@@ -56,17 +56,17 @@ public class GroupHasUsersService {
         groupHasUsersRepository.deleteByUserAndGroup(userRepository.getById(userId), groupRepository.getById(groupId));
     }
 
-    public Optional<GroupHasUsers> findByUserIdAndGroupId(Integer userId, Integer groupId) {
-//        Optional<GroupHasUsers> groupHasUsers = groupHasUsersRepository.findGroupHasUsersByUserAndGroup(
-//                userRepository.getById(userId),
-//                groupRepository.getById(groupId))
-//
-//        if (groupHasUsers.isPresent()) {
-//            Optional<GroupHasUsersDTO> result = groupHasUsersDTOConverter.toDTO(groupHasUsers.get());
-//        }
-        return groupHasUsersRepository.findGroupHasUsersByUserAndGroup(
+    public Optional<GroupHasUsersDTO> findByUserIdAndGroupId(Integer userId, Integer groupId) {
+        Optional<GroupHasUsersDTO> result = Optional.empty();
+
+        Optional<GroupHasUsers> groupHasUsers = groupHasUsersRepository.findGroupHasUsersByUserAndGroup(
                 userRepository.getById(userId),
                 groupRepository.getById(groupId));
+        if(groupHasUsers.isPresent()) {
+            result = Optional.of(groupHasUsersDTOConverter.toDTO(groupHasUsers.get()));
+        }
+
+        return result;
     }
 
     public List<Group> getAllGroupsByUserId(Integer userId) {
