@@ -1,5 +1,6 @@
 package nl.miwgroningen.se6.heartcoded.CaTo.dto;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -15,6 +16,14 @@ public class TaskListDTO {
     private List<TaskDTO> taskList;
 
     private UserDTO client;
+
+    public TaskListDTO(UserDTO client) {
+        this.taskList = new ArrayList<>();
+        this.client = client;
+    }
+
+    public TaskListDTO() {
+    }
 
     public Integer getTaskListId() {
         return taskListId;

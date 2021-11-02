@@ -1,7 +1,10 @@
 package nl.miwgroningen.se6.heartcoded.CaTo.service;
 
+import nl.miwgroningen.se6.heartcoded.CaTo.dto.UserDTO;
+import nl.miwgroningen.se6.heartcoded.CaTo.dto.UserWithPasswordDTO;
 import nl.miwgroningen.se6.heartcoded.CaTo.model.User;
 import nl.miwgroningen.se6.heartcoded.CaTo.repository.UserRepository;
+import nl.miwgroningen.se6.heartcoded.CaTo.service.dtoConverter.UserDTOConverter;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -19,24 +22,32 @@ import java.util.Optional;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final UserDTOConverter userDTOConverter;
 
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, UserDTOConverter userDTOConverter) {
         this.userRepository = userRepository;
+        this.userDTOConverter = userDTOConverter;
     }
 
-    public List<User> findAllUsers() {
+    public List<UserDTO> findAllUsers() {
         List<User> findUsers = userRepository.findAll();
-        List<User> allUsers = new ArrayList<>();
 
+        List<UserDTO> userDTOList = new ArrayList<>();
         for (User user : findUsers) {
-            allUsers.add(new User(user.getUserId(), user.getName(), user.getEmail()));
+            userDTOList.add(userDTOConverter.toDTO(user));
+        }
+
+        List<UserDTO> allUsers = new ArrayList<>();
+
+        for (UserDTO user : userDTOList) {
+            allUsers.add(new UserDTO(user.getUserId(), user.getName(), user.getEmail()));
         }
         return allUsers;
     }
 
-    public User getById(Integer userId) {
-        User user = new User();
-        User userTemp = userRepository.getById(userId);
+    public UserDTO getById(Integer userId) {
+        UserDTO user = new UserDTO();
+        UserDTO userTemp = userDTOConverter.toDTO(userRepository.getById(userId));
         user.setUserId(userTemp.getUserId());
         user.setName(userTemp.getName());
         user.setEmail(userTemp.getEmail());
@@ -48,12 +59,23 @@ public class UserService {
         userRepository.deleteById(userId);
     }
 
-    public void saveUser(User user) {
-        userRepository.save(user);
+    public void saveUser(UserDTO user) {
+        userRepository.save(userDTOConverter.toModel(user));
     }
 
-    public Optional<User> findUserByEmail(String email) {
-        return userRepository.findByEmail(email);
+    public void saveNewUser(UserWithPasswordDTO user) {
+        userRepository.save( userDTOConverter.toModelWithPassword(user) );
+    }
+
+    public Optional<UserDTO> findUserByEmail(String email) {
+        Optional<UserDTO> userDTO = Optional.empty();
+        Optional<User> user = userRepository.findByEmail(email);
+
+        if (user.isEmpty()) {
+            userDTO = Optional.of(userDTOConverter.toDTO(user.get()));
+        }
+
+        return userDTO;
     }
 
     public boolean emailInUse(String email) {

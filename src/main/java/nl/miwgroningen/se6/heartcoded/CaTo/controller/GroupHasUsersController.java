@@ -2,11 +2,8 @@ package nl.miwgroningen.se6.heartcoded.CaTo.controller;
 
 import nl.miwgroningen.se6.heartcoded.CaTo.dto.GroupDTO;
 import nl.miwgroningen.se6.heartcoded.CaTo.dto.GroupHasUsersDTO;
+import nl.miwgroningen.se6.heartcoded.CaTo.dto.TaskListDTO;
 import nl.miwgroningen.se6.heartcoded.CaTo.dto.UserDTO;
-import nl.miwgroningen.se6.heartcoded.CaTo.model.Group;
-import nl.miwgroningen.se6.heartcoded.CaTo.model.GroupHasUsers;
-import nl.miwgroningen.se6.heartcoded.CaTo.model.TaskList;
-import nl.miwgroningen.se6.heartcoded.CaTo.model.User;
 import nl.miwgroningen.se6.heartcoded.CaTo.service.GroupHasUsersService;
 import nl.miwgroningen.se6.heartcoded.CaTo.service.GroupService;
 import nl.miwgroningen.se6.heartcoded.CaTo.service.TaskListService;
@@ -182,14 +179,14 @@ public class GroupHasUsersController {
     protected void createNewTaskList(GroupHasUsersDTO groupHasUsers) {
         if (isClient(groupHasUsers)) {
 
-            TaskList taskList = taskListService.findByUser(groupHasUsers.getUser());
+            TaskListDTO taskList = taskListService.findByUser(groupHasUsers.getUser());
             if (taskList == null) {
-                taskListService.save(new TaskList(groupHasUsers.getUser()));
+                taskListService.save(new TaskListDTO(groupHasUsers.getUser()));
             }
         }
     }
 
     protected boolean isClient(GroupHasUsersDTO groupHasUsers) {
-        return groupHasUsers.getUserRole().equals(GroupHasUsers.getGroupRoleOptions()[1]);
+        return groupHasUsers.getUserRole().equals(GroupHasUsersDTO.getGroupRoleOptions()[1]);
     }
 }

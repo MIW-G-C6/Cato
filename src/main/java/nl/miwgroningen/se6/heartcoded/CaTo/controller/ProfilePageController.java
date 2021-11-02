@@ -1,6 +1,6 @@
 package nl.miwgroningen.se6.heartcoded.CaTo.controller;
 
-import nl.miwgroningen.se6.heartcoded.CaTo.model.User;
+import nl.miwgroningen.se6.heartcoded.CaTo.dto.UserDTO;
 import nl.miwgroningen.se6.heartcoded.CaTo.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,7 +24,7 @@ public class ProfilePageController {
 
     @GetMapping("/profilepage/{userId}")
     protected String showProfilePage(@PathVariable("userId") Integer userId, Model model) {
-        User user = userService.getById(userId);
+        UserDTO user = userService.getById(userId);
         model.addAttribute("user", user);
         return "profilePage";
     }

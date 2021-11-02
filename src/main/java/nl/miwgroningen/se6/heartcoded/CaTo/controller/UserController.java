@@ -1,6 +1,7 @@
 package nl.miwgroningen.se6.heartcoded.CaTo.controller;
 
-import nl.miwgroningen.se6.heartcoded.CaTo.model.User;
+import nl.miwgroningen.se6.heartcoded.CaTo.dto.UserDTO;
+import nl.miwgroningen.se6.heartcoded.CaTo.dto.UserWithPasswordDTO;
 import nl.miwgroningen.se6.heartcoded.CaTo.service.UserService;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -38,23 +39,23 @@ public class UserController {
 
     @GetMapping("/registration")
     protected String showUserForm(Model model) {
-        model.addAttribute("user", new User());
+        model.addAttribute("user", new UserWithPasswordDTO());
         model.addAttribute("allUsers", userService.findAllUsers());
         return "registrationForm";
     }
 
     @PostMapping("/registration")
-    protected String saveUser(@ModelAttribute("user") User user, BindingResult result) {
+    protected String saveUser(@ModelAttribute("user") UserDTO user, @ModelAttribute("userWithPW") UserWithPasswordDTO userWithPasswordDTO, BindingResult result) {
         String returnString;
         if (isUserAnonymous()) {
-            returnString = saveNewUser(user, result);
+            returnString = saveNewUser(userWithPasswordDTO, result);
         } else {
             returnString = updateUser(user, result);
         }
         return returnString;
     }
 
-    protected String saveNewUser(User user, BindingResult result) {
+    protected String saveNewUser(UserWithPasswordDTO user, BindingResult result) {
         if (userService.emailInUse(user.getEmail())) {
             ObjectError error = new ObjectError("globalError", "Email is already in use");
             result.addError(error);
@@ -63,12 +64,12 @@ public class UserController {
             return "registrationForm";
         }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        userService.saveUser(user);
+        userService.saveNewUser(user);
         return "redirect:/users";
     }
 
-    protected String updateUser(User user, BindingResult result) {
-        User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    protected String updateUser(UserDTO user, BindingResult result) {
+        UserDTO currentUser = (UserDTO) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (userService.emailInUse(user.getEmail()) && !user.getEmail().equals(currentUser.getEmail())) {
             ObjectError error = new ObjectError("globalError", "Email is already in use");
             result.addError(error);
@@ -76,7 +77,7 @@ public class UserController {
         if (result.hasErrors()) {
             return "editUserForm";
         }
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+//        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userService.saveUser(user);
         return "redirect:/profilepage/" + user.getUserId();
     }
@@ -89,7 +90,7 @@ public class UserController {
 
     @GetMapping("/users/update/{userId}")
     protected String showUpdateUserForm(@PathVariable("userId") Integer userId, Model model) {
-        User user = userService.getById(userId);
+        UserDTO user = userService.getById(userId);
         model.addAttribute("user", user);
         model.addAttribute("allUsers", userService.findAllUsers());
         return "editUserForm";

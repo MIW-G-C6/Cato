@@ -63,7 +63,7 @@ public class GroupController {
                                        @ModelAttribute("groupHasUsers") GroupHasUsers groupHasUsers, BindingResult result) {
         if (!result.hasErrors()) {
             groupService.saveGroup(group);
-            UserDTO user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            UserDTO user = (UserDTO) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             groupHasUsersService.saveGroupHasUsers(new GroupHasUsersDTO(group, user, "Caregiver", true));
         }
         return "redirect:/groups/" + group.getGroupId();
