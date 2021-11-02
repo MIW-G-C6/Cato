@@ -1,10 +1,14 @@
 package nl.miwgroningen.se6.heartcoded.CaTo.service;
 
+import nl.miwgroningen.se6.heartcoded.CaTo.dto.TaskDTO;
 import nl.miwgroningen.se6.heartcoded.CaTo.model.Task;
 import nl.miwgroningen.se6.heartcoded.CaTo.repository.TaskListRepository;
 import nl.miwgroningen.se6.heartcoded.CaTo.repository.TaskRepository;
+import nl.miwgroningen.se6.heartcoded.CaTo.service.dtoConverter.TaskDTOConverter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.swing.text.html.Option;
 import java.util.Optional;
 
 /**
@@ -17,28 +21,37 @@ import java.util.Optional;
 public class TaskService {
 
     private final TaskRepository taskRepository;
+    private final TaskDTOConverter taskDTOConverter;
 
-    public TaskService(TaskRepository taskRepository) {
+    public TaskService(TaskRepository taskRepository, TaskDTOConverter taskDTOConverter) {
         this.taskRepository = taskRepository;
+        this.taskDTOConverter = taskDTOConverter;
     }
 
-    public Optional<Task> findById(Integer taskId) {
-        return taskRepository.findById(taskId);
+    public Optional<TaskDTO> findById(Integer taskId) {
+        Optional<TaskDTO> taskDTO = Optional.empty();
+
+        Optional<Task> task = taskRepository.findById(taskId);
+        if (!task.isEmpty()) {
+            taskDTO = Optional.of(taskDTOConverter.toDTO(task.get()));
+        }
+
+        return taskDTO;
     }
 
-    public Task getById(Integer taskId) {
-        return taskRepository.getById(taskId);
+    public TaskDTO getById(Integer taskId) {
+        return taskDTOConverter.toDTO(taskRepository.getById(taskId));
     }
 
     public void deleteById(Integer taskId) {
         taskRepository.deleteById(taskId);
     }
 
-    public void save(Task task) {
-        taskRepository.save(task);
+    public void save(TaskDTO task) {
+        taskRepository.save(taskDTOConverter.toModel(task));
     }
 
     public Integer getTaskListIdByTaskId(Integer taskId) {
-        return taskRepository.getById(taskId).getTaskList().getTaskListId();
+        return taskDTOConverter.toDTO(taskRepository.getById(taskId)).getTaskList().getTaskListId();
     }
 }
