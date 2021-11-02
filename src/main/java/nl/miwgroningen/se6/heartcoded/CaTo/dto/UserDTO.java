@@ -18,6 +18,15 @@ public class UserDTO {
 
     private List<GroupHasUsersDTO> groupHasUsersDTOList;
 
+    public UserDTO(Integer userId, String name, String email) {
+        this.userId = userId;
+        this.name = name;
+        this.email = email;
+    }
+
+    public UserDTO() {
+    }
+
     public Integer getUserId() {
         return userId;
     }

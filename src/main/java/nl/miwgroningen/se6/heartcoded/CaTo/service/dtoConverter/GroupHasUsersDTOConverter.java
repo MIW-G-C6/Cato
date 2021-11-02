@@ -17,8 +17,8 @@ import java.util.Optional;
 @Service
 public class GroupHasUsersDTOConverter {
 
-    UserDTOConverter userDTOConverter;
-    GroupDTOConverter groupDTOConverter;
+    private final UserDTOConverter userDTOConverter;
+    private final GroupDTOConverter groupDTOConverter;
 
     public GroupHasUsersDTOConverter(UserDTOConverter userDTOConverter, GroupDTOConverter groupDTOConverter) {
         this.userDTOConverter = userDTOConverter;
