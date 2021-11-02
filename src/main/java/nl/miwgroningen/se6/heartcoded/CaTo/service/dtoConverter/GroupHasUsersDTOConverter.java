@@ -4,6 +4,8 @@ import nl.miwgroningen.se6.heartcoded.CaTo.dto.GroupHasUsersDTO;
 import nl.miwgroningen.se6.heartcoded.CaTo.model.GroupHasUsers;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -44,9 +46,13 @@ public class GroupHasUsersDTOConverter {
     }
 
 
-//    protected Optional<GroupHasUsersDTO> toOptionalDTO (Optional<GroupHasUsers> groupHasUsers) {
-//        Optional<GroupHasUsersDTO> result;
-//        result
-//    }
+    public List<GroupHasUsersDTO> toListDTO(List<GroupHasUsers> groupHasUsersList) {
+        List <GroupHasUsersDTO> result = new ArrayList<>();
+
+        for (GroupHasUsers groupHasUsers : groupHasUsersList) {
+            result.add(toDTO(groupHasUsers));
+        }
+        return result;
+    }
 
 }
