@@ -1,13 +1,9 @@
 package nl.miwgroningen.se6.heartcoded.CaTo.dto;
 
-import nl.miwgroningen.se6.heartcoded.CaTo.model.TaskList;
-
-import javax.persistence.ManyToOne;
-
 /**
  * @author Erwin Wegter <ewegter@gmail.com>
  *
- *
+ * DTO version of model Task
  */
 public class TaskDTO {
 
