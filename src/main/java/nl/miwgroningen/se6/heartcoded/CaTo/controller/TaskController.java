@@ -1,11 +1,9 @@
 package nl.miwgroningen.se6.heartcoded.CaTo.controller;
 
-import nl.miwgroningen.se6.heartcoded.CaTo.model.GroupHasUsers;
-import nl.miwgroningen.se6.heartcoded.CaTo.model.Task;
-import nl.miwgroningen.se6.heartcoded.CaTo.model.TaskList;
-import nl.miwgroningen.se6.heartcoded.CaTo.model.User;
-import nl.miwgroningen.se6.heartcoded.CaTo.repository.TaskListRepository;
-import nl.miwgroningen.se6.heartcoded.CaTo.repository.TaskRepository;
+import nl.miwgroningen.se6.heartcoded.CaTo.dto.GroupHasUsersDTO;
+import nl.miwgroningen.se6.heartcoded.CaTo.dto.TaskDTO;
+import nl.miwgroningen.se6.heartcoded.CaTo.dto.TaskListDTO;
+import nl.miwgroningen.se6.heartcoded.CaTo.dto.UserDTO;
 import nl.miwgroningen.se6.heartcoded.CaTo.service.GroupHasUsersService;
 import nl.miwgroningen.se6.heartcoded.CaTo.service.TaskListService;
 import nl.miwgroningen.se6.heartcoded.CaTo.service.TaskService;
@@ -39,7 +37,8 @@ public class TaskController {
 
     @GetMapping("/taskLists/{taskListId}/{taskId}")
     protected String showTaskDetails(@PathVariable("taskListId") Integer taskListId, @PathVariable("taskId") Integer taskId, Model model) {
-        Optional<Task> task = taskService.findById(taskId);
+
+        Optional<TaskDTO> task = taskService.findById(taskId);
         if (task.isEmpty()) {
             return "redirect:/taskLists/" + taskListId;
         }
@@ -50,7 +49,7 @@ public class TaskController {
 
     @GetMapping("taskLists/{taskListId}/update/{taskId}")
     protected String showUpdateTaskForm(@PathVariable("taskListId") Integer taskListId, @PathVariable("taskId") Integer taskId, Model model) {
-        Optional<Task> task = taskService.findById(taskId);
+        Optional<TaskDTO> task = taskService.findById(taskId);
         if (task.isEmpty()) {
             return "redirect:/taskLists/" + taskListId;
         }
@@ -61,11 +60,11 @@ public class TaskController {
 
     @GetMapping("/taskLists/{taskListId}/new")
     protected String showTaskForm(@PathVariable("taskListId") Integer taskListId, Model model) {
-        Optional<TaskList> taskList = taskListService.findById(taskListId);
+        Optional<TaskListDTO> taskList = taskListService.findById(taskListId);
         if (taskList.isEmpty()) {
             return "redirect:/taskLists";
         }
-        model.addAttribute("task", new Task());
+        model.addAttribute("task", new TaskDTO());
         model.addAttribute("taskList", taskListService.getById(taskListId));
         return "taskForm";
     }
@@ -73,9 +72,9 @@ public class TaskController {
     @GetMapping("/task/delete/{taskId}")
     protected String deleteTask(@PathVariable("taskId") Integer taskId) {
         Integer taskListId = taskService.getTaskListIdByTaskId(taskId);
-        TaskList taskList = taskListService.getById(taskListId);
-        User client = taskList.getClient();
-        GroupHasUsers clientGroupHasUsers = groupHasUsersService.getByClient(client);
+        TaskListDTO taskList = taskListService.getById(taskListId);
+        UserDTO client = taskList.getClient();
+        GroupHasUsersDTO clientGroupHasUsers = groupHasUsersService.getByClient(client);
         Integer groupId = clientGroupHasUsers.getGroup().getGroupId();
 
         taskService.deleteById(taskId);
@@ -85,7 +84,7 @@ public class TaskController {
     @PostMapping("/taskLists/{taskListId}/new")
     protected String saveOrUpdateTask(
             @PathVariable ("taskListId") Integer taskListId,
-            @ModelAttribute("task") Task task, BindingResult result) {
+            @ModelAttribute("task") TaskDTO task, BindingResult result) {
 
         if (!result.hasErrors()) {
             task.setTaskList(taskListService.getById(taskListId));
