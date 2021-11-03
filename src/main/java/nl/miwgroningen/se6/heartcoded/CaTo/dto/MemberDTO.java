@@ -6,7 +6,7 @@ package nl.miwgroningen.se6.heartcoded.CaTo.dto;
  * DTO version of model GroupHasUsers with userId, username and role.
  */
 
-public class GroupHasUsersDTO {
+public class MemberDTO {
 
     private Integer userId;
 

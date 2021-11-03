@@ -37,7 +37,7 @@ public class User implements UserDetails {
     private String email;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<GroupHasUsers> groupHasUsersList;
+    private List<Member> memberList;
 
     public User(Integer userId, String name, String email) {
         this.userId = userId;
@@ -113,11 +113,11 @@ public class User implements UserDetails {
         this.name = name;
     }
 
-    public List<GroupHasUsers> getGroupHasUsersList() {
-        return groupHasUsersList;
+    public List<Member> getGroupHasUsersList() {
+        return memberList;
     }
 
-    public void setGroupHasUsersList(List<GroupHasUsers> groupHasUsersList) {
-        this.groupHasUsersList = groupHasUsersList;
+    public void setGroupHasUsersList(List<Member> memberList) {
+        this.memberList = memberList;
     }
 }

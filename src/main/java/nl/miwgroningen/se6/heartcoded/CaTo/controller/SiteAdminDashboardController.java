@@ -1,6 +1,6 @@
 package nl.miwgroningen.se6.heartcoded.CaTo.controller;
 
-import nl.miwgroningen.se6.heartcoded.CaTo.service.GroupHasUsersService;
+import nl.miwgroningen.se6.heartcoded.CaTo.service.MemberService;
 import nl.miwgroningen.se6.heartcoded.CaTo.service.GroupService;
 import nl.miwgroningen.se6.heartcoded.CaTo.service.TaskListService;
 import nl.miwgroningen.se6.heartcoded.CaTo.service.UserService;
@@ -18,13 +18,13 @@ public class SiteAdminDashboardController {
 
     private UserService userService;
     private GroupService groupService;
-    private GroupHasUsersService groupHasUsersService;
+    private MemberService memberService;
     private TaskListService taskListService;
 
-    public SiteAdminDashboardController(UserService userService, GroupService groupService, GroupHasUsersService groupHasUsersService, TaskListService taskListService) {
+    public SiteAdminDashboardController(UserService userService, GroupService groupService, MemberService memberService, TaskListService taskListService) {
         this.userService = userService;
         this.groupService = groupService;
-        this.groupHasUsersService = groupHasUsersService;
+        this.memberService = memberService;
         this.taskListService = taskListService;
     }
 
@@ -32,7 +32,7 @@ public class SiteAdminDashboardController {
     protected String showSiteAdminDashboard(Model model) {
         model.addAttribute("allUsers", userService.findAllUsers());
         model.addAttribute("allTaskLists", taskListService.findAll());
-        model.addAttribute("allClients", groupHasUsersService.findAllClients());
+        model.addAttribute("allClients", memberService.findAllClients());
         model.addAttribute("allGroups", groupService.findAllGroups());
 
         return "siteAdminDashboard";

@@ -24,12 +24,12 @@
         <hr>
         <table>
             <tr> <div class="error" th:text="${error}"></div></tr>
-            <tr th:each="thisGroupHasUser : ${allGroupHasUsersByGroupId}" >
-                <td th:text="${thisGroupHasUser.user.name}"></td>
+            <tr th:each="thisMember : ${allMembersByGroupId}" >
+                <td th:text="${thisMember.user.name}"></td>
                 <td width="40%">
-                    <span class="float-left" th:text="${thisGroupHasUser.userRole}"></span>
-                    <a class="float-right" th:href="@{'/groups/options/{groupId}/updatemember/' + ${thisGroupHasUser.user.userId}(groupId=${thisGroup.groupId})}"><img th:src="@{/css/images/edit-icon.svg}" height="20" width="20" title="edit role"></a></td>
-                <td class="delete"><a th:href="@{'/groups/options/{groupId}/delete/' + ${thisGroupHasUser.user.userId}(groupId=${thisGroup.groupId})}"><img th:src="@{/css/images/delete-icon.svg}" height="20" width="20" title="remove user from group"></a></td>
+                    <span class="float-left" th:text="${thisMember.userRole}"></span>
+                    <a class="float-right" th:href="@{'/groups/options/{groupId}/updatemember/' + ${thisMember.user.userId}(groupId=${thisGroup.groupId})}"><img th:src="@{/css/images/edit-icon.svg}" height="20" width="20" title="edit role"></a></td>
+                <td class="delete"><a th:href="@{'/groups/options/{groupId}/delete/' + ${thisMember.user.userId}(groupId=${thisGroup.groupId})}"><img th:src="@{/css/images/delete-icon.svg}" height="20" width="20" title="remove user from group"></a></td>
             </tr>
         </table>
     </div>

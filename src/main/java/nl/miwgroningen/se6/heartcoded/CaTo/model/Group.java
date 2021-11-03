@@ -19,7 +19,7 @@ public class Group {
     private String groupName;
 
     @OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
-    private List<GroupHasUsers> groupHasUsersList;
+    private List<Member> memberList;
 
     public Integer getGroupId() {
         return groupId;
@@ -37,11 +37,11 @@ public class Group {
         this.groupName = groupName;
     }
 
-    public List<GroupHasUsers> getGroupHasUsersList() {
-        return groupHasUsersList;
+    public List<Member> getGroupHasUsersList() {
+        return memberList;
     }
 
-    public void setGroupHasUsersList(List<GroupHasUsers> groupHasUsersList) {
-        this.groupHasUsersList = groupHasUsersList;
+    public void setGroupHasUsersList(List<Member> memberList) {
+        this.memberList = memberList;
     }
 }

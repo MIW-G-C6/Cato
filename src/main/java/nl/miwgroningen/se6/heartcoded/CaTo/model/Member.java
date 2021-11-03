@@ -10,8 +10,8 @@ import javax.persistence.*;
  */
 
 @Entity
-@IdClass(GroupHasUsersId.class)
-public class GroupHasUsers {
+@IdClass(MemberId.class)
+public class Member {
 
     private static final String[] GROUP_ROLE_OPTIONS = {"Caregiver", "Client"};
 
@@ -27,14 +27,14 @@ public class GroupHasUsers {
 
     private boolean isAdmin;
 
-    public GroupHasUsers(Group group, User user, String userRole, boolean isAdmin) {
+    public Member(Group group, User user, String userRole, boolean isAdmin) {
         this.group = group;
         this.user = user;
         this.userRole = userRole;
         this.isAdmin = isAdmin;
     }
 
-    public GroupHasUsers() {
+    public Member() {
     }
 
     public Group getGroup() {

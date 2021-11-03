@@ -15,7 +15,7 @@
 
 <div class="container">
   <div class="group-edit-member">
-    <form class="cato-form" th:action="@{/groups/options/{groupId}/editmember/(groupId=${thisGroup.groupId})}" method="get" th:object="${makeGroupHasUsers}">
+    <form class="cato-form" th:action="@{/groups/options/{groupId}/editmember/(groupId=${thisGroup.groupId})}" method="get" th:object="${makeMember}">
       <div>
         <h1>Add a new member</h1>
         <label>User e-mail</label>
@@ -29,8 +29,8 @@
       <div>
         <label>Select a user role</label>
         <ul class="cato-radio">
-          <li th:each="userRole : ${makeGroupHasUsers.groupRoleOptions}">
-            <input type="radio" th:field="${makeGroupHasUsers.userRole}" th:value="${userRole}" required>
+          <li th:each="userRole : ${makeMember.groupRoleOptions}">
+            <input type="radio" th:field="${makeMember.userRole}" th:value="${userRole}" required>
             <label th:for="${#ids.prev('userRole')}" th:text="${userRole}"></label>
           </li>
         </ul>

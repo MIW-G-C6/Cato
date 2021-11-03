@@ -1,7 +1,7 @@
 package nl.miwgroningen.se6.heartcoded.CaTo.service;
 
-import nl.miwgroningen.se6.heartcoded.CaTo.model.GroupHasUsers;
-import nl.miwgroningen.se6.heartcoded.CaTo.repository.GroupHasUsersRepository;
+import nl.miwgroningen.se6.heartcoded.CaTo.model.Member;
+import nl.miwgroningen.se6.heartcoded.CaTo.repository.MemberRepository;
 import nl.miwgroningen.se6.heartcoded.CaTo.repository.GroupRepository;
 import nl.miwgroningen.se6.heartcoded.CaTo.repository.TaskListRepository;
 import nl.miwgroningen.se6.heartcoded.CaTo.repository.UserRepository;
@@ -23,7 +23,7 @@ import java.util.Optional;
  */
 
 @Service
-public class GroupHasUsersService {
+public class MemberService {
 
     private final GroupHasUsersDTOConverter groupHasUsersDTOConverter;
     private final GroupDTOConverter groupDTOConverter;
@@ -31,42 +31,42 @@ public class GroupHasUsersService {
 
     private final GroupRepository groupRepository;
     private final UserRepository userRepository;
-    private final GroupHasUsersRepository groupHasUsersRepository;
+    private final MemberRepository memberRepository;
     private final TaskListRepository taskListRepository;
 
-    public GroupHasUsersService(GroupHasUsersDTOConverter groupHasUsersDTOConverter,
-                                GroupDTOConverter groupDTOConverter,
-                                UserDTOConverter userDTOConverter,
-                                GroupRepository groupRepository,
-                                UserRepository userRepository,
-                                GroupHasUsersRepository groupHasUsersRepository,
-                                TaskListRepository taskListRepository) {
+    public MemberService(GroupHasUsersDTOConverter groupHasUsersDTOConverter,
+                         GroupDTOConverter groupDTOConverter,
+                         UserDTOConverter userDTOConverter,
+                         GroupRepository groupRepository,
+                         UserRepository userRepository,
+                         MemberRepository memberRepository,
+                         TaskListRepository taskListRepository) {
         this.groupHasUsersDTOConverter = groupHasUsersDTOConverter;
         this.groupDTOConverter = groupDTOConverter;
         this.userDTOConverter = userDTOConverter;
         this.groupRepository = groupRepository;
         this.userRepository = userRepository;
-        this.groupHasUsersRepository = groupHasUsersRepository;
+        this.memberRepository = memberRepository;
         this.taskListRepository = taskListRepository;
     }
 
-    public void saveGroupHasUsers(GroupHasUsersDTO groupHasUsers) {
-        groupHasUsersRepository.save(groupHasUsersDTOConverter.toModel(groupHasUsers));
+    public void saveMember(GroupHasUsersDTO groupHasUsers) {
+        memberRepository.save(groupHasUsersDTOConverter.toModel(groupHasUsers));
     }
 
     public List<GroupHasUsersDTO> getAllByGroupId(Integer groupId) {
-        return groupHasUsersDTOConverter.toDTOList(groupHasUsersRepository.
+        return groupHasUsersDTOConverter.toDTOList(memberRepository.
                 getAllByGroup(groupRepository.getById(groupId)));
     }
 
     @Transactional
     public void deleteByUserId(Integer userId, Integer groupId) {
-        groupHasUsersRepository.deleteByUserAndGroup(userRepository.getById(userId), groupRepository.getById(groupId));
+        memberRepository.deleteByUserAndGroup(userRepository.getById(userId), groupRepository.getById(groupId));
     }
 
     public Optional<GroupHasUsersDTO> findByUserIdAndGroupId(Integer userId, Integer groupId) {
         Optional<GroupHasUsersDTO> result = Optional.empty();
-        Optional<GroupHasUsers> groupHasUsers = groupHasUsersRepository.findGroupHasUsersByUserAndGroup(
+        Optional<Member> groupHasUsers = memberRepository.findGroupHasUsersByUserAndGroup(
                 userRepository.getById(userId),
                 groupRepository.getById(groupId));
         if(groupHasUsers.isPresent()) {
@@ -77,31 +77,31 @@ public class GroupHasUsersService {
 
     public List<GroupDTO> getAllGroupsByUserId(Integer userId) {
         List<GroupDTO> result = new ArrayList<>();
-        List<GroupHasUsers> groupsHasUserList = groupHasUsersRepository.getAllByUser(userRepository.getById(userId));
-        for (GroupHasUsers groupHasUsers : groupsHasUserList) {
-            result.add(groupDTOConverter.toDTO(groupHasUsers.getGroup()));
+        List<Member> groupsHasUserList = memberRepository.getAllByUser(userRepository.getById(userId));
+        for (Member member : groupsHasUserList) {
+            result.add(groupDTOConverter.toDTO(member.getGroup()));
         }
         return result;
     }
 
     public List<GroupHasUsersDTO> findAllClients() {
         List<GroupHasUsersDTO> result = new ArrayList<>();
-        for (GroupHasUsers groupHasUsers : groupHasUsersRepository.findAll()) {
-            if (groupHasUsers.getUserRole().equals("Client")) {
-                result.add(groupHasUsersDTOConverter.toDTO(groupHasUsers));
+        for (Member member : memberRepository.findAll()) {
+            if (member.getUserRole().equals("Client")) {
+                result.add(groupHasUsersDTOConverter.toDTO(member));
             }
         }
         return result;
     }
 
     public GroupHasUsersDTO getByClient(UserDTO client) {
-        List<GroupHasUsers> allGroupHasUsers = groupHasUsersRepository.getAllByUser(
+        List<Member> allGroupHasUsers = memberRepository.getAllByUser(
                 userRepository.getById(client.getUserId()));
 
         GroupHasUsersDTO result = new GroupHasUsersDTO();
-        for (GroupHasUsers groupHasUsers : allGroupHasUsers) {
-            if (groupHasUsers.getUserRole().equals("Client")) {
-                result = groupHasUsersDTOConverter.toDTO(groupHasUsers);
+        for (Member member : allGroupHasUsers) {
+            if (member.getUserRole().equals("Client")) {
+                result = groupHasUsersDTOConverter.toDTO(member);
             }
         }
         return result;
@@ -129,7 +129,7 @@ public class GroupHasUsersService {
         return result;
     }
 
-    public boolean findOutIfGroupHasUsersIsAdmin(GroupHasUsersDTO groupHasUsers) {
+    public boolean findOutIfMemberIsAdmin(GroupHasUsersDTO groupHasUsers) {
         return findByUserIdAndGroupId(groupHasUsers.getUser().getUserId(),
                 groupHasUsers.getGroup().getGroupId()).get().isAdmin();
     }

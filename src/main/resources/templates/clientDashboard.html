@@ -17,11 +17,11 @@
             <h5>Group members</h5>
             <hr>
             <table>
-                <tr th:each="thisGroupHasUser : ${allGroupHasUsersByGroupId}" >
+                <tr th:each="thisMember : ${allMembersByGroupId}" >
                     <td>
-                        <a th:href="@{/profilepage/{userId}(userId=${thisGroupHasUser.user.userId})}" th:text="${thisGroupHasUser.user.name}"></a>
+                        <a th:href="@{/profilepage/{userId}(userId=${thisMember.user.userId})}" th:text="${thisMember.user.name}"></a>
                     </td>
-                    <td th:text="${thisGroupHasUser.userRole}"></td>
+                    <td th:text="${thisMember.userRole}"></td>
                 </tr>
             </table>
         </div>

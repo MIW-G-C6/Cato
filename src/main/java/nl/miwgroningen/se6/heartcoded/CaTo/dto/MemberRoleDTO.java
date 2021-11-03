@@ -1,12 +1,10 @@
 package nl.miwgroningen.se6.heartcoded.CaTo.dto;
 
-import java.util.List;
-
 /**
  * @author Remco Lantinga <remco_lantinga@hotmail.com>
  * hier komt wat het programma doet
  */
-public class GroupHasUsersRoleDTO {
+public class MemberRoleDTO {
 
     private static final String[] GROUP_ROLE_OPTIONS = {"Caregiver", "Client"};
 

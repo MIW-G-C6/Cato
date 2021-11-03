@@ -1,6 +1,6 @@
 package nl.miwgroningen.se6.heartcoded.CaTo.controller;
 
-import nl.miwgroningen.se6.heartcoded.CaTo.service.GroupHasUsersService;
+import nl.miwgroningen.se6.heartcoded.CaTo.service.MemberService;
 import nl.miwgroningen.se6.heartcoded.CaTo.service.GroupService;
 import nl.miwgroningen.se6.heartcoded.CaTo.service.TaskListService;
 import nl.miwgroningen.se6.heartcoded.CaTo.service.UserService;
@@ -22,17 +22,17 @@ import java.util.Optional;
 
 @Controller
 @RequestMapping("/groups")
-public class GroupHasUsersController {
+public class MemberController {
 
     private GroupService groupService;
-    private GroupHasUsersService groupHasUsersService;
+    private MemberService memberService;
     private UserService userService;
     private TaskListService taskListService;
 
-    public GroupHasUsersController(GroupService groupService, GroupHasUsersService groupHasUsersService,
-                                   UserService userService, TaskListService taskListService) {
+    public MemberController(GroupService groupService, MemberService memberService,
+                            UserService userService, TaskListService taskListService) {
         this.groupService = groupService;
-        this.groupHasUsersService = groupHasUsersService;
+        this.memberService = memberService;
         this.userService = userService;
         this.taskListService = taskListService;
     }
@@ -47,7 +47,7 @@ public class GroupHasUsersController {
     @GetMapping("/options/{groupId}")
     protected String showGroupOptions(@PathVariable("groupId") Integer groupId, @ModelAttribute("error") String error, Model model) {
         model.addAttribute("thisGroup", groupService.getById(groupId));
-        model.addAttribute("allGroupHasUsersByGroupId", groupHasUsersService.getAllByGroupId(groupId));
+        model.addAttribute("allMembersByGroupId", memberService.getAllByGroupId(groupId));
         return "groupOptions";
     }
 
@@ -56,15 +56,15 @@ public class GroupHasUsersController {
                                          @PathVariable("userId") Integer userId,
                                          RedirectAttributes redirectAttributes) {
         // checks first if the group member isn't the last group admin. If so, it can't be removed from the group.
-        Optional<GroupHasUsersDTO> groupHasUser = groupHasUsersService.findByUserIdAndGroupId(userId, groupId);
+        Optional<GroupHasUsersDTO> groupHasUser = memberService.findByUserIdAndGroupId(userId, groupId);
         if (groupHasUser.isPresent()) {
-            if (groupHasUsersService.findOutIfGroupHasUsersIsAdmin(groupHasUser.get()) &&
-                    groupHasUsersService.getGroupAdminsByGroupId(
+            if (memberService.findOutIfMemberIsAdmin(groupHasUser.get()) &&
+                    memberService.getGroupAdminsByGroupId(
                             groupHasUser.get().getGroup().getGroupId()).size() == 1) {
                 redirectAttributes.addAttribute("error",
                         "Cannot remove group admin if this is the only group admin");
             } else {
-                groupHasUsersService.deleteByUserId(userId, groupId);
+                memberService.deleteByUserId(userId, groupId);
             }
         }
         return "redirect:/groups/options/{groupId}";
@@ -86,24 +86,24 @@ public class GroupHasUsersController {
         return "redirect:/groups/options/{groupId}";
     }
 
-    @RequestMapping(value = "/options/{groupId}/editmember")
+    @RequestMapping(value = "/options/{groupId}/addmember")
     protected String doAddUser(@PathVariable("groupId") Integer groupId, Model model, String email,
-                               @ModelAttribute ("makeGroupHasUsers") GroupHasUsersDTO makeGroupHasUsers,
+                               @ModelAttribute ("makeMember") GroupHasUsersDTO makeMember,
                                BindingResult result) {
         String validEntry = "";
 
         if (email != null) {
             Optional<UserDTO> user = userService.findUserByEmail(email); //TODO only use userId, ono user model
             if (!user.isEmpty()) {
-                makeGroupHasUsers.setGroup(groupService.getById(groupId));
-                makeGroupHasUsers.setUser(user.get());
-                checkForErrorsAddMember(groupId, makeGroupHasUsers, result, user);
+                makeMember.setGroup(groupService.getById(groupId));
+                makeMember.setUser(user.get());
+                checkForErrorsAddMember(groupId, makeMember, result, user);
             } else {
                 result.addError(new ObjectError("globalError", "No existing account found with this email address"));
             }
             if (!result.hasErrors()) {
-                groupHasUsersService.saveGroupHasUsers(makeGroupHasUsers);
-                createNewTaskList(makeGroupHasUsers);
+                memberService.saveMember(makeMember);
+                createNewTaskList(makeMember);
                 validEntry = "Successfully added this member to your group";
             }
         }
@@ -111,16 +111,16 @@ public class GroupHasUsersController {
         model.addAttribute("validEntry", validEntry);
         model.addAttribute("groupUserRole", new GroupHasUsersDTO());
         model.addAttribute("thisGroup", groupService.getById(groupId));
-        model.addAttribute("groupHasUsers", groupHasUsersService.getAllByGroupId(groupId));
-        return "groupEditMember";
+        model.addAttribute("member", memberService.getAllByGroupId(groupId));
+        return "groupAddMember";
     }
 
-    private void checkForErrorsAddMember(Integer groupId, GroupHasUsersDTO makeGroupHasUsers, BindingResult result, Optional<UserDTO> user) {
-        if (groupHasUsersService.userInGroupExists(makeGroupHasUsers)) {
+    private void checkForErrorsAddMember(Integer groupId, GroupHasUsersDTO makeMember, BindingResult result, Optional<UserDTO> user) {
+        if (memberService.userInGroupExists(makeMember)) {
             result.addError(new ObjectError("globalError", "Not able to add the same user twice"));
         }
 
-        if (isClient(makeGroupHasUsers) && groupHasUsersService.isClientInOtherGroup(user.get(), groupId)) {
+        if (isClient(makeMember) && memberService.isClientInOtherGroup(user.get(), groupId)) {
             result.addError(new ObjectError("globalError", "User is already a client in another group"));
         }
     }
@@ -128,11 +128,11 @@ public class GroupHasUsersController {
     @GetMapping("/options/{groupId}/updatemember/{userId}")
     protected String showGroupUpdateMember(@PathVariable("userId") Integer userId,
                                            @PathVariable("groupId") Integer groupId, Model model) {
-        Optional<GroupHasUsersDTO> groupHasUsers = groupHasUsersService.findByUserIdAndGroupId(userId, groupId);
-        if (groupHasUsers.isEmpty()) {
+        Optional<GroupHasUsersDTO> member = memberService.findByUserIdAndGroupId(userId, groupId);
+        if (member.isEmpty()) {
             return "redirect:/groups/options/{groupId}";
         }
-        model.addAttribute("groupHasUser", groupHasUsers.get());
+        model.addAttribute("groupHasUser", member.get());
         return "groupUpdateMember";
     }
 
@@ -146,18 +146,18 @@ public class GroupHasUsersController {
             return  "groupUpdateMember";
         }
         createNewTaskList(groupHasUser);
-        groupHasUsersService.saveGroupHasUsers(groupHasUser);
+        memberService.saveMember(groupHasUser);
         return "redirect:/groups/options/{groupId}";
     }
 
-    private void checkForErrorsUpdateGroupMember(Integer groupId, GroupHasUsersDTO groupHasUser, BindingResult result) {
-        if (isClient(groupHasUser) && groupHasUsersService.isClientInOtherGroup(groupHasUser.getUser(), groupId)) {
+    private void checkForErrorsUpdateGroupMember(Integer groupId, GroupHasUsersDTO member, BindingResult result) {
+        if (isClient(member) && memberService.isClientInOtherGroup(member.getUser(), groupId)) {
             result.addError(new ObjectError("globalError", "This user is already a client in another group"));
         }
 
-        if (groupHasUsersService.findOutIfGroupHasUsersIsAdmin(groupHasUser) &&
-                !groupHasUser.isAdmin() &&
-                groupHasUsersService.getGroupAdminsByGroupId(groupHasUser.getGroup().getGroupId()).size() == 1) {
+        if (memberService.findOutIfMemberIsAdmin(member) &&
+                !member.isAdmin() &&
+                memberService.getGroupAdminsByGroupId(member.getGroup().getGroupId()).size() == 1) {
             result.addError(new ObjectError("globalError",
                     "Cannot remove admin rights if this member is the last admin in the group"));
         }
@@ -168,22 +168,22 @@ public class GroupHasUsersController {
                                          @PathVariable("clientId") Integer clientId, Model model) {
         model.addAttribute("client", userService.getById(clientId));
         model.addAttribute("taskList", taskListService.findByUser(userService.getById(clientId)));
-        model.addAttribute("allGroupHasUsersByGroupId", groupHasUsersService.getAllByGroupId(groupId));
+        model.addAttribute("allMembersByGroupId", memberService.getAllByGroupId(groupId));
         model.addAttribute("groupId", groupId);
         return "clientDashboard";
     }
 
-    protected void createNewTaskList(GroupHasUsersDTO groupHasUsers) {
-        if (isClient(groupHasUsers)) {
+    protected void createNewTaskList(GroupHasUsersDTO member) {
+        if (isClient(member)) {
 
-            TaskListDTO taskList = taskListService.findByUser(groupHasUsers.getUser());
+            TaskListDTO taskList = taskListService.findByUser(member.getUser());
             if (taskList == null) {
-                taskListService.save(new TaskListDTO(groupHasUsers.getUser()));
+                taskListService.save(new TaskListDTO(member.getUser()));
             }
         }
     }
 
-    protected boolean isClient(GroupHasUsersDTO groupHasUsers) {
-        return groupHasUsers.getUserRole().equals(GroupHasUsersDTO.getGroupRoleOptions()[1]);
+    protected boolean isClient(GroupHasUsersDTO member) {
+        return member.getUserRole().equals(GroupHasUsersDTO.getGroupRoleOptions()[1]);
     }
 }

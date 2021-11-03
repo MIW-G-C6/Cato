@@ -1,6 +1,6 @@
 package nl.miwgroningen.se6.heartcoded.CaTo.controller;
 
-import nl.miwgroningen.se6.heartcoded.CaTo.service.GroupHasUsersService;
+import nl.miwgroningen.se6.heartcoded.CaTo.service.MemberService;
 import nl.miwgroningen.se6.heartcoded.CaTo.service.TaskListService;
 import nl.miwgroningen.se6.heartcoded.CaTo.service.TaskService;
 import org.springframework.stereotype.Controller;
@@ -23,12 +23,12 @@ public class TaskController {
 
     private TaskService taskService;
     private TaskListService taskListService;
-    private GroupHasUsersService groupHasUsersService;
+    private MemberService memberService;
 
-    public TaskController(TaskService taskService, TaskListService taskListService, GroupHasUsersService groupHasUsersService) {
+    public TaskController(TaskService taskService, TaskListService taskListService, MemberService memberService) {
         this.taskService = taskService;
         this.taskListService = taskListService;
-        this.groupHasUsersService = groupHasUsersService;
+        this.memberService = memberService;
     }
 
     @GetMapping("/taskLists/{taskListId}/{taskId}")
@@ -70,8 +70,8 @@ public class TaskController {
         Integer taskListId = taskService.getTaskListIdByTaskId(taskId);
         TaskListDTO taskList = taskListService.getById(taskListId);
         UserDTO client = taskList.getClient();
-        GroupHasUsersDTO clientGroupHasUsers = groupHasUsersService.getByClient(client);
-        Integer groupId = clientGroupHasUsers.getGroup().getGroupId();
+        GroupHasUsersDTO clientMember = memberService.getByClient(client);
+        Integer groupId = clientMember.getGroup().getGroupId();
         //TODO used client --> groupId for redirect, fix when DTOs break it
         taskService.deleteById(taskId);
         return "redirect:/groups/" + groupId + "/clientDashboard/" + client.getUserId();

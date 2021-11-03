@@ -1,9 +1,9 @@
 package nl.miwgroningen.se6.heartcoded.CaTo.controller;
 
 import nl.miwgroningen.se6.heartcoded.CaTo.model.Group;
-import nl.miwgroningen.se6.heartcoded.CaTo.model.GroupHasUsers;
+import nl.miwgroningen.se6.heartcoded.CaTo.model.Member;
 import nl.miwgroningen.se6.heartcoded.CaTo.model.User;
-import nl.miwgroningen.se6.heartcoded.CaTo.service.GroupHasUsersService;
+import nl.miwgroningen.se6.heartcoded.CaTo.service.MemberService;
 import nl.miwgroningen.se6.heartcoded.CaTo.service.GroupService;
 import nl.miwgroningen.se6.heartcoded.CaTo.service.UserService;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -22,19 +22,19 @@ import org.springframework.web.bind.annotation.*;
 public class GroupController {
 
     private GroupService groupService;
-    private GroupHasUsersService groupHasUsersService;
+    private MemberService memberService;
     private UserService userService;
 
-    public GroupController(GroupService groupService, GroupHasUsersService groupHasUsersService, UserService userService) {
+    public GroupController(GroupService groupService, MemberService memberService, UserService userService) {
         this.groupService = groupService;
-        this.groupHasUsersService = groupHasUsersService;
+        this.memberService = memberService;
         this.userService = userService;
     }
 
     @GetMapping("/groups")
     protected String showGroupOverview(Model model) {
         User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        model.addAttribute("allGroups", groupHasUsersService.getAllGroupsByUserId(user.getUserId()));
+        model.addAttribute("allGroups", memberService.getAllGroupsByUserId(user.getUserId()));
         return "groupOverview";
     }
 
@@ -55,11 +55,11 @@ public class GroupController {
 
     @PostMapping("/groups/new")
     protected String saveOrUpdateGroup(@ModelAttribute("group") GroupDTO group,
-                                       @ModelAttribute("groupHasUsers") GroupHasUsers groupHasUsers, BindingResult result) {
+                                       @ModelAttribute("member") Member member, BindingResult result) {
         if (!result.hasErrors()) {
             groupService.saveGroup(group);
             UserDTO user = (UserDTO) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            groupHasUsersService.saveGroupHasUsers(new GroupHasUsersDTO(group, user, "Caregiver", true));
+            memberService.saveMember(new GroupHasUsersDTO(group, user, "Caregiver", true));
         }
         return "redirect:/groups/" + group.getGroupId();
     }

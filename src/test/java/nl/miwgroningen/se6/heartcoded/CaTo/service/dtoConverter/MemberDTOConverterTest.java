@@ -1,7 +1,7 @@
 package nl.miwgroningen.se6.heartcoded.CaTo.service.dtoConverter;
 
 import nl.miwgroningen.se6.heartcoded.CaTo.model.Group;
-import nl.miwgroningen.se6.heartcoded.CaTo.model.GroupHasUsers;
+import nl.miwgroningen.se6.heartcoded.CaTo.model.Member;
 import nl.miwgroningen.se6.heartcoded.CaTo.model.User;
 import org.junit.jupiter.api.Test;
 
@@ -14,11 +14,11 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 
 
-class GroupHasUsersDTOConverterTest {
+class MemberDTOConverterTest {
 
     private  GroupHasUsersDTOConverter groupHasUsersDTOConverter;
 
-    protected GroupHasUsersDTOConverterTest(GroupHasUsersDTOConverter groupHasUsersDTOConverter) {
+    protected MemberDTOConverterTest(GroupHasUsersDTOConverter groupHasUsersDTOConverter) {
         this.groupHasUsersDTOConverter = groupHasUsersDTOConverter;
     }
 
@@ -30,7 +30,7 @@ class GroupHasUsersDTOConverterTest {
         group.setGroupName("Test group");
 
         GroupHasUsersDTO groupHasUsersDTO = groupHasUsersDTOConverter.toDTO(
-                new GroupHasUsers(group, user, "Caregiver", true));
+                new Member(group, user, "Caregiver", true));
 
         assertEquals(100, groupHasUsersDTO.getUser().getUserId());
         assertEquals("Test group", groupHasUsersDTO.getGroup().getGroupName());
@@ -48,13 +48,13 @@ class GroupHasUsersDTOConverterTest {
         userDTO.setName("Test User");
         userDTO.setEmail("testemail@example.com");
 
-        GroupHasUsers groupHasUsersModel = groupHasUsersDTOConverter.toModel(
+        Member memberModel = groupHasUsersDTOConverter.toModel(
                 new GroupHasUsersDTO(groupDTO, userDTO, "Caregiver", true));
 
 
-        assertEquals("Test group", groupHasUsersModel.getGroup().getGroupName());
-        assertEquals("testemail@example.com", groupHasUsersModel.getUser().getEmail());
-        assertEquals("Caregiver", groupHasUsersModel.getUserRole());
-        assertTrue(groupHasUsersModel.isAdmin());
+        assertEquals("Test group", memberModel.getGroup().getGroupName());
+        assertEquals("testemail@example.com", memberModel.getUser().getEmail());
+        assertEquals("Caregiver", memberModel.getUserRole());
+        assertTrue(memberModel.isAdmin());
     }
 }

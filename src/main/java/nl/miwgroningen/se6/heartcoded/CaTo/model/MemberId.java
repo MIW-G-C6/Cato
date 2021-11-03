@@ -8,7 +8,7 @@ import java.io.Serializable;
  * is a model to make sure the groupHasUsers works together with User and Group
  */
 
-public class GroupHasUsersId implements Serializable {
+public class MemberId implements Serializable {
     int user;
     int group;
 }
