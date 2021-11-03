@@ -34,14 +34,14 @@ public class TaskService {
 
         Optional<Task> task = taskRepository.findById(taskId);
         if (!task.isEmpty()) {
-            taskDTO = Optional.of(taskDTOConverter.toDTO(task.get()));
+            taskDTO = Optional.of(taskMapper.toDTO(task.get()));
         }
 
         return taskDTO;
     }
 
     public TaskDTO getById(Integer taskId) {
-        return taskDTOConverter.toDTO(taskRepository.getById(taskId));
+        return taskMapper.toDTO(taskRepository.getById(taskId));
     }
 
     public void deleteById(Integer taskId) {
@@ -55,6 +55,6 @@ public class TaskService {
     }
 
     public Integer getTaskListIdByTaskId(Integer taskId) {
-        return taskDTOConverter.toDTO(taskRepository.getById(taskId)).getTaskList().getTaskListId();
+        return taskRepository.getById(taskId).getTaskList().getTaskListId();
     }
 }
