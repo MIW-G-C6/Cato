@@ -1,10 +1,13 @@
 package nl.miwgroningen.se6.heartcoded.CaTo.service;
 
 import nl.miwgroningen.se6.heartcoded.CaTo.dto.TaskListDTO;
+import nl.miwgroningen.se6.heartcoded.CaTo.dto.UserDTO;
 import nl.miwgroningen.se6.heartcoded.CaTo.model.TaskList;
+import nl.miwgroningen.se6.heartcoded.CaTo.model.User;
 import nl.miwgroningen.se6.heartcoded.CaTo.repository.TaskListRepository;
 import nl.miwgroningen.se6.heartcoded.CaTo.repository.UserRepository;
 import nl.miwgroningen.se6.heartcoded.CaTo.service.mappers.TaskListMapper;
+import nl.miwgroningen.se6.heartcoded.CaTo.service.mappers.UserMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -21,8 +24,8 @@ import java.util.Optional;
 public class TaskListService {
 
     private final TaskListRepository taskListRepository;
-    private final TaskListMapper taskListMapper;
     private final UserRepository userRepository;
+    private final TaskListMapper taskListMapper;
 
     public TaskListService(TaskListRepository taskListRepository, TaskListMapper taskListMapper, UserRepository userRepository) {
         this.taskListRepository = taskListRepository;
@@ -31,12 +34,7 @@ public class TaskListService {
     }
 
     public List<TaskListDTO> findAll() {
-        List<TaskList> allTaskLists = taskListRepository.findAll();
-        List<TaskListDTO> result = new ArrayList<>();
-        for (TaskList taskList : allTaskLists) {
-            result.add(taskListMapper.toDTO(taskList));
-        }
-        return result;
+        return taskListMapper.toDTO(taskListRepository.findAll());
     }
 
     public List<TaskListDTO> findAllByGroupId(Integer groupId) {
@@ -51,13 +49,7 @@ public class TaskListService {
     }
 
     public Optional<TaskListDTO> findById(Integer taskListId) {
-        Optional<TaskListDTO> taskListDTO = Optional.empty();
-
-        Optional<TaskList> taskList = taskListRepository.findById(taskListId);
-        if(!taskList.isEmpty()) {
-            taskListDTO = Optional.of(taskListMapper.toDTO(taskList.get()));
-        }
-        return taskListDTO;
+        return taskListMapper.toDTO(taskListRepository.findById(taskListId));
     }
 
     public TaskListDTO getById(Integer taskListId) {
@@ -73,7 +65,8 @@ public class TaskListService {
     }
 
     public TaskListDTO findByUser(UserDTO user) {
-        return taskListDTOConverter.toDTO(taskListRepository.findByClient(userDTOConverter.toModel(user)));
+        User client = userRepository.getById(user.getUserId());
+        return taskListMapper.toDTO(taskListRepository.findByClient(client));
     }
 }
 
