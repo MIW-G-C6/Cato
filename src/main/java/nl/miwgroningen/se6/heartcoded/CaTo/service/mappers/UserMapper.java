@@ -1,9 +1,14 @@
 package nl.miwgroningen.se6.heartcoded.CaTo.service.mappers;
 
 import nl.miwgroningen.se6.heartcoded.CaTo.dto.UserDTO;
+import nl.miwgroningen.se6.heartcoded.CaTo.model.Member;
 import nl.miwgroningen.se6.heartcoded.CaTo.model.User;
 import org.apache.catalina.mapper.Mapper;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * @author Paul Romkes <p.r.romkes@gmail.com
@@ -22,5 +27,15 @@ public class UserMapper {
         return result;
     }
 
+    public List<UserDTO> toDTO(List<User> userList) {
+        return userList.stream().map(this::toDTO).collect(Collectors.toList());
+    }
 
+    public Optional<UserDTO> toDTO(Optional<User> user) {
+        Optional<UserDTO> result = Optional.empty();
+        if(user.isPresent()) {
+            result = Optional.of(toDTO(user.get()));
+        }
+        return result;
+    }
 }

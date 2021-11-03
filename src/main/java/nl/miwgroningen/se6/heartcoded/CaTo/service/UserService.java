@@ -1,8 +1,12 @@
 package nl.miwgroningen.se6.heartcoded.CaTo.service;
 
+import nl.miwgroningen.se6.heartcoded.CaTo.dto.UserDTO;
 import nl.miwgroningen.se6.heartcoded.CaTo.model.User;
 import nl.miwgroningen.se6.heartcoded.CaTo.repository.UserRepository;
 import nl.miwgroningen.se6.heartcoded.CaTo.service.dtoConverter.UserDTOConverter;
+import nl.miwgroningen.se6.heartcoded.CaTo.service.mappers.UserLoginMapper;
+import nl.miwgroningen.se6.heartcoded.CaTo.service.mappers.UserMapper;
+import nl.miwgroningen.se6.heartcoded.CaTo.service.mappers.UserRegistrationMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -19,11 +23,16 @@ import java.util.Optional;
 public class UserService {
 
     private final UserRepository userRepository;
-    private final UserDTOConverter userDTOConverter;
+    private final UserMapper userMapper;
+    private final UserLoginMapper userLoginMapper;
+    private final UserRegistrationMapper userRegistrationMapper;
 
-    public UserService(UserRepository userRepository, UserDTOConverter userDTOConverter) {
+    public UserService(UserRepository userRepository, UserMapper userMapper,
+                       UserLoginMapper userLoginMapper, UserRegistrationMapper userRegistrationMapper) {
         this.userRepository = userRepository;
-        this.userDTOConverter = userDTOConverter;
+        this.userMapper = userMapper;
+        this.userLoginMapper = userLoginMapper;
+        this.userRegistrationMapper = userRegistrationMapper;
     }
 
     public List<UserDTO> findAllUsers() {
