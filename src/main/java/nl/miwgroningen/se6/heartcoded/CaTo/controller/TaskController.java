@@ -1,5 +1,6 @@
 package nl.miwgroningen.se6.heartcoded.CaTo.controller;
 
+import nl.miwgroningen.se6.heartcoded.CaTo.dto.TaskDTO;
 import nl.miwgroningen.se6.heartcoded.CaTo.service.MemberService;
 import nl.miwgroningen.se6.heartcoded.CaTo.service.TaskListService;
 import nl.miwgroningen.se6.heartcoded.CaTo.service.TaskService;
@@ -83,9 +84,9 @@ public class TaskController {
             @ModelAttribute("task") TaskDTO task, BindingResult result) {
 
         if (!result.hasErrors()) {
-            task.setTaskList(taskListService.getById(taskListId));
-            taskService.save(task);
+            taskService.save(task, taskListId);
         }
         return "redirect:/taskLists/{taskListId}";
     }
 }
+

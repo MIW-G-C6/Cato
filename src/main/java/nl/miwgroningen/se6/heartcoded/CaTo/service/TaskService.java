@@ -1,7 +1,10 @@
 package nl.miwgroningen.se6.heartcoded.CaTo.service;
 
+import nl.miwgroningen.se6.heartcoded.CaTo.dto.TaskDTO;
 import nl.miwgroningen.se6.heartcoded.CaTo.model.Task;
+import nl.miwgroningen.se6.heartcoded.CaTo.repository.TaskListRepository;
 import nl.miwgroningen.se6.heartcoded.CaTo.repository.TaskRepository;
+import nl.miwgroningen.se6.heartcoded.CaTo.seeding.TaskMapper;
 import nl.miwgroningen.se6.heartcoded.CaTo.service.dtoConverter.TaskDTOConverter;
 import org.springframework.stereotype.Service;
 
@@ -17,11 +20,13 @@ import java.util.Optional;
 public class TaskService {
 
     private final TaskRepository taskRepository;
-    private final TaskDTOConverter taskDTOConverter;
+    private final TaskListRepository taskListRepository;
+    private final TaskMapper taskMapper;
 
-    public TaskService(TaskRepository taskRepository, TaskDTOConverter taskDTOConverter) {
+    public TaskService(TaskRepository taskRepository, TaskListRepository taskListRepository, TaskMapper taskMapper) {
         this.taskRepository = taskRepository;
-        this.taskDTOConverter = taskDTOConverter;
+        this.taskListRepository = taskListRepository;
+        this.taskMapper = taskMapper;
     }
 
     public Optional<TaskDTO> findById(Integer taskId) {
@@ -43,8 +48,10 @@ public class TaskService {
         taskRepository.deleteById(taskId);
     }
 
-    public void save(TaskDTO task) {
-        taskRepository.save(taskDTOConverter.toModel(task));
+    public void save(TaskDTO taskDTO, Integer taskListId) {
+        Task task = taskMapper.toTask(taskDTO);
+        task.setTaskList(taskListRepository.getById(taskListId));
+        taskRepository.save(task);
     }
 
     public Integer getTaskListIdByTaskId(Integer taskId) {

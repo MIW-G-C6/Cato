@@ -8,7 +8,7 @@ import java.util.List;
  * TaskDTO containing all information for tasks
  */
 public class TaskDTO {
-    private List<String> priorityOptions;
+    private String[] priorityOptions;
 
     private Integer taskId;
 
@@ -16,11 +16,11 @@ public class TaskDTO {
 
     private String description;
 
-    public List<String> getPriorityOptions() {
+    public String[] getPriorityOptions() {
         return priorityOptions;
     }
 
-    public void setPriorityOptions(List<String> priorityOptions) {
+    public void setPriorityOptions(String[] priorityOptions) {
         this.priorityOptions = priorityOptions;
     }
 
