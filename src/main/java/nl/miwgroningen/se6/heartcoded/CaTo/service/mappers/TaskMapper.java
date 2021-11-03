@@ -27,7 +27,7 @@ public class TaskMapper {
     public Optional<TaskDTO> toDTO(Optional<Task> task) {
         Optional<TaskDTO> taskDTO = Optional.empty();
 
-        if (!task.isEmpty()) {
+        if (task.isPresent()) {
             taskDTO = Optional.of(toDTO(task.get()));
         }
         return taskDTO;
