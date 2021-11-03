@@ -4,6 +4,8 @@ import nl.miwgroningen.se6.heartcoded.CaTo.dto.TaskDTO;
 import nl.miwgroningen.se6.heartcoded.CaTo.model.Task;
 import org.springframework.stereotype.Component;
 
+import java.util.Optional;
+
 /**
  * @author Erwin Wegter <ewegter@gmail.com>
  *
@@ -19,6 +21,15 @@ public class TaskMapper {
         taskDTO.setDescription(task.getDescription());
         taskDTO.setPriority(task.getPriority());
 
+        return taskDTO;
+    }
+
+    public Optional<TaskDTO> toDTO(Optional<Task> task) {
+        Optional<TaskDTO> taskDTO = Optional.empty();
+
+        if (!task.isEmpty()) {
+            taskDTO = Optional.of(toDTO(task.get()));
+        }
         return taskDTO;
     }
 
