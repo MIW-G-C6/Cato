@@ -4,7 +4,7 @@ import nl.miwgroningen.se6.heartcoded.CaTo.dto.TaskDTO;
 import nl.miwgroningen.se6.heartcoded.CaTo.model.Task;
 import nl.miwgroningen.se6.heartcoded.CaTo.repository.TaskListRepository;
 import nl.miwgroningen.se6.heartcoded.CaTo.repository.TaskRepository;
-import nl.miwgroningen.se6.heartcoded.CaTo.seeding.TaskMapper;
+import nl.miwgroningen.se6.heartcoded.CaTo.service.mappers.TaskMapper;
 import nl.miwgroningen.se6.heartcoded.CaTo.service.dtoConverter.TaskDTOConverter;
 import org.springframework.stereotype.Service;
 
