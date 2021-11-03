@@ -4,7 +4,6 @@ import nl.miwgroningen.se6.heartcoded.CaTo.dto.GroupDTO;
 import nl.miwgroningen.se6.heartcoded.CaTo.model.Group;
 import nl.miwgroningen.se6.heartcoded.CaTo.repository.GroupRepository;
 import nl.miwgroningen.se6.heartcoded.CaTo.repository.MemberRepository;
-import nl.miwgroningen.se6.heartcoded.CaTo.service.dtoConverter.GroupDTOConverter;
 import nl.miwgroningen.se6.heartcoded.CaTo.service.mappers.GroupMapper;
 import org.springframework.stereotype.Service;
 
@@ -34,7 +33,7 @@ public class GroupService {
         List<Group> allGroups = groupRepository.findAll();
         List<GroupDTO> result = new ArrayList<>();
         for (Group group : allGroups) {
-            result.add(groupDTOConverter.toDTO(group));
+            result.add(groupMapper.toDTO(group));
         }
         return result;
     }
@@ -50,8 +49,6 @@ public class GroupService {
     }
 
     public GroupDTO getById(Integer groupId) {
-        Group group = groupRepository.getById(groupId);
-        GroupDTO result = groupDTOConverter.toDTO(group);
-        return result;
+        return groupMapper.toDTO(groupRepository.getById(groupId));
     }
 }

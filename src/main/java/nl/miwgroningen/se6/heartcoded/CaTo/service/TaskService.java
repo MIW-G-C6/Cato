@@ -5,7 +5,6 @@ import nl.miwgroningen.se6.heartcoded.CaTo.model.Task;
 import nl.miwgroningen.se6.heartcoded.CaTo.repository.TaskListRepository;
 import nl.miwgroningen.se6.heartcoded.CaTo.repository.TaskRepository;
 import nl.miwgroningen.se6.heartcoded.CaTo.service.mappers.TaskMapper;
-import nl.miwgroningen.se6.heartcoded.CaTo.service.dtoConverter.TaskDTOConverter;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -30,14 +29,7 @@ public class TaskService {
     }
 
     public Optional<TaskDTO> findById(Integer taskId) {
-        Optional<TaskDTO> taskDTO = Optional.empty();
-
-        Optional<Task> task = taskRepository.findById(taskId);
-        if (!task.isEmpty()) {
-            taskDTO = Optional.of(taskMapper.toDTO(task.get()));
-        }
-
-        return taskDTO;
+        return taskMapper.toDTO(taskRepository.findById(taskId));
     }
 
     public TaskDTO getById(Integer taskId) {
