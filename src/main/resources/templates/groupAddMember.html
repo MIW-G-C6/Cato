@@ -30,7 +30,7 @@
         <label>Select a user role</label>
         <ul class="cato-radio">
           <li th:each="userRole : ${makeMember.groupRoleOptions}">
-            <input type="radio" th:field="${makeMember.userRole}" th:value="${userRole}" required>
+            <input type="radio" th:field="${makeMember.role}" th:value="${userRole}" required>
             <label th:for="${#ids.prev('userRole')}" th:text="${userRole}"></label>
           </li>
         </ul>
