@@ -8,11 +8,19 @@ package nl.miwgroningen.se6.heartcoded.CaTo.dto;
 
 public class TaskListDTO {
 
+    private Integer taskListId;
+
     private Integer userId;
 
     private String userName;
 
-    private Integer taskListId;
+    public Integer getTaskListId() {
+        return taskListId;
+    }
+
+    public void setTaskListId(Integer taskListId) {
+        this.taskListId = taskListId;
+    }
 
     public Integer getUserId() {
         return userId;
@@ -30,11 +38,4 @@ public class TaskListDTO {
         this.userName = userName;
     }
 
-    public Integer getTaskListId() {
-        return taskListId;
-    }
-
-    public void setTaskListId(Integer taskListId) {
-        this.taskListId = taskListId;
-    }
 }
