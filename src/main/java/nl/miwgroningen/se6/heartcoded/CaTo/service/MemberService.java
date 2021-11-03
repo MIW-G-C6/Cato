@@ -2,10 +2,14 @@ package nl.miwgroningen.se6.heartcoded.CaTo.service;
 
 import nl.miwgroningen.se6.heartcoded.CaTo.dto.GroupDTO;
 import nl.miwgroningen.se6.heartcoded.CaTo.dto.MemberDTO;
+import nl.miwgroningen.se6.heartcoded.CaTo.dto.TaskListDTO;
 import nl.miwgroningen.se6.heartcoded.CaTo.dto.UserDTO;
 import nl.miwgroningen.se6.heartcoded.CaTo.model.Member;
+import nl.miwgroningen.se6.heartcoded.CaTo.model.TaskList;
+import nl.miwgroningen.se6.heartcoded.CaTo.model.User;
 import nl.miwgroningen.se6.heartcoded.CaTo.repository.MemberRepository;
 import nl.miwgroningen.se6.heartcoded.CaTo.repository.GroupRepository;
+import nl.miwgroningen.se6.heartcoded.CaTo.repository.TaskListRepository;
 import nl.miwgroningen.se6.heartcoded.CaTo.repository.UserRepository;
 import nl.miwgroningen.se6.heartcoded.CaTo.service.mappers.GroupMapper;
 import nl.miwgroningen.se6.heartcoded.CaTo.service.mappers.MemberMapper;
@@ -31,14 +35,17 @@ public class MemberService {
     private final GroupRepository groupRepository;
     private final UserRepository userRepository;
     private final MemberRepository memberRepository;
+    private final TaskListRepository taskListRepository;
 
-    public MemberService(MemberMapper memberMapper, GroupMapper groupMapper, GroupRepository groupRepository,
-                         UserRepository userRepository, MemberRepository memberRepository) {
+    public MemberService(MemberMapper memberMapper, GroupMapper groupMapper,
+                         GroupRepository groupRepository, UserRepository userRepository,
+                         MemberRepository memberRepository, TaskListRepository taskListRepository) {
         this.memberMapper = memberMapper;
         this.groupMapper = groupMapper;
         this.groupRepository = groupRepository;
         this.userRepository = userRepository;
         this.memberRepository = memberRepository;
+        this.taskListRepository = taskListRepository;
     }
 
     public void saveMember(MemberDTO memberDTO) {
@@ -48,10 +55,10 @@ public class MemberService {
         member.setAdmin(memberDTO.isAdmin());
         memberRepository.save(member);
     }
-//
-//    public List<MemberDTO> getAllByGroupId(Integer groupId) {
-//        return memberMapper.toDTO(memberRepository.getAllByGroup(groupRepository.getById(groupId)));
-//    }
+
+    public List<MemberDTO> getAllByGroupId(Integer groupId) {
+        return memberMapper.toDTO(memberRepository.getAllByGroupGroupId(groupId));
+    }
 
     @Transactional
     public void deleteByUserId(Integer userId, Integer groupId) {
@@ -109,7 +116,7 @@ public class MemberService {
     }
 
     public List<MemberDTO> getGroupAdminsByGroupId(Integer groupId) {
-        List<MemberDTO> allMembersInGroup = memberMapper.toDTO(memberRepository.getAllByGroupId(groupId));
+        List<MemberDTO> allMembersInGroup = memberMapper.toDTO(memberRepository.getAllByGroupGroupId(groupId));
         List<MemberDTO> result = new ArrayList<>();
 
         for (MemberDTO member : allMembersInGroup) {
@@ -129,17 +136,32 @@ public class MemberService {
         return false;
     }
 
-    public boolean isClientInOtherGroup(UserDTO user, Integer groupId) {
+    public boolean isClientInOtherGroup(Integer userid, Integer groupId) {
         boolean result = false;
         List<MemberDTO> allClients = findAllClients();
 
         for (MemberDTO client : allClients) {
-            if (Objects.equals(user.getUserId(), client.getUserId()) &&
+            if (Objects.equals(userid, client.getUserId()) &&
                     !Objects.equals(client.getGroupId(), groupId)) {
                 result = true;
                 break;
             }
         }
         return result;
+    }
+
+    public void createNewTaskList(MemberDTO member) {
+        if (isClient(member)) {
+            User client = userRepository.getById(member.getUserId());
+            TaskList taskList = taskListRepository.findByClient(client);
+
+            if (taskList == null) {
+                taskListRepository.save(new TaskList(client));
+            }
+        }
+    }
+
+    public boolean isClient(MemberDTO member) {
+        return member.getRole().equals(member.getGroupRoleOptions()[1]);
     }
 }

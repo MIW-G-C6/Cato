@@ -4,7 +4,6 @@ import nl.miwgroningen.se6.heartcoded.CaTo.dto.UserDTO;
 import nl.miwgroningen.se6.heartcoded.CaTo.dto.UserRegistrationDTO;
 import nl.miwgroningen.se6.heartcoded.CaTo.model.User;
 import nl.miwgroningen.se6.heartcoded.CaTo.repository.UserRepository;
-import nl.miwgroningen.se6.heartcoded.CaTo.service.dtoConverter.UserDTOConverter;
 import nl.miwgroningen.se6.heartcoded.CaTo.service.mappers.UserLoginMapper;
 import nl.miwgroningen.se6.heartcoded.CaTo.service.mappers.UserMapper;
 import nl.miwgroningen.se6.heartcoded.CaTo.service.mappers.UserRegistrationMapper;

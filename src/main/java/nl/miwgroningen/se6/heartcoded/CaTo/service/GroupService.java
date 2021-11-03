@@ -44,7 +44,7 @@ public class GroupService {
 
     public void saveGroup (GroupDTO groupDTO) {
         Group result = groupMapper.toGroup(groupDTO);
-        result.setMemberList(memberRepository.getAllByGroupId(result.getGroupId()));
+        result.setMemberList(memberRepository.getAllByGroupGroupId(result.getGroupId()));
         groupRepository.save(result);
     }
 

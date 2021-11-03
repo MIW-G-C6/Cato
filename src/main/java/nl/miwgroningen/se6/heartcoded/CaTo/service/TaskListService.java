@@ -59,7 +59,7 @@ public class TaskListService {
     public void save(TaskListDTO taskListDTO) {
         TaskList taskList = taskListMapper.toTaskList(taskListDTO);
         taskList.setClient(userRepository.getById(taskListDTO.getUserId()));
-        //TODO
+
 
         taskListRepository.save(taskList);
     }
