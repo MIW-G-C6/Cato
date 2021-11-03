@@ -27,10 +27,11 @@
         <div>
             <input class="cato-text-field" placeholder="Email" type="email" id="email" required th:field="*{email}">
         </div>
-        <div>
-            <input type="hidden" id="password"
-                   th:field="*{password}">
-        </div>
+        <!--        Make sure a hidden email isn't needed anymore. else a different DTO is needed for user-->
+        <!--        <div>-->
+        <!--            <input type="hidden" id="password"-->
+        <!--                   th:field="*{password}">-->
+        <!--        </div>-->
         <br>
         <div>
             <button type="submit" class="catoButton">Save</button>
