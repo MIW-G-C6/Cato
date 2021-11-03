@@ -1,6 +1,7 @@
 package nl.miwgroningen.se6.heartcoded.CaTo.service;
 
 import nl.miwgroningen.se6.heartcoded.CaTo.dto.UserDTO;
+import nl.miwgroningen.se6.heartcoded.CaTo.dto.UserRegistrationDTO;
 import nl.miwgroningen.se6.heartcoded.CaTo.model.User;
 import nl.miwgroningen.se6.heartcoded.CaTo.repository.UserRepository;
 import nl.miwgroningen.se6.heartcoded.CaTo.service.dtoConverter.UserDTOConverter;
@@ -36,29 +37,11 @@ public class UserService {
     }
 
     public List<UserDTO> findAllUsers() {
-        List<User> findUsers = userRepository.findAll();
-
-        List<UserDTO> userDTOList = new ArrayList<>();
-        for (User user : findUsers) {
-            userDTOList.add(userDTOConverter.toDTO(user));
-        }
-
-        List<UserDTO> allUsers = new ArrayList<>();
-
-        for (UserDTO user : userDTOList) {
-            allUsers.add(new UserDTO(user.getUserId(), user.getName(), user.getEmail()));
-        }
-        return allUsers;
+        return userMapper.toDTO(userRepository.findAll());
     }
 
     public UserDTO getById(Integer userId) {
-        UserDTO user = new UserDTO();
-        UserDTO userTemp = userDTOConverter.toDTO(userRepository.getById(userId));
-        user.setUserId(userTemp.getUserId());
-        user.setName(userTemp.getName());
-        user.setEmail(userTemp.getEmail());
-
-        return user;
+        return userMapper.toDTO(userRepository.getById(userId));
     }
 
     public void deleteUserById(Integer userId) {
@@ -66,22 +49,21 @@ public class UserService {
     }
 
     public void saveUser(UserDTO user) {
-        userRepository.save(userDTOConverter.toModel(user));
+        User result = userMapper.toUser(user);
+        result.setMemberList(userRepository.getById(user.getUserId()).getMemberList());
+        userRepository.save(result);
+        //TODO maybe this needs an exception throw??
     }
 
-    public void saveNewUser(UserWithPasswordDTO user) {
-        userRepository.save( userDTOConverter.toModelWithPassword(user) );
+    public void saveNewUser(UserRegistrationDTO user) {
+        if(user.getPassword().equals(user.getPasswordCheck())) {
+            userRepository.save(userRegistrationMapper.toUser(user));
+        }
+        //TODO maybe this needs an exception throw??
     }
 
     public Optional<UserDTO> findUserByEmail(String email) {
-        Optional<UserDTO> userDTO = Optional.empty();
-        Optional<User> user = userRepository.findByEmail(email);
-
-        if (user.isEmpty()) {
-            userDTO = Optional.of(userDTOConverter.toDTO(user.get()));
-        }
-
-        return userDTO;
+        return userMapper.toDTO(userRepository.findByEmail(email));
     }
 
     public boolean emailInUse(String email) {

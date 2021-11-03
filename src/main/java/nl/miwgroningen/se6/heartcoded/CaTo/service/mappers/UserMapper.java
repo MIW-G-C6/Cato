@@ -38,4 +38,12 @@ public class UserMapper {
         }
         return result;
     }
+
+    public User toUser (UserDTO userDTO) {
+        User result = new User();
+        result.setUserId(userDTO.getUserId());
+        result.setName(userDTO.getName());
+        result.setEmail(userDTO.getEmail());
+        return result;
+    }
 }

@@ -113,11 +113,11 @@ public class User implements UserDetails {
         this.name = name;
     }
 
-    public List<Member> getGroupHasUsersList() {
+    public List<Member> getMemberList() {
         return memberList;
     }
 
-    public void setGroupHasUsersList(List<Member> memberList) {
+    public void setMemberList(List<Member> memberList) {
         this.memberList = memberList;
     }
 }
