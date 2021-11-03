@@ -1,9 +1,13 @@
 package nl.miwgroningen.se6.heartcoded.CaTo.controller;
 
+import nl.miwgroningen.se6.heartcoded.CaTo.dto.MemberDTO;
 import nl.miwgroningen.se6.heartcoded.CaTo.dto.TaskDTO;
+import nl.miwgroningen.se6.heartcoded.CaTo.dto.TaskListDTO;
+import nl.miwgroningen.se6.heartcoded.CaTo.dto.UserDTO;
 import nl.miwgroningen.se6.heartcoded.CaTo.service.MemberService;
 import nl.miwgroningen.se6.heartcoded.CaTo.service.TaskListService;
 import nl.miwgroningen.se6.heartcoded.CaTo.service.TaskService;
+import nl.miwgroningen.se6.heartcoded.CaTo.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -19,17 +23,20 @@ import java.util.Optional;
  *
  * Controls all pages about tasks
  */
+
 @Controller
 public class TaskController {
 
     private TaskService taskService;
     private TaskListService taskListService;
     private MemberService memberService;
+    private UserService userService;
 
-    public TaskController(TaskService taskService, TaskListService taskListService, MemberService memberService) {
+    public TaskController(TaskService taskService, TaskListService taskListService, MemberService memberService, UserService userService) {
         this.taskService = taskService;
         this.taskListService = taskListService;
         this.memberService = memberService;
+        this.userService = userService;
     }
 
     @GetMapping("/taskLists/{taskListId}/{taskId}")
@@ -70,12 +77,10 @@ public class TaskController {
     protected String deleteTask(@PathVariable("taskId") Integer taskId) {
         Integer taskListId = taskService.getTaskListIdByTaskId(taskId);
         TaskListDTO taskList = taskListService.getById(taskListId);
-        UserDTO client = taskList.getClient();
-        GroupHasUsersDTO clientMember = memberService.getByClient(client);
-        Integer groupId = clientMember.getGroup().getGroupId();
-        //TODO used client --> groupId for redirect, fix when DTOs break it
+        UserDTO client = userService.getById(taskList.getUserId());
+        MemberDTO clientMember = memberService.getByClient(client);
         taskService.deleteById(taskId);
-        return "redirect:/groups/" + groupId + "/clientDashboard/" + client.getUserId();
+        return "redirect:/groups/" + clientMember.getGroupId() + "/clientDashboard/" + taskList.getUserId();
     }
 
     @PostMapping("/taskLists/{taskListId}/new")
