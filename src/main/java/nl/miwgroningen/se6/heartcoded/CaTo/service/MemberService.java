@@ -107,10 +107,10 @@ public class MemberService {
         return result;
     }
 
-    public boolean userInGroupExists(GroupHasUsersDTO groupHasUsers) {
+    public boolean userInGroupExists(GroupHasUsersDTO member) {
         if (findByUserIdAndGroupId(
-                groupHasUsers.getUser().getUserId(),
-                groupHasUsers.getGroup().getGroupId())
+                member.getUser().getUserId(),
+                member.getGroup().getGroupId())
                 .isPresent()){
                 return true;
             }
@@ -129,9 +129,9 @@ public class MemberService {
         return result;
     }
 
-    public boolean findOutIfMemberIsAdmin(GroupHasUsersDTO groupHasUsers) {
-        return findByUserIdAndGroupId(groupHasUsers.getUser().getUserId(),
-                groupHasUsers.getGroup().getGroupId()).get().isAdmin();
+    public boolean findOutIfMemberIsAdmin(GroupHasUsersDTO member) {
+        return findByUserIdAndGroupId(member.getUser().getUserId(),
+                member.getGroup().getGroupId()).get().isAdmin();
     }
 
     public boolean isClientInOtherGroup(UserDTO user, Integer groupId) {
