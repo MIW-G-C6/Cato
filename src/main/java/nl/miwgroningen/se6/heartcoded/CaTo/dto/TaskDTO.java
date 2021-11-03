@@ -4,8 +4,8 @@ import java.util.List;
 
 /**
  * @author Erwin Wegter <ewegter@gmail.com>
- * <p>
- * Dit is wat het programma doet
+ *
+ * TaskDTO containing all information for tasks
  */
 public class TaskDTO {
     private List<String> priorityOptions;
