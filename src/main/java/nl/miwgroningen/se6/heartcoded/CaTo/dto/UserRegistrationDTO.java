@@ -11,6 +11,7 @@ public class UserRegistrationDTO {
     private Integer userId;
     private String name;
     private String password;
+    private String passwordCheck;
     private String email;
 
     public Integer getUserId() {
@@ -35,6 +36,14 @@ public class UserRegistrationDTO {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getPasswordCheck() {
+        return passwordCheck;
+    }
+
+    public void setPasswordCheck(String passwordCheck) {
+        this.passwordCheck = passwordCheck;
     }
 
     public String getEmail() {
