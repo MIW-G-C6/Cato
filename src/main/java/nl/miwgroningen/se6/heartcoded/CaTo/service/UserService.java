@@ -48,7 +48,7 @@ public class UserService {
         userRepository.deleteById(userId);
     }
 
-    public void saveUser(UserDTO user) {
+    public void editUser(UserDTO user) {
         User result = userMapper.toUser(user);
         result.setMemberList(userRepository.getById(user.getUserId()).getMemberList());
         userRepository.save(result);
