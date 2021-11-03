@@ -16,4 +16,6 @@ public class MemberRoleMapper {
         result.setGroupRoleOptions(member.getGroupRoleOptions());
         return result;
     }
+
+    //TODO check if to Member model is necessary
 }
