@@ -1,8 +1,11 @@
 package nl.miwgroningen.se6.heartcoded.CaTo.service;
 
+import nl.miwgroningen.se6.heartcoded.CaTo.dto.GroupDTO;
 import nl.miwgroningen.se6.heartcoded.CaTo.model.Group;
 import nl.miwgroningen.se6.heartcoded.CaTo.repository.GroupRepository;
+import nl.miwgroningen.se6.heartcoded.CaTo.repository.MemberRepository;
 import nl.miwgroningen.se6.heartcoded.CaTo.service.dtoConverter.GroupDTOConverter;
+import nl.miwgroningen.se6.heartcoded.CaTo.service.mappers.GroupMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -17,12 +20,14 @@ import java.util.List;
 @Service
 public class GroupService {
 
+    private final MemberRepository memberRepository;
     private final GroupRepository groupRepository;
-    private final GroupDTOConverter groupDTOConverter;
+    private final GroupMapper groupMapper;
 
-    public GroupService(GroupRepository groupRepository, GroupDTOConverter groupDTOConverter) {
+    public GroupService(MemberRepository memberRepository, GroupRepository groupRepository, GroupMapper groupMapper) {
+        this.memberRepository = memberRepository;
         this.groupRepository = groupRepository;
-        this.groupDTOConverter = groupDTOConverter;
+        this.groupMapper = groupMapper;
     }
 
     public List<GroupDTO> findAllGroups() {
@@ -39,7 +44,8 @@ public class GroupService {
     }
 
     public void saveGroup (GroupDTO groupDTO) {
-        Group result = groupDTOConverter.toModel(groupDTO);
+        Group result = groupMapper.toGroup(groupDTO);
+        result.setMemberList(memberRepository.getAllByGroupGroupId(result.getGroupId()));
         groupRepository.save(result);
     }
 
