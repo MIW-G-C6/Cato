@@ -1,8 +1,14 @@
 package nl.miwgroningen.se6.heartcoded.CaTo.service.mappers;
 
 import nl.miwgroningen.se6.heartcoded.CaTo.dto.MemberDTO;
+import nl.miwgroningen.se6.heartcoded.CaTo.dto.UserDTO;
 import nl.miwgroningen.se6.heartcoded.CaTo.model.Member;
+import nl.miwgroningen.se6.heartcoded.CaTo.model.User;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * @author Shalena Omapersad <shalenao@hotmail.com>
@@ -16,16 +22,32 @@ public class MemberMapper {
     public MemberDTO toDTO(Member member) {
         MemberDTO result = new MemberDTO();
 
+        result.setGroupRoleOptions(member.getGroupRoleOptions());
         result.setUserId(member.getUser().getUserId());
         result.setUserName(member.getUser().getUsername());
+        result.setGroupId(member.getGroup().getGroupId());
         result.setRole(member.getUserRole());
+        result.setAdmin(member.isAdmin());
 
+        return result;
+    }
+
+    public List<MemberDTO> toDTO(List<Member> memberList) {
+        return memberList.stream().map(this::toDTO).collect(Collectors.toList());
+    }
+
+    public Optional<MemberDTO> toDTO(Optional<Member> member) {
+        Optional<MemberDTO> result = Optional.empty();
+        if(member.isPresent()) {
+            result = Optional.of(toDTO(member.get()));
+        }
         return result;
     }
 
     public Member toMember(MemberDTO memberDTO) {
         Member result = new Member();
         result.setUserRole(memberDTO.getRole());
+        result.setAdmin(memberDTO.isAdmin());
 
         return result;
     }

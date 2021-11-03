@@ -8,11 +8,36 @@ package nl.miwgroningen.se6.heartcoded.CaTo.dto;
 
 public class MemberDTO {
 
+    private String[] groupRoleOptions;
+
     private Integer userId;
 
     private String userName;
 
+    private Integer groupId;
+
     private String role;
+
+    private Boolean isAdmin;
+
+    public MemberDTO(Integer userId, String userName, Integer groupId, String role, Boolean isAdmin) {
+        this.userId = userId;
+        this.userName = userName;
+        this.groupId = groupId;
+        this.role = role;
+        this.isAdmin = isAdmin;
+    }
+
+    public MemberDTO() {
+    }
+
+    public String[] getGroupRoleOptions() {
+        return groupRoleOptions;
+    }
+
+    public void setGroupRoleOptions(String[] groupRoleOptions) {
+        this.groupRoleOptions = groupRoleOptions;
+    }
 
     public Integer getUserId() {
         return userId;
@@ -30,11 +55,27 @@ public class MemberDTO {
         this.userName = userName;
     }
 
+    public Integer getGroupId() {
+        return groupId;
+    }
+
+    public void setGroupId(Integer groupId) {
+        this.groupId = groupId;
+    }
+
     public String getRole() {
         return role;
     }
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public Boolean isAdmin() {
+        return isAdmin;
+    }
+
+    public void setAdmin(Boolean admin) {
+        isAdmin = admin;
     }
 }

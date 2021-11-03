@@ -1,14 +1,13 @@
 package nl.miwgroningen.se6.heartcoded.CaTo.service;
 
+import nl.miwgroningen.se6.heartcoded.CaTo.dto.GroupDTO;
 import nl.miwgroningen.se6.heartcoded.CaTo.dto.MemberDTO;
+import nl.miwgroningen.se6.heartcoded.CaTo.dto.UserDTO;
 import nl.miwgroningen.se6.heartcoded.CaTo.model.Member;
 import nl.miwgroningen.se6.heartcoded.CaTo.repository.MemberRepository;
 import nl.miwgroningen.se6.heartcoded.CaTo.repository.GroupRepository;
-import nl.miwgroningen.se6.heartcoded.CaTo.repository.TaskListRepository;
 import nl.miwgroningen.se6.heartcoded.CaTo.repository.UserRepository;
-import nl.miwgroningen.se6.heartcoded.CaTo.service.dtoConverter.GroupDTOConverter;
-import nl.miwgroningen.se6.heartcoded.CaTo.service.dtoConverter.GroupHasUsersDTOConverter;
-import nl.miwgroningen.se6.heartcoded.CaTo.service.dtoConverter.UserDTOConverter;
+import nl.miwgroningen.se6.heartcoded.CaTo.service.mappers.GroupMapper;
 import nl.miwgroningen.se6.heartcoded.CaTo.service.mappers.MemberMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,53 +19,52 @@ import java.util.Optional;
 
 /**
  * @author Paul Romkes <p.r.romkes@gmail.com
- * <p>
- * Dit is wat het programma doet
+ *
+ * Gets data from the member repository and gives it to the controllers.
  */
 
 @Service
 public class MemberService {
 
     private final MemberMapper memberMapper;
-
+    private final GroupMapper groupMapper;
     private final GroupRepository groupRepository;
     private final UserRepository userRepository;
     private final MemberRepository memberRepository;
-    private final TaskListRepository taskListRepository;
 
-    public MemberService(MemberMapper memberMapper, GroupRepository groupRepository, UserRepository userRepository,
-                         MemberRepository memberRepository, TaskListRepository taskListRepository) {
+    public MemberService(MemberMapper memberMapper, GroupMapper groupMapper, GroupRepository groupRepository,
+                         UserRepository userRepository, MemberRepository memberRepository) {
         this.memberMapper = memberMapper;
+        this.groupMapper = groupMapper;
         this.groupRepository = groupRepository;
         this.userRepository = userRepository;
         this.memberRepository = memberRepository;
-        this.taskListRepository = taskListRepository;
     }
 
     public void saveMember(MemberDTO memberDTO) {
         Member member = memberMapper.toMember(memberDTO);
         member.setUser(userRepository.getById(memberDTO.getUserId()));
-        //TODO
+        member.setGroup(groupRepository.getById(memberDTO.getGroupId()));
+        member.setAdmin(memberDTO.isAdmin());
         memberRepository.save(member);
     }
-
-    public List<GroupHasUsersDTO> getAllByGroupId(Integer groupId) {
-        return groupHasUsersDTOConverter.toDTOList(memberRepository.
-                getAllByGroup(groupRepository.getById(groupId)));
-    }
+//
+//    public List<MemberDTO> getAllByGroupId(Integer groupId) {
+//        return memberMapper.toDTO(memberRepository.getAllByGroup(groupRepository.getById(groupId)));
+//    }
 
     @Transactional
     public void deleteByUserId(Integer userId, Integer groupId) {
         memberRepository.deleteByUserAndGroup(userRepository.getById(userId), groupRepository.getById(groupId));
     }
 
-    public Optional<GroupHasUsersDTO> findByUserIdAndGroupId(Integer userId, Integer groupId) {
-        Optional<GroupHasUsersDTO> result = Optional.empty();
-        Optional<Member> groupHasUsers = memberRepository.findGroupHasUsersByUserAndGroup(
+    public Optional<MemberDTO> findByUserIdAndGroupId(Integer userId, Integer groupId) {
+        Optional<MemberDTO> result = Optional.empty();
+        Optional<Member> member = memberRepository.findMemberByUserAndGroup(
                 userRepository.getById(userId),
                 groupRepository.getById(groupId));
-        if(groupHasUsers.isPresent()) {
-            result = Optional.of(groupHasUsersDTOConverter.toDTO(groupHasUsers.get()));
+        if(member.isPresent()) {
+            result = memberMapper.toDTO(member);
         }
         return result;
     }
@@ -75,67 +73,69 @@ public class MemberService {
         List<GroupDTO> result = new ArrayList<>();
         List<Member> groupsHasUserList = memberRepository.getAllByUser(userRepository.getById(userId));
         for (Member member : groupsHasUserList) {
-            result.add(groupDTOConverter.toDTO(member.getGroup()));
+            result.add(groupMapper.toDTO(member.getGroup()));
         }
         return result;
     }
 
-    public List<GroupHasUsersDTO> findAllClients() {
-        List<GroupHasUsersDTO> result = new ArrayList<>();
+    public List<MemberDTO> findAllClients() {
+        List<MemberDTO> result = new ArrayList<>();
         for (Member member : memberRepository.findAll()) {
             if (member.getUserRole().equals("Client")) {
-                result.add(groupHasUsersDTOConverter.toDTO(member));
+                result.add(memberMapper.toDTO(member));
             }
         }
         return result;
     }
 
-    public GroupHasUsersDTO getByClient(UserDTO client) {
+    public MemberDTO getByClient(UserDTO client) {
         List<Member> allGroupHasUsers = memberRepository.getAllByUser(
                 userRepository.getById(client.getUserId()));
 
-        GroupHasUsersDTO result = new GroupHasUsersDTO();
+        MemberDTO result = new MemberDTO();
         for (Member member : allGroupHasUsers) {
             if (member.getUserRole().equals("Client")) {
-                result = groupHasUsersDTOConverter.toDTO(member);
+                result = memberMapper.toDTO(member);
             }
         }
         return result;
     }
 
-    public boolean userInGroupExists(GroupHasUsersDTO member) {
-        if (findByUserIdAndGroupId(
-                member.getUser().getUserId(),
-                member.getGroup().getGroupId())
-                .isPresent()){
+    public boolean userInGroupExists(MemberDTO member) {
+        if (findByUserIdAndGroupId(member.getUserId(), member.getGroupId()).isPresent()) {
                 return true;
             }
         return false;
     }
 
-    public List<GroupHasUsersDTO> getGroupAdminsByGroupId(Integer groupId) {
-        List<GroupHasUsersDTO> allFromGroup = getAllByGroupId(groupId);
-        List<GroupHasUsersDTO> result = new ArrayList<>();
+    public List<MemberDTO> getGroupAdminsByGroupId(Integer groupId) {
+        List<MemberDTO> allMembersInGroup = memberMapper.toDTO(memberRepository.getAllByGroupId(groupId));
+        List<MemberDTO> result = new ArrayList<>();
 
-        for (GroupHasUsersDTO groupHasUsers : allFromGroup) {
-            if (groupHasUsers.isAdmin()) {
-                result.add(groupHasUsers);
+        for (MemberDTO member : allMembersInGroup) {
+            if (member.isAdmin()) {
+                result.add(member);
             }
         }
         return result;
     }
 
-    public boolean findOutIfMemberIsAdmin(GroupHasUsersDTO member) {
-        return findByUserIdAndGroupId(member.getUser().getUserId(),
-                member.getGroup().getGroupId()).get().isAdmin();
+    public boolean findOutIfMemberIsAdmin(MemberDTO memberDTO) {
+        Optional<MemberDTO> memberOptional = findByUserIdAndGroupId(memberDTO.getUserId(), memberDTO.getGroupId());
+        if (memberOptional.isPresent()) {
+            Member member = memberMapper.toMember(memberOptional.get());
+            return member.isAdmin();
+        }
+        return false;
     }
 
     public boolean isClientInOtherGroup(UserDTO user, Integer groupId) {
         boolean result = false;
-        List<GroupHasUsersDTO> allClients = findAllClients();
+        List<MemberDTO> allClients = findAllClients();
 
-        for (GroupHasUsersDTO client : allClients) {
-            if (Objects.equals(user.getUserId(), client.getUser().getUserId()) && !Objects.equals(client.getGroup().getGroupId(), groupId)) {
+        for (MemberDTO client : allClients) {
+            if (Objects.equals(user.getUserId(), client.getUserId()) &&
+                    !Objects.equals(client.getGroupId(), groupId)) {
                 result = true;
                 break;
             }

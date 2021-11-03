@@ -14,9 +14,9 @@ public interface MemberRepository extends JpaRepository <Member, Integer> {
 
     void deleteByUserAndGroup(User user, Group group);
 
-    Optional<Member> findGroupHasUsersByUserAndGroup(User user, Group group);
+    Optional<Member> findMemberByUserAndGroup(User user, Group group);
 
     List<Member> getAllByUser(User user);
 
-    List<Member> getAllByGroupGroupId(Integer groupId);
+    List<Member> getAllByGroupId(Integer groupId);
 }
