@@ -37,11 +37,11 @@ public class Group {
         this.groupName = groupName;
     }
 
-    public List<Member> getGroupHasUsersList() {
+    public List<Member> getMemberList() {
         return memberList;
     }
 
-    public void setGroupHasUsersList(List<Member> memberList) {
+    public void setMemberList(List<Member> memberList) {
         this.memberList = memberList;
     }
 }

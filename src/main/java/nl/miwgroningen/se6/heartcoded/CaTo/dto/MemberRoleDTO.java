@@ -6,14 +6,18 @@ package nl.miwgroningen.se6.heartcoded.CaTo.dto;
  */
 public class MemberRoleDTO {
 
-    private static final String[] GROUP_ROLE_OPTIONS = {"Caregiver", "Client"};
+    private String[] groupRoleOptions;
 
     private String userRole;
 
     private Boolean isAdmin;
 
-    public static String[] getGroupRoleOptions() {
-        return GROUP_ROLE_OPTIONS;
+    public String[] getGroupRoleOptions() {
+        return groupRoleOptions;
+    }
+
+    public void setGroupRoleOptions(String[] groupRoleOptions) {
+        this.groupRoleOptions = groupRoleOptions;
     }
 
     public String getUserRole() {

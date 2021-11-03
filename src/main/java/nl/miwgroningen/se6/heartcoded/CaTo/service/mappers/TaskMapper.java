@@ -1,4 +1,4 @@
-package nl.miwgroningen.se6.heartcoded.CaTo.seeding;
+package nl.miwgroningen.se6.heartcoded.CaTo.service.mappers;
 
 import nl.miwgroningen.se6.heartcoded.CaTo.dto.TaskDTO;
 import nl.miwgroningen.se6.heartcoded.CaTo.model.Task;
