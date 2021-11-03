@@ -77,7 +77,8 @@ public class GroupHasUsersController {
     @GetMapping("/options/edit/{groupId}")
     protected String showGroupEdit(@PathVariable("groupId") Integer groupId, Model model) {
         model.addAttribute("thisGroup", groupService.getById(groupId));
-        model.addAttribute("allGroupHasUsersByGroupId", groupHasUsersService.getAllByGroupId(groupId));
+//        model.addAttribute("allGroupHasUsersByGroupId", groupHasUsersService.getAllByGroupId(groupId));
+        //TODO allGroupHasUsersByGroupId not used in html
         return "groupEdit";
     }
 
@@ -96,7 +97,7 @@ public class GroupHasUsersController {
         String validEntry = "";
 
         if (email != null) {
-            Optional<UserDTO> user = userService.findUserByEmail(email);
+            Optional<UserDTO> user = userService.findUserByEmail(email); //TODO only use userId, ono user model
             if (!user.isEmpty()) {
                 makeGroupHasUsers.setGroup(groupService.getById(groupId));
                 makeGroupHasUsers.setUser(user.get());

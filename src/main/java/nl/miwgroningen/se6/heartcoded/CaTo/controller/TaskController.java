@@ -76,7 +76,7 @@ public class TaskController {
         UserDTO client = taskList.getClient();
         GroupHasUsersDTO clientGroupHasUsers = groupHasUsersService.getByClient(client);
         Integer groupId = clientGroupHasUsers.getGroup().getGroupId();
-
+        //TODO used client --> groupId for redirect, fix when DTOs break it
         taskService.deleteById(taskId);
         return "redirect:/groups/" + groupId + "/clientDashboard/" + client.getUserId();
     }
