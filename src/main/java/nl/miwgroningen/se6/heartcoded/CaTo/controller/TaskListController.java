@@ -1,6 +1,5 @@
 package nl.miwgroningen.se6.heartcoded.CaTo.controller;
 
-import nl.miwgroningen.se6.heartcoded.CaTo.dto.TaskListDTO;
 import nl.miwgroningen.se6.heartcoded.CaTo.service.TaskListService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
