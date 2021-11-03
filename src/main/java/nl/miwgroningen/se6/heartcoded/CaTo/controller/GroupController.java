@@ -33,8 +33,8 @@ public class GroupController {
 
     @GetMapping("/groups")
     protected String showGroupOverview(Model model) {
-        UserDTO user = (UserDTO)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        model.addAttribute("allGroups", memberService.getAllGroupsByUserId(user.getUserId()));
+        UserDTO userDTO = (UserDTO)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        model.addAttribute("allGroups", memberService.getAllGroupsByUserId(userDTO.getUserId()));
         return "groupOverview";
     }
 
@@ -58,8 +58,8 @@ public class GroupController {
                                        @ModelAttribute("member") MemberDTO member, BindingResult result) {
         if (!result.hasErrors()) {
             groupService.saveGroup(group);
-            UserDTO user = (UserDTO) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            memberService.saveMember(new MemberDTO(user.getUserId(), user.getName(), group.getGroupId(), "Caregiver", true));
+            UserDTO userDTO = (UserDTO) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            memberService.saveMember(new MemberDTO(userDTO.getUserId(), userDTO.getName(), group.getGroupId(), "Caregiver", true));
         }
         return "redirect:/groups/" + group.getGroupId();
     }

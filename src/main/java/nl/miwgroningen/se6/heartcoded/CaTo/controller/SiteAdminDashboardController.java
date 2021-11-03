@@ -21,7 +21,8 @@ public class SiteAdminDashboardController {
     private MemberService memberService;
     private TaskListService taskListService;
 
-    public SiteAdminDashboardController(UserService userService, GroupService groupService, MemberService memberService, TaskListService taskListService) {
+    public SiteAdminDashboardController(UserService userService, GroupService groupService,
+                                        MemberService memberService, TaskListService taskListService) {
         this.userService = userService;
         this.groupService = groupService;
         this.memberService = memberService;

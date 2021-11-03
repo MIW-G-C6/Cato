@@ -24,8 +24,8 @@ public class ProfilePageController {
 
     @GetMapping("/profilepage/{userId}")
     protected String showProfilePage(@PathVariable("userId") Integer userId, Model model) {
-        UserDTO user = userService.getById(userId);
-        model.addAttribute("user", user);
+        UserDTO userDTO = userService.getById(userId);
+        model.addAttribute("user", userDTO);
         return "profilePage";
     }
 }
