@@ -1,8 +1,8 @@
 package nl.miwgroningen.se6.heartcoded.CaTo.controller;
 
-import nl.miwgroningen.se6.heartcoded.CaTo.model.Group;
-import nl.miwgroningen.se6.heartcoded.CaTo.model.Member;
-import nl.miwgroningen.se6.heartcoded.CaTo.model.User;
+import nl.miwgroningen.se6.heartcoded.CaTo.dto.GroupDTO;
+import nl.miwgroningen.se6.heartcoded.CaTo.dto.MemberDTO;
+import nl.miwgroningen.se6.heartcoded.CaTo.dto.UserDTO;
 import nl.miwgroningen.se6.heartcoded.CaTo.service.MemberService;
 import nl.miwgroningen.se6.heartcoded.CaTo.service.GroupService;
 import nl.miwgroningen.se6.heartcoded.CaTo.service.UserService;
@@ -33,16 +33,16 @@ public class GroupController {
 
     @GetMapping("/groups")
     protected String showGroupOverview(Model model) {
-        User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        UserDTO user = (UserDTO)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         model.addAttribute("allGroups", memberService.getAllGroupsByUserId(user.getUserId()));
         return "groupOverview";
     }
 
     @GetMapping("/groups/new")
     protected String showGroupForm(Model model) {
-        model.addAttribute("user", new User());
+        model.addAttribute("user", new UserDTO());
         model.addAttribute("allUsers", userService.findAllUsers());
-        model.addAttribute("group", new Group());
+        model.addAttribute("group", new GroupDTO());
         model.addAttribute("allGroups", groupService.findAllGroups());
         return "groupForm";
     }
@@ -55,11 +55,11 @@ public class GroupController {
 
     @PostMapping("/groups/new")
     protected String saveOrUpdateGroup(@ModelAttribute("group") GroupDTO group,
-                                       @ModelAttribute("member") Member member, BindingResult result) {
+                                       @ModelAttribute("member") MemberDTO member, BindingResult result) {
         if (!result.hasErrors()) {
             groupService.saveGroup(group);
             UserDTO user = (UserDTO) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            memberService.saveMember(new GroupHasUsersDTO(group, user, "Caregiver", true));
+            memberService.saveMember(new MemberDTO(user.getUserId(), user.getName(), group.getGroupId(), "Caregiver", true));
         }
         return "redirect:/groups/" + group.getGroupId();
     }
