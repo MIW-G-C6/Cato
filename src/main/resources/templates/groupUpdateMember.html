@@ -14,8 +14,6 @@
 
   <div class="group-update-member">
     <form th:action="@{/groups/options/{groupId}/updatemember/{userId}(groupId=${groupId}, userId=${userId})}" method="post" th:object="${member}">
-<!--      <input type="hidden" th:field="*{userId}">-->
-<!--      <input type="hidden" th:field="*{userId}">-->
 
       <div th:if="${#fields.hasErrors()}">
         <p th:each="err : ${#fields.errors('global')}" th:text="${err}" class="error" />

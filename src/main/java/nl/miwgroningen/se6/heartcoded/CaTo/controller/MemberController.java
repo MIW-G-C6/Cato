@@ -135,7 +135,6 @@ public class MemberController {
         if (member.isEmpty()) {
             return "redirect:/groups/options/{groupId}";
         }
-        model.addAttribute("groupUserRole", new MemberDTO());
         model.addAttribute("member", member.get());
         return "groupUpdateMember";
     }
