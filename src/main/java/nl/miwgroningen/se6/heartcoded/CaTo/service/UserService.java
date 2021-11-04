@@ -31,7 +31,7 @@ public class UserService {
     private PasswordEncoder passwordEncoder;
 
     public UserService(UserRepository userRepository,
-                       UserMapper userMapper,
+                       UserMapper userMapper, 
                        UserLoginMapper userLoginMapper,
                        UserRegistrationMapper userRegistrationMapper,
                        PasswordEncoder passwordEncoder) {
@@ -39,6 +39,7 @@ public class UserService {
         this.userMapper = userMapper;
         this.userLoginMapper = userLoginMapper;
         this.userRegistrationMapper = userRegistrationMapper;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public List<UserDTO> findAllUsers() {
