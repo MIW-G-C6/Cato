@@ -3,11 +3,9 @@ package nl.miwgroningen.se6.heartcoded.CaTo.controller;
 import nl.miwgroningen.se6.heartcoded.CaTo.dto.GroupDTO;
 import nl.miwgroningen.se6.heartcoded.CaTo.dto.MemberDTO;
 import nl.miwgroningen.se6.heartcoded.CaTo.dto.UserDTO;
-import nl.miwgroningen.se6.heartcoded.CaTo.model.User;
 import nl.miwgroningen.se6.heartcoded.CaTo.service.MemberService;
 import nl.miwgroningen.se6.heartcoded.CaTo.service.GroupService;
 import nl.miwgroningen.se6.heartcoded.CaTo.service.UserService;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -34,7 +32,8 @@ public class GroupController {
 
     @GetMapping("/groups")
     protected String showGroupOverview(Model model) {
-        model.addAttribute("allGroups", memberService.getAllGroupsByUserId(userService.getCurrentUser().getUserId()));
+        model.addAttribute("allGroups",
+                memberService.getAllGroupsByUserId(userService.getCurrentUser().getUserId()));
         return "groupOverview";
     }
 
@@ -59,7 +58,8 @@ public class GroupController {
         if (!result.hasErrors()) {
             groupService.saveGroup(group);
             UserDTO userDTO = userService.getCurrentUser();
-            memberService.saveMember(new MemberDTO(userDTO.getUserId(), userDTO.getName(), group.getGroupId(),"Caregiver", true));
+            memberService.saveMember(new MemberDTO(userDTO.getUserId(), userDTO.getName(), group.getGroupId(),
+                    "Caregiver", true));
         }
         return "redirect:/groups/" + group.getGroupId();
     }

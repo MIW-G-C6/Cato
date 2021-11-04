@@ -11,12 +11,11 @@
 
 <div class="container">
   <div class="group-edit-member">
-    <form class="cato-form" th:action="@{/groups/options/{groupId}/addmember/(groupId=${thisGroup.groupId})}" method="get" th:object="${makeMember}">
+    <form class="cato-form" th:action="@{/groups/options/{groupId}/addmember/(groupId=${thisGroup.groupId})}" method="get" th:object="${addMember}">
       <div>
         <h1>Add a new member</h1>
         <label>User e-mail</label>
         <input class="cato-text-field" type="text" placeholder="E-mail adress"  name="email" required>
-        <span th:text="${validEntry}"></span>
         <div th:if="${#fields.hasErrors()}">
           <p th:each="err : ${#fields.errors('global')}" th:text="${err}" class="error" />
         </div>
@@ -25,8 +24,8 @@
       <div>
         <label>Select a user role</label>
         <ul class="cato-radio">
-          <li th:each="role : ${makeMember.groupRoleOptions}">
-            <input type="radio" th:field="${makeMember.role}" th:value="${role}" required>
+          <li th:each="role : ${addMember.groupRoleOptions}">
+            <input type="radio" th:field="${addMember.role}" th:value="${role}" required>
             <label th:for="${#ids.prev('role')}" th:text="${role}"></label>
           </li>
         </ul>
