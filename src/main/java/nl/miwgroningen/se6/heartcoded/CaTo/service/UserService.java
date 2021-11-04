@@ -7,6 +7,7 @@ import nl.miwgroningen.se6.heartcoded.CaTo.repository.UserRepository;
 import nl.miwgroningen.se6.heartcoded.CaTo.service.mappers.UserLoginMapper;
 import nl.miwgroningen.se6.heartcoded.CaTo.service.mappers.UserMapper;
 import nl.miwgroningen.se6.heartcoded.CaTo.service.mappers.UserRegistrationMapper;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -26,13 +27,18 @@ public class UserService {
     private final UserMapper userMapper;
     private final UserLoginMapper userLoginMapper;
     private final UserRegistrationMapper userRegistrationMapper;
+    private PasswordEncoder passwordEncoder;
 
-    public UserService(UserRepository userRepository, UserMapper userMapper,
-                       UserLoginMapper userLoginMapper, UserRegistrationMapper userRegistrationMapper) {
+    public UserService(UserRepository userRepository,
+                       UserMapper userMapper,
+                       UserLoginMapper userLoginMapper,
+                       UserRegistrationMapper userRegistrationMapper,
+                       PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.userMapper = userMapper;
         this.userLoginMapper = userLoginMapper;
         this.userRegistrationMapper = userRegistrationMapper;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public List<UserDTO> findAllUsers() {
@@ -55,7 +61,10 @@ public class UserService {
     }
 
     public void saveNewUser(UserRegistrationDTO user) {
+        System.out.println("password = " + user.getPassword() + " confirm password = " + user.getPasswordCheck());
         if(user.getPassword().equals(user.getPasswordCheck())) {
+            System.out.println("bij save new user method");
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
             userRepository.save(userRegistrationMapper.toUser(user));
         }
         //TODO maybe this needs an exception throw??
