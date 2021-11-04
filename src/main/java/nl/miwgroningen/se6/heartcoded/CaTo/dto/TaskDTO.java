@@ -1,5 +1,7 @@
 package nl.miwgroningen.se6.heartcoded.CaTo.dto;
 
+import nl.miwgroningen.se6.heartcoded.CaTo.model.Task;
+
 import java.util.List;
 
 /**
@@ -18,6 +20,11 @@ public class TaskDTO {
     private String description;
 
     private Integer taskListId;
+
+    public TaskDTO() {
+        Task taskForPriority = new Task();
+        this.priorityOptions = taskForPriority.getPriorityOptions();
+    }
 
     public String[] getPriorityOptions() {
         return priorityOptions;

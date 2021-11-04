@@ -1,9 +1,11 @@
 package nl.miwgroningen.se6.heartcoded.CaTo.service;
 
 import nl.miwgroningen.se6.heartcoded.CaTo.dto.TaskDTO;
+import nl.miwgroningen.se6.heartcoded.CaTo.dto.TaskListDTO;
 import nl.miwgroningen.se6.heartcoded.CaTo.model.Task;
 import nl.miwgroningen.se6.heartcoded.CaTo.model.TaskList;
 import nl.miwgroningen.se6.heartcoded.CaTo.model.User;
+import nl.miwgroningen.se6.heartcoded.CaTo.repository.MemberRepository;
 import nl.miwgroningen.se6.heartcoded.CaTo.repository.TaskListRepository;
 import nl.miwgroningen.se6.heartcoded.CaTo.repository.TaskRepository;
 import nl.miwgroningen.se6.heartcoded.CaTo.repository.UserRepository;
@@ -27,13 +29,15 @@ public class TaskService {
     private final TaskListRepository taskListRepository;
     private final UserRepository userRepository;
     private final TaskMapper taskMapper;
+    private final MemberRepository memberRepository;
 
     public TaskService(TaskRepository taskRepository, TaskListRepository taskListRepository,
-                       UserRepository userRepository, TaskMapper taskMapper) {
+                       UserRepository userRepository, TaskMapper taskMapper, MemberRepository memberRepository) {
         this.taskRepository = taskRepository;
         this.taskListRepository = taskListRepository;
         this.userRepository = userRepository;
         this.taskMapper = taskMapper;
+        this.memberRepository = memberRepository;
     }
 
     public Optional<TaskDTO> findById(Integer taskId) {

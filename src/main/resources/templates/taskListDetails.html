@@ -10,13 +10,13 @@
 <div th:replace="fragments/general :: breadCrumbsBar"></div>
 
 <div class="container">
-    <h1>Task List of <span th:text="${taskList.client.name}"></span></h1>
+    <h1>Task List of <span th:text="${taskList.userName}"></span></h1>
     <table>
         <tr>
             <th>Task Description</th>
             <th class="iconheader">Delete</th>
         </tr>
-        <tr th:each="task : ${taskList.taskList}">
+        <tr th:each="task : ${taskList}">
             <td><a th:href="@{/taskLists/{taskListId}/{taskId}(taskListId=${taskList.taskListId}, taskId=${task.taskId})}"
                    th:text="${task.description}"></a></td>
             <td class="delete"><a th:href="@{'/task/delete/' + ${task.taskId}}"><img th:src="@{/css/images/delete-icon.svg}" height="30" width="30"></a></td>

@@ -62,15 +62,29 @@ public class TaskController {
         return "taskForm";
     }
 
-    @GetMapping("/taskLists/{taskListId}/new")
-    protected String showTaskForm(@PathVariable("taskListId") Integer taskListId, Model model) {
-        Optional<TaskListDTO> taskList = taskListService.findById(taskListId);
-        if (taskList.isEmpty()) {
-            return "redirect:/taskLists";
+    @GetMapping("/groups/{groupId}/clientDashboard/{clientId}/taskLists/{taskListId}/new")
+    protected String showTaskForm(@PathVariable("taskListId") Integer taskListId,
+                                  @PathVariable("groupId") Integer groupId,
+                                  @PathVariable("clientId") Integer clientId,  Model model) {
+        Optional<TaskListDTO> taskListDTO = taskListService.findById(taskListId);
+
+        if (taskListDTO.isEmpty()) {
+            return "redirect:/groups/{groupId}/clientDashboard/{clientId}";
         }
         model.addAttribute("task", new TaskDTO());
         model.addAttribute("taskList", taskListService.getById(taskListId));
         return "taskForm";
+    }
+
+    @PostMapping("/groups/{groupId}/clientDashboard/{clientId}/taskLists/{taskListId}/new")
+    protected String saveOrUpdateTask(
+            @PathVariable ("taskListId") Integer taskListId,
+            @ModelAttribute("task") TaskDTO task, Model model, BindingResult result) {
+
+        if (!result.hasErrors()) {
+            taskService.save(task, taskListId);
+        }
+        return "redirect:/groups/{groupId}/clientDashboard/{clientId}";
     }
 
     @GetMapping("/task/delete/{taskId}")
@@ -81,17 +95,6 @@ public class TaskController {
         MemberDTO clientMember = memberService.getByClient(client);
         taskService.deleteById(taskId);
         return "redirect:/groups/" + clientMember.getGroupId() + "/clientDashboard/" + taskList.getUserId();
-    }
-
-    @PostMapping("/taskLists/{taskListId}/new")
-    protected String saveOrUpdateTask(
-            @PathVariable ("taskListId") Integer taskListId,
-            @ModelAttribute("task") TaskDTO task, BindingResult result) {
-
-        if (!result.hasErrors()) {
-            taskService.save(task, taskListId);
-        }
-        return "redirect:/taskLists/{taskListId}";
     }
 }
 

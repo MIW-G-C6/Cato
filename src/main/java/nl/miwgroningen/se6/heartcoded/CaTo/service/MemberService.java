@@ -96,11 +96,11 @@ public class MemberService {
     }
 
     public MemberDTO getByClient(UserDTO client) {
-        List<Member> allGroupHasUsers = memberRepository.getAllByUser(
+        List<Member> memberList = memberRepository.getAllByUser(
                 userRepository.getById(client.getUserId()));
 
         MemberDTO result = new MemberDTO();
-        for (Member member : allGroupHasUsers) {
+        for (Member member : memberList) {
             if (member.getUserRole().equals("Client")) {
                 result = memberMapper.toDTO(member);
             }
