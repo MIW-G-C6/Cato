@@ -85,7 +85,7 @@ public class TaskController {
     @PostMapping("/groups/{groupId}/clientDashboard/{clientId}/taskLists/{taskListId}/new")
     protected String saveOrUpdateTask(
             @PathVariable ("taskListId") Integer taskListId,
-            @ModelAttribute("task") TaskDTO task, Model model, BindingResult result) {
+            @ModelAttribute("task") TaskDTO task, BindingResult result) {
 
         if (!result.hasErrors()) {
             taskService.save(task, taskListId);

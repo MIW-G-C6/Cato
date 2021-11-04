@@ -31,8 +31,7 @@ public class TaskService {
     private final TaskMapper taskMapper;
     private final MemberRepository memberRepository;
 
-    public TaskService(TaskRepository taskRepository, TaskListRepository taskListRepository,
-                       UserRepository userRepository, TaskMapper taskMapper, MemberRepository memberRepository) {
+    public TaskService(TaskRepository taskRepository, TaskListRepository taskListRepository, UserRepository userRepository, TaskMapper taskMapper, TaskListRepository taskListRepository1, MemberRepository memberRepository) {
         this.taskRepository = taskRepository;
         this.taskListRepository = taskListRepository;
         this.userRepository = userRepository;
