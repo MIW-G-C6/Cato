@@ -1,9 +1,6 @@
 package nl.miwgroningen.se6.heartcoded.CaTo.service;
 
-import nl.miwgroningen.se6.heartcoded.CaTo.dto.GroupDTO;
-import nl.miwgroningen.se6.heartcoded.CaTo.dto.MemberDTO;
-import nl.miwgroningen.se6.heartcoded.CaTo.dto.TaskListDTO;
-import nl.miwgroningen.se6.heartcoded.CaTo.dto.UserDTO;
+import nl.miwgroningen.se6.heartcoded.CaTo.dto.*;
 import nl.miwgroningen.se6.heartcoded.CaTo.model.Member;
 import nl.miwgroningen.se6.heartcoded.CaTo.model.TaskList;
 import nl.miwgroningen.se6.heartcoded.CaTo.model.User;
@@ -13,6 +10,7 @@ import nl.miwgroningen.se6.heartcoded.CaTo.repository.TaskListRepository;
 import nl.miwgroningen.se6.heartcoded.CaTo.repository.UserRepository;
 import nl.miwgroningen.se6.heartcoded.CaTo.service.mappers.GroupMapper;
 import nl.miwgroningen.se6.heartcoded.CaTo.service.mappers.MemberMapper;
+import nl.miwgroningen.se6.heartcoded.CaTo.service.mappers.MemberSiteAdminMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,16 +30,19 @@ public class MemberService {
 
     private final MemberMapper memberMapper;
     private final GroupMapper groupMapper;
+    private final MemberSiteAdminMapper memberSiteAdminMapper;
     private final GroupRepository groupRepository;
     private final UserRepository userRepository;
     private final MemberRepository memberRepository;
     private final TaskListRepository taskListRepository;
 
     public MemberService(MemberMapper memberMapper, GroupMapper groupMapper,
-                         GroupRepository groupRepository, UserRepository userRepository,
-                         MemberRepository memberRepository, TaskListRepository taskListRepository) {
+                         MemberSiteAdminMapper memberSiteAdminMapper, GroupRepository groupRepository,
+                         UserRepository userRepository, MemberRepository memberRepository,
+                         TaskListRepository taskListRepository) {
         this.memberMapper = memberMapper;
         this.groupMapper = groupMapper;
+        this.memberSiteAdminMapper = memberSiteAdminMapper;
         this.groupRepository = groupRepository;
         this.userRepository = userRepository;
         this.memberRepository = memberRepository;
@@ -90,6 +91,16 @@ public class MemberService {
         for (Member member : memberRepository.findAll()) {
             if (member.getUserRole().equals("Client")) {
                 result.add(memberMapper.toDTO(member));
+            }
+        }
+        return result;
+    }
+
+    public List<MemberSiteAdminDTO> findAllClientsForSiteAdmin() {
+        List<MemberSiteAdminDTO> result = new ArrayList<>();
+        for (Member member : memberRepository.findAll()) {
+            if (member.getUserRole().equals("Client")) {
+                result.add(memberSiteAdminMapper.toDTO(member));
             }
         }
         return result;

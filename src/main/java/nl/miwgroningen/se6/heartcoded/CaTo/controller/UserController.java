@@ -91,7 +91,7 @@ public class UserController {
             result.addError(error);
         }
         if (result.hasErrors()) {
-            return "editUserForm";
+            return "editUserForm"; //TODO Error is not shown in html page for some reason
         }
         userService.editUser(user);
         return "redirect:/profilepage/" + user.getUserId();

@@ -32,8 +32,7 @@ public class SiteAdminDashboardController {
     @GetMapping("/siteAdminDashboard")
     protected String showSiteAdminDashboard(Model model) {
         model.addAttribute("allUsers", userService.findAllUsers());
-        model.addAttribute("allTaskLists", taskListService.findAll());
-        model.addAttribute("allClients", memberService.findAllClients());
+        model.addAttribute("allClients", memberService.findAllClientsForSiteAdmin());
         model.addAttribute("allGroups", groupService.findAllGroups());
 
         return "siteAdminDashboard";

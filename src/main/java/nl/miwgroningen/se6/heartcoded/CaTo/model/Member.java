@@ -69,7 +69,7 @@ public class Member {
         isAdmin = admin;
     }
 
-    public String[] getGroupRoleOptions() {
+    public static String[] getGroupRoleOptions() {
         return GROUP_ROLE_OPTIONS;
     }
 }
