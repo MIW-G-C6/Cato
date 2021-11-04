@@ -44,7 +44,6 @@ class TaskMapperTest {
 
         Optional<Task> presentOptionalTask = Optional.of(task);
 
-
         Optional<TaskDTO> presentOptionalDTO = taskMapper.toDTO(presentOptionalTask);
 
         assertTrue(presentOptionalDTO.isPresent());
