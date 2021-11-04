@@ -24,7 +24,7 @@ public class MemberMapper {
 
         result.setGroupRoleOptions(member.getGroupRoleOptions());
         result.setUserId(member.getUser().getUserId());
-        result.setUserName(member.getUser().getUsername());
+        result.setUserName(member.getUser().getName());
         result.setGroupId(member.getGroup().getGroupId());
         result.setRole(member.getUserRole());
         result.setAdmin(member.isAdmin());

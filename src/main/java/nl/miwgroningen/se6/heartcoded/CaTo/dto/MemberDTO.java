@@ -1,5 +1,7 @@
 package nl.miwgroningen.se6.heartcoded.CaTo.dto;
 
+import nl.miwgroningen.se6.heartcoded.CaTo.model.Member;
+
 /**
  * @author Shalena Omapersad <shalenao@hotmail.com>
  *
@@ -18,7 +20,7 @@ public class MemberDTO {
 
     private String role;
 
-    private Boolean isAdmin;
+    private boolean isAdmin;
 
     public MemberDTO(Integer userId, String userName, Integer groupId, String role, Boolean isAdmin) {
         this.userId = userId;
@@ -26,9 +28,14 @@ public class MemberDTO {
         this.groupId = groupId;
         this.role = role;
         this.isAdmin = isAdmin;
+        Member test = new Member();
+        this.groupRoleOptions = test.getGroupRoleOptions();
+
     }
 
     public MemberDTO() {
+        Member test = new Member();
+        this.groupRoleOptions = test.getGroupRoleOptions();
     }
 
     public String[] getGroupRoleOptions() {
@@ -71,7 +78,7 @@ public class MemberDTO {
         this.role = role;
     }
 
-    public Boolean isAdmin() {
+    public boolean isAdmin() {
         return isAdmin;
     }
 

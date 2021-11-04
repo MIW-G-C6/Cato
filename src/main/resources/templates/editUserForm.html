@@ -13,10 +13,12 @@
     <h1>Edit personal information</h1>
 
     <form class="cato-form" th:action="@{/registration}" method="post" th:object="${user}">
-        <div th:if="${#fields.hasErrors()}">
-            <p th:each="err : ${#fields.errors('global')}" th:text="${err}" class="alert alert-danger" />
-        </div>
+
         <input type="hidden" th:field="*{userId}">
+        <div th:if="${#fields.hasErrors()}">
+            <p th:each="err : ${#fields.errors('global')}" th:text="${err}" class="error" />
+        </div>
+
         <div>
             <input class="cato-text-field" placeholder="Name" type="text" id="name" required pattern=".*\S+.*"
                    oninvalid="this.setCustomValidity('Name cannot be empty')"

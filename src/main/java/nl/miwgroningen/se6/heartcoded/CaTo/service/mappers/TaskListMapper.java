@@ -22,7 +22,7 @@ public class TaskListMapper {
 
         result.setTaskListId(taskList.getTaskListId());
         result.setUserId(taskList.getClient().getUserId());
-        result.setUserName(taskList.getClient().getUsername());
+        result.setUserName(taskList.getClient().getName());
 
         return result;
     }

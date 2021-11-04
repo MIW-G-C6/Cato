@@ -85,7 +85,7 @@ public class UserController {
     }
 
     protected String editUser(UserDTO user, BindingResult result) {
-        UserDTO currentUser = (UserDTO) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        UserDTO currentUser = userService.getCurrentUser();
         if (userService.emailInUse(user.getEmail()) && !user.getEmail().equals(currentUser.getEmail())) {
             ObjectError error = new ObjectError("globalError", "Email is already in use");
             result.addError(error);
