@@ -2,12 +2,8 @@
 <html lang="en" xmlns:th="https://www.thymeleaf.org">
 <head th:replace="fragments/general :: baseHeader(~{:: title})" >
   <meta charset="UTF-8">
-  <title>add a groupmember</title>
+  <title>Add a group member</title>
 </head>
-
-<script>
-
-</script>
 <body>
 
 <div th:replace="fragments/general :: navbar"></div>
@@ -30,7 +26,7 @@
         <label>Select a user role</label>
         <ul class="cato-radio">
           <li th:each="userRole : ${makeMember.groupRoleOptions}">
-            <input type="radio" th:field="${makeMember.userRole}" th:value="${userRole}" required>
+            <input type="radio" th:field="${makeMember.role}" th:value="${userRole}" required>
             <label th:for="${#ids.prev('userRole')}" th:text="${userRole}"></label>
           </li>
         </ul>

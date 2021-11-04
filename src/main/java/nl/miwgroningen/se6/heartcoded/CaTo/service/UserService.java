@@ -8,6 +8,7 @@ import nl.miwgroningen.se6.heartcoded.CaTo.service.mappers.UserLoginMapper;
 import nl.miwgroningen.se6.heartcoded.CaTo.service.mappers.UserMapper;
 import nl.miwgroningen.se6.heartcoded.CaTo.service.mappers.UserRegistrationMapper;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -38,7 +39,6 @@ public class UserService {
         this.userMapper = userMapper;
         this.userLoginMapper = userLoginMapper;
         this.userRegistrationMapper = userRegistrationMapper;
-        this.passwordEncoder = passwordEncoder;
     }
 
     public List<UserDTO> findAllUsers() {
@@ -75,5 +75,10 @@ public class UserService {
 
     public boolean emailInUse(String email) {
         return findUserByEmail(email).isPresent();
+    }
+
+    public UserDTO getCurrentUser() {
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return getById(user.getUserId());
     }
 }
