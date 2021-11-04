@@ -22,7 +22,7 @@ public class MemberMapper {
     public MemberDTO toDTO(Member member) {
         MemberDTO result = new MemberDTO();
 
-        result.setGroupRoleOptions(member.getGroupRoleOptions());
+        result.setGroupRoleOptions(Member.getGroupRoleOptions());
         result.setUserId(member.getUser().getUserId());
         result.setUserName(member.getUser().getName());
         result.setGroupId(member.getGroup().getGroupId());

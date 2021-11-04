@@ -59,8 +59,7 @@ public class GroupController {
         if (!result.hasErrors()) {
             groupService.saveGroup(group);
             UserDTO userDTO = userService.getCurrentUser();
-            System.out.println("*****************"+ userDTO.getUserId() + "****************" + group.getGroupId());
-            memberService.saveMember(new MemberDTO(userDTO.getUserId(), userDTO.getName(), group.getGroupId(), "Caregiver", true));
+            memberService.saveMember(new MemberDTO(userDTO.getUserId(), userDTO.getName(), group.getGroupId(),"Caregiver", true));
         }
         return "redirect:/groups/" + group.getGroupId();
     }

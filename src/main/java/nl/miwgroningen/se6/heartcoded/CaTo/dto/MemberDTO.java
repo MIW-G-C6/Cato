@@ -22,20 +22,16 @@ public class MemberDTO {
 
     private boolean isAdmin;
 
-    public MemberDTO(Integer userId, String userName, Integer groupId, String role, Boolean isAdmin) {
+    public MemberDTO(Integer userId, String userName, Integer groupId, String role, boolean isAdmin) {
         this.userId = userId;
         this.userName = userName;
         this.groupId = groupId;
         this.role = role;
         this.isAdmin = isAdmin;
-        Member test = new Member();
-        this.groupRoleOptions = test.getGroupRoleOptions();
-
     }
 
     public MemberDTO() {
-        Member test = new Member();
-        this.groupRoleOptions = test.getGroupRoleOptions();
+        this.groupRoleOptions = Member.getGroupRoleOptions();
     }
 
     public String[] getGroupRoleOptions() {
