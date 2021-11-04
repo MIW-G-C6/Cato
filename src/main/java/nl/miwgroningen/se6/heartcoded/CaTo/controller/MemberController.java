@@ -135,21 +135,22 @@ public class MemberController {
         if (member.isEmpty()) {
             return "redirect:/groups/options/{groupId}";
         }
-        model.addAttribute("groupHasUser", member.get());
+        model.addAttribute("groupUserRole", new MemberDTO());
+        model.addAttribute("member", member.get());
         return "groupUpdateMember";
     }
 
     @PostMapping("/options/{groupId}/updatemember/{userId}")
     protected String updateGroupMember(@PathVariable("userId") Integer userId,
                                        @PathVariable("groupId") Integer groupId,
-                                       @ModelAttribute("groupHasUser") MemberDTO groupHasUser,
+                                       @ModelAttribute("member") MemberDTO member,
                                        BindingResult result) {
-        checkForErrorsUpdateGroupMember(groupId, groupHasUser, result);
+        checkForErrorsUpdateGroupMember(groupId, member, result);
         if (result.hasErrors()) {
             return  "groupUpdateMember";
         }
-        memberService.createNewTaskList(groupHasUser);
-        memberService.saveMember(groupHasUser);
+        memberService.createNewTaskList(member);
+        memberService.saveMember(member);
         return "redirect:/groups/options/{groupId}";
     }
 

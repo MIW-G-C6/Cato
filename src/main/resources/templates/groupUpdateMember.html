@@ -13,9 +13,9 @@
 <div class="container">
 
   <div class="group-update-member">
-    <form th:action="@{/groups/options/{groupId}/updatemember/{userId}(groupId=${groupId}, userId=${userId})}" method="post" th:object="${groupHasUser}">
-      <input type="hidden" th:field="*{user}">
-      <input type="hidden" th:field="*{group}">
+    <form th:action="@{/groups/options/{groupId}/updatemember/{userId}(groupId=${groupId}, userId=${userId})}" method="post" th:object="${member}">
+<!--      <input type="hidden" th:field="*{userId}">-->
+<!--      <input type="hidden" th:field="*{userId}">-->
 
       <div th:if="${#fields.hasErrors()}">
         <p th:each="err : ${#fields.errors('global')}" th:text="${err}" class="error" />
@@ -24,9 +24,9 @@
       <h1>Change role</h1>
 
       <ul class="cato-radio">
-        <li th:each="userRole : ${groupHasUser.groupRoleOptions}">
-          <input type="radio" th:field="${groupHasUser.userRole}" th:value="${userRole}">
-          <label th:for="${#ids.prev('userRole')}" th:text="${userRole}"></label>
+        <li th:each="role : ${member.groupRoleOptions}">
+          <input type="radio" th:field="${member.role}" th:value="${role}">
+          <label th:for="${#ids.prev('role')}" th:text="${role}"></label>
         </li>
       </ul>
 
