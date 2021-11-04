@@ -5,10 +5,7 @@ import nl.miwgroningen.se6.heartcoded.CaTo.dto.MemberDTO;
 import nl.miwgroningen.se6.heartcoded.CaTo.dto.TaskListDTO;
 import nl.miwgroningen.se6.heartcoded.CaTo.dto.UserDTO;
 import nl.miwgroningen.se6.heartcoded.CaTo.model.Member;
-import nl.miwgroningen.se6.heartcoded.CaTo.service.MemberService;
-import nl.miwgroningen.se6.heartcoded.CaTo.service.GroupService;
-import nl.miwgroningen.se6.heartcoded.CaTo.service.TaskListService;
-import nl.miwgroningen.se6.heartcoded.CaTo.service.UserService;
+import nl.miwgroningen.se6.heartcoded.CaTo.service.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -32,13 +29,15 @@ public class MemberController {
     private MemberService memberService;
     private UserService userService;
     private TaskListService taskListService;
+    private TaskService taskService;
 
     public MemberController(GroupService groupService, MemberService memberService,
-                            UserService userService, TaskListService taskListService) {
+                            UserService userService, TaskListService taskListService, TaskService taskService) {
         this.groupService = groupService;
         this.memberService = memberService;
         this.userService = userService;
         this.taskListService = taskListService;
+        this.taskService = taskService;
     }
 
     @GetMapping("/{groupId}")
@@ -174,6 +173,7 @@ public class MemberController {
         model.addAttribute("taskList", taskListService.findByUser(userService.getById(clientId)));
         model.addAttribute("allMembersByGroupId", memberService.getAllByGroupId(groupId));
         model.addAttribute("groupId", groupId);
+        model.addAttribute("listOfTasks", taskService.getAllTasksByClientId(clientId));
         return "clientDashboard";
     }
 

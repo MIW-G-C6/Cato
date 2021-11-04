@@ -19,9 +19,9 @@
             <table>
                 <tr th:each="thisMember : ${allMembersByGroupId}" >
                     <td>
-                        <a th:href="@{/profilepage/{userId}(userId=${thisMember.user.userId})}" th:text="${thisMember.user.name}"></a>
+                        <a th:href="@{/profilepage/{userId}(userId=${thisMember.userId})}" th:text="${thisMember.userName}"></a>
                     </td>
-                    <td th:text="${thisMember.userRole}"></td>
+                    <td th:text="${thisMember.role}"></td>
                 </tr>
             </table>
         </div>
@@ -29,7 +29,7 @@
             <h5>Task List<a class="float-right" th:href="@{/taskLists/{taskListId}/new(taskListId=${taskList.taskListId})}">Add new task</a></h5>
             <hr>
             <table>
-                <tr th:each="task : ${taskList.taskList}">
+                <tr th:each="task : ${listOfTasks}">
                     <td><a th:href="@{/taskLists/{taskListId}/{taskId}(taskListId=${taskList.taskListId}, taskId=${task.taskId})}" th:text="${task.description}" title="show task details"></a></td>
                     <td>
                         <span th:text="${task.priority}"></span>

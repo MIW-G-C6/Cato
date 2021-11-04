@@ -20,6 +20,7 @@ public class TaskMapper {
         taskDTO.setTaskId(task.getTaskId());
         taskDTO.setDescription(task.getDescription());
         taskDTO.setPriority(task.getPriority());
+        taskDTO.setTaskListId(task.getTaskList().getTaskListId());
 
         return taskDTO;
     }

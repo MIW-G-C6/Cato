@@ -17,6 +17,8 @@ public class TaskDTO {
 
     private String description;
 
+    private Integer taskListId;
+
     public String[] getPriorityOptions() {
         return priorityOptions;
     }
@@ -47,5 +49,13 @@ public class TaskDTO {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Integer getTaskListId() {
+        return taskListId;
+    }
+
+    public void setTaskListId(Integer taskListId) {
+        this.taskListId = taskListId;
     }
 }
