@@ -5,6 +5,8 @@ import nl.miwgroningen.se6.heartcoded.CaTo.dto.UserRegistrationDTO;
 import nl.miwgroningen.se6.heartcoded.CaTo.model.User;
 import org.springframework.stereotype.Component;
 
+import java.util.Optional;
+
 /**
  * @author Paul Romkes <p.r.romkes@gmail.com
  *
@@ -22,6 +24,14 @@ public class UserRegistrationMapper {
         result.setPassword(user.getPassword());
 
         return result;
+    }
+
+    public Optional<UserRegistrationDTO> toDTO(Optional<User> user) {
+        Optional<UserRegistrationDTO> userRegistrationDTO = Optional.empty();
+        if (user.isPresent()) {
+            userRegistrationDTO = Optional.of(toDTO(user.get()));
+        }
+        return userRegistrationDTO;
     }
 
     public User toUser(UserRegistrationDTO userRegistrationDTO) {

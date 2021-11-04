@@ -33,23 +33,9 @@ public class UserController {
 
     @GetMapping("/registration")
     protected String showUserForm(Model model) {
-        model.addAttribute("user", new UserRegistrationDTO());
+        model.addAttribute("userWithPW", new UserRegistrationDTO());
         model.addAttribute("allUsers", userService.findAllUsers());
         return "registrationForm";
-    }
-
-    @PostMapping("/registration")
-    protected String doSaveOrEditUser(@ModelAttribute("user") UserDTO user,
-                                      @ModelAttribute("userWithPW") UserRegistrationDTO userRegistrationDTO,
-                                      BindingResult result) {
-        String returnString;
-        if (isUserAnonymous()) {
-            returnString = saveNewUser(userRegistrationDTO, result);
-        }
-        else {
-            returnString = editUser(user, result);
-        }
-        return returnString;
     }
 
     @GetMapping("/users/delete/{userId}")
@@ -62,11 +48,12 @@ public class UserController {
     protected String showEditUserForm(@PathVariable("userId") Integer userId, Model model) {
         UserDTO user = userService.getById(userId);
         model.addAttribute("user", user);
-        model.addAttribute("allUsers", userService.findAllUsers());
         return "editUserForm";
     }
 
-    protected String saveNewUser(UserRegistrationDTO userRegistrationDTO, BindingResult result) {
+    @PostMapping("/registration")
+    protected String saveNewUser(@ModelAttribute("userWithPW") UserRegistrationDTO userRegistrationDTO,
+                                 BindingResult result) {
         if (userService.emailInUse(userRegistrationDTO.getEmail())) {
             ObjectError error = new ObjectError("globalError", "Email is already in use");
             result.addError(error);
@@ -78,20 +65,18 @@ public class UserController {
         return "redirect:/groups";
     }
 
-    protected String editUser(UserDTO user, BindingResult result) {
+    @PostMapping("users/edit/{userId}")
+    protected String editUser(@PathVariable("userId") Integer userId, @ModelAttribute("user") UserDTO user,
+                              BindingResult result) {
         UserDTO currentUser = userService.getCurrentUser();
         if (userService.emailInUse(user.getEmail()) && !user.getEmail().equals(currentUser.getEmail())) {
             ObjectError error = new ObjectError("globalError", "Email is already in use");
             result.addError(error);
         }
         if (result.hasErrors()) {
-            return "editUserForm"; //TODO Error is not shown in html page for some reason
+            return "editUserForm";
         }
         userService.editUser(user);
         return "redirect:/profilepage/" + user.getUserId();
-    }
-
-    protected boolean isUserAnonymous() {
-        return SecurityContextHolder.getContext().getAuthentication().getPrincipal().equals("anonymousUser");
     }
 }

@@ -96,11 +96,11 @@ public class MemberController {
         String validEntry = "";
 
         if (email != null) {
-            Optional<UserDTO> user = userService.findUserByEmail(email); //TODO only use userId, ono user model
-            if (!user.isEmpty()) {
+            Optional<Integer> userId = userService.findUserIdByEmail(email);
+            if (!userId.isEmpty()) {
                 makeMember.setGroupId(groupId);
-                makeMember.setUserId(user.get().getUserId());
-                checkForErrorsAddMember(groupId, makeMember, result, user);
+                makeMember.setUserId(userId.get());;
+                checkForErrorsAddMember(groupId, makeMember, result, userId);
             } else {
                 result.addError(new ObjectError("globalError", "No existing account found with this email address"));
             }
@@ -108,6 +108,7 @@ public class MemberController {
                 memberService.saveMember(makeMember);
                 memberService.createNewTaskList(makeMember);
                 validEntry = "Successfully added this member to your group";
+                return "redirect:/groups/options/{groupId}";
             }
         }
 
@@ -118,12 +119,12 @@ public class MemberController {
         return "groupAddMember";
     }
 
-    private void checkForErrorsAddMember(Integer groupId, MemberDTO makeMember, BindingResult result, Optional<UserDTO> user) {
+    private void checkForErrorsAddMember(Integer groupId, MemberDTO makeMember, BindingResult result, Optional<Integer> userId) {
         if (memberService.userInGroupExists(makeMember)) {
             result.addError(new ObjectError("globalError", "Not able to add the same user twice"));
         }
 
-        if (memberService.isClient(makeMember) && memberService.isClientInOtherGroup(user.get().getUserId(), groupId)) {
+        if (memberService.isClient(makeMember) && memberService.isClientInOtherGroup(userId.get(), groupId)) {
             result.addError(new ObjectError("globalError", "User is already a client in another group"));
         }
     }
@@ -176,18 +177,4 @@ public class MemberController {
         model.addAttribute("listOfTasks", taskService.getAllTasksByClientId(clientId));
         return "clientDashboard";
     }
-
-//    protected void createNewTaskList(MemberDTO member) {
-//        if (memberService.isClient(member)) {
-//
-//            TaskListDTO taskList = taskListService.findByUser(member.getUser());
-//            if (taskList == null) {
-//                taskListService.save(new TaskListDTO(member.getUser()));
-//            }
-//        }
-//    }
-
-//    protected boolean isClient(MemberDTO member) {
-//        return member.getRole().equals(MemberDTO.getGroupRoleOptions()[1]);
-//    }
 }

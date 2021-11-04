@@ -70,8 +70,19 @@ public class UserService {
         //TODO maybe this needs an exception throw??
     }
 
-    public Optional<UserDTO> findUserByEmail(String email) {
-        return userMapper.toDTO(userRepository.findByEmail(email));
+    public Optional<UserRegistrationDTO> findUserByEmail(String email) {
+        return userRegistrationMapper.toDTO(userRepository.findByEmail(email));
+    }
+
+    public Optional<Integer> findUserIdByEmail(String email) {
+        Optional<Integer> userId = Optional.empty();
+        Optional<User> user = userRepository.findByEmail(email);
+
+        if (user.isPresent()) {
+            userId = Optional.of(user.get().getUserId());
+        }
+
+        return userId;
     }
 
     public boolean emailInUse(String email) {
