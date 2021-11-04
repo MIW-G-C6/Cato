@@ -47,8 +47,8 @@ public class Task {
         return taskList;
     }
 
-    public void setTaskList(TaskList taskListId) {
-        this.taskList = taskListId;
+    public void setTaskList(TaskList taskList) {
+        this.taskList = taskList;
     }
 
     public String getPriority() {
