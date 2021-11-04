@@ -30,7 +30,7 @@
             <hr>
             <table>
                 <tr th:each="task : ${listOfTasks}">
-                    <td><a th:href="@{/taskLists/{taskListId}/{taskId}(taskListId=${taskList.taskListId}, taskId=${task.taskId})}" th:text="${task.description}" title="show task details"></a></td>
+                    <td><a th:href="@{/groups/{groupId}/clientDashboard/{clientId}/taskLists/{taskListId}/{taskId} (groupId=${groupId}, clientId=${clientId}, taskListId=${task.taskListId}, taskId=${task.taskId})}" th:text="${task.description}" title="show task details"></a></td>
                     <td>
                         <span th:text="${task.priority}"></span>
                         <span th:text="priority"></span>

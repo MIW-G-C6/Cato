@@ -39,23 +39,29 @@ public class TaskController {
         this.userService = userService;
     }
 
-    @GetMapping("/taskLists/{taskListId}/{taskId}")
-    protected String showTaskDetails(@PathVariable("taskListId") Integer taskListId, @PathVariable("taskId") Integer taskId, Model model) {
+    @GetMapping("/groups/{groupId}/clientDashboard/{clientId}/taskLists/{taskListId}/{taskId}")
+    protected String showTaskDetails(@PathVariable("groupId") Integer groupId,
+                                     @PathVariable("clientId") Integer clientId,
+                                     @PathVariable("taskListId") Integer taskListId,
+                                     @PathVariable("taskId") Integer taskId, Model model) {
 
         Optional<TaskDTO> task = taskService.findById(taskId);
         if (task.isEmpty()) {
-            return "redirect:/taskLists/" + taskListId;
+            return "redirect:/groups/{groupId}/clientDashboard/{clientId}" + taskListId;
         }
         model.addAttribute("task", task.get());
         model.addAttribute("taskList", taskListService.getById(taskListId));
         return "taskDetails";
     }
 
-    @GetMapping("taskLists/{taskListId}/update/{taskId}")
-    protected String showUpdateTaskForm(@PathVariable("taskListId") Integer taskListId, @PathVariable("taskId") Integer taskId, Model model) {
+    @GetMapping("/groups/{groupId}/clientDashboard/{clientId}/taskLists/{taskListId}/update/{taskId}")
+    protected String showUpdateTaskForm(@PathVariable("groupId") Integer groupId,
+                                        @PathVariable("clientId") Integer clientId,
+                                        @PathVariable("taskListId") Integer taskListId,
+                                        @PathVariable("taskId") Integer taskId, Model model) {
         Optional<TaskDTO> task = taskService.findById(taskId);
         if (task.isEmpty()) {
-            return "redirect:/taskLists/" + taskListId;
+            return "redirect:/groups/{groupId}/clientDashboard/{clientId}" + taskListId;
         }
         model.addAttribute("task", task.get());
         model.addAttribute("taskList", taskListService.getById(taskListId));

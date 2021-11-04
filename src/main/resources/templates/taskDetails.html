@@ -11,7 +11,7 @@
 
 <div class="container">
     <h1>Task details
-        <a th:href="@{/taskLists/{taskListId}/update/{taskId}(taskListId=${taskList.taskListId}, taskId=${task.taskId})}"><img th:src="@{/css/images/edit-icon.svg}" height="15" width="15" title="edit task"></a>
+        <a th:href="@{/groups/{groupId}/clientDashboard/{clientId}/taskLists/{taskListId}/update/{taskId}(groupId=${groupId}, clientId=${clientId}, taskListId=${taskList.taskListId}, taskId=${task.taskId})}"><img th:src="@{/css/images/edit-icon.svg}" height="15" width="15" title="edit task"></a>
         <a th:href="@{'/task/delete/' + ${task.taskId}}"><img th:src="@{/css/images/delete-icon.svg}" height="15" width="15" title="delete task"></a>
     </h1>
     <div class="card-body">
