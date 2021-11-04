@@ -31,12 +31,6 @@ public class UserController {
         this.passwordEncoder = passwordEncoder;
     }
 
-    @GetMapping("/users")
-    protected String showUserOverview(Model model) {
-        model.addAttribute("allUsers", userService.findAllUsers());
-        return "userOverview";
-    }
-
     @GetMapping("/registration")
     protected String showUserForm(Model model) {
         model.addAttribute("user", new UserRegistrationDTO());
@@ -81,7 +75,7 @@ public class UserController {
             return "registrationForm";
         }
         userService.saveNewUser(userRegistrationDTO);
-        return "redirect:/users";
+        return "redirect:/groups";
     }
 
     protected String editUser(UserDTO user, BindingResult result) {
