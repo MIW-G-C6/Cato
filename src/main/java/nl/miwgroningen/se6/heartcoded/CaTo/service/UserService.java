@@ -61,9 +61,8 @@ public class UserService {
     }
 
     public void saveNewUser(UserRegistrationDTO user) {
-        System.out.println("password = " + user.getPassword() + " confirm password = " + user.getPasswordCheck());
         if(user.getPassword().equals(user.getPasswordCheck())) {
-            System.out.println("bij save new user method");
+
             user.setPassword(passwordEncoder.encode(user.getPassword()));
             userRepository.save(userRegistrationMapper.toUser(user));
         }

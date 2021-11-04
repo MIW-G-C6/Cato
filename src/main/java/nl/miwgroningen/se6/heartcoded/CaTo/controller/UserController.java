@@ -49,12 +49,12 @@ public class UserController {
                                       @ModelAttribute("userWithPW") UserRegistrationDTO userRegistrationDTO,
                                       BindingResult result) {
         String returnString;
-//        if (isUserAnonymous()) {
+        if (isUserAnonymous()) {
             returnString = saveNewUser(userRegistrationDTO, result);
-//        }
-//        else {
-//            returnString = editUser(user, result);
-//        }
+        }
+        else {
+            returnString = editUser(user, result);
+        }
         return returnString;
     }
 
@@ -80,7 +80,6 @@ public class UserController {
         if (result.hasErrors()) {
             return "registrationForm";
         }
-//        userRegistrationDTO.setPassword(passwordEncoder.encode(userRegistrationDTO.getPassword()));
         userService.saveNewUser(userRegistrationDTO);
         return "redirect:/users";
     }
