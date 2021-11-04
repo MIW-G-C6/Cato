@@ -2,9 +2,6 @@ package nl.miwgroningen.se6.heartcoded.CaTo.controller;
 
 import nl.miwgroningen.se6.heartcoded.CaTo.dto.GroupDTO;
 import nl.miwgroningen.se6.heartcoded.CaTo.dto.MemberDTO;
-import nl.miwgroningen.se6.heartcoded.CaTo.dto.TaskListDTO;
-import nl.miwgroningen.se6.heartcoded.CaTo.dto.UserDTO;
-import nl.miwgroningen.se6.heartcoded.CaTo.model.Member;
 import nl.miwgroningen.se6.heartcoded.CaTo.service.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,6 +21,11 @@ import java.util.Optional;
 @Controller
 @RequestMapping("/groups")
 public class MemberController {
+
+    private static final String ONLY_GROUP_ADMIN_ERROR = "Cannot remove group admin if this is the only group admin";
+    private static final String NO_ACCOUNT_WITH_EMAIL_ERROR = "No existing account found with this email address";
+    private static final String SAME_USER_TWICE_ERROR = "Not able to add the same user twice";
+    private static final String ALREADY_CLIENT_ERROR = "User is already a client in another group";
 
     private GroupService groupService;
     private MemberService memberService;
@@ -48,36 +50,16 @@ public class MemberController {
     }
 
     @GetMapping("/options/{groupId}")
-    protected String showGroupOptions(@PathVariable("groupId") Integer groupId, @ModelAttribute("error") String error, Model model) {
+    protected String showGroupOptions(@PathVariable("groupId") Integer groupId,
+                                      @ModelAttribute("error") String error, Model model) {
         model.addAttribute("thisGroup", groupService.getById(groupId));
         model.addAttribute("allMembersByGroupId", memberService.getAllByGroupId(groupId));
         return "groupOptions";
     }
 
-    @GetMapping("/options/{groupId}/delete/{userId}")
-    protected String deleteUserFromGroup(@PathVariable("groupId") Integer groupId,
-                                         @PathVariable("userId") Integer userId,
-                                         RedirectAttributes redirectAttributes) {
-        // checks first if the group member isn't the last group admin. If so, it can't be removed from the group.
-        Optional<MemberDTO> groupHasUser = memberService.findByUserIdAndGroupId(userId, groupId);
-        if (groupHasUser.isPresent()) {
-            if (memberService.findOutIfMemberIsAdmin(groupHasUser.get()) &&
-                    memberService.getGroupAdminsByGroupId(
-                            groupHasUser.get().getGroupId()).size() == 1) {
-                redirectAttributes.addAttribute("error",
-                        "Cannot remove group admin if this is the only group admin");
-            } else {
-                memberService.deleteByUserId(userId, groupId);
-            }
-        }
-        return "redirect:/groups/options/{groupId}";
-    }
-
     @GetMapping("/options/edit/{groupId}")
     protected String showGroupEdit(@PathVariable("groupId") Integer groupId, Model model) {
         model.addAttribute("thisGroup", groupService.getById(groupId));
-//        model.addAttribute("allGroupHasUsersByGroupId", groupHasUsersService.getAllByGroupId(groupId));
-        //TODO allGroupHasUsersByGroupId not used in html
         return "groupEdit";
     }
 
@@ -91,42 +73,24 @@ public class MemberController {
 
     @RequestMapping(value = "/options/{groupId}/addmember")
     protected String doAddUser(@PathVariable("groupId") Integer groupId, Model model, String email,
-                               @ModelAttribute ("makeMember") MemberDTO makeMember,
+                               @ModelAttribute ("addMember") MemberDTO addMember,
                                BindingResult result) {
-        String validEntry = "";
-
         if (email != null) {
             Optional<Integer> userId = userService.findUserIdByEmail(email);
-            if (!userId.isEmpty()) {
-                makeMember.setGroupId(groupId);
-                makeMember.setUserId(userId.get());;
-                checkForErrorsAddMember(groupId, makeMember, result, userId);
-            } else {
-                result.addError(new ObjectError("globalError", "No existing account found with this email address"));
-            }
+
+            checkIfAccountExists(groupId, addMember, result, userId);
+
             if (!result.hasErrors()) {
-                memberService.saveMember(makeMember);
-                memberService.createNewTaskList(makeMember);
-                validEntry = "Successfully added this member to your group";
+                memberService.saveMember(addMember);
+                memberService.createNewTaskList(addMember);
                 return "redirect:/groups/options/{groupId}";
             }
         }
 
-        model.addAttribute("validEntry", validEntry);
         model.addAttribute("groupUserRole", new MemberDTO());
         model.addAttribute("thisGroup", groupService.getById(groupId));
         model.addAttribute("member", memberService.getAllByGroupId(groupId));
         return "groupAddMember";
-    }
-
-    private void checkForErrorsAddMember(Integer groupId, MemberDTO makeMember, BindingResult result, Optional<Integer> userId) {
-        if (memberService.userInGroupExists(makeMember)) {
-            result.addError(new ObjectError("globalError", "Not able to add the same user twice"));
-        }
-
-        if (memberService.isClient(makeMember) && memberService.isClientInOtherGroup(userId.get(), groupId)) {
-            result.addError(new ObjectError("globalError", "User is already a client in another group"));
-        }
     }
 
     @GetMapping("/options/{groupId}/updatemember/{userId}")
@@ -141,8 +105,7 @@ public class MemberController {
     }
 
     @PostMapping("/options/{groupId}/updatemember/{userId}")
-    protected String updateGroupMember(@PathVariable("userId") Integer userId,
-                                       @PathVariable("groupId") Integer groupId,
+    protected String updateGroupMember(@PathVariable("groupId") Integer groupId,
                                        @ModelAttribute("member") MemberDTO member,
                                        BindingResult result) {
         checkForErrorsUpdateGroupMember(groupId, member, result);
@@ -154,17 +117,20 @@ public class MemberController {
         return "redirect:/groups/options/{groupId}";
     }
 
-    private void checkForErrorsUpdateGroupMember(Integer groupId, MemberDTO member, BindingResult result) {
-        if (memberService.isClient(member) && memberService.isClientInOtherGroup(member.getUserId(), groupId)) {
-            result.addError(new ObjectError("globalError", "This user is already a client in another group"));
+    @GetMapping("/options/{groupId}/delete/{userId}")
+    protected String deleteUserFromGroup(@PathVariable("groupId") Integer groupId,
+                                         @PathVariable("userId") Integer userId,
+                                         RedirectAttributes redirectAttributes) {
+        // checks first if the group member isn't the last group admin. If so, it can't be removed from the group.
+        Optional<MemberDTO> member = memberService.findByUserIdAndGroupId(userId, groupId);
+        if (member.isPresent()) {
+            if (isLastAdminInGroup(member.get())) {
+                redirectAttributes.addAttribute("error", ONLY_GROUP_ADMIN_ERROR);
+            } else {
+                memberService.deleteByUserId(userId, groupId);
+            }
         }
-
-        if (memberService.findOutIfMemberIsAdmin(member) &&
-                !member.isAdmin() &&
-                memberService.getGroupAdminsByGroupId(member.getGroupId()).size() == 1) {
-            result.addError(new ObjectError("globalError",
-                    "Cannot remove admin rights if this member is the last admin in the group"));
-        }
+        return "redirect:/groups/options/{groupId}";
     }
 
     @GetMapping("{groupId}/clientDashboard/{clientId}")
@@ -176,5 +142,46 @@ public class MemberController {
         model.addAttribute("groupId", groupId);
         model.addAttribute("listOfTasks", taskService.getAllTasksByClientId(clientId));
         return "clientDashboard";
+    }
+
+    private void checkIfAccountExists(Integer groupId, MemberDTO addMember, BindingResult result,
+                                      Optional<Integer> userId) {
+        if (!userId.isEmpty()) {
+            addMember.setGroupId(groupId);
+            addMember.setUserId(userId.get());;
+            checkForErrorsAddMember(groupId, addMember, result, userId);
+        } else {
+            result.addError(new ObjectError("globalError", NO_ACCOUNT_WITH_EMAIL_ERROR));
+        }
+    }
+
+    private void checkForErrorsAddMember(Integer groupId, MemberDTO makeMember, BindingResult result,
+                                         Optional<Integer> userId) {
+        if (memberService.userInGroupExists(makeMember)) {
+            result.addError(new ObjectError("globalError", SAME_USER_TWICE_ERROR));
+        }
+
+        if (isAlreadyClient(groupId, makeMember, userId.get())) {
+            result.addError(new ObjectError("globalError", ALREADY_CLIENT_ERROR));
+        }
+    }
+
+    private void checkForErrorsUpdateGroupMember(Integer groupId, MemberDTO member, BindingResult result) {
+        if (isAlreadyClient(groupId, member, member.getUserId())) {
+            result.addError(new ObjectError("globalError", ALREADY_CLIENT_ERROR));
+        }
+
+        if (isLastAdminInGroup(member) && !member.isAdmin()) {
+            result.addError(new ObjectError("globalError", ONLY_GROUP_ADMIN_ERROR));
+        }
+    }
+
+    private boolean isAlreadyClient(Integer groupId, MemberDTO member, Integer userId) {
+        return memberService.isClient(member) && memberService.isClientInOtherGroup(userId, groupId);
+    }
+
+    private boolean isLastAdminInGroup(MemberDTO member) {
+        return memberService.findOutIfMemberIsAdmin(member) &&
+                memberService.getGroupAdminsByGroupId(member.getGroupId()).size() == 1;
     }
 }
