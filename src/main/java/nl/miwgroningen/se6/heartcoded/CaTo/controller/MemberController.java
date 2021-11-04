@@ -44,7 +44,7 @@ public class MemberController {
     @GetMapping("/{groupId}")
     protected String showGroupDashboard(@PathVariable("groupId") Integer groupId, Model model) {
         model.addAttribute("thisGroup", groupService.getById(groupId));
-        model.addAttribute("allTaskLists", taskListService.findAllByGroupId(groupId));
+        model.addAttribute("allTaskLists", taskListService.getAllByGroupId(groupId));
         return "groupDashboard";
     }
 

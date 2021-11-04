@@ -19,4 +19,6 @@ public interface MemberRepository extends JpaRepository <Member, Integer> {
     List<Member> getAllByUser(User user);
 
     List<Member> getAllByGroupGroupId(Integer groupId);
+
+    List<Member> getAllByUserRoleAndGroupGroupId(String userRole, Integer groupId);
 }

@@ -12,10 +12,4 @@ import java.util.List;
 public interface TaskListRepository extends JpaRepository<TaskList, Integer> {
 
     TaskList findByClient(User user);
-
-    @Query(value = "SELECT task_list_id FROM group_has_users g LEFT JOIN task_list t " +
-                    "ON g.user_user_id = t.client_user_id " +
-                    "WHERE user_role = 'client' AND group_group_id = :groupId",
-                    nativeQuery = true)
-    List<Integer> findAllTaskListIdsByGroupId(@Param("groupId") Integer groupId);
 }
