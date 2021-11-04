@@ -18,4 +18,5 @@ public interface TaskListRepository extends JpaRepository<TaskList, Integer> {
                     "WHERE user_role = 'client' AND group_group_id = :groupId",
                     nativeQuery = true)
     List<Integer> findAllTaskListIdsByGroupId(@Param("groupId") Integer groupId);
+
 }

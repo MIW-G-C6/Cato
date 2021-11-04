@@ -1,5 +1,6 @@
 package nl.miwgroningen.se6.heartcoded.CaTo.service;
 
+import nl.miwgroningen.se6.heartcoded.CaTo.dto.TaskDTO;
 import nl.miwgroningen.se6.heartcoded.CaTo.dto.TaskListDTO;
 import nl.miwgroningen.se6.heartcoded.CaTo.dto.UserDTO;
 import nl.miwgroningen.se6.heartcoded.CaTo.model.TaskList;
@@ -68,5 +69,6 @@ public class TaskListService {
         User client = userRepository.getById(user.getUserId());
         return taskListMapper.toDTO(taskListRepository.findByClient(client));
     }
+
 }
 
