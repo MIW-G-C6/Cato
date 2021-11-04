@@ -15,7 +15,7 @@ public class UserLoginMapper {
 
     public UserLoginDTO toDTO(User user) {
         UserLoginDTO result = new UserLoginDTO();
-        result.setEmail(user.getEmail());
+        result.setPassword(user.getPassword());
         result.setEmail(user.getEmail());
         return result;
     }
