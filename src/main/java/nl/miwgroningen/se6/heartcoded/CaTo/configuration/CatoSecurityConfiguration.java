@@ -48,7 +48,7 @@ public class CatoSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/about", "/contact").permitAll()
                 .anyRequest().authenticated().and()
                 .formLogin()
-                .loginPage("/login")
+                .loginPage("/")
                 .defaultSuccessUrl("/groups")
                 .permitAll()
                 .and()
