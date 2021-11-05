@@ -2,9 +2,8 @@ package nl.miwgroningen.se6.heartcoded.CaTo.controller;
 
 import nl.miwgroningen.se6.heartcoded.CaTo.dto.UserDTO;
 import nl.miwgroningen.se6.heartcoded.CaTo.dto.UserRegistrationDTO;
+import nl.miwgroningen.se6.heartcoded.CaTo.service.TaskListService;
 import nl.miwgroningen.se6.heartcoded.CaTo.service.UserService;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -24,11 +23,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class UserController {
 
     private UserService userService;
-    private PasswordEncoder passwordEncoder;
+    private TaskListService taskListService;
 
-    public UserController(UserService userService, PasswordEncoder passwordEncoder) {
+    public UserController(UserService userService, TaskListService taskListService) {
         this.userService = userService;
-        this.passwordEncoder = passwordEncoder;
+        this.taskListService = taskListService;
     }
 
     @GetMapping("/registration")
@@ -40,6 +39,7 @@ public class UserController {
 
     @GetMapping("/users/delete/{userId}")
     protected String deleteUser(@PathVariable("userId") Integer userId) {
+        taskListService.deleteByUserId(userId);
         userService.deleteUserById(userId);
         return "redirect:/siteAdminDashboard";
     }

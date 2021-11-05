@@ -3,15 +3,30 @@ a.nav-link{
 }
 
 
-.loginbody {
-    display: flex;
-    align-items: center;
-}
+
 
 .site-admin-dashboard-box {
     display: flex;
     flex-flow: row;
     justify-content: space-between;
+}
+
+.cato-edit-flex {
+    display: flex;
+    flex-flow: row;
+    justify-content: space-between;
+}
+
+.cato-option-row {
+    margin-top: 8%;
+}
+
+.cato-ul {
+    list-style-type: none;
+}
+
+#cato-delete-link {
+    color: red;
 }
 
 /*contains general layout for top navigation bar*/
@@ -147,9 +162,11 @@ a.nav-link{
     color: black;
     background-color: transparent;
     border: 1px solid black;
+    border-radius: 4px;
 }
 
 .catoButton:hover {
+    text-decoration: none;
     background-color: #cafad9;
     color: black;
     cursor: pointer;
@@ -364,7 +381,7 @@ button {
 }
 
 .form-group {
-    width: 50%;
+    width: 30%;
     display: block;
     margin: auto;
 }
@@ -383,7 +400,7 @@ input[type=email], input[type=password], input[type=text] {
     word-wrap: break-word;
 }
 
-.logotext a {
+.logotext p {
     font-family: "Georgia i";
     font-size: 50px;
     color: #303c42;
@@ -468,3 +485,11 @@ input[type=email], input[type=password], input[type=text] {
     width: 50%;
 }
 
+.home-page {
+    display: flex;
+    flex-flow: row;
+}
+
+.home-page-text {
+    width: 50%;
+}

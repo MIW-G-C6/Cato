@@ -1,6 +1,8 @@
 package nl.miwgroningen.se6.heartcoded.CaTo.controller;
 
+import nl.miwgroningen.se6.heartcoded.CaTo.dto.UserLoginDTO;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 /**
@@ -13,7 +15,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class HomepageController {
 
     @GetMapping("/")
-    protected String showHomepage() {
+    protected String showHomepage(Model model) {
+        model.addAttribute("user", new UserLoginDTO());
         return "homepage";
     }
 }
