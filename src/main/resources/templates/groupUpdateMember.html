@@ -8,7 +8,16 @@
 <body>
 
 <div th:replace="fragments/general :: navbar"></div>
-<div th:replace="fragments/general :: breadCrumbsBar"></div>
+<div class="breadCrumbsBar">
+  <div th:replace="fragments/general :: previousButton"></div>
+  <div class="breadCrumbs">
+    <li><a th:href="@{/}">Home</a></li>
+    <li><a th:href="@{/groups}">Groups</a></li>
+    <li><a th:href="@{/groups/{groupId}(groupId=${groupId})}">I Need A GroupName Here!</a></li>
+    <li><a th:href="@{/groups/options/{groupId}(groupId=${groupId})}">Options</a></li>
+    <li>Edit member</li>
+  </div>
+</div>
 
 <div class="container">
 
