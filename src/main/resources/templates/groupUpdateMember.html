@@ -23,8 +23,10 @@
 
       <ul class="cato-radio">
         <li th:each="role : ${member.groupRoleOptions}">
-          <input type="radio" th:field="${member.role}" th:value="${role}">
-          <label th:for="${#ids.prev('role')}" th:text="${role}"></label>
+          <div class="custom-control custom-radio">
+            <input type="radio" class="custom-control-input" th:field="${member.role}" th:value="${role}">
+            <label class="custom-control-label" th:for="${#ids.prev('role')}" th:text="${role}"></label>
+          </div>
         </li>
       </ul>
 

@@ -23,8 +23,10 @@
         <div>
             <ul class="cato-radio">
                 <li th:each="priority : *{priorityOptions}">
-                    <input type="radio" th:field="*{priority}" th:value="${priority}" />
-                    <label th:for="${#ids.prev('priority')}" th:text="${priority} + ' priority'"></label>
+                    <div class="custom-control custom-radio">
+                        <input type="radio" class="custom-control-input" th:field="*{priority}" th:value="${priority}" />
+                        <label class="custom-control-label" th:for="${#ids.prev('priority')}" th:text="${priority} + ' priority'"></label>
+                    </div>
                 </li>
             </ul>
         </div>

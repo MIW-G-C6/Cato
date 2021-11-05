@@ -10,30 +10,39 @@
 <div th:replace="fragments/general :: breadCrumbsBar"></div>
 
 <div class="container">
-    <h1>Task details
-        <a th:href="@{/groups/{groupId}/clientDashboard/{clientId}/taskLists/{taskListId}/update/{taskId}(groupId=${groupId}, clientId=${clientId}, taskListId=${taskList.taskListId}, taskId=${task.taskId})}"><img th:src="@{/css/images/edit-icon.svg}" height="15" width="15" title="edit task"></a>
-        <a th:href="@{'/task/delete/' + ${task.taskId}}"><img th:src="@{/css/images/delete-icon.svg}" height="15" width="15" title="delete task"></a>
-    </h1>
-    <div class="card-body">
-        <div class="row">
-            <div class="col-sm-3">
-                <h6 class="mb-0">Task</h6>
-            </div>
-            <div class="col-sm-9 text-secondary">
-                <span th:text="${task.description}"></span>
-            </div>
+
+    <div class="cato-edit-flex">
+            <div class="card-body">
+                <h1>Task details</h1>
+                <br>
+                <div class="row">
+                    <div class="col-sm-3">
+                        <h6 class="mb-0">Task</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                        <span th:text="${task.description}"></span>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-sm-3">
+                        <h6 class="mb-0">Priority</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                        <span th:text="${task.priority}"></span>
+                    </div>
+                </div>
         </div>
-        <br>
-        <div class="row">
-            <div class="col-sm-3">
-                <h6 class="mb-0">Priority</h6>
-            </div>
-            <div class="col-sm-9 text-secondary">
-                <span th:text="${task.priority}"></span>
-            </div>
+        <div class="cato-option-row">
+            <ul class="cato-ul">
+                <li><a th:href="@{/groups/{groupId}/clientDashboard/{clientId}/taskLists/{taskListId}/update/{taskId}(groupId=${groupId}, clientId=${clientId}, taskListId=${taskList.taskListId}, taskId=${task.taskId})}">Edit task</a></li>
+                <li><hr></li>
+                <li><a id="cato-delete-link" th:href="@{'/task/delete/' + ${task.taskId}}">Delete task</a></li>
+            </ul>
         </div>
     </div>
-  </div>
+
+</div>
 
 <div th:replace="fragments/general :: footer"></div>
 <div th:replace="fragments/general :: bottomScripts"></div>
