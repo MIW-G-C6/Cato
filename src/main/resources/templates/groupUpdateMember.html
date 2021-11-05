@@ -16,7 +16,7 @@
     <form th:action="@{/groups/options/{groupId}/updatemember/{userId}(groupId=${groupId}, userId=${userId})}" method="post" th:object="${member}">
 
       <div th:if="${#fields.hasErrors()}">
-        <p th:each="err : ${#fields.errors('global')}" th:text="${err}" class="error" />
+        <p th:each="err : ${#fields.errors('global')}" th:text="${err}" class="alert alert-danger" />
       </div>
 
       <h1>Change role</h1>
