@@ -23,7 +23,7 @@
         </h5>
         <hr>
         <table>
-            <tr> <div class="error" th:text="${error}"></div></tr>
+            <tr> <div th:if="${!error.equals('')}" class="alert alert-danger" th:text="${error}"></div></tr>
             <tr th:each="thisMember : ${allMembersByGroupId}" >
                 <td th:text="${thisMember.userName}"></td>
                 <td width="40%">
