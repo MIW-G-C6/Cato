@@ -147,9 +147,11 @@ a.nav-link{
     color: black;
     background-color: transparent;
     border: 1px solid black;
+    border-radius: 4px;
 }
 
 .catoButton:hover {
+    text-decoration: none;
     background-color: #cafad9;
     color: black;
     cursor: pointer;
