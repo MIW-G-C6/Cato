@@ -3,10 +3,10 @@ a.nav-link{
 }
 
 
-.loginbody {
-    display: flex;
-    align-items: center;
-}
+/*.loginbody {*/
+/*    display: flex;*/
+/*    align-items: center;*/
+/*}*/
 
 .site-admin-dashboard-box {
     display: flex;
@@ -363,7 +363,7 @@ button {
 }
 
 .form-group {
-    width: 50%;
+    width: 30%;
     display: block;
     margin: auto;
 }
@@ -382,7 +382,7 @@ input[type=email], input[type=password], input[type=text] {
     word-wrap: break-word;
 }
 
-.logotext a {
+.logotext p {
     font-family: "Georgia i";
     font-size: 50px;
     color: #303c42;
@@ -470,4 +470,13 @@ input[type=email], input[type=password], input[type=text] {
 .cato-radio {
     list-style-type: none;
     padding-left: 0;
+}
+
+.home-page {
+    display: flex;
+    flex-flow: row;
+}
+
+.home-page-text {
+    width: 50%;
 }
