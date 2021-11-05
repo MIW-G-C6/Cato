@@ -41,7 +41,7 @@ public class UserController {
     @GetMapping("/users/delete/{userId}")
     protected String deleteUser(@PathVariable("userId") Integer userId) {
         userService.deleteUserById(userId);
-        return "redirect:/users";
+        return "redirect:/siteAdminDashboard";
     }
 
     @GetMapping("/users/edit/{userId}")
