@@ -14,6 +14,24 @@ a.nav-link{
     justify-content: space-between;
 }
 
+.cato-edit-flex {
+    display: flex;
+    flex-flow: row;
+    justify-content: space-between;
+}
+
+.cato-option-row {
+    margin-top: 8%;
+}
+
+.cato-ul {
+    list-style-type: none;
+}
+
+#cato-delete-link {
+    color: red;
+}
+
 /*contains general layout for top navigation bar*/
 .topnavbar {
     display: flex;
