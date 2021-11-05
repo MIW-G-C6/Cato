@@ -438,6 +438,10 @@ input[type=email], input[type=password], input[type=text] {
     width: 50%;
 }
 
+.group-options-table {
+    width: 40%;
+}
+
 .group-overview {
     width: 50%;
 }
