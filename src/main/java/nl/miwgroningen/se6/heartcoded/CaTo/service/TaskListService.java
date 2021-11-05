@@ -57,7 +57,6 @@ public class TaskListService {
         TaskList taskList = taskListMapper.toTaskList(taskListDTO);
         taskList.setClient(userRepository.getById(taskListDTO.getUserId()));
 
-
         taskListRepository.save(taskList);
     }
 
@@ -73,6 +72,11 @@ public class TaskListService {
             allTaskLists.add(findByUser(userMapper.toDTO(userRepository.getById(clientMember.getUser().getUserId()))));
         }
         return allTaskLists;
+    }
+
+    public void deleteByUserId(Integer userId) {
+        Optional<TaskList> taskList = taskListRepository.findByClientUserId(userId);
+        taskList.ifPresent(list -> taskListRepository.deleteById(list.getTaskListId()));
     }
 }
 
