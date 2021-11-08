@@ -15,14 +15,14 @@ public class TaskList {
     @GeneratedValue
     private Integer taskListId;
 
-    @OneToMany(mappedBy = "taskList")
+    @OneToMany(mappedBy = "taskList", cascade = CascadeType.ALL)
     private List<Task> taskList;
 
     @OneToOne
-    private User client;
+    private Group group;
 
-    public TaskList(User client) {
-        this.client = client;
+    public TaskList(Group group) {
+        this.group = group;
         this.taskList = new ArrayList<>();
     }
 
@@ -45,11 +45,11 @@ public class TaskList {
         this.taskList = taskList;
     }
 
-    public User getClient() {
-        return client;
+    public Group getGroup() {
+        return group;
     }
 
-    public void setClient(User client) {
-        this.client = client;
+    public void setGroup(Group group) {
+        this.group = group;
     }
 }

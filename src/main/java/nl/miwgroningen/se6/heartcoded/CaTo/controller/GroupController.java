@@ -6,6 +6,7 @@ import nl.miwgroningen.se6.heartcoded.CaTo.dto.UserDTO;
 import nl.miwgroningen.se6.heartcoded.CaTo.model.Group;
 import nl.miwgroningen.se6.heartcoded.CaTo.service.MemberService;
 import nl.miwgroningen.se6.heartcoded.CaTo.service.GroupService;
+import nl.miwgroningen.se6.heartcoded.CaTo.service.TaskListService;
 import nl.miwgroningen.se6.heartcoded.CaTo.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,11 +27,14 @@ public class GroupController {
     private GroupService groupService;
     private MemberService memberService;
     private UserService userService;
+    private TaskListService taskListService;
 
-    public GroupController(GroupService groupService, MemberService memberService, UserService userService) {
+    public GroupController(GroupService groupService, MemberService memberService, UserService userService,
+                           TaskListService taskListService) {
         this.groupService = groupService;
         this.memberService = memberService;
         this.userService = userService;
+        this.taskListService = taskListService;
     }
 
     @GetMapping("/groups")
@@ -59,6 +63,7 @@ public class GroupController {
 
     @GetMapping("/groups/delete/{groupId}")
     protected String deleteGroupBySiteAdmin(@PathVariable("groupId") Integer groupId) {
+        taskListService.deleteByGroupId(groupId);
         groupService.deleteGroupById(groupId);
         return "redirect:/groups";
     }
@@ -71,6 +76,7 @@ public class GroupController {
             UserDTO userDTO = userService.getCurrentUser();
             memberService.saveMember(new MemberDTO(userDTO.getUserId(), userDTO.getName(), group.getGroupId(),
                     "Caregiver", true));
+            taskListService.saveNew(group);
         }
         return "redirect:/groups/" + group.getGroupId();
     }

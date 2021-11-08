@@ -12,7 +12,7 @@
     <div class="breadCrumbs">
         <li><a th:href="@{/}">Home</a></li>
         <li><a th:href="@{/groups}">Groups</a></li>
-        <li><a th:href="@{/groups/{groupId}(groupId=${groupId})}">I Need A GroupName Here!</a></li>
+        <li><a th:href="@{/groups/{groupId}(groupId=${groupId})}"><span th:text="${groupName}"></span></a></li>
         <li>Task</li>
     </div>
 </div>
@@ -43,7 +43,7 @@
         </div>
         <div class="cato-option-row">
             <ul class="cato-ul">
-                <li><a th:href="@{/groups/{groupId}/clientDashboard/{clientId}/taskLists/{taskListId}/update/{taskId}(groupId=${groupId}, clientId=${clientId}, taskListId=${taskList.taskListId}, taskId=${task.taskId})}">Edit task</a></li>
+                <li><a th:href="@{/groups/{groupId}/taskLists/{taskListId}/update/{taskId}(groupId=${groupId}, taskListId=${taskList.taskListId}, taskId=${task.taskId})}">Edit task</a></li>
                 <li><hr></li>
                 <li><a id="cato-delete-link" th:href="@{'/task/delete/' + ${task.taskId}}">Delete task</a></li>
             </ul>

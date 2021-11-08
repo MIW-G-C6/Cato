@@ -21,8 +21,7 @@ public class TaskListMapper {
         TaskListDTO result = new TaskListDTO();
 
         result.setTaskListId(taskList.getTaskListId());
-        result.setUserId(taskList.getClient().getUserId());
-        result.setUserName(taskList.getClient().getName());
+        result.setGroupId(taskList.getGroup().getGroupId());
 
         return result;
     }

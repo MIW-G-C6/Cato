@@ -17,6 +17,12 @@ a.nav-link{
     justify-content: space-between;
 }
 
+.cato-group-dashboard-flex {  /* Same as .cato-edit.flex */
+    display: flex;
+    flex-flow: row;
+    justify-content: space-between;
+}
+
 .cato-option-row {
     margin-top: 8%;
 }
@@ -518,6 +524,15 @@ input[type=email], input[type=password], input[type=text] {
 }
 
 .cd-tasklist {
+    width: 40%;
+}
+
+.gd-groupmember {
+    width: 33%;
+    padding-right: 100px;
+}
+
+.gd-tasklist {
     width: 40%;
 }
 
