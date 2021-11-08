@@ -5,45 +5,46 @@
     <title>Edit personal information</title>
 </head>
 <body>
-
-<div th:replace="fragments/general :: navbar"></div>
-<div class="breadCrumbsBar">
-    <div th:replace="fragments/general :: previousButton"></div>
-    <div class="breadCrumbs">
-        <li><a th:href="@{/}">Home</a></li>
-        <li>Profile</li>
+<div id="main-body">
+    <div th:replace="fragments/general :: navbar"></div>
+    <div class="breadCrumbsBar">
+        <div th:replace="fragments/general :: previousButton"></div>
+        <div class="breadCrumbs">
+            <li><a th:href="@{/}">Home</a></li>
+            <li>Profile</li>
+        </div>
     </div>
+
+    <div class="container">
+        <h1>Edit personal information</h1>
+
+        <form class="cato-form" th:action="@{/users/edit/{userId}(userId=${user.userId})}" method="post" th:object="${user}">
+
+            <div th:if="${#fields.hasErrors()}">
+                <p th:each="err : ${#fields.errors('global')}" th:text="${err}" class="alert alert-danger" />
+            </div>
+
+            <input type="hidden" th:field="*{userId}">
+
+            <div>
+                <input class="cato-text-field" placeholder="Name" type="text" id="name" required pattern=".*\S+.*"
+                       oninvalid="this.setCustomValidity('Name cannot be empty')"
+                       oninput="this.setCustomValidity('')"
+                       th:field="*{name}">
+            </div>
+            <br>
+            <div>
+                <input class="cato-text-field" placeholder="Email" type="email" id="email" required th:field="*{email}">
+            </div>
+            <br>
+            <div>
+                <button type="submit" class="catoButton">Save</button>
+            </div>
+        </form>
+    </div>
+
+    <div th:replace="fragments/general :: footer"></div>
 </div>
-
-<div class="container">
-    <h1>Edit personal information</h1>
-
-    <form class="cato-form" th:action="@{/users/edit/{userId}(userId=${user.userId})}" method="post" th:object="${user}">
-
-        <div th:if="${#fields.hasErrors()}">
-            <p th:each="err : ${#fields.errors('global')}" th:text="${err}" class="alert alert-danger" />
-        </div>
-
-        <input type="hidden" th:field="*{userId}">
-
-        <div>
-            <input class="cato-text-field" placeholder="Name" type="text" id="name" required pattern=".*\S+.*"
-                   oninvalid="this.setCustomValidity('Name cannot be empty')"
-                   oninput="this.setCustomValidity('')"
-                   th:field="*{name}">
-        </div>
-        <br>
-        <div>
-            <input class="cato-text-field" placeholder="Email" type="email" id="email" required th:field="*{email}">
-        </div>
-        <br>
-        <div>
-            <button type="submit" class="catoButton">Save</button>
-        </div>
-    </form>
-</div>
-
-<div th:replace="fragments/general :: footer"></div>
 <div th:replace="fragments/general :: bottomScripts"></div>
 </body>
 </html>

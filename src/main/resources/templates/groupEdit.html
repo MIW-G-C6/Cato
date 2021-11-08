@@ -5,37 +5,38 @@
   <title>Edit group name</title>
 </head>
 <body>
-
-<div th:replace="fragments/general :: navbar"></div>
-<div class="breadCrumbsBar">
-  <div th:replace="fragments/general :: previousButton"></div>
-  <div class="breadCrumbs">
-    <li><a th:href="@{/}">Home</a></li>
-    <li><a th:href="@{/groups}">Groups</a></li>
-    <li><a th:href="@{/groups/{groupId}(groupId=${thisGroup.groupId})}"><span th:text="${thisGroup.groupName}"></span></a></li>
-    <li><a th:href="@{/groups/options/{groupId}(groupId=${thisGroup.groupId})}">Options</a></li>
-    <li>Edit group</li>
+<div id="main-body">
+  <div th:replace="fragments/general :: navbar"></div>
+  <div class="breadCrumbsBar">
+    <div th:replace="fragments/general :: previousButton"></div>
+    <div class="breadCrumbs">
+      <li><a th:href="@{/}">Home</a></li>
+      <li><a th:href="@{/groups}">Groups</a></li>
+      <li><a th:href="@{/groups/{groupId}(groupId=${thisGroup.groupId})}"><span th:text="${thisGroup.groupName}"></span></a></li>
+      <li><a th:href="@{/groups/options/{groupId}(groupId=${thisGroup.groupId})}">Options</a></li>
+      <li>Edit group</li>
+    </div>
   </div>
+
+  <div class="container">
+    <h1>Edit group name</h1>
+    <form class="cato-form" th:action="@{/groups/options/edit/{groupId}(groupId=${thisGroup.groupId})}" method="post" th:object="${thisGroup}">
+      <div>
+        <input type="text" placeholder="Group name" id="groupName" required pattern=".*\S+.*"
+               oninvalid="this.setCustomValidity('Name of group cannot be empty')"
+               oninput="this.setCustomValidity('')"
+               th:field="*{groupName}">
+      </div>
+        <br>
+      <div>
+        <button type="submit" class="catoButton">Save</button>
+      </div>
+    </form>
+
+  </div>
+
+  <div th:replace="fragments/general :: footer"></div>
 </div>
-
-<div class="container">
-  <h1>Edit group name</h1>
-  <form class="cato-form" th:action="@{/groups/options/edit/{groupId}(groupId=${thisGroup.groupId})}" method="post" th:object="${thisGroup}">
-    <div>
-      <input type="text" placeholder="Group name" id="groupName" required pattern=".*\S+.*"
-             oninvalid="this.setCustomValidity('Name of group cannot be empty')"
-             oninput="this.setCustomValidity('')"
-             th:field="*{groupName}">
-    </div>
-      <br>
-    <div>
-      <button type="submit" class="catoButton">Save</button>
-    </div>
-  </form>
-
-</div>
-
-<div th:replace="fragments/general :: footer"></div>
 <div th:replace="fragments/general :: bottomScripts"></div>
 </body>
 </html>

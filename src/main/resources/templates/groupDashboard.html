@@ -5,37 +5,38 @@
     <title>Group dashboard</title>
 </head>
 <body>
-
-<div th:replace="fragments/general :: navbar"></div>
-<div class="breadCrumbsBar">
-    <div th:replace="fragments/general :: previousButton"></div>
-    <div class="breadCrumbs">
-        <li><a th:href="@{/}">Home</a></li>
-        <li><a th:href="@{/groups}">Groups</a></li>
-        <li><span th:text="${thisGroup.groupName}"></span></li>
-    </div>
-</div>
-
-<div class="container">
-    <div>
-        <h1><span th:text="${thisGroup.groupName}"></span></h1>
-        <br>
-        <div class="cato-table">
-            <h5>All clients<a class="float-right" th:href="@{/groups/options/{groupId}(groupId=${thisGroup.groupId})}">group settings</a>
-            </h5>
-            <hr>
-            <table>
-                <tr th:each="taskList : ${allTaskLists}">
-                    <td>
-                        <a th:href="@{/groups/{groupId}/clientDashboard/{clientId}(groupId=${thisGroup.groupId}, clientId=${taskList.userId})}"><div th:text="${taskList.userName}"></div></a>
-                    </td>
-                </tr>
-            </table>
+<div id="main-body">
+    <div th:replace="fragments/general :: navbar"></div>
+    <div class="breadCrumbsBar">
+        <div th:replace="fragments/general :: previousButton"></div>
+        <div class="breadCrumbs">
+            <li><a th:href="@{/}">Home</a></li>
+            <li><a th:href="@{/groups}">Groups</a></li>
+            <li><span th:text="${thisGroup.groupName}"></span></li>
         </div>
     </div>
-</div>
 
-<div th:replace="fragments/general :: footer"></div>
+    <div class="container">
+        <div>
+            <h1><span th:text="${thisGroup.groupName}"></span></h1>
+            <br>
+            <div class="cato-table">
+                <h5>All clients<a class="float-right" th:href="@{/groups/options/{groupId}(groupId=${thisGroup.groupId})}">group settings</a>
+                </h5>
+                <hr>
+                <table>
+                    <tr th:each="taskList : ${allTaskLists}">
+                        <td>
+                            <a th:href="@{/groups/{groupId}/clientDashboard/{clientId}(groupId=${thisGroup.groupId}, clientId=${taskList.userId})}"><div th:text="${taskList.userName}"></div></a>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div th:replace="fragments/general :: footer"></div>
+</div>
 <div th:replace="fragments/general :: bottomScripts"></div>
 </body>
 </html>

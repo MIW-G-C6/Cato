@@ -5,55 +5,55 @@
     <title>Task Details</title>
 </head>
 <body>
-
-<div th:replace="fragments/general :: navbar"></div>
-<div class="breadCrumbsBar">
-    <div th:replace="fragments/general :: previousButton"></div>
-    <div class="breadCrumbs">
-        <li><a th:href="@{/}">Home</a></li>
-        <li><a th:href="@{/groups}">Groups</a></li>
-        <li><a th:href="@{/groups/{groupId}(groupId=${groupId})}">I Need A GroupName Here!</a></li>
-        <li><a th:href="@{/groups/{groupId}/clientDashboard/{clientId}(groupId=${groupId}, clientId=${clientId})}">I Need A ClientName Here!</a></li>
-        <li>Task</li>
-    </div>
-</div>
-
-<div class="container">
-
-    <div class="cato-edit-flex">
-            <div class="card-body">
-                <h1>Task details</h1>
-                <br>
-                <div class="row">
-                    <div class="col-sm-3">
-                        <h6 class="mb-0">Task</h6>
-                    </div>
-                    <div class="col-sm-9 text-secondary">
-                        <span th:text="${task.description}"></span>
-                    </div>
-                </div>
-                <br>
-                <div class="row">
-                    <div class="col-sm-3">
-                        <h6 class="mb-0">Priority</h6>
-                    </div>
-                    <div class="col-sm-9 text-secondary">
-                        <span th:text="${task.priority}"></span>
-                    </div>
-                </div>
-        </div>
-        <div class="cato-option-row">
-            <ul class="cato-ul">
-                <li><a th:href="@{/groups/{groupId}/clientDashboard/{clientId}/taskLists/{taskListId}/update/{taskId}(groupId=${groupId}, clientId=${clientId}, taskListId=${taskList.taskListId}, taskId=${task.taskId})}">Edit task</a></li>
-                <li><hr></li>
-                <li><a id="cato-delete-link" th:href="@{'/task/delete/' + ${task.taskId}}">Delete task</a></li>
-            </ul>
+<div id="main-body">
+    <div th:replace="fragments/general :: navbar"></div>
+    <div class="breadCrumbsBar">
+        <div th:replace="fragments/general :: previousButton"></div>
+        <div class="breadCrumbs">
+            <li><a th:href="@{/}">Home</a></li>
+            <li><a th:href="@{/groups}">Groups</a></li>
+            <li><a th:href="@{/groups/{groupId}(groupId=${groupId})}">I Need A GroupName Here!</a></li>
+            <li><a th:href="@{/groups/{groupId}/clientDashboard/{clientId}(groupId=${groupId}, clientId=${clientId})}">I Need A ClientName Here!</a></li>
+            <li>Task</li>
         </div>
     </div>
 
-</div>
+    <div class="container">
 
-<div th:replace="fragments/general :: footer"></div>
+        <div class="cato-edit-flex">
+                <div class="card-body">
+                    <h1>Task details</h1>
+                    <br>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <h6 class="mb-0">Task</h6>
+                        </div>
+                        <div class="col-sm-9 text-secondary">
+                            <span th:text="${task.description}"></span>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <h6 class="mb-0">Priority</h6>
+                        </div>
+                        <div class="col-sm-9 text-secondary">
+                            <span th:text="${task.priority}"></span>
+                        </div>
+                    </div>
+            </div>
+            <div class="cato-option-row">
+                <ul class="cato-ul">
+                    <li><a th:href="@{/groups/{groupId}/clientDashboard/{clientId}/taskLists/{taskListId}/update/{taskId}(groupId=${groupId}, clientId=${clientId}, taskListId=${taskList.taskListId}, taskId=${task.taskId})}">Edit task</a></li>
+                    <li><hr></li>
+                    <li><a id="cato-delete-link" th:href="@{'/task/delete/' + ${task.taskId}}">Delete task</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div th:replace="fragments/general :: footer"></div>
+</div>
 <div th:replace="fragments/general :: bottomScripts"></div>
 </body>
 </html>

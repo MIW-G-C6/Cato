@@ -5,56 +5,57 @@
   <title>User form</title>
 </head>
 <body>
+<div id="main-body">
+  <div th:replace="fragments/general :: navbar"></div>
+  <div th:replace="fragments/general :: previousButton"></div>
 
-<div th:replace="fragments/general :: navbar"></div>
-<div th:replace="fragments/general :: previousButton"></div>
+  <div class="container">
+    <h1>Register as a new user</h1>
 
-<div class="container">
-  <h1>Register as a new user</h1>
+    <form class="cato-form" th:action="@{/registration}" method="post" th:object="${userWithPW}">
+      <div th:if="${#fields.hasErrors()}">
+        <p th:each="err : ${#fields.errors('global')}" th:text="${err}" class="alert alert-danger" />
+      </div>
+      <input type="hidden" th:field="*{userId}">
+      <div>
+        <input class="cato-text-field" type="text" placeholder="Enter full name" id="name" required th:field="*{name}">
+      </div>
+      <br>
+      <div>
+        <input class="cato-text-field" type="email" placeholder="Enter email" id="email" required th:field="*{email}">
+      </div>
+      <br>
+      <div>
+        <input class="cato-text-field" type="password" placeholder="Enter password" id="password" required th:field="*{password}">
+      </div>
+      <br>
+      <div>
+        <input class="cato-text-field" type="password" placeholder="Confirm password" id="confirm_password" required th:field="*{passwordCheck}">
+      </div>
+      <br>
+      <div>
+        <button type="submit" class="catoButton">Save</button>
+      </div>
 
-  <form class="cato-form" th:action="@{/registration}" method="post" th:object="${userWithPW}">
-    <div th:if="${#fields.hasErrors()}">
-      <p th:each="err : ${#fields.errors('global')}" th:text="${err}" class="alert alert-danger" />
-    </div>
-    <input type="hidden" th:field="*{userId}">
-    <div>
-      <input class="cato-text-field" type="text" placeholder="Enter full name" id="name" required th:field="*{name}">
-    </div>
-    <br>
-    <div>
-      <input class="cato-text-field" type="email" placeholder="Enter email" id="email" required th:field="*{email}">
-    </div>
-    <br>
-    <div>
-      <input class="cato-text-field" type="password" placeholder="Enter password" id="password" required th:field="*{password}">
-    </div>
-    <br>
-    <div>
-      <input class="cato-text-field" type="password" placeholder="Confirm password" id="confirm_password" required th:field="*{passwordCheck}">
-    </div>
-    <br>
-    <div>
-      <button type="submit" class="catoButton">Save</button>
-    </div>
+      <script>
+        let password = document.getElementById("password"), confirm_password = document.getElementById("confirm_password");
 
-    <script>
-      let password = document.getElementById("password"), confirm_password = document.getElementById("confirm_password");
-
-      function validatePassword() {
-        if(password.value !== confirm_password.value) {
-          confirm_password.setCustomValidity("Passwords Don't Match");
-        } else {
-          confirm_password.setCustomValidity('');
+        function validatePassword() {
+          if(password.value !== confirm_password.value) {
+            confirm_password.setCustomValidity("Passwords Don't Match");
+          } else {
+            confirm_password.setCustomValidity('');
+          }
         }
-      }
 
-      password.onchange = validatePassword;
-      confirm_password.onkeyup = validatePassword;
-    </script>
-  </form>
+        password.onchange = validatePassword;
+        confirm_password.onkeyup = validatePassword;
+      </script>
+    </form>
+  </div>
+
+  <div th:replace="fragments/general :: footer"></div>
 </div>
-
-<div th:replace="fragments/general :: footer"></div>
 <div th:replace="fragments/general :: bottomScripts"></div>
 </body>
 </html>

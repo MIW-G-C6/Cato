@@ -5,50 +5,51 @@
     <title>Add task</title>
 </head>
 <body>
-
-<div th:replace="fragments/general :: navbar"></div>
-<div class="breadCrumbsBar">
-    <div th:replace="fragments/general :: previousButton"></div>
-    <div class="breadCrumbs">
-        <li><a th:href="@{/}">Home</a></li>
-        <li><a th:href="@{/groups}">Groups</a></li>
-        <li><a th:href="@{/groups/{groupId}(groupId=${groupId})}">I Need A GroupName Here!</a></li>
-        <li><a th:href="@{/groups/{groupId}/clientDashboard/{clientId}(groupId=${groupId}, clientId=${clientId})}">I Need A ClientName Here!</a></li>
-        <li>Task</li>
+<div id="main-body">
+    <div th:replace="fragments/general :: navbar"></div>
+    <div class="breadCrumbsBar">
+        <div th:replace="fragments/general :: previousButton"></div>
+        <div class="breadCrumbs">
+            <li><a th:href="@{/}">Home</a></li>
+            <li><a th:href="@{/groups}">Groups</a></li>
+            <li><a th:href="@{/groups/{groupId}(groupId=${groupId})}">I Need A GroupName Here!</a></li>
+            <li><a th:href="@{/groups/{groupId}/clientDashboard/{clientId}(groupId=${groupId}, clientId=${clientId})}">I Need A ClientName Here!</a></li>
+            <li>Task</li>
+        </div>
     </div>
+
+
+    <div class="container">
+        <h1>Add a task for <span th:text="${taskList.userName}"></span></h1>
+
+        <form class="cato-form" th:action="@{/groups/{groupId}/clientDashboard/{clientId}/taskLists/{taskListId}/new(groupId=${groupId}, clientId=${clientId}, taskListId=${taskListId})}" method="post" th:object="${task}">
+
+            <input type="hidden" th:field="*{taskId}">
+            <div>
+                <input class="cato-text-field" type="text" placeholder="Description" id="description" required th:field="*{description}">
+            </div>
+            <br>
+            <div>
+                <ul class="cato-radio">
+                    <li th:each="priority : *{priorityOptions}">
+                        <div class="custom-control custom-radio">
+                            <input type="radio" class="custom-control-input" th:field="*{priority}" th:value="${priority}" />
+                            <label class="custom-control-label" th:for="${#ids.prev('priority')}" th:text="${priority} + ' priority'"></label>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div>
+                <button type="submit" class="catoButton">Save</button>
+            </div>
+            <script>
+                document.getElementById("priority1").setAttribute("checked", "checked");
+            </script>
+        </form>
+    </div>
+
+    <div th:replace="fragments/general :: footer"></div>
 </div>
-
-
-<div class="container">
-    <h1>Add a task for <span th:text="${taskList.userName}"></span></h1>
-
-    <form class="cato-form" th:action="@{/groups/{groupId}/clientDashboard/{clientId}/taskLists/{taskListId}/new(groupId=${groupId}, clientId=${clientId}, taskListId=${taskListId})}" method="post" th:object="${task}">
-
-        <input type="hidden" th:field="*{taskId}">
-        <div>
-            <input class="cato-text-field" type="text" placeholder="Description" id="description" required th:field="*{description}">
-        </div>
-        <br>
-        <div>
-            <ul class="cato-radio">
-                <li th:each="priority : *{priorityOptions}">
-                    <div class="custom-control custom-radio">
-                        <input type="radio" class="custom-control-input" th:field="*{priority}" th:value="${priority}" />
-                        <label class="custom-control-label" th:for="${#ids.prev('priority')}" th:text="${priority} + ' priority'"></label>
-                    </div>
-                </li>
-            </ul>
-        </div>
-        <div>
-            <button type="submit" class="catoButton">Save</button>
-        </div>
-        <script>
-            document.getElementById("priority1").setAttribute("checked", "checked");
-        </script>
-    </form>
-</div>
-
-<div th:replace="fragments/general :: footer"></div>
 <div th:replace="fragments/general :: bottomScripts"></div>
 </body>
 </html>
