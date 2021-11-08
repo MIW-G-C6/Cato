@@ -157,7 +157,26 @@ a.nav-link{
 
 /*contains design choices for breadcrumbs bar*/
 .breadCrumbsBar {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+/*Dit moet previousButton worden*/
+.previousButton {
     padding: 10px 10px;
+}
+
+/*zorgt dat alle breadcrumbs achter elkaar komen te staan*/
+.breadCrumbs li {
+    display: inline;
+}
+
+/*zorgt dat tussen iedere link een slash komt te staan*/
+.breadCrumbs li+li:before {
+    padding: 2px;
+    color: black;
+    content: "/\00a0";
 }
 
 /*contains design choices for all buttons*/
