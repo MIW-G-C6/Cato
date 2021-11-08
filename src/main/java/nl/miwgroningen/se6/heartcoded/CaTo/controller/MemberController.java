@@ -100,6 +100,7 @@ public class MemberController {
         if (member.isEmpty()) {
             return "redirect:/groups/options/{groupId}";
         }
+        model.addAttribute("group", groupService.getById(groupId));
         model.addAttribute("member", member.get());
         return "groupUpdateMember";
     }
