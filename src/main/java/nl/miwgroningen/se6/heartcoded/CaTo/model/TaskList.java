@@ -15,7 +15,7 @@ public class TaskList {
     @GeneratedValue
     private Integer taskListId;
 
-    @OneToMany(mappedBy = "taskList")
+    @OneToMany(mappedBy = "taskList", cascade = CascadeType.ALL)
     private List<Task> taskList;
 
     @OneToOne

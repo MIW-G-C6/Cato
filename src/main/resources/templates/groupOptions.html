@@ -5,7 +5,6 @@
     <title>Group settings</title>
 </head>
 <body>
-
 <div th:replace="fragments/general :: navbar"></div>
 <div class="breadCrumbsBar">
     <div th:replace="fragments/general :: previousButton"></div>
@@ -49,12 +48,63 @@
                 <li><hr></li>
                 <li><a th:href="@{/groups/options/edit/{groupId}(groupId=${thisGroup.groupId})}">Edit group name</a></li>
                 <li><hr></li>
-                <li><a id="cato-delete-link" th:href="@{'/groups/delete/' + ${thisGroup.groupId}}">Delete group</a></td></li>
+                <li><a id="cato-delete-link">Delete group</a></td></li>
             </ul>
         </div>
     </div>
 </div>
 
+<div id="myModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2 class="modal-title">Warning!</h2>
+            <span class="close">&times;</span>
+        </div>
+        <div class="modal-body">
+            <p>Are you sure you want to delete:</p>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span id="modalSpan" th:text="${thisGroup.groupName}"></span>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="catoButton" id="noBtn">No</button>
+            <a th:href="@{'/groups/delete/' + ${thisGroup.groupId}}"><button type="button" class="btn btn-primary" id="modalYesButton">Yes</button></a>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Get the modal
+    var modal = document.getElementById("myModal");
+
+    // Get the button that opens the modal
+    var btn = document.getElementById("cato-delete-link");
+
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close")[0];
+
+    // Get the button that opens the modal
+    var noBtn = document.getElementById("noBtn");
+
+    // When the user clicks the button, open the modal
+    btn.onclick = function() {
+        modal.style.display = "block";
+    }
+
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function() {
+        modal.style.display = "none";
+    }
+
+    noBtn.onclick = function() {
+        modal.style.display = "none";
+    }
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+</script>
 <div th:replace="fragments/general :: footer"></div>
 <div th:replace="fragments/general :: bottomScripts"></div>
 </body>
