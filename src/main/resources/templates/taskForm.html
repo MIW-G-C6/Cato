@@ -12,17 +12,16 @@
         <div class="breadCrumbs">
             <li><a th:href="@{/}">Home</a></li>
             <li><a th:href="@{/groups}">Groups</a></li>
-            <li><a th:href="@{/groups/{groupId}(groupId=${groupId})}">I Need A GroupName Here!</a></li>
-            <li><a th:href="@{/groups/{groupId}/clientDashboard/{clientId}(groupId=${groupId}, clientId=${clientId})}">I Need A ClientName Here!</a></li>
+            <li><a th:href="@{/groups/{groupId}(groupId=${groupId})}"><span th:text="${groupName}"></span></a></li>
             <li>Task</li>
         </div>
     </div>
 
 
     <div class="container">
-        <h1>Add a task for <span th:text="${taskList.userName}"></span></h1>
+        <h1>Add a task for <span th:text="${groupName}"></span></h1>
 
-        <form class="cato-form" th:action="@{/groups/{groupId}/clientDashboard/{clientId}/taskLists/{taskListId}/new(groupId=${groupId}, clientId=${clientId}, taskListId=${taskListId})}" method="post" th:object="${task}">
+        <form class="cato-form" th:action="@{/groups/{groupId}/taskLists/{taskListId}/new(groupId=${groupId}, taskListId=${taskListId})}" method="post" th:object="${task}">
 
             <input type="hidden" th:field="*{taskId}">
             <div>

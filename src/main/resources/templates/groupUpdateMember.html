@@ -13,7 +13,7 @@
     <div class="breadCrumbs">
       <li><a th:href="@{/}">Home</a></li>
       <li><a th:href="@{/groups}">Groups</a></li>
-      <li><a th:href="@{/groups/{groupId}(groupId=${groupId})}">I Need A GroupName Here!</a></li>
+      <li><a th:href="@{/groups/{groupId}(groupId=${groupId})}"><span th:text="${group.groupName}"></span></a></li>
       <li><a th:href="@{/groups/options/{groupId}(groupId=${groupId})}">Options</a></li>
       <li>Edit member</li>
     </div>

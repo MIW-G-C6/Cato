@@ -34,19 +34,16 @@ public class MemberService {
     private final GroupRepository groupRepository;
     private final UserRepository userRepository;
     private final MemberRepository memberRepository;
-    private final TaskListRepository taskListRepository;
 
     public MemberService(MemberMapper memberMapper, GroupMapper groupMapper,
                          MemberSiteAdminMapper memberSiteAdminMapper, GroupRepository groupRepository,
-                         UserRepository userRepository, MemberRepository memberRepository,
-                         TaskListRepository taskListRepository) {
+                         UserRepository userRepository, MemberRepository memberRepository) {
         this.memberMapper = memberMapper;
         this.groupMapper = groupMapper;
         this.memberSiteAdminMapper = memberSiteAdminMapper;
         this.groupRepository = groupRepository;
         this.userRepository = userRepository;
         this.memberRepository = memberRepository;
-        this.taskListRepository = taskListRepository;
     }
 
     public void saveMember(MemberDTO memberDTO) {
@@ -106,19 +103,6 @@ public class MemberService {
         return result;
     }
 
-    public MemberDTO getByClient(UserDTO client) {
-        List<Member> memberList = memberRepository.getAllByUser(
-                userRepository.getById(client.getUserId()));
-
-        MemberDTO result = new MemberDTO();
-        for (Member member : memberList) {
-            if (member.getUserRole().equals("Client")) {
-                result = memberMapper.toDTO(member);
-            }
-        }
-        return result;
-    }
-
     public boolean userInGroupExists(MemberDTO member) {
         if (findByUserIdAndGroupId(member.getUserId(), member.getGroupId()).isPresent()) {
                 return true;
@@ -159,17 +143,6 @@ public class MemberService {
             }
         }
         return result;
-    }
-
-    public void createNewTaskList(MemberDTO member) {
-        if (isClient(member)) {
-            User client = userRepository.getById(member.getUserId());
-            TaskList taskList = taskListRepository.findByClient(client);
-
-            if (taskList == null) {
-                taskListRepository.save(new TaskList(client));
-            }
-        }
     }
 
     public boolean isClient(MemberDTO member) {

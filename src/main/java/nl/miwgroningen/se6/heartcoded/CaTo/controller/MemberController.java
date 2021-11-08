@@ -45,7 +45,9 @@ public class MemberController {
     @GetMapping("/{groupId}")
     protected String showGroupDashboard(@PathVariable("groupId") Integer groupId, Model model) {
         model.addAttribute("thisGroup", groupService.getById(groupId));
-        model.addAttribute("allTaskLists", taskListService.getAllByGroupId(groupId));
+        model.addAttribute("taskListId", taskListService.getByGroupId(groupId).getTaskListId());
+        model.addAttribute("taskList", taskService.getAllTasksByGroupId(groupId));
+        model.addAttribute("allMembersByGroupId", memberService.getAllByGroupId(groupId));
         return "groupDashboard";
     }
 
@@ -82,7 +84,6 @@ public class MemberController {
 
             if (!result.hasErrors()) {
                 memberService.saveMember(addMember);
-                memberService.createNewTaskList(addMember);
                 return "redirect:/groups/options/{groupId}";
             }
         }
@@ -100,6 +101,7 @@ public class MemberController {
         if (member.isEmpty()) {
             return "redirect:/groups/options/{groupId}";
         }
+        model.addAttribute("group", groupService.getById(groupId));
         model.addAttribute("member", member.get());
         return "groupUpdateMember";
     }
@@ -112,7 +114,6 @@ public class MemberController {
         if (result.hasErrors()) {
             return  "groupUpdateMember";
         }
-        memberService.createNewTaskList(member);
         memberService.saveMember(member);
         return "redirect:/groups/options/{groupId}";
     }
@@ -131,17 +132,6 @@ public class MemberController {
             }
         }
         return "redirect:/groups/options/{groupId}";
-    }
-
-    @GetMapping("{groupId}/clientDashboard/{clientId}")
-    protected String showClientDashboard(@PathVariable("groupId") Integer groupId,
-                                         @PathVariable("clientId") Integer clientId, Model model) {
-        model.addAttribute("client", userService.getById(clientId));
-        model.addAttribute("taskList", taskListService.findByUser(userService.getById(clientId)));
-        model.addAttribute("allMembersByGroupId", memberService.getAllByGroupId(groupId));
-        model.addAttribute("groupId", groupId);
-        model.addAttribute("listOfTasks", taskService.getAllTasksByClientId(clientId));
-        return "clientDashboard";
     }
 
     private void checkIfAccountExists(Integer groupId, MemberDTO addMember, BindingResult result,

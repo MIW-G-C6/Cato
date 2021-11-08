@@ -2,13 +2,11 @@ package nl.miwgroningen.se6.heartcoded.CaTo.service;
 
 import nl.miwgroningen.se6.heartcoded.CaTo.dto.TaskDTO;
 import nl.miwgroningen.se6.heartcoded.CaTo.dto.TaskListDTO;
+import nl.miwgroningen.se6.heartcoded.CaTo.model.Group;
 import nl.miwgroningen.se6.heartcoded.CaTo.model.Task;
 import nl.miwgroningen.se6.heartcoded.CaTo.model.TaskList;
 import nl.miwgroningen.se6.heartcoded.CaTo.model.User;
-import nl.miwgroningen.se6.heartcoded.CaTo.repository.MemberRepository;
-import nl.miwgroningen.se6.heartcoded.CaTo.repository.TaskListRepository;
-import nl.miwgroningen.se6.heartcoded.CaTo.repository.TaskRepository;
-import nl.miwgroningen.se6.heartcoded.CaTo.repository.UserRepository;
+import nl.miwgroningen.se6.heartcoded.CaTo.repository.*;
 import nl.miwgroningen.se6.heartcoded.CaTo.service.mappers.TaskMapper;
 import org.springframework.stereotype.Service;
 
@@ -27,24 +25,16 @@ public class TaskService {
 
     private final TaskRepository taskRepository;
     private final TaskListRepository taskListRepository;
-    private final UserRepository userRepository;
     private final TaskMapper taskMapper;
-    private final MemberRepository memberRepository;
 
-    public TaskService(TaskRepository taskRepository, TaskListRepository taskListRepository, UserRepository userRepository, TaskMapper taskMapper, TaskListRepository taskListRepository1, MemberRepository memberRepository) {
+    public TaskService(TaskRepository taskRepository, TaskListRepository taskListRepository, TaskMapper taskMapper) {
         this.taskRepository = taskRepository;
         this.taskListRepository = taskListRepository;
-        this.userRepository = userRepository;
         this.taskMapper = taskMapper;
-        this.memberRepository = memberRepository;
     }
 
     public Optional<TaskDTO> findById(Integer taskId) {
         return taskMapper.toDTO(taskRepository.findById(taskId));
-    }
-
-    public TaskDTO getById(Integer taskId) {
-        return taskMapper.toDTO(taskRepository.getById(taskId));
     }
 
     public void deleteById(Integer taskId) {
@@ -61,14 +51,8 @@ public class TaskService {
         return taskRepository.getById(taskId).getTaskList().getTaskListId();
     }
 
-    public List<TaskDTO> getAllTasksByClientId(Integer userId) {
-        User user = userRepository.getById(userId);
-        List<TaskDTO> taskDTOList = new ArrayList<>();
-        TaskList taskList = taskListRepository.findByClient(user);
-        List<Task> listOfTasks = taskList.getTaskList();
-        for (Task listOfTask : listOfTasks) {
-            taskDTOList.add(taskMapper.toDTO(listOfTask));
-        }
-        return taskDTOList;
+    public List<TaskDTO> getAllTasksByGroupId(Integer groupId) {
+        List<Task> listOfTasks = new ArrayList<>(taskListRepository.getByGroupGroupId(groupId).getTaskList());
+        return taskMapper.toDTO(listOfTasks);
     }
 }

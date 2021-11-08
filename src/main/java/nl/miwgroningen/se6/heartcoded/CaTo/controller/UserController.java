@@ -23,11 +23,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class UserController {
 
     private UserService userService;
-    private TaskListService taskListService;
 
-    public UserController(UserService userService, TaskListService taskListService) {
+    public UserController(UserService userService) {
         this.userService = userService;
-        this.taskListService = taskListService;
     }
 
     @GetMapping("/registration")
@@ -39,7 +37,6 @@ public class UserController {
 
     @GetMapping("/users/delete/{userId}")
     protected String deleteUser(@PathVariable("userId") Integer userId) {
-        taskListService.deleteByUserId(userId);
         userService.deleteUserById(userId);
         return "redirect:/siteAdminDashboard";
     }
@@ -66,7 +63,7 @@ public class UserController {
     }
 
     @PostMapping("users/edit/{userId}")
-    protected String editUser(@PathVariable("userId") Integer userId, @ModelAttribute("user") UserDTO user,
+    protected String editUser(@ModelAttribute("user") UserDTO user,
                               BindingResult result) {
         UserDTO currentUser = userService.getCurrentUser();
         if (userService.emailInUse(user.getEmail()) && !user.getEmail().equals(currentUser.getEmail())) {

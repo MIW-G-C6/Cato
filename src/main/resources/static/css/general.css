@@ -17,6 +17,12 @@ a.nav-link{
     justify-content: space-between;
 }
 
+.cato-group-dashboard-flex {  /* Same as .cato-edit.flex */
+    display: flex;
+    flex-flow: row;
+    justify-content: space-between;
+}
+
 .cato-option-row {
     margin-top: 8%;
 }
@@ -26,9 +32,70 @@ a.nav-link{
 }
 
 #cato-delete-link {
-    color: red;
+    color: #fc0303;
 }
 
+#cato-delete-link:hover {
+    cursor: pointer;
+    text-decoration: underline;
+    color: #d60000;
+}
+
+/* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+.modal-header {
+    /*background-color: #ff3333;*/
+}
+
+/* Modal Content */
+.modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 30%;
+}
+
+.modal-body {
+    font-size: 18px;
+}
+
+#modalSpan {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+#modalYesButton {
+    background-color: red;
+    border-color: red;
+}
+/* The Close Button */
+.close {
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
 /*contains general layout for top navigation bar*/
 .topnavbar {
     display: flex;
@@ -474,6 +541,15 @@ input[type=email], input[type=password], input[type=text] {
 }
 
 .cd-tasklist {
+    width: 40%;
+}
+
+.gd-groupmember {
+    width: 33%;
+    padding-right: 100px;
+}
+
+.gd-tasklist {
     width: 40%;
 }
 

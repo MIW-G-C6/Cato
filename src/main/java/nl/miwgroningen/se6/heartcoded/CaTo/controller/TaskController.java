@@ -2,10 +2,7 @@ package nl.miwgroningen.se6.heartcoded.CaTo.controller;
 
 import nl.miwgroningen.se6.heartcoded.CaTo.dto.TaskDTO;
 import nl.miwgroningen.se6.heartcoded.CaTo.dto.TaskListDTO;
-import nl.miwgroningen.se6.heartcoded.CaTo.service.MemberService;
-import nl.miwgroningen.se6.heartcoded.CaTo.service.TaskListService;
-import nl.miwgroningen.se6.heartcoded.CaTo.service.TaskService;
-import nl.miwgroningen.se6.heartcoded.CaTo.service.UserService;
+import nl.miwgroningen.se6.heartcoded.CaTo.service.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -27,71 +24,68 @@ public class TaskController {
 
     private TaskService taskService;
     private TaskListService taskListService;
-    private MemberService memberService;
-    private UserService userService;
+    private GroupService groupService;
 
-    public TaskController(TaskService taskService, TaskListService taskListService, MemberService memberService,
-                          UserService userService) {
+    public TaskController(TaskService taskService, TaskListService taskListService, GroupService groupService) {
         this.taskService = taskService;
         this.taskListService = taskListService;
-        this.memberService = memberService;
-        this.userService = userService;
+        this.groupService = groupService;
     }
 
-    @GetMapping("/groups/{groupId}/clientDashboard/{clientId}/taskLists/{taskListId}/{taskId}")
+    @GetMapping("/groups/{groupId}/taskLists/{taskListId}/{taskId}")
     protected String showTaskDetails(@PathVariable("groupId") Integer groupId,
-                                     @PathVariable("clientId") Integer clientId,
                                      @PathVariable("taskListId") Integer taskListId,
                                      @PathVariable("taskId") Integer taskId, Model model) {
 
         if (doShowTaskDetailsOrTaskForm(taskListId, taskId, model)) {
-            return "redirect:/groups/" + groupId + "/clientDashboard/" + clientId;
+            return "redirect:/groups/" + groupId;
         }
+        model.addAttribute("groupName", groupService.getById(groupId).getGroupName());
         return "taskDetails";
     }
 
-    @GetMapping("/groups/{groupId}/clientDashboard/{clientId}/taskLists/{taskListId}/update/{taskId}")
+    @GetMapping("/groups/{groupId}/taskLists/{taskListId}/update/{taskId}")
     protected String showUpdateTaskForm(@PathVariable("groupId") Integer groupId,
-                                        @PathVariable("clientId") Integer clientId,
                                         @PathVariable("taskListId") Integer taskListId,
                                         @PathVariable("taskId") Integer taskId, Model model) {
 
         if (doShowTaskDetailsOrTaskForm(taskListId, taskId, model)) {
-            return "redirect:/groups/" + groupId + "/clientDashboard/" + clientId;
+            return "redirect:/groups/" + groupId;
         }
+        model.addAttribute("groupName", groupService.getById(groupId).getGroupName());
         return "taskForm";
     }
 
-    @GetMapping("/groups/{groupId}/clientDashboard/{clientId}/taskLists/{taskListId}/new")
+    @GetMapping("/groups/{groupId}/taskLists/{taskListId}/new")
     protected String showTaskForm(@PathVariable("taskListId") Integer taskListId,
                                   @PathVariable("groupId") Integer groupId,
-                                  @PathVariable("clientId") Integer clientId,  Model model) {
+                                  Model model) {
         Optional<TaskListDTO> taskListDTO = taskListService.findById(taskListId);
 
         if (taskListDTO.isEmpty()) {
-            return "redirect:/groups/" + groupId + "/clientDashboard/" + clientId;
+            return "redirect:/groups/" + groupId;
         }
         model.addAttribute("task", new TaskDTO());
+        model.addAttribute("groupName", groupService.getById(groupId).getGroupName());
         model.addAttribute("taskList", taskListService.getById(taskListId));
         return "taskForm";
     }
 
-    @PostMapping("/groups/{groupId}/clientDashboard/{clientId}/taskLists/{taskListId}/new")
+    @PostMapping("/groups/{groupId}/taskLists/{taskListId}/new")
     protected String saveOrUpdateTask(@PathVariable ("taskListId") Integer taskListId,
                                       @ModelAttribute("task") TaskDTO task, BindingResult result) {
 
         if (!result.hasErrors()) {
             taskService.save(task, taskListId);
         }
-        return "redirect:/groups/{groupId}/clientDashboard/{clientId}";
+        return "redirect:/groups/{groupId}";
     }
 
     @GetMapping("/task/delete/{taskId}")
     protected String deleteTask(@PathVariable("taskId") Integer taskId) {
-        Integer clientId = taskListService.getById(taskService.getTaskListIdByTaskId(taskId)).getUserId();
-        Integer groupId = memberService.getByClient(userService.getById(clientId)).getGroupId();
+        Integer groupId = taskListService.getById(taskService.getTaskListIdByTaskId(taskId)).getGroupId();
         taskService.deleteById(taskId);
-        return "redirect:/groups/" + groupId + "/clientDashboard/" + clientId;
+        return "redirect:/groups/" + groupId;
     }
 
     private boolean doShowTaskDetailsOrTaskForm(@PathVariable("taskListId") Integer taskListId,
