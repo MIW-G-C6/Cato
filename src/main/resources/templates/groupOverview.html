@@ -5,73 +5,75 @@
     <title>My groups</title>
 </head>
 <body>
-<div th:replace="fragments/general :: navbar"></div>
-<div class="breadCrumbsBar">
-    <div th:replace="fragments/general :: previousButton"></div>
-    <div class="breadCrumbs">
-        <li><a th:href="@{/}">Home</a></li>
-        <li>Groups</li>
+<div id="main-body">
+    <div th:replace="fragments/general :: navbar"></div>
+    <div class="breadCrumbsBar">
+        <div th:replace="fragments/general :: previousButton"></div>
+        <div class="breadCrumbs">
+            <li><a th:href="@{/}">Home</a></li>
+            <li>Groups</li>
+        </div>
     </div>
-</div>
 
-<div class="container">
-    <h1 th:if="${!(lastThreeGroups.get(0).groupId == 0)}">Last visited</h1>
-    <div  th:class="cato-three-groups-placing" th:if="${!(lastThreeGroups.get(0).groupId == 0)}" th:object="${lastThreeGroups}" >
-        <div th:if="${!(lastThreeGroups.get(0).groupId == 0)}" class="group-overview-group-banner" th:onclick="|window.location.href='@{/groups/{groupId}(groupId=${lastThreeGroups.get(0).groupId})}'|">
-            <h2 th:text="*{get(0).groupName}"></h2>
-            <table >
-                <tr>Clients</tr>
-                <br>
-                <tr class="tr-plain" th:if="${(clientsGroupOne.isEmpty())}">There are no clients in this group</tr>
-                <tr class="tr-plain" th:if="${!(clientsGroupOne.isEmpty())}" th:each="client : ${clientsGroupOne}">
-                    <td th:text="${client.userName}"></td>
-                </tr>
-            </table>
+    <div class="container">
+        <h1 th:if="${!(lastThreeGroups.get(0).groupId == 0)}">Last visited</h1>
+        <div  th:class="cato-three-groups-placing" th:if="${!(lastThreeGroups.get(0).groupId == 0)}" th:object="${lastThreeGroups}" >
+            <div th:if="${!(lastThreeGroups.get(0).groupId == 0)}" class="group-overview-group-banner" th:onclick="|window.location.href='@{/groups/{groupId}(groupId=${lastThreeGroups.get(0).groupId})}'|">
+                <h2 th:text="*{get(0).groupName}"></h2>
+                <table >
+                    <tr>Clients</tr>
+                    <br>
+                    <tr class="tr-plain" th:if="${(clientsGroupOne.isEmpty())}">There are no clients in this group</tr>
+                    <tr class="tr-plain" th:if="${!(clientsGroupOne.isEmpty())}" th:each="client : ${clientsGroupOne}">
+                        <td th:text="${client.userName}"></td>
+                    </tr>
+                </table>
+            </div>
+            <div th:if="${!(lastThreeGroups.get(1).groupId == 0)}" class="group-overview-group-banner" th:onclick="|window.location.href='@{/groups/{groupId}(groupId=${lastThreeGroups.get(1).groupId})}'|">
+                <h2 th:text="*{get(1).groupName}"></h2>
+                <table >
+                    <tr>Clients</tr>
+                    <br>
+                    <tr class="tr-plain" th:if="${(clientsGroupTwo.isEmpty())}">There are no clients in this group</tr>
+                    <tr class="tr-plain" th:if="${!(clientsGroupTwo.isEmpty())}" th:each="client : ${clientsGroupTwo}">
+                        <td th:text="${client.userName}"></td>
+                    </tr>
+                </table>
+            </div>
+            <div th:if="${!(lastThreeGroups.get(2).groupId == 0)}" class="group-overview-group-banner" th:onclick="|window.location.href='@{/groups/{groupId}(groupId=${lastThreeGroups.get(2).groupId})}'|">
+                <h1 th:text="*{get(2).groupName}"></h1>
+                <table >
+                    <tr>Clients</tr>
+                    <br>
+                    <tr class="tr-plain" th:if="${(clientsGroupThree.isEmpty())}">There are no clients in this group</tr>
+                    <tr class="tr-plain" th:if="${!(clientsGroupThree.isEmpty())}" th:each="client : ${clientsGroupThree}">
+                        <td th:text="${client.userName}"></td>
+                    </tr>
+                </table>
+            </div>
         </div>
-        <div th:if="${!(lastThreeGroups.get(1).groupId == 0)}" class="group-overview-group-banner" th:onclick="|window.location.href='@{/groups/{groupId}(groupId=${lastThreeGroups.get(1).groupId})}'|">
-            <h2 th:text="*{get(1).groupName}"></h2>
-            <table >
-                <tr>Clients</tr>
+        <br>
+        <div class="cato-edit-flex">
+            <div class="cato-table">
                 <br>
-                <tr class="tr-plain" th:if="${(clientsGroupTwo.isEmpty())}">There are no clients in this group</tr>
-                <tr class="tr-plain" th:if="${!(clientsGroupTwo.isEmpty())}" th:each="client : ${clientsGroupTwo}">
-                    <td th:text="${client.userName}"></td>
-                </tr>
-            </table>
+                <h5>My groups</h5>
+                <hr>
+                <table>
+                    <tr th:if="${allGroups.isEmpty()}">You are not a member of a group yet</tr><br>
+                    <tr th:if="${allGroups.isEmpty()}">Create a new group or ask a group admin to add you to a group</tr>
+                    <tr th:each="group : ${allGroups}">
+                        <td><a th:href="@{/groups/{groupId}(groupId=${group.groupId})}"><div th:text="${group.groupName}"></div></a></td>
+                    </tr>
+                </table>
+            </div>
+            <div class="cato-option-row">
+                <ul class="cato-ul">
+                    <li><a th:href="@{/groups/new}">Create new group</a></li>
+                </ul>
+            </div>
         </div>
-        <div th:if="${!(lastThreeGroups.get(2).groupId == 0)}" class="group-overview-group-banner" th:onclick="|window.location.href='@{/groups/{groupId}(groupId=${lastThreeGroups.get(2).groupId})}'|">
-            <h1 th:text="*{get(2).groupName}"></h1>
-            <table >
-                <tr>Clients</tr>
-                <br>
-                <tr class="tr-plain" th:if="${(clientsGroupThree.isEmpty())}">There are no clients in this group</tr>
-                <tr class="tr-plain" th:if="${!(clientsGroupThree.isEmpty())}" th:each="client : ${clientsGroupThree}">
-                    <td th:text="${client.userName}"></td>
-                </tr>
-            </table>
-        </div>
+        <br>
     </div>
-    <br>
-    <div class="cato-edit-flex">
-        <div class="cato-table">
-            <br>
-            <h5>My groups</h5>
-            <hr>
-            <table>
-                <tr th:if="${allGroups.isEmpty()}">You are not a member of a group yet</tr><br>
-                <tr th:if="${allGroups.isEmpty()}">Create a new group or ask a group admin to add you to a group</tr>
-                <tr th:each="group : ${allGroups}">
-                    <td><a th:href="@{/groups/{groupId}(groupId=${group.groupId})}"><div th:text="${group.groupName}"></div></a></td>
-                </tr>
-            </table>
-        </div>
-        <div class="cato-option-row">
-            <ul class="cato-ul">
-                <li><a th:href="@{/groups/new}">Create new group</a></li>
-            </ul>
-        </div>
-    </div>
-    <br>
 </div>
 
 <div th:replace="fragments/general :: footer"></div>

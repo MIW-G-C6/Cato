@@ -198,7 +198,6 @@ a.nav-link{
 }
 
 .topnavbar #main {
-    transition: margin-left .5s;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -218,7 +217,8 @@ a.nav-link{
 }
 
 
-/*contains general layout for side navigation bar*/
+/*!*contains general layout for side navigation bar*!*/
+
 .sidenav {
     height: 100%;
     width: 0;
@@ -228,7 +228,6 @@ a.nav-link{
     left: 0;
     background-color: #111;
     overflow-x: hidden;
-    transition: 0.5s;
     padding-top: 60px;
     opacity: 0.9;
 }
@@ -255,11 +254,6 @@ a.nav-link{
     right: 25px;
     font-size: 36px;
     margin-left: 50px;
-}
-
-@media screen and (max-height: 450px) {
-    .sidenav {padding-top: 15px;}
-    .sidenav a {font-size: 18px;}
 }
 
 /*contains design choices for breadcrumbs bar*/
@@ -355,7 +349,6 @@ html, body {
 
 .container {
     width: 80vw;
-    margin: 0 auto;
     padding: 30px 20px;
     flex: 1;
 }
@@ -647,4 +640,11 @@ input[type=email], input[type=password], input[type=text] {
 
 .home-page-text {
     width: 50%;
+}
+
+#hamburger-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 93px;
 }

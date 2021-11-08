@@ -6,6 +6,7 @@
     <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
     <link rel="stylesheet" type="text/css" th:href="@{/css/general.css}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
     <script>
         window.addEventListener("mouseup", focusLoss);
 
@@ -13,7 +14,6 @@
             let profile = document.getElementById("profileLinks");
             if (event.target !== profile) {
                 profile.style.display = "none";
-                closeNav();
             }
         }
 
@@ -28,23 +28,40 @@
 
         function openNav() {
             document.getElementById("mySidenav").style.width = "250px";
+            document.getElementById("main-body").style.marginLeft = "250px";
+            document.getElementById("hamburger-icon").style.display = "none";
         }
 
         function closeNav() {
             document.getElementById("mySidenav").style.width = "0";
+            document.getElementById("main-body").style.marginLeft = "0";
+            document.getElementById("hamburger-icon").style.display = "flex";
+
         }
     </script>
 </head>
+
 <body>
 
+<div id="main-body">
 <div class="topnavbar" th:fragment="navbar">
     <div id="mySidenav" class="sidenav">
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-        <a class="nav-link" th:href="@{/groups}">Groups</a>
-        <a class="nav-link" th:href="@{/siteAdminDashboard}">Site admin dashboard</a>
+        <li>
+            <a class="nav-link" th:href="@{/groups}">Groups</a>
+        </li>
+        <li>
+            <a class="nav-link" th:href="@{/siteAdminDashboard}">Site admin dashboard</a>
+        </li>
+        <li>
+            <a class="nav-link" th:href="@{/about}">About</a>
+        </li>
+        <li>
+            <a class="nav-link" th:href="@{/contact}">Contact</a>
+        </li>
     </div>
 
-    <div id="main">
+    <div id="hamburger-icon">
         <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776;</span>
     </div>
 
@@ -74,12 +91,13 @@
     </div>
 </div>
 
-<div class="previousButton" th:fragment="previousButton">
-    <button class="catoButton" onclick="javascript:history.back()">&laquo; Previous</button>
-</div>
+    <div class="previousButton" th:fragment="previousButton">
+        <button class="catoButton" onclick="javascript:history.back()">&laquo; Previous</button>
+    </div>
 
-<div th:fragment="container" class="container">
+    <div th:fragment="container" class="container">
 
+    </div>
 </div>
 
 <div th:fragment="footer" class="catoFooter">
@@ -114,14 +132,14 @@
     </div>
     <div class="footerdiv">
         <footer>
-                <div class="footerButtons">
-                    <ul class="list-inline">
-                        <li class="list-inline-item"><a th:href="@{/}">Home</a></li>
-                        <li class="list-inline-item"><a th:href="@{/about}">About</a></li>
-                        <li class="list-inline-item"><a th:href="@{/contact}">Contact</a></li>
-                    </ul>
-                    <p class="copyright">&copy; 2021 HeartCoded</p>
-                </div>
+            <div class="footerButtons">
+                <ul class="list-inline">
+                    <li class="list-inline-item"><a th:href="@{/}">Home</a></li>
+                    <li class="list-inline-item"><a th:href="@{/about}">About</a></li>
+                    <li class="list-inline-item"><a th:href="@{/contact}">Contact</a></li>
+                </ul>
+                <p class="copyright">&copy; 2021 HeartCoded</p>
+            </div>
         </footer>
     </div>
 </div>
