@@ -40,6 +40,7 @@ public class TaskController {
         if (doShowTaskDetailsOrTaskForm(taskListId, taskId, model)) {
             return "redirect:/groups/" + groupId;
         }
+        model.addAttribute("groupName", groupService.getById(groupId).getGroupName());
         return "taskDetails";
     }
 
@@ -51,6 +52,7 @@ public class TaskController {
         if (doShowTaskDetailsOrTaskForm(taskListId, taskId, model)) {
             return "redirect:/groups/" + groupId;
         }
+        model.addAttribute("groupName", groupService.getById(groupId).getGroupName());
         return "taskForm";
     }
 
@@ -92,7 +94,6 @@ public class TaskController {
         if (task.isEmpty()) {
             return true;
         }
-        //TODO model.addAttribute("group", taskListService) (vraag erwin naar juiste stappen)
         model.addAttribute("task", task.get());
         model.addAttribute("taskList", taskListService.getById(taskListId));
         return false;
