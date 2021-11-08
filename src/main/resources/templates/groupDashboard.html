@@ -25,10 +25,12 @@
             <hr>
             <table>
                 <tr th:each="thisMember : ${allMembersByGroupId}" >
-                    <td>
-                        <a th:href="@{/profilepage/{userId}(userId=${thisMember.userId})}" th:text="${thisMember.userName}"></a>
-                    </td>
-                    <td th:text="${thisMember.role}"></td>
+
+                    <td><span th:if="${thisMember.admin}"><i class="fa fa-key"></i></span>
+                        <span th:text="${thisMember.admin} ? '' : '&emsp;'"></span>
+                        <span><a th:href="@{/profilepage/{userId}(userId=${thisMember.userId})}" th:text="${thisMember.userName}"></a></span></td>
+
+                    </td><td th:text="${thisMember.role}"></td>
                 </tr>
             </table>
         </div>
