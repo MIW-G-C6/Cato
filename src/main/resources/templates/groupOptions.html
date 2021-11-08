@@ -23,7 +23,7 @@
             <hr>
             <table>
                 <tr> <div th:if="${!error.equals('')}" class="alert alert-danger" th:text="${error}"></div></tr>
-                <tr th:each="thisMember : ${allMembersByGroupId}" >
+                <tr th:each="thisMember : ${allMembersByGroupId}">
                     <td th:text="${thisMember.userName}"></td>
                     <td width="40%">
                         <span class="float-left" th:text="${thisMember.role}"></span>

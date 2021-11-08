@@ -10,6 +10,18 @@
 
 <div class="container">
     <h1>Overview of my groups</h1>
+    <div  th:class="cato-three-groups-placing" th:if="${!(lastThreeGroups.get(0).groupId == 0) || !(lastThreeGroups.get(1).groupId == 0) || !(lastThreeGroups.get(2).groupId == 0)}" th:object="${lastThreeGroups}" >
+
+        <div th:if="${!(lastThreeGroups.get(0).groupId == 0)}" class="group-overview-group-banner" th:onclick="|window.location.href='@{/groups/{groupId}(groupId=${lastThreeGroups.get(0).groupId})}'|">
+                <h2 th:text="*{get(0).groupName}"></h2>
+        </div>
+        <div th:if="${!(lastThreeGroups.get(1).groupId == 0)}" class="group-overview-group-banner" th:onclick="|window.location.href='@{/groups/{groupId}(groupId=${lastThreeGroups.get(1).groupId})}'|">
+            <h2 th:text="*{get(1).groupName}"></h2>
+        </div>
+        <div th:if="${!(lastThreeGroups.get(2).groupId == 0)}" class="group-overview-group-banner" th:onclick="|window.location.href='@{/groups/{groupId}(groupId=${lastThreeGroups.get(2).groupId})}'|">
+            <h2 th:text="*{get(2).groupName}"></h2>
+        </div>
+    </div>
     <br>
     <div class="cato-table">
         <h5>All groups<a class="float-right" th:href="@{/groups/new}">Create new group</a>
