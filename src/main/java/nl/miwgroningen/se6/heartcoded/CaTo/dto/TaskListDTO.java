@@ -10,9 +10,7 @@ public class TaskListDTO {
 
     private Integer taskListId;
 
-    private Integer userId;
-
-    private String userName;
+    private Integer groupId;
 
     public Integer getTaskListId() {
         return taskListId;
@@ -22,20 +20,11 @@ public class TaskListDTO {
         this.taskListId = taskListId;
     }
 
-    public Integer getUserId() {
-        return userId;
+    public Integer getGroupId() {
+        return groupId;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public void setGroupId(Integer groupId) {
+        this.groupId = groupId;
     }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
 }

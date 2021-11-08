@@ -44,7 +44,7 @@
             <table>
                 <tr th:each="client : ${allClients}">
                     <td>
-                        <a th:href="@{/groups/{groupId}/clientDashboard/{clientId}(groupId=${client.groupId}, clientId=${client.userId})}"><div th:text="${client.userName}"></div></a>
+                        <div th:text="${client.userName}"></div>
                     </td>
                     <td>
                         <a th:href="@{/groups/{groupId}(groupId=${client.groupId})}"><div th:text="${client.groupName}"></div></a>
