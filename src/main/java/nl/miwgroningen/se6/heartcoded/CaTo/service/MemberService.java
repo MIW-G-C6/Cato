@@ -11,6 +11,7 @@ import nl.miwgroningen.se6.heartcoded.CaTo.repository.UserRepository;
 import nl.miwgroningen.se6.heartcoded.CaTo.service.mappers.GroupMapper;
 import nl.miwgroningen.se6.heartcoded.CaTo.service.mappers.MemberMapper;
 import nl.miwgroningen.se6.heartcoded.CaTo.service.mappers.MemberSiteAdminMapper;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -91,6 +92,18 @@ public class MemberService {
             }
         }
         return result;
+    }
+
+    public List<MemberDTO> findAllClientsInGroup(Integer groupId) {
+        List<MemberDTO> result = new ArrayList<>();
+        List<MemberDTO> memberList = getAllByGroupId(groupId);
+        for (MemberDTO member : memberList) {
+            if(member.getRole().equals("Client")) {
+                result.add(member);
+            }
+        }
+        return result;
+
     }
 
     public List<MemberSiteAdminDTO> findAllClientsForSiteAdmin() {
