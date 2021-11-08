@@ -7,7 +7,13 @@
 <body>
 
 <div th:replace="fragments/general :: navbar"></div>
-<div th:replace="fragments/general :: breadCrumbsBar"></div>
+<div class="breadCrumbsBar">
+    <div th:replace="fragments/general :: previousButton"></div>
+    <div class="breadCrumbs">
+        <li><a th:href="@{/}">Home</a></li>
+        <li>Groups</li>
+    </div>
+</div>
 
 <div class="container">
     <div th:insert="fragments/general :: historyButton"></div>

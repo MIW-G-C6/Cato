@@ -37,6 +37,12 @@ public class GroupController {
     protected String showGroupOverview(Model model) {
         userService.checkForGroupDeletion();
         Integer currentUser = userService.getCurrentUser().getUserId();
+        model.addAttribute("clientsGroupOne",
+                memberService.findAllClientsInGroup(userService.getGroupOne(currentUser)));
+        model.addAttribute("clientsGroupTwo",
+                memberService.findAllClientsInGroup(userService.getGroupTwo(currentUser)));
+        model.addAttribute("clientsGroupThree",
+                memberService.findAllClientsInGroup(userService.getGroupThree(currentUser)));
         model.addAttribute("lastThreeGroups", userService.getLastThreeGroupsByUserId(currentUser));
         model.addAttribute("allGroups", memberService.getAllGroupsByUserId(currentUser));
         return "groupOverview";

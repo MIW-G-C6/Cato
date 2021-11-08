@@ -3,10 +3,7 @@ a.nav-link{
 }
 
 
-/*.loginbody {*/
-/*    display: flex;*/
-/*    align-items: center;*/
-/*}*/
+
 
 .site-admin-dashboard-box {
     display: flex;
@@ -32,16 +29,17 @@ a.nav-link{
     color: red;
 }
 
+
+/*Group Overview Page*/
 .cato-three-groups-placing {
-    display: flex;
+    display: flex;;
     flex-flow: row;
     justify-content: space-around;
-    min-height: 450px;
 }
 
 .group-overview-group-banner {
     width: 30%;
-    height: 400px;
+    min-height: 150px;
     text-decoration: none;
     display: inline-block;
     padding: 8px 16px;
@@ -53,7 +51,6 @@ a.nav-link{
 }
 
 .group-overview-group-banner:hover {
-    height: 425px;
     background-color: #cafad9;
     cursor: pointer;
 }
@@ -180,7 +177,26 @@ a.nav-link{
 
 /*contains design choices for breadcrumbs bar*/
 .breadCrumbsBar {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+/*Dit moet previousButton worden*/
+.previousButton {
     padding: 10px 10px;
+}
+
+/*zorgt dat alle breadcrumbs achter elkaar komen te staan*/
+.breadCrumbs li {
+    display: inline;
+}
+
+/*zorgt dat tussen iedere link een slash komt te staan*/
+.breadCrumbs li+li:before {
+    padding: 2px;
+    color: black;
+    content: "/\00a0";
 }
 
 /*contains design choices for all buttons*/
@@ -202,7 +218,28 @@ a.nav-link{
 }
 
 .custom-switch .custom-control-input:checked ~ .custom-control-label::before {
-    background-color: #cafad9;
+    background-color: #376B47;
+    border: 1px solid #376B47;
+}
+
+.custom-switch .custom-control-input:focus ~ .custom-control-label::before {
+    box-shadow: 0 0 0 0.2rem rgba(202, 250, 217, 0.98);
+}
+
+.cato-radio {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.custom-radio .custom-control-input:checked~.custom-control-label::before,
+.custom-radio .custom-control-input:checked~.custom-control-label::after {
+    background-color: #376B47;
+    background-image: url(data:image/svg+xml;charset=utf8,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox='-4 -4 8 8'%3E%3Ccircle r='3' fill='%23fff'/%3E%3C/svg%3E);
+    border-radius: 50%;
+}
+
+.custom-radio .custom-control-input:focus ~ .custom-control-label::before {
+    box-shadow: 0 0 0 0.2rem rgba(202, 250, 217, 1);
 }
 
 /*contains layout for columns on about page*/
@@ -284,6 +321,17 @@ tr:hover {
 tr {
     padding: 1rem;
     background-color: transparent;
+}
+
+.tr-plain {
+    padding: 0;
+    background-color: transparent;
+}
+
+.tr-plain:hover {
+    background-color: transparent;
+    box-shadow: 0 0 0px transparent;
+
 }
 
 th {
@@ -427,6 +475,10 @@ input[type=email], input[type=password], input[type=text] {
     width: 50%;
 }
 
+.group-options-table {
+    width: 40%;
+}
+
 .group-overview {
     width: 50%;
 }
@@ -491,11 +543,6 @@ input[type=email], input[type=password], input[type=text] {
 
 .custom-select {
     width: 50%;
-}
-
-.cato-radio {
-    list-style-type: none;
-    padding-left: 0;
 }
 
 .home-page {

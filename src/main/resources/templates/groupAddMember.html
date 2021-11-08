@@ -7,7 +7,16 @@
 <body>
 
 <div th:replace="fragments/general :: navbar"></div>
-<div th:replace="fragments/general :: breadCrumbsBar"></div>
+<div class="breadCrumbsBar">
+  <div th:replace="fragments/general :: previousButton"></div>
+  <div class="breadCrumbs">
+    <li><a th:href="@{/}">Home</a></li>
+    <li><a th:href="@{/groups}">Groups</a></li>
+    <li><a th:href="@{/groups/{groupId}(groupId=${thisGroup.groupId})}"><span th:text="${thisGroup.groupName}"></span></a></li>
+    <li><a th:href="@{/groups/options/{groupId}(groupId=${thisGroup.groupId})}">Options</a></li>
+    <li>Add member</li>
+  </div>
+</div>
 
 <div class="container">
   <div class="group-edit-member">
@@ -25,8 +34,10 @@
         <label>Select a user role</label>
         <ul class="cato-radio">
           <li th:each="role : ${addMember.groupRoleOptions}">
-            <input type="radio" th:field="${addMember.role}" th:value="${role}" required>
-            <label th:for="${#ids.prev('role')}" th:text="${role}"></label>
+            <div class="custom-control custom-radio">
+              <input type="radio" class="custom-control-input" th:field="${addMember.role}" th:value="${role}" required>
+              <label class="custom-control-label" th:for="${#ids.prev('role')}" th:text="${role}"></label>
+            </div>
           </li>
         </ul>
       </div>

@@ -100,6 +100,7 @@ public class TaskController {
         if (task.isEmpty()) {
             return true;
         }
+        //TODO model.addAttribute("group", taskListService) (vraag erwin naar juiste stappen)
         model.addAttribute("task", task.get());
         model.addAttribute("taskList", taskListService.getById(taskListId));
         return false;

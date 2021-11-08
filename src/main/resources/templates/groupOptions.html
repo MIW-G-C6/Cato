@@ -7,7 +7,15 @@
 <body>
 
 <div th:replace="fragments/general :: navbar"></div>
-<div th:replace="fragments/general :: breadCrumbsBar"></div>
+<div class="breadCrumbsBar">
+    <div th:replace="fragments/general :: previousButton"></div>
+    <div class="breadCrumbs">
+        <li><a th:href="@{/}">Home</a></li>
+        <li><a th:href="@{/groups}">Groups</a></li>
+        <li><a th:href="@{/groups/{groupId}(groupId=${thisGroup.getGroupId()})}"><span th:text="${thisGroup.groupName}"></span></a></li>
+        <li>Options</li>
+    </div>
+</div>
 
 <div class="container">
 
@@ -17,15 +25,16 @@
                 <span th:text="${thisGroup.groupName}"></span>
             </h1>
             <br>
-
             <h5>Group members
             </h5>
             <hr>
             <table>
                 <tr> <div th:if="${!error.equals('')}" class="alert alert-danger" th:text="${error}"></div></tr>
-                <tr th:each="thisMember : ${allMembersByGroupId}">
-                    <td th:text="${thisMember.userName}"></td>
-                    <td width="40%">
+                <tr th:each="thisMember : ${allMembersByGroupId}" >
+                    <td><span th:if="${thisMember.admin}"><i class="fa fa-key"></i></span>
+                        <span th:text="${thisMember.admin} ? '' : '&emsp;'"></span>
+                        <span th:text="' '+ ${thisMember.userName}"></span></td>
+                    <td class="group-options-table">
                         <span class="float-left" th:text="${thisMember.role}"></span>
                         <a class="float-right" th:href="@{'/groups/options/{groupId}/updatemember/' + ${thisMember.userId}(groupId=${thisGroup.groupId})}"><img th:src="@{/css/images/edit-icon.svg}" height="20" width="20" title="edit role"></a></td>
                     <td class="delete"><a th:href="@{'/groups/options/{groupId}/delete/' + ${thisMember.userId}(groupId=${thisGroup.groupId})}"><img th:src="@{/css/images/delete-icon.svg}" height="20" width="20" title="remove user from group"></a></td>
@@ -44,7 +53,6 @@
             </ul>
         </div>
     </div>
-
 </div>
 
 <div th:replace="fragments/general :: footer"></div>

@@ -120,16 +120,23 @@ public class UserService {
         for (Integer groupId : groupList) {
             Optional<Group> group = groupRepository.findById(groupId);
             if (group.isEmpty()) {
-                if(user.getGroupOne() == groupId) {
-                    user.setGroupOne(0);
-                } else if(user.getGroupTwo() == groupId) {
-                    user.setGroupTwo(0);
-                } else if(user.getGroupThree() == groupId) {
-                    user.setGroupThree(0);
-                }
+                ifGroupIsDeletedSetGroups(user, groupId);
             }
         }
         userRepository.save(user);
+    }
+
+    public void ifGroupIsDeletedSetGroups(User user,Integer groupId) {
+        if(user.getGroupOne() == groupId) {
+            user.setGroupOne(user.getGroupTwo());
+            user.setGroupTwo(user.getGroupThree());
+            user.setGroupThree(0);
+        } else if(user.getGroupTwo() == groupId) {
+            user.setGroupTwo(user.getGroupThree());
+            user.setGroupThree(0);
+        } else if(user.getGroupThree() == groupId) {
+            user.setGroupThree(0);
+        }
     }
 
     public void addGroupToLastThreeGroups(Integer groupId) {
@@ -158,6 +165,18 @@ public class UserService {
         result.add(1, user.getGroupTwo());
         result.add(2, user.getGroupThree());
         return result;
+    }
+
+    public Integer getGroupOne(Integer userId) {
+       return userRepository.getById(userId).getGroupOne();
+    }
+
+    public Integer getGroupTwo(Integer userId) {
+        return userRepository.getById(userId).getGroupTwo();
+    }
+
+    public Integer getGroupThree(Integer userId) {
+        return userRepository.getById(userId).getGroupThree();
     }
 
 
