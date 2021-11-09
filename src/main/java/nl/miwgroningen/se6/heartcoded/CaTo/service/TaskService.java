@@ -47,7 +47,6 @@ public class TaskService {
     public void save(TaskDTO taskDTO, Integer taskListId) {
         Task task = taskMapper.toTask(taskDTO);
         task.setTaskList(taskListRepository.getById(taskListId));
-        task.setAssignedUser(userRepository.getById(taskDTO.getAssignedUserId()));
         taskRepository.save(task);
     }
 

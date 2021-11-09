@@ -23,8 +23,13 @@ public class TaskMapper {
         taskDTO.setDescription(task.getDescription());
         taskDTO.setPriority(task.getPriority());
         taskDTO.setTaskListId(task.getTaskList().getTaskListId());
-        taskDTO.setAssignedUserId(task.getAssignedUser().getUserId());
-        taskDTO.setAssignedUserName(task.getAssignedUser().getName());
+        if (task.getAssignedUser() == null) {
+            taskDTO.setAssignedUserId(0);
+            taskDTO.setAssignedUserName("");
+        } else {
+            taskDTO.setAssignedUserId(task.getAssignedUser().getUserId());
+            taskDTO.setAssignedUserName(task.getAssignedUser().getName());
+        }
 
         return taskDTO;
     }
