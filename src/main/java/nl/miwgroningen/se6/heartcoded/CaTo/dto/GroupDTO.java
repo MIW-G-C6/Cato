@@ -10,6 +10,13 @@ public class GroupDTO {
 
     private String groupName;
 
+    public GroupDTO(String groupName) {
+        this.groupName = groupName;
+    }
+
+    public GroupDTO() {
+    }
+
     public Integer getGroupId() {
         return groupId;
     }
