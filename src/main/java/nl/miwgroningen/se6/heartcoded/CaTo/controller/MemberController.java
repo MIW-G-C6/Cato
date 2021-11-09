@@ -140,6 +140,9 @@ public class MemberController {
             return "groupUpdateMember";
         }
         memberService.saveMember(member);
+        if (!member.isAdmin() && member.getUserId().equals(userService.getCurrentUser().getUserId())) {
+            return "redirect:/groups/{groupId}";
+        }
         return "redirect:/groups/options/{groupId}";
     }
 
