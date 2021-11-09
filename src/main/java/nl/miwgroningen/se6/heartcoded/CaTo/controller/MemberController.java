@@ -114,6 +114,8 @@ public class MemberController {
     @GetMapping("/options/{groupId}/updatemember/{userId}")
     protected String showGroupUpdateMember(@PathVariable("userId") Integer userId,
                                            @PathVariable("groupId") Integer groupId, Model model) {
+        boolean showGroupAdminWarning = false;
+
         if (isNotGroupAdmin(groupId)) {
             return "redirect:/403";
         }
@@ -121,6 +123,11 @@ public class MemberController {
         if (member.isEmpty()) {
             return "redirect:/groups/options/{groupId}";
         }
+        if (member.get().getUserId().equals(userService .getCurrentUser().getUserId())) {
+            showGroupAdminWarning = true;
+        }
+
+        model.addAttribute("showGroupAdminWarning", showGroupAdminWarning);
         model.addAttribute("group", groupService.getById(groupId));
         model.addAttribute("member", member.get());
         return "groupUpdateMember";

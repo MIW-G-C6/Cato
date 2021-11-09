@@ -22,7 +22,7 @@
   <div class="container">
 
   <div class="group-update-member">
-    <form th:action="@{/groups/options/{groupId}/updatemember/{userId}(groupId=${groupId}, userId=${member.userId})}" method="post" th:object="${member}">
+    <form id="updateMember" th:action="@{/groups/options/{groupId}/updatemember/{userId}(groupId=${groupId}, userId=${member.userId})}" method="post" th:object="${member}">
 
         <div th:if="${#fields.hasErrors()}">
           <p th:each="err : ${#fields.errors('global')}" th:text="${err}" class="alert alert-danger" />
@@ -44,12 +44,73 @@
           <label class="custom-control-label" for="groupAdminSwitch">Group admin</label>
         </div>
         <br>
-        <button type="submit" class="catoButton">Save</button>
+        <button th:if="${showGroupAdminWarning == false}" type="submit" class="catoButton">Save</button>
+        <a th:if="${showGroupAdminWarning == true}" type="button" id="updateMemberBtn" class="catoButton" onchange="adminChecked()">Save</a>
         <a type="button" th:href="@{/groups/options/{groupId}(groupId=${groupId})}" class="catoButton">Cancel</a>
+
+        <div id="groupAdminModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title">Warning!</h2>
+                    <span class="close">&times;</span>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to remove your admin rights?</p>
+                    <p>You will not be able to come back to this page</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="catoButton" id="noBtn">No</button>
+                    <button data-accept="updateMember" type="submit" class="btn btn-primary" id="modalYesButton">Yes</button></a>
+                </div>
+            </div>
+        </div>
 
       </form>
     </div>
   </div>
+
+    <script>
+        // Get the modal
+        var modal = document.getElementById("groupAdminModal");
+
+        // Get the button that opens the modal
+        var btn = document.getElementById("updateMemberBtn");
+
+        // Get the <span> element that closes the modal
+        var span = document.getElementsByClassName("close")[0];
+
+        // Get the button that opens the modal
+        var noBtn = document.getElementById("noBtn");
+
+        // When the user clicks the button, open the modal
+        btn.onclick = function() {
+            modal.style.display = "block";
+        }
+
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
+
+        noBtn.onclick = function() {
+            modal.style.display = "none";
+        }
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+            if (event.target === modal) {
+                modal.style.display = "none";
+            }
+        }
+
+        function adminChecked() {
+            if(!$('#groupAdminSwitch').is(":checked")) {
+                $(".modal").show();
+            } else {
+                $(".modal").hide();
+            }
+        }
+    </script>
 </div>
 
 <div th:replace="fragments/general :: footer"></div>
