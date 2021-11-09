@@ -94,6 +94,18 @@ public class MemberService {
         return result;
     }
 
+    public List<MemberDTO> findAllClientsInGroup(Integer groupId) {
+        List<MemberDTO> result = new ArrayList<>();
+        List<MemberDTO> memberList = getAllByGroupId(groupId);
+        for (MemberDTO member : memberList) {
+            if(member.getRole().equals("Client")) {
+                result.add(member);
+            }
+        }
+        return result;
+
+    }
+
     public List<MemberSiteAdminDTO> findAllClientsForSiteAdmin() {
         List<MemberSiteAdminDTO> result = new ArrayList<>();
         for (Member member : memberRepository.findAll()) {

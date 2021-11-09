@@ -39,11 +39,20 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Member> memberList;
 
+    private int groupOne;
+
+    private int groupTwo;
+
+    private int groupThree;
+
     public User(Integer userId, String name, String email) {
         this.userId = userId;
         this.name = name;
         this.email = email;
         this.password = "";
+        this.groupOne = 0;
+        this.groupTwo = 0;
+        this.groupThree = 0;
     }
 
     public User() {
@@ -111,6 +120,36 @@ public class User implements UserDetails {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public int getGroupOne() {
+        return groupOne;
+    }
+
+    public void setGroupOne(int groupOne) {
+        this.groupOne = groupOne;
+    }
+
+    public int getGroupTwo() {
+        return groupTwo;
+    }
+
+    public void setGroupTwo(int groupTwo) {
+        this.groupTwo = groupTwo;
+    }
+
+    public int getGroupThree() {
+        return groupThree;
+    }
+
+    public void setGroupThree(int groupThree) {
+        this.groupThree = groupThree;
+    }
+
+    public void setAllThreeGroups (List<Integer> groupIdList, Integer groupId) {
+        this.groupOne = groupId;
+        this.groupTwo = groupIdList.get(0);
+        this.groupThree = groupIdList.get(1);
     }
 
     public List<Member> getMemberList() {

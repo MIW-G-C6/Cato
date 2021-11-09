@@ -6,48 +6,49 @@
   <title>Edit member</title>
 </head>
 <body>
-
-<div th:replace="fragments/general :: navbar"></div>
-<div class="breadCrumbsBar">
-  <div th:replace="fragments/general :: previousButton"></div>
-  <div class="breadCrumbs">
-    <li><a th:href="@{/}">Home</a></li>
-    <li><a th:href="@{/groups}">Groups</a></li>
-    <li><a th:href="@{/groups/{groupId}(groupId=${groupId})}"><span th:text="${group.groupName}"></span></a></li>
-    <li><a th:href="@{/groups/options/{groupId}(groupId=${groupId})}">Options</a></li>
-    <li>Edit member</li>
+<div id="main-body">
+  <div th:replace="fragments/general :: navbar"></div>
+  <div class="breadCrumbsBar">
+    <div th:replace="fragments/general :: previousButton"></div>
+    <div class="breadCrumbs">
+      <li><a th:href="@{/}">Home</a></li>
+      <li><a th:href="@{/groups}">Groups</a></li>
+      <li><a th:href="@{/groups/{groupId}(groupId=${groupId})}"><span th:text="${group.groupName}"></span></a></li>
+      <li><a th:href="@{/groups/options/{groupId}(groupId=${groupId})}">Options</a></li>
+      <li>Edit member</li>
+    </div>
   </div>
-</div>
 
-<div class="container">
+  <div class="container">
 
   <div class="group-update-member">
     <form th:action="@{/groups/options/{groupId}/updatemember/{userId}(groupId=${groupId}, userId=${member.userId})}" method="post" th:object="${member}">
 
-      <div th:if="${#fields.hasErrors()}">
-        <p th:each="err : ${#fields.errors('global')}" th:text="${err}" class="alert alert-danger" />
-      </div>
+        <div th:if="${#fields.hasErrors()}">
+          <p th:each="err : ${#fields.errors('global')}" th:text="${err}" class="alert alert-danger" />
+        </div>
 
-      <h1>Change role</h1>
+        <h1>Change role</h1>
 
-      <ul class="cato-radio">
-        <li th:each="role : ${member.groupRoleOptions}">
-          <div class="custom-control custom-radio">
-            <input type="radio" class="custom-control-input" th:field="${member.role}" th:value="${role}">
-            <label class="custom-control-label" th:for="${#ids.prev('role')}" th:text="${role}"></label>
-          </div>
-        </li>
-      </ul>
+        <ul class="cato-radio">
+          <li th:each="role : ${member.groupRoleOptions}">
+            <div class="custom-control custom-radio">
+              <input type="radio" class="custom-control-input" th:field="${member.role}" th:value="${role}">
+              <label class="custom-control-label" th:for="${#ids.prev('role')}" th:text="${role}"></label>
+            </div>
+          </li>
+        </ul>
 
-      <div class="custom-control custom-switch">
-        <input type="checkbox" class="custom-control-input" id="groupAdminSwitch" th:field="*{admin}">
-        <label class="custom-control-label" for="groupAdminSwitch">Group admin</label>
-      </div>
-      <br>
-      <button type="submit" class="catoButton">Save</button>
-      <a type="button" th:href="@{/groups/options/{groupId}(groupId=${groupId})}" class="catoButton">Cancel</a>
+        <div class="custom-control custom-switch">
+          <input type="checkbox" class="custom-control-input" id="groupAdminSwitch" th:field="*{admin}">
+          <label class="custom-control-label" for="groupAdminSwitch">Group admin</label>
+        </div>
+        <br>
+        <button type="submit" class="catoButton">Save</button>
+        <a type="button" th:href="@{/groups/options/{groupId}(groupId=${groupId})}" class="catoButton">Cancel</a>
 
-    </form>
+      </form>
+    </div>
   </div>
 </div>
 

@@ -47,6 +47,7 @@ public class MemberController {
         if (!isGroupMember(groupId)) {
             return "redirect:/403";
         }
+        userService.addGroupToLastThreeGroups(groupId);
         model.addAttribute("thisGroup", groupService.getById(groupId));
         model.addAttribute("taskListId", taskListService.getByGroupId(groupId).getTaskListId());
         model.addAttribute("taskList", taskService.getAllTasksByGroupId(groupId));

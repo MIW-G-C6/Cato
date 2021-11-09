@@ -3,6 +3,7 @@ package nl.miwgroningen.se6.heartcoded.CaTo.controller;
 import nl.miwgroningen.se6.heartcoded.CaTo.dto.GroupDTO;
 import nl.miwgroningen.se6.heartcoded.CaTo.dto.MemberDTO;
 import nl.miwgroningen.se6.heartcoded.CaTo.dto.UserDTO;
+import nl.miwgroningen.se6.heartcoded.CaTo.model.Group;
 import nl.miwgroningen.se6.heartcoded.CaTo.service.MemberService;
 import nl.miwgroningen.se6.heartcoded.CaTo.service.GroupService;
 import nl.miwgroningen.se6.heartcoded.CaTo.service.TaskListService;
@@ -11,6 +12,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * @author Shalena Omapersad <shalenao@hotmail.com>
@@ -36,8 +39,16 @@ public class GroupController {
 
     @GetMapping("/groups")
     protected String showGroupOverview(Model model) {
-        model.addAttribute("allGroups",
-                memberService.getAllGroupsByUserId(userService.getCurrentUser().getUserId()));
+        userService.checkForGroupDeletion();
+        Integer currentUser = userService.getCurrentUser().getUserId();
+        model.addAttribute("clientsGroupOne",
+                memberService.findAllClientsInGroup(userService.getGroupOne(currentUser)));
+        model.addAttribute("clientsGroupTwo",
+                memberService.findAllClientsInGroup(userService.getGroupTwo(currentUser)));
+        model.addAttribute("clientsGroupThree",
+                memberService.findAllClientsInGroup(userService.getGroupThree(currentUser)));
+        model.addAttribute("lastThreeGroups", userService.getLastThreeGroupsByUserId(currentUser));
+        model.addAttribute("allGroups", memberService.getAllGroupsByUserId(currentUser));
         return "groupOverview";
     }
 

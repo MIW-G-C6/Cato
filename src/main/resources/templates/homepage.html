@@ -6,38 +6,40 @@
 </head>
 <body>
 
-<div th:replace="fragments/general :: navbar"></div>
-<div th:insert="fragments/general :: previousButton"></div>
+<div id="main-body">
+    <div th:replace="fragments/general :: navbar"></div>
+    <div th:insert="fragments/general :: previousButton"></div>
 
-<div class="container">
-    <div class="logotext">
-        <p><img th:src="@{/css/images/CaToLogo.jpg}" height="80" alt="Home">&ensp;Welcome to Care Together</p>
-    </div>
-    <br>
-    <div class="home-page">
-        <div class="home-page-text">
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam ex elit, lobortis eu erat in, fermentum congue turpis. Nam tristique erat turpis, dictum rutrum mi scelerisque vitae. Proin volutpat est quis libero posuere dapibus. Phasellus hendrerit sem ac nunc condimentum, non eleifend urna gravida.<br><br> Curabitur libero magna, convallis at facilisis nec, posuere at nibh. Suspendisse ut venenatis purus, ut venenatis est. Aenean non lorem vitae leo posuere tristique. Nunc pulvinar, mi non imperdiet sollicitudin, est arcu laoreet massa, vel placerat lorem urna vel sem. Praesent non vehicula ante. Maecenas quam nisl, placerat sed gravida non, aliquet eget leo. Sed volutpat sit amet nulla in semper.</p>
+    <div class="container">
+        <div class="logotext">
+            <p><img th:src="@{/css/images/CaToLogo.jpg}" height="80" alt="Home">&ensp;Welcome to Care Together</p>
         </div>
-        <div class="form-group">
-            <form th:action="@{/}" method="post">
-                <div th:if="${param.error}">
-                    <div class="alert alert-danger">Invalid username or password.
+        <br>
+        <div class="home-page">
+            <div class="home-page-text">
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam ex elit, lobortis eu erat in, fermentum congue turpis. Nam tristique erat turpis, dictum rutrum mi scelerisque vitae. Proin volutpat est quis libero posuere dapibus. Phasellus hendrerit sem ac nunc condimentum, non eleifend urna gravida.<br><br> Curabitur libero magna, convallis at facilisis nec, posuere at nibh. Suspendisse ut venenatis purus, ut venenatis est. Aenean non lorem vitae leo posuere tristique. Nunc pulvinar, mi non imperdiet sollicitudin, est arcu laoreet massa, vel placerat lorem urna vel sem. Praesent non vehicula ante. Maecenas quam nisl, placerat sed gravida non, aliquet eget leo. Sed volutpat sit amet nulla in semper.</p>
+            </div>
+            <div class="form-group">
+                <form th:action="@{/}" method="post">
+                    <div th:if="${param.error}">
+                        <div class="alert alert-danger">Invalid username or password.
+                        </div>
                     </div>
-                </div>
-                <input type="email" id="username" name="username" class="form-control" autofocus="autofocus" placeholder="Enter email" />
-                <br>
-                <input type="password" id="password" name="password" class="form-control" placeholder="Enter password" />
-                <br>
-                <div class="row">
-                    <div class="col-sm-12 col-sm-offset-3">
-                        <input type="submit" name="login-submit" id="login-submit" class="form-control catoButton" value="Log in" />
+                    <input type="email" id="username" name="username" class="form-control" autofocus="autofocus" placeholder="Enter email" />
+                    <br>
+                    <input type="password" id="password" name="password" class="form-control" placeholder="Enter password" />
+                    <br>
+                    <div class="row">
+                        <div class="col-sm-12 col-sm-offset-3">
+                            <input type="submit" name="login-submit" id="login-submit" class="form-control catoButton" value="Log in" />
+                        </div>
                     </div>
-                </div>
-                <br>
-                <p>
-                    New user? <a th:href="@{/registration}">Register here</a>
-                </p>
-            </form>
+                    <br>
+                    <p>
+                        New user? <a th:href="@{/registration}">Register here</a>
+                    </p>
+                </form>
+            </div>
         </div>
     </div>
 </div>
