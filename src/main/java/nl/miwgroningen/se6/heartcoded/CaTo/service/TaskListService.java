@@ -41,6 +41,10 @@ public class TaskListService {
         this.taskListMapper = taskListMapper;
     }
 
+    public List<TaskListDTO> findAllTaskLists() {
+        return taskListMapper.toDTO(taskListRepository.findAll());
+    }
+
     public Optional<TaskListDTO> findById(Integer taskListId) {
         return taskListMapper.toDTO(taskListRepository.findById(taskListId));
     }

@@ -33,6 +33,10 @@ public class TaskService {
         this.taskMapper = taskMapper;
     }
 
+    public List<TaskDTO> findAllTasks() {
+        return taskMapper.toDTO(taskRepository.findAll());
+    }
+
     public Optional<TaskDTO> findById(Integer taskId) {
         return taskMapper.toDTO(taskRepository.findById(taskId));
     }
