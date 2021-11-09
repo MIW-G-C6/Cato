@@ -23,8 +23,7 @@
 
             if (profile.style.display === "flex") {
                 profile.style.display = "none";
-            }
-            else {
+            } else {
                 profile.style.display = "flex";
             }
         }
@@ -47,30 +46,30 @@
 <body>
 
 <div id="main-body">
-    <div class="topnavbar" th:fragment="navbar">
-        <div id="mySidenav" class="sidenav">
-            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-            <li>
-                <a class="nav-link" th:href="@{/groups}">Groups</a>
-            </li>
-            <li>
-                <a class="nav-link" th:href="@{/siteAdminDashboard}">Site admin dashboard</a>
-            </li>
-            <li>
-                <a class="nav-link" th:href="@{/about}">About</a>
-            </li>
-            <li>
-                <a class="nav-link" th:href="@{/contact}">Contact</a>
-            </li>
-        </div>
+<div class="topnavbar" th:fragment="navbar">
+    <div id="mySidenav" class="sidenav">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        <li class="cato-ul">
+            <a class="nav-link" th:href="@{/groups}">Groups</a>
+        </li>
+        <li class="cato-ul">
+            <a class="nav-link" th:href="@{/siteAdminDashboard}">Site admin dashboard</a>
+        </li>
+        <li class="cato-ul">
+            <a class="nav-link" th:href="@{/about}">About</a>
+        </li>
+        <li class="cato-ul">
+            <a class="nav-link" th:href="@{/contact}">Contact</a>
+        </li>
+    </div>
 
-        <div id="hamburger-icon">
-            <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776;</span>
-        </div>
+    <div id="hamburger-icon">
+        <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776;</span>
+    </div>
 
-        <div id="homeDiv">
-            <a id="home" th:href="@{/}"><img th:src="@{/css/images/CaToLogo.jpg}" height="40" alt="Home"> Care Together</a>
-        </div>
+    <div id="homeDiv">
+        <a id="home" th:href="@{/}"><img th:src="@{/css/images/CaToLogo.jpg}" height="40" alt="Home"> Care Together</a>
+    </div>
 
         <div id="profileMenu">
             <a href="javascript:void(0)" class="profileIcon" onclick="profileMenuExtend()">
