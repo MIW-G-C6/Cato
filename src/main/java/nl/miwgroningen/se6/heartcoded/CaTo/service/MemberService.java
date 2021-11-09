@@ -11,6 +11,7 @@ import nl.miwgroningen.se6.heartcoded.CaTo.repository.UserRepository;
 import nl.miwgroningen.se6.heartcoded.CaTo.service.mappers.GroupMapper;
 import nl.miwgroningen.se6.heartcoded.CaTo.service.mappers.MemberMapper;
 import nl.miwgroningen.se6.heartcoded.CaTo.service.mappers.MemberSiteAdminMapper;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -147,5 +148,29 @@ public class MemberService {
 
     public boolean isClient(MemberDTO member) {
         return member.getRole().equals(member.getGroupRoleOptions()[1]);
+    }
+
+    public boolean userIsMemberOfGroup(Integer groupId) {
+        Integer userId = getCurrentUser().getUserId();
+        List<Member> memberList = memberRepository.getAllByGroupGroupId(groupId);
+        for (Member member : memberList) {
+            if (Objects.equals(userId, member.getUser().getUserId())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean userIsGroupAdmin(Integer groupId) {
+        Integer userId = getCurrentUser().getUserId();
+        Optional<Member> member = memberRepository.findMemberByUserUserIdAndGroupGroupId(userId, groupId);
+        if (member.isPresent()) {
+            return member.get().isAdmin();
+        }
+        return false;
+    }
+
+    private User getCurrentUser() {
+        return (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     }
 }

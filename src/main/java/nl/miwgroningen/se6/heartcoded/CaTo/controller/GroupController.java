@@ -52,6 +52,11 @@ public class GroupController {
 
     @GetMapping("/groups/delete/{groupId}")
     protected String deleteGroupBySiteAdmin(@PathVariable("groupId") Integer groupId) {
+
+        if (!memberService.userIsMemberOfGroup(groupId) || !memberService.userIsGroupAdmin(groupId)) {
+            return "redirect:/403";
+        }
+
         taskListService.deleteByGroupId(groupId);
         groupService.deleteGroupById(groupId);
         return "redirect:/groups";

@@ -25,11 +25,14 @@ public class TaskController {
     private TaskService taskService;
     private TaskListService taskListService;
     private GroupService groupService;
+    private MemberService memberService;
 
-    public TaskController(TaskService taskService, TaskListService taskListService, GroupService groupService) {
+
+    public TaskController(TaskService taskService, TaskListService taskListService, GroupService groupService, MemberService memberService) {
         this.taskService = taskService;
         this.taskListService = taskListService;
         this.groupService = groupService;
+        this.memberService = memberService;
     }
 
     @GetMapping("/groups/{groupId}/taskLists/{taskListId}/{taskId}")
@@ -37,6 +40,9 @@ public class TaskController {
                                      @PathVariable("taskListId") Integer taskListId,
                                      @PathVariable("taskId") Integer taskId, Model model) {
 
+        if (!memberService.userIsMemberOfGroup(groupId)) {
+            return "redirect:/403";
+        }
         if (doShowTaskDetailsOrTaskForm(taskListId, taskId, model)) {
             return "redirect:/groups/" + groupId;
         }
@@ -49,6 +55,9 @@ public class TaskController {
                                         @PathVariable("taskListId") Integer taskListId,
                                         @PathVariable("taskId") Integer taskId, Model model) {
 
+        if (!memberService.userIsMemberOfGroup(groupId)) {
+            return "redirect:/403";
+        }
         if (doShowTaskDetailsOrTaskForm(taskListId, taskId, model)) {
             return "redirect:/groups/" + groupId;
         }
@@ -60,6 +69,9 @@ public class TaskController {
     protected String showTaskForm(@PathVariable("taskListId") Integer taskListId,
                                   @PathVariable("groupId") Integer groupId,
                                   Model model) {
+        if (!memberService.userIsMemberOfGroup(groupId)) {
+            return "redirect:/403";
+        }
         Optional<TaskListDTO> taskListDTO = taskListService.findById(taskListId);
 
         if (taskListDTO.isEmpty()) {
@@ -73,8 +85,12 @@ public class TaskController {
 
     @PostMapping("/groups/{groupId}/taskLists/{taskListId}/new")
     protected String saveOrUpdateTask(@PathVariable ("taskListId") Integer taskListId,
+                                      @PathVariable("groupId") Integer groupId,
                                       @ModelAttribute("task") TaskDTO task, BindingResult result) {
 
+        if (!memberService.userIsMemberOfGroup(groupId)) {
+            return "redirect:/403";
+        }
         if (!result.hasErrors()) {
             taskService.save(task, taskListId);
         }
@@ -84,6 +100,9 @@ public class TaskController {
     @GetMapping("/task/delete/{taskId}")
     protected String deleteTask(@PathVariable("taskId") Integer taskId) {
         Integer groupId = taskListService.getById(taskService.getTaskListIdByTaskId(taskId)).getGroupId();
+        if (!memberService.userIsMemberOfGroup(groupId)) {
+            return "redirect:/403";
+        }
         taskService.deleteById(taskId);
         return "redirect:/groups/" + groupId;
     }
