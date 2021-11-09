@@ -96,6 +96,17 @@ public class TaskController {
         return "redirect:/groups/{groupId}";
     }
 
+    @GetMapping("/groups/{groupId}/task/{taskId}/unassign")
+    protected String unassignTask(@PathVariable ("groupId") Integer groupId,
+                                @PathVariable ("taskId") Integer taskId) {
+        if (!memberService.userIsMemberOfGroup(groupId)) {
+            return "redirect:/403";
+        }
+        taskService.unassignUser(taskId);
+
+        return "redirect:/groups/{groupId}";
+    }
+
     @PostMapping("/groups/{groupId}/taskLists/{taskListId}/new")
     protected String saveOrUpdateTask(@PathVariable ("taskListId") Integer taskListId,
                                       @PathVariable("groupId") Integer groupId,
