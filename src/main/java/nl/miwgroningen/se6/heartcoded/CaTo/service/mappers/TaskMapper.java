@@ -1,9 +1,7 @@
 package nl.miwgroningen.se6.heartcoded.CaTo.service.mappers;
 
 import nl.miwgroningen.se6.heartcoded.CaTo.dto.TaskDTO;
-import nl.miwgroningen.se6.heartcoded.CaTo.dto.TaskListDTO;
 import nl.miwgroningen.se6.heartcoded.CaTo.model.Task;
-import nl.miwgroningen.se6.heartcoded.CaTo.model.TaskList;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -25,6 +23,8 @@ public class TaskMapper {
         taskDTO.setDescription(task.getDescription());
         taskDTO.setPriority(task.getPriority());
         taskDTO.setTaskListId(task.getTaskList().getTaskListId());
+        taskDTO.setAssignedUserId(task.getAssignedUser().getUserId());
+        taskDTO.setAssignedUserName(task.getAssignedUser().getName());
 
         return taskDTO;
     }
