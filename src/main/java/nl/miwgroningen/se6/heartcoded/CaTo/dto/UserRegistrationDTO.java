@@ -14,6 +14,16 @@ public class UserRegistrationDTO {
     private String passwordCheck;
     private String email;
 
+    public UserRegistrationDTO(String name, String password, String passwordCheck, String email) {
+        this.name = name;
+        this.password = password;
+        this.passwordCheck = passwordCheck;
+        this.email = email;
+    }
+
+    public UserRegistrationDTO() {
+    }
+
     public Integer getUserId() {
         return userId;
     }

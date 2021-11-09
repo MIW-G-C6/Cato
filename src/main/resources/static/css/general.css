@@ -2,9 +2,6 @@ a.nav-link{
     color: ghostwhite;
 }
 
-
-
-
 .site-admin-dashboard-box {
     display: flex;
     flex-flow: row;
@@ -132,35 +129,37 @@ a.nav-link{
     height: 72px;
 }
 
-.topnavbar #profileLinks {
-    /*display: none;*/
+.profileIcon {
+    width: 90px;
+    padding: 10px 40px;
+    align-self: center;
+}
+.profile-dropdown-content {
     flex-direction: column;
     position: absolute;
-    top: 75px;
+    top: 72px;
     right: 0;
-    width: fit-content;
-    /*background-color: #333;*/
     transition: 0.3s;
-
-    /*text-decoration: none;*/
-    /*display: inline-block;*/
-    /*padding: 8px 16px;*/
-    /*!*color: black;*!*/
-    /*background-color: #cafad9;*/
-    /*!*background-color: #e8ffef;*!*/
-    /*border: 1px solid black;*/
-    /*border-radius: 4px;*/
-
-    /*width: 30%;*/
-    min-height: 150px;
-    text-decoration: none;
-    display: inline-block;
-    padding: 8px 16px;
-    color: black;
-    background-color: #f5f5f5;
-    text-align: center;
+    background-color: #e8ffef;
+    display: none;
+    padding-bottom: 0;
+    padding-top: 0;
     box-shadow: 0 0 11px rgba(33,33,33,.2);
 
+    list-style-type: none;
+}
+
+.profile-dropdown-content li a {
+    min-width: 100px;
+    height: 10px;
+    font-size: small;
+    text-align-all: left;
+    padding: 0 0;
+}
+
+.profile-dropdown-content li:hover {
+    background-color: #cafad9;
+    color: ghostwhite;
 }
 
 .topnavbar a {
@@ -191,10 +190,6 @@ a.nav-link{
 
 .topnavbar a.profileIcon:hover {
     background-color: #cafad9;
-}
-
-.topnavbar a:hover {
-    color: white;
 }
 
 .topnavbar #main {
@@ -319,7 +314,7 @@ a.nav-link{
 .custom-radio .custom-control-input:checked~.custom-control-label::before,
 .custom-radio .custom-control-input:checked~.custom-control-label::after {
     background-color: #376B47;
-    background-image: url(data:image/svg+xml;charset=utf8,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox='-4 -4 8 8'%3E%3Ccircle r='3' fill='%23fff'/%3E%3C/svg%3E);
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns=\"http://www.w3.org/2000/svg\" viewBox='-4 -4 8 8'%3E%3Ccircle r='3' fill='%23fff'/%3E%3C/svg%3E");
     border-radius: 50%;
 }
 
@@ -361,11 +356,7 @@ html, body {
     display: flex;
 }
 
-.profileIcon {
-    width: 90px;
-    padding: 10px 40px;
-    align-self: center;
-}
+
 
 .stackedHeaderAndInfo {
     display: flex;
@@ -380,10 +371,6 @@ table {
     width: 100%;
     border-style: hidden;
 }
-
-/*#tasklisttable {*/
-/*    width: 100%;*/
-/*}*/
 
 .iconheader {
     width: 133px;
@@ -644,6 +631,10 @@ input[type=email], input[type=password], input[type=text] {
 
 .home-page-text {
     width: 50%;
+}
+
+.home-page-text-wide {
+    width: 100%;
 }
 
 #hamburger-icon {
