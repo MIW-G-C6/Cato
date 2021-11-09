@@ -87,7 +87,7 @@
         </div>
         <div id="profile-drop-down" class="profile-dropdown-content">
                 <li sec:authorize="isAnonymous()">
-                    <a th:href="@{/login}">Log in</a>
+                    <a th:href="@{/}">Log in</a>
                 </li>
                 <li  sec:authorize="isAuthenticated()">
                     <a th:href="@{/profilepage/{userId}(userId =${#authentication.getPrincipal().getUserId()})}">My Profile</a>
