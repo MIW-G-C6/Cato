@@ -50,6 +50,12 @@ public class TaskService {
         taskRepository.save(task);
     }
 
+    public void assignUser(Integer taskId, Integer userId) {
+        Task task = taskRepository.getById(taskId);
+        task.setAssignedUser(userRepository.getById(userId));
+        taskRepository.save(task);
+    }
+
     public Integer getTaskListIdByTaskId(Integer taskId) {
         return taskRepository.getById(taskId).getTaskList().getTaskListId();
     }
