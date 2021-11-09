@@ -221,34 +221,38 @@ a.nav-link{
     z-index: 1;
     top: 0;
     left: 0;
-    background-color: #111;
+    background-color: #e8ffef;
     overflow-x: hidden;
-    padding-top: 60px;
-    opacity: 0.9;
+    box-shadow: 0 0 11px rgba(33,33,33,.2);
 }
 
 .sidenav a {
-    padding: 8px 8px 8px 32px;
-    text-decoration: none;
-    font-size: 25px;
-    color: white;
+    border-bottom: 1px solid lightgrey;
+    color: black;
     display: block;
     transition: 0.3s;
+    text-align: left;
+    font-size: 16px;
 }
 
 .sidenav a:hover {
-    background-color: #818181;
+    background-color: #cafad9;
     color: black;
 }
 
 .sidenav .closebtn {
     display: flex;
-    padding: 14px 16px;
+    padding: 0;
     position: absolute;
     top: 0;
-    right: 25px;
+    right: 0;
     font-size: 36px;
     margin-left: 50px;
+    border-bottom: none;
+}
+
+.sidenav .closebtn:hover {
+    background-color: transparent;
 }
 
 /*contains design choices for breadcrumbs bar*/
