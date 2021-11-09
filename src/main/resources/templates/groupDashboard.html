@@ -50,13 +50,15 @@
                 </table>
             </div>
 
-        <div>
-            <ul class="cato-ul">
-                <li><a class="float-right" th:href="@{/groups/{groupId}/taskLists/{taskListId}/new(groupId=${groupId}, taskListId=${taskListId})}">Add new task</a></li>
-                <li><br></li>
-                <li th:if="${thisUserIsAdmin}"><hr></li>
-                <li th:if="${thisUserIsAdmin}"><a th:href="@{/groups/options/{groupId}(groupId=${thisGroup.groupId})}">group settings</a></li>
-            </ul>
+
+            <div>
+                <ul class="cato-ul">
+                    <li><a class="float-right" th:href="@{/groups/{groupId}/taskLists/{taskListId}/new(groupId=${groupId}, taskListId=${taskListId})}">Add new task</a></li>
+                    <li><br></li>
+                    <li th:if="${thisUserIsAdmin}"><hr></li>
+                    <li th:if="${thisUserIsAdmin}"><a th:href="@{/groups/options/{groupId}(groupId=${thisGroup.groupId})}">group settings</a></li>
+                </ul>
+            </div>
         </div>
     </div>
 </div>
