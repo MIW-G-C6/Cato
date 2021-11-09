@@ -2,6 +2,8 @@ package nl.miwgroningen.se6.heartcoded.CaTo.dto;
 
 import nl.miwgroningen.se6.heartcoded.CaTo.model.Task;
 
+import java.util.List;
+
 /**
  * @author Erwin Wegter <ewegter@gmail.com>
  *
@@ -24,6 +26,13 @@ public class TaskDTO {
 
     //nodig om te laten zien in de view (default lege string? --> view laat knopje zien: assign)
     private String assignedUserName;
+
+    public TaskDTO(String[] priorityOptions, String priority, String description, Integer taskListId) {
+        this.priorityOptions = priorityOptions;
+        this.priority = priority;
+        this.description = description;
+        this.taskListId = taskListId;
+    }
 
     public TaskDTO() {
         Task taskForPriority = new Task();

@@ -47,6 +47,10 @@ public class MemberService {
         this.memberRepository = memberRepository;
     }
 
+    public List<MemberDTO> findAllMembers() {
+        return memberMapper.toDTO(memberRepository.findAll());
+    }
+
     public void saveMember(MemberDTO memberDTO) {
         Member member = memberMapper.toMember(memberDTO);
         member.setUser(userRepository.getById(memberDTO.getUserId()));
