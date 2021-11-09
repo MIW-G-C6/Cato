@@ -22,7 +22,7 @@
         <div class="cato-edit-flex">
             <div class="cato-table">
                 <h1>
-                    <span th:text="${thisGroup.groupName}"></span>
+                    <a id="group-options-header" th:href="@{/groups/{groupId}(groupId=${thisGroup.getGroupId()})}"><span th:text="${thisGroup.groupName}"></span></a>
                 </h1>
                 <br>
                 <h5>Group members</h5>

@@ -642,3 +642,10 @@ input[type=email], input[type=password], input[type=text] {
     align-items: center;
     width: 93px;
 }
+
+#group-options-header {
+    padding: 10px 0 10px 0;
+    font-size: 30px;
+    text-decoration: none;
+    color: black;
+}
