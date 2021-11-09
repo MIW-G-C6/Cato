@@ -2,9 +2,6 @@ a.nav-link{
     color: ghostwhite;
 }
 
-
-
-
 .site-admin-dashboard-box {
     display: flex;
     flex-flow: row;
@@ -132,35 +129,36 @@ a.nav-link{
     height: 72px;
 }
 
-.topnavbar #profileLinks {
-    /*display: none;*/
+.profileIcon {
+    width: 90px;
+    padding: 10px 40px;
+    align-self: center;
+}
+.profile-dropdown-content {
     flex-direction: column;
     position: absolute;
-    top: 75px;
+    top: 72px;
     right: 0;
-    width: fit-content;
-    /*background-color: #333;*/
     transition: 0.3s;
-
-    /*text-decoration: none;*/
-    /*display: inline-block;*/
-    /*padding: 8px 16px;*/
-    /*!*color: black;*!*/
-    /*background-color: #cafad9;*/
-    /*!*background-color: #e8ffef;*!*/
-    /*border: 1px solid black;*/
-    /*border-radius: 4px;*/
-
-    /*width: 30%;*/
-    min-height: 150px;
-    text-decoration: none;
-    display: inline-block;
-    padding: 8px 16px;
-    color: black;
-    background-color: #f5f5f5;
-    text-align: center;
+    background-color: #e8ffef;
+    display: none;
+    padding-bottom: 0;
+    padding-top: 0;
     box-shadow: 0 0 11px rgba(33,33,33,.2);
+    list-style-type: none;
+}
 
+.profile-dropdown-content li a {
+    min-width: 100px;
+    height: 10px;
+    font-size: 16px;
+    text-align-all: left;
+    padding: 0 0;
+}
+
+.profile-dropdown-content li:hover {
+    background-color: #cafad9;
+    color: ghostwhite;
 }
 
 .topnavbar a {
@@ -193,10 +191,6 @@ a.nav-link{
     background-color: #cafad9;
 }
 
-.topnavbar a:hover {
-    color: white;
-}
-
 .topnavbar #main {
     display: flex;
     justify-content: center;
@@ -226,34 +220,38 @@ a.nav-link{
     z-index: 1;
     top: 0;
     left: 0;
-    background-color: #111;
+    background-color: #e8ffef;
     overflow-x: hidden;
-    padding-top: 60px;
-    opacity: 0.9;
+    box-shadow: 0 0 11px rgba(33,33,33,.2);
 }
 
 .sidenav a {
-    padding: 8px 8px 8px 32px;
-    text-decoration: none;
-    font-size: 25px;
-    color: white;
+    border-bottom: 1px solid lightgrey;
+    color: black;
     display: block;
     transition: 0.3s;
+    text-align: left;
+    font-size: 16px;
 }
 
 .sidenav a:hover {
-    background-color: #818181;
+    background-color: #cafad9;
     color: black;
 }
 
 .sidenav .closebtn {
     display: flex;
-    padding: 14px 16px;
+    padding: 0;
     position: absolute;
     top: 0;
-    right: 25px;
+    right: 0;
     font-size: 36px;
     margin-left: 50px;
+    border-bottom: none;
+}
+
+.sidenav .closebtn:hover {
+    background-color: transparent;
 }
 
 /*contains design choices for breadcrumbs bar*/
@@ -357,11 +355,7 @@ html, body {
     display: flex;
 }
 
-.profileIcon {
-    width: 90px;
-    padding: 10px 40px;
-    align-self: center;
-}
+
 
 .stackedHeaderAndInfo {
     display: flex;
@@ -376,10 +370,6 @@ table {
     width: 100%;
     border-style: hidden;
 }
-
-/*#tasklisttable {*/
-/*    width: 100%;*/
-/*}*/
 
 .iconheader {
     width: 133px;
@@ -640,6 +630,10 @@ input[type=email], input[type=password], input[type=text] {
 
 .home-page-text {
     width: 50%;
+}
+
+.home-page-text-wide {
+    width: 100%;
 }
 
 #hamburger-icon {
