@@ -11,17 +11,20 @@
         window.addEventListener("mouseup", focusLoss);
 
         function focusLoss(event) {
-            let profile = document.getElementById("profileLinks");
+            let profile = document.getElementById("profile-drop-down");
             if (event.target !== profile) {
                 profile.style.display = "none";
             }
         }
 
         function profileMenuExtend() {
-            let profile = document.getElementById("profileLinks");
+            // let profile = document.getElementById("profileLinks");
+            let profile = document.getElementById("profile-drop-down");
+
             if (profile.style.display === "flex") {
                 profile.style.display = "none";
-            } else {
+            }
+            else {
                 profile.style.display = "flex";
             }
         }
@@ -44,52 +47,52 @@
 <body>
 
 <div id="main-body">
-<div class="topnavbar" th:fragment="navbar">
-    <div id="mySidenav" class="sidenav">
-        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-        <li>
-            <a class="nav-link" th:href="@{/groups}">Groups</a>
-        </li>
-        <li>
-            <a class="nav-link" th:href="@{/siteAdminDashboard}">Site admin dashboard</a>
-        </li>
-        <li>
-            <a class="nav-link" th:href="@{/about}">About</a>
-        </li>
-        <li>
-            <a class="nav-link" th:href="@{/contact}">Contact</a>
-        </li>
-    </div>
+    <div class="topnavbar" th:fragment="navbar">
+        <div id="mySidenav" class="sidenav">
+            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+            <li>
+                <a class="nav-link" th:href="@{/groups}">Groups</a>
+            </li>
+            <li>
+                <a class="nav-link" th:href="@{/siteAdminDashboard}">Site admin dashboard</a>
+            </li>
+            <li>
+                <a class="nav-link" th:href="@{/about}">About</a>
+            </li>
+            <li>
+                <a class="nav-link" th:href="@{/contact}">Contact</a>
+            </li>
+        </div>
 
-    <div id="hamburger-icon">
-        <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776;</span>
-    </div>
+        <div id="hamburger-icon">
+            <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776;</span>
+        </div>
 
-    <div id="homeDiv">
-        <a id="home" th:href="@{/}"><img th:src="@{/css/images/CaToLogo.jpg}" height="40" alt="Home"> Care Together</a>
-    </div>
+        <div id="homeDiv">
+            <a id="home" th:href="@{/}"><img th:src="@{/css/images/CaToLogo.jpg}" height="40" alt="Home"> Care Together</a>
+        </div>
 
-    <div id="profileMenu">
-        <a href="javascript:void(0)" class="profileIcon" onclick="profileMenuExtend()">
-            <i class="fa fa-user"></i>
-        </a>
-    </div>
+        <div id="profileMenu">
+            <a href="javascript:void(0)" class="profileIcon" onclick="profileMenuExtend()">
+                <i class="fa fa-user"></i>
+            </a>
+        </div>
+        <div id="profile-drop-down" class="profile-dropdown-content">
+                <li sec:authorize="isAnonymous()">
+                    <a th:href="@{/login}">Log in</a>
+                </li>
+                <li  sec:authorize="isAuthenticated()">
+                    <a th:href="@{/profilepage/{userId}(userId =${#authentication.getPrincipal().getUserId()})}">My Profile</a>
+                </li>
+                <li  sec:authorize="isAuthenticated()">
+                    <a th:href="@{/logout}">Log out</a>
+                </li>
+                <li  sec:authorize="isAnonymous()">
+                    <a th:href="@{/registration}">Create account</a>
+                </li>
 
-    <div id="profileLinks" class="cato-ul">
-        <li class="nav-item" sec:authorize="isAnonymous()">
-            <a class="nav-link" th:href="@{/login}">Log in</a>
-        </li>
-        <li class="nav-item" sec:authorize="isAuthenticated()">
-            <a class="nav-link" th:href="@{/profilepage/{userId}(userId =${#authentication.getPrincipal().getUserId()})}">My Profile</a>
-        </li>
-        <li class="nav-item" sec:authorize="isAuthenticated()">
-            <a class="nav-link" th:href="@{/logout}">Log out</a>
-        </li>
-        <li>
-            <a class="nav-link" sec:authorize="isAnonymous()" th:href="@{/registration}">Create account</a>
-        </li>
+        </div>
     </div>
-</div>
 
     <div class="previousButton" th:fragment="previousButton">
         <button class="catoButton" onclick="javascript:history.back()">&laquo; Previous</button>
