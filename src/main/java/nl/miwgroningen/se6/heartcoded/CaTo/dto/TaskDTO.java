@@ -21,6 +21,13 @@ public class TaskDTO {
 
     private Integer taskListId;
 
+    public TaskDTO(String[] priorityOptions, String priority, String description, Integer taskListId) {
+        this.priorityOptions = priorityOptions;
+        this.priority = priority;
+        this.description = description;
+        this.taskListId = taskListId;
+    }
+
     public TaskDTO() {
         Task taskForPriority = new Task();
         this.priorityOptions = taskForPriority.getPriorityOptions();

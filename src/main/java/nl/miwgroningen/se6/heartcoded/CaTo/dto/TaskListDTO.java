@@ -12,6 +12,14 @@ public class TaskListDTO {
 
     private Integer groupId;
 
+    public TaskListDTO(Integer taskListId, Integer groupId) {
+        this.taskListId = taskListId;
+        this.groupId = groupId;
+    }
+
+    public TaskListDTO() {
+    }
+
     public Integer getTaskListId() {
         return taskListId;
     }
