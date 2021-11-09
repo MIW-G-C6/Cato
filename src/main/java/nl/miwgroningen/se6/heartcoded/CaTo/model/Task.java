@@ -1,9 +1,6 @@
 package nl.miwgroningen.se6.heartcoded.CaTo.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 /**
  * @author Erwin Wegter <ewegter@gmail.com>
@@ -26,6 +23,9 @@ public class Task {
     private TaskList taskList;
 
     private String priority;
+
+    @OneToOne
+    private User assignedUser;
 
     public Integer getTaskId() {
         return taskId;
@@ -61,5 +61,13 @@ public class Task {
 
     public String[] getPriorityOptions() {
         return PRIORITY_OPTIONS;
+    }
+
+    public User getAssignedUser() {
+        return assignedUser;
+    }
+
+    public void setAssignedUser(User reservedByUser) {
+        this.assignedUser = reservedByUser;
     }
 }

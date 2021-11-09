@@ -25,12 +25,19 @@ public class TaskService {
 
     private final TaskRepository taskRepository;
     private final TaskListRepository taskListRepository;
+    private final UserRepository userRepository;
     private final TaskMapper taskMapper;
 
-    public TaskService(TaskRepository taskRepository, TaskListRepository taskListRepository, TaskMapper taskMapper) {
+    public TaskService(TaskRepository taskRepository, TaskListRepository taskListRepository,
+                       UserRepository userRepository, TaskMapper taskMapper) {
         this.taskRepository = taskRepository;
         this.taskListRepository = taskListRepository;
+        this.userRepository = userRepository;
         this.taskMapper = taskMapper;
+    }
+
+    public List<TaskDTO> findAllTasks() {
+        return taskMapper.toDTO(taskRepository.findAll());
     }
 
     public Optional<TaskDTO> findById(Integer taskId) {
@@ -44,6 +51,12 @@ public class TaskService {
     public void save(TaskDTO taskDTO, Integer taskListId) {
         Task task = taskMapper.toTask(taskDTO);
         task.setTaskList(taskListRepository.getById(taskListId));
+        taskRepository.save(task);
+    }
+
+    public void assignUser(Integer taskId, Integer userId) {
+        Task task = taskRepository.getById(taskId);
+        task.setAssignedUser(userRepository.getById(userId));
         taskRepository.save(task);
     }
 

@@ -26,13 +26,15 @@ public class TaskController {
     private TaskListService taskListService;
     private GroupService groupService;
     private MemberService memberService;
+    private UserService userService;
 
-
-    public TaskController(TaskService taskService, TaskListService taskListService, GroupService groupService, MemberService memberService) {
+    public TaskController(TaskService taskService, TaskListService taskListService, GroupService groupService,
+                          MemberService memberService, UserService userService) {
         this.taskService = taskService;
         this.taskListService = taskListService;
         this.groupService = groupService;
         this.memberService = memberService;
+        this.userService = userService;
     }
 
     @GetMapping("/groups/{groupId}/taskLists/{taskListId}/{taskId}")
@@ -81,6 +83,17 @@ public class TaskController {
         model.addAttribute("groupName", groupService.getById(groupId).getGroupName());
         model.addAttribute("taskList", taskListService.getById(taskListId));
         return "taskForm";
+    }
+
+    @GetMapping("/groups/{groupId}/task/{taskId}/assign")
+    protected String assignTask(@PathVariable ("groupId") Integer groupId,
+                                @PathVariable ("taskId") Integer taskId) {
+        if (!memberService.userIsMemberOfGroup(groupId)) {
+            return "redirect:/403";
+        }
+        taskService.assignUser(taskId, userService.getCurrentUser().getUserId());
+
+        return "redirect:/groups/{groupId}";
     }
 
     @PostMapping("/groups/{groupId}/taskLists/{taskListId}/new")

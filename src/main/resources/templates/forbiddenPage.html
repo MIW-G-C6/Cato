@@ -5,16 +5,17 @@
     <title>Access denied</title>
 </head>
 <body>
+<div id="main-body">
+    <div th:replace="fragments/general :: navbar"></div>
+    <div class="breadCrumbsBar">
+        <div th:replace="fragments/general :: previousButton"></div>
+    </div>
 
-<div th:replace="fragments/general :: navbar"></div>
-<div class="breadCrumbsBar">
-    <div th:replace="fragments/general :: previousButton"></div>
-</div>
+    <div class="container">
 
-<div class="container">
+    <h1>403: Access Denied</h1>
 
-<h1>403: Access Denied</h1>
-
+    </div>
 </div>
 
 <div th:replace="fragments/general :: footer"></div>
