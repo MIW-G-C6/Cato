@@ -452,8 +452,8 @@ h5 a {
 /*contains general layout for footer*/
 .catoFooter {
     margin-top: auto;
-    position: absolute;
-    bottom: 0;
+    position: relative;
+    bottom: -35px;
     width: 100%;
 }
 
