@@ -25,6 +25,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class UserController {
 
     private static final String USER_IS_THE_LAST_ADMIN_IN_A_GROUP = "User is the last admin in a group";
+    private static final String SITE_ADMIN_DELETE_ERROR = "Unable to delete site admin";
 
     private UserService userService;
     private MemberService memberService;
@@ -48,14 +49,19 @@ public class UserController {
         }
         if (memberService.userIsLastGroupAdminInAnyGroup(userId)) {
             redirectAttributes.addAttribute("error", USER_IS_THE_LAST_ADMIN_IN_A_GROUP);
-            return "redirect:/siteAdminDashboard";
+        } else if (userService.userIsSiteAdmin(userId)) {
+            redirectAttributes.addAttribute("error", SITE_ADMIN_DELETE_ERROR);
+        } else {
+            userService.deleteUserById(userId);
         }
-        userService.deleteUserById(userId);
         return "redirect:/siteAdminDashboard";
     }
 
     @GetMapping("/users/edit/{userId}")
     protected String showEditUserForm(@PathVariable("userId") Integer userId, Model model) {
+        if (!userService.getCurrentUser().getUserId().equals(userId)) {
+            return "redirect:/403";
+        }
         UserDTO user = userService.getById(userId);
         model.addAttribute("user", user);
         return "editUserForm";
@@ -79,6 +85,10 @@ public class UserController {
     protected String editUser(@ModelAttribute("user") UserDTO user,
                               BindingResult result) {
         UserDTO currentUser = userService.getCurrentUser();
+        if (!userService.getCurrentUser().getUserId().equals(user.getUserId()) ||
+                userService.currentUserIsSiteAdmin()) {
+            return "redirect:/403";
+        }
         if (userService.emailInUse(user.getEmail()) && !user.getEmail().equals(currentUser.getEmail())) {
             ObjectError error = new ObjectError("globalError", "Email is already in use");
             result.addError(error);

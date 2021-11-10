@@ -41,7 +41,7 @@
             </div>
         </div>
         <br>
-        <a th:href="@{'/users/edit/' + ${user.userId}}"><button class="catoButton">Edit</button></a>
+        <a th:if="${userIsCurrentUser}" th:href="@{'/users/edit/' + ${user.userId}}"><button class="catoButton">Edit</button></a>
 
     </div>
 </div>

@@ -191,6 +191,14 @@ public class UserService {
                 .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
     }
 
+    public boolean userIsSiteAdmin(Integer userId) {
+        Optional<User> user = userRepository.findById(userId);
+        if (user.isPresent()) {
+            return user.get().getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
+        }
+        return false;
+    }
+
     public Integer getGroupOne(Integer userId) {
        return userRepository.getById(userId).getGroupOne();
     }
