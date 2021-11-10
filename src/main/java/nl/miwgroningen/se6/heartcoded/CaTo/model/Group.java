@@ -21,6 +21,15 @@ public class Group {
     @OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
     private List<Member> memberList;
 
+    public Group(Integer groupId, String groupName, List<Member> memberList) {
+        this.groupId = groupId;
+        this.groupName = groupName;
+        this.memberList = memberList;
+    }
+
+    public Group() {
+    }
+
     public Integer getGroupId() {
         return groupId;
     }
