@@ -42,6 +42,7 @@
       </div>
       <div>
         <button type="submit" class="catoButton">Save</button>
+        <a type="button" th:href="@{/groups/{groupId}/taskLists/{taskListId}/{taskId}(groupId=${groupId}, taskListId=${taskListId}, taskId=${taskId})}" class="catoButton">Cancel</a>
       </div>
       <script>
         document.getElementById("priority1").setAttribute("checked", "checked");
