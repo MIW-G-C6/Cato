@@ -2,6 +2,7 @@ package nl.miwgroningen.se6.heartcoded.CaTo.controller;
 
 import nl.miwgroningen.se6.heartcoded.CaTo.dto.GroupDTO;
 import nl.miwgroningen.se6.heartcoded.CaTo.dto.MemberDTO;
+import nl.miwgroningen.se6.heartcoded.CaTo.dto.UserDTO;
 import nl.miwgroningen.se6.heartcoded.CaTo.service.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -114,7 +115,6 @@ public class MemberController {
     @GetMapping("/options/{groupId}/updatemember/{userId}")
     protected String showGroupUpdateMember(@PathVariable("userId") Integer userId,
                                            @PathVariable("groupId") Integer groupId, Model model) {
-        boolean showGroupAdminWarning = false;
 
         if (isNotGroupAdmin(groupId)) {
             return "redirect:/403";
@@ -123,11 +123,6 @@ public class MemberController {
         if (member.isEmpty()) {
             return "redirect:/groups/options/{groupId}";
         }
-        if (member.get().getUserId().equals(userService .getCurrentUser().getUserId())) {
-            showGroupAdminWarning = true;
-        }
-
-        model.addAttribute("showGroupAdminWarning", showGroupAdminWarning);
         model.addAttribute("group", groupService.getById(groupId));
         model.addAttribute("member", member.get());
         return "groupUpdateMember";
@@ -136,7 +131,7 @@ public class MemberController {
     @PostMapping("/options/{groupId}/updatemember/{userId}")
     protected String updateGroupMember(@PathVariable("groupId") Integer groupId,
                                        @ModelAttribute("member") MemberDTO member,
-                                       BindingResult result, Model model) {
+                                       BindingResult result, Model model, RedirectAttributes redirectAttributes) {
         if (isNotGroupAdmin(groupId)) {
             return "redirect:/403";
         }
@@ -146,12 +141,32 @@ public class MemberController {
             model.addAttribute("member", member);
             return "groupUpdateMember";
         }
+        if (groupAdminRemoveOwnRights(member)) {
+            redirectAttributes.addFlashAttribute("member", member);
+            return "redirect:/groups/options/{groupId}/updatemember/{userId}/changeAdminRole";
+        }
         memberService.saveMember(member);
         if (!member.isAdmin() && member.getUserId().equals(userService.getCurrentUser().getUserId())) {
             return "redirect:/groups/{groupId}";
         }
         return "redirect:/groups/options/{groupId}";
     }
+
+    @GetMapping("/options/{groupId}/updatemember/{userId}/changeAdminRole")
+    protected String changeAdminRoleWarning(@PathVariable("groupId") Integer groupId,
+                                            @PathVariable("userId") Integer userId,
+                                            @ModelAttribute("member") MemberDTO member) {
+        return "groupUpdateMemberWarning";
+    }
+
+    @PostMapping("/options/{groupId}/updatemember/{userId}/changeAdminRole")
+    protected String updateChangeAdminRoleWarning(@PathVariable("groupId") Integer groupId,
+                                                  @PathVariable("userId") Integer userId,
+                                                  @ModelAttribute("member") MemberDTO member) {
+        memberService.saveMember(member);
+        return "redirect:/groups/" + groupId;
+    }
+
 
     @GetMapping("/options/{groupId}/delete/{userId}")
     protected String deleteUserFromGroup(@PathVariable("groupId") Integer groupId,
@@ -169,6 +184,8 @@ public class MemberController {
                 memberService.deleteByUserId(userId, groupId);
             }
         }
+        if (member.get().getUserId().equals(userService.getCurrentUser().getUserId()) && !member.get().isAdmin() && memberService.findOutIfMemberIsAdmin(member.get()));
+
         return "redirect:/groups/options/{groupId}";
     }
 
@@ -219,5 +236,16 @@ public class MemberController {
 
     private boolean isNotGroupAdmin(Integer groupId) {
         return !memberService.userIsMemberOfGroup(groupId) || !memberService.userIsGroupAdmin(groupId);
+    }
+
+    private boolean groupAdminRemoveOwnRights (MemberDTO memberDTO) {
+        Integer currentUserId = userService.getCurrentUser().getUserId();
+        if (!memberDTO.isAdmin()
+                && memberService.findOutIfMemberIsAdmin(
+                        memberService.findByUserIdAndGroupId(currentUserId , memberDTO.getGroupId()).get())
+                && memberDTO.getUserId().equals(currentUserId)) {
+            return true;
+        }
+        return false;
     }
 }

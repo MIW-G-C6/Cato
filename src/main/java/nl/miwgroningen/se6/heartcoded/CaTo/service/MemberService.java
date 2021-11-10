@@ -141,11 +141,7 @@ public class MemberService {
 
     public boolean findOutIfMemberIsAdmin(MemberDTO memberDTO) {
         Optional<MemberDTO> memberOptional = findByUserIdAndGroupId(memberDTO.getUserId(), memberDTO.getGroupId());
-        if (memberOptional.isPresent()) {
-            Member member = memberMapper.toMember(memberOptional.get());
-            return member.isAdmin();
-        }
-        return false;
+        return memberOptional.map(MemberDTO::isAdmin).orElse(false);
     }
 
     public boolean isClientInOtherGroup(Integer userid, Integer groupId) {

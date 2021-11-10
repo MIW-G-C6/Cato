@@ -1,116 +1,50 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org">
 <head th:replace="fragments/general :: baseHeader(~{:: title})" >
-  <meta charset="UTF-8">
-  <link rel="stylesheet" type="text/css" th:href="@{/css/groupUpdateMember.css}">
-  <title>Edit member</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/groupUpdateMember.css}">
+    <title>Edit member</title>
 </head>
 <body>
 <div id="main-body">
-  <div th:replace="fragments/general :: navbar"></div>
-  <div class="breadCrumbsBar">
-    <div th:replace="fragments/general :: previousButton"></div>
-    <div class="breadCrumbs">
-      <li><a th:href="@{/}">Home</a></li>
-      <li><a th:href="@{/groups}">Groups</a></li>
-      <li><a th:href="@{/groups/{groupId}(groupId=${groupId})}"><span th:text="${group.groupName}"></span></a></li>
-      <li><a th:href="@{/groups/options/{groupId}(groupId=${groupId})}">Options</a></li>
-      <li>Edit member</li>
+    <div th:replace="fragments/general :: navbar"></div>
+    <div class="breadCrumbsBar">
+        <div th:replace="fragments/general :: previousButton"></div>
+        <div class="breadCrumbs">
+            <li><a th:href="@{/}">Home</a></li>
+            <li><a th:href="@{/groups}">Groups</a></li>
+            <li><a th:href="@{/groups/{groupId}(groupId=${groupId})}"><span th:text="${group.groupName}"></span></a></li>
+            <li><a th:href="@{/groups/options/{groupId}(groupId=${groupId})}">Options</a></li>
+            <li>Edit member</li>
+        </div>
     </div>
-  </div>
 
-  <div class="container">
+    <div class="container">
 
-  <div class="group-update-member">
-    <form id="updateMember" th:action="@{/groups/options/{groupId}/updatemember/{userId}(groupId=${groupId}, userId=${member.userId})}" method="post" th:object="${member}">
-
-        <div th:if="${#fields.hasErrors()}">
-          <p th:each="err : ${#fields.errors('global')}" th:text="${err}" class="alert alert-danger" />
-        </div>
-
-        <h1>Change role</h1>
-
-        <ul class="cato-radio">
-          <li th:each="role : ${member.groupRoleOptions}">
-            <div class="custom-control custom-radio">
-              <input type="radio" class="custom-control-input" th:field="${member.role}" th:value="${role}">
-              <label class="custom-control-label" th:for="${#ids.prev('role')}" th:text="${role}"></label>
-            </div>
-          </li>
-        </ul>
-
-        <div class="custom-control custom-switch">
-          <input type="checkbox" class="custom-control-input" id="groupAdminSwitch" th:field="*{admin}">
-          <label class="custom-control-label" for="groupAdminSwitch">Group admin</label>
-        </div>
-        <br>
-        <button th:if="${showGroupAdminWarning == false}" type="submit" class="catoButton">Save</button>
-        <a th:if="${showGroupAdminWarning == true}" type="button" id="updateMemberBtn" class="catoButton" onchange="adminChecked()">Save</a>
-        <a type="button" th:href="@{/groups/options/{groupId}(groupId=${groupId})}" class="catoButton">Cancel</a>
-
-        <div id="groupAdminModal" class="modal">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h2 class="modal-title">Warning!</h2>
-                    <span class="close">&times;</span>
+    <div class="group-update-member">
+            <form th:action="@{/groups/options/{groupId}/updatemember/{userId}(groupId=${groupId}, userId=${userId})}" method="post" th:object="${member}">
+                <div th:if="${#fields.hasErrors()}">
+                    <p th:each="err : ${#fields.errors('global')}" th:text="${err}" class="error" />
                 </div>
-                <div class="modal-body">
-                    <p>Are you sure you want to remove your admin rights?</p>
-                    <p>You will not be able to come back to this page</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="catoButton" id="noBtn">No</button>
-                    <button data-accept="updateMember" type="submit" class="btn btn-primary" id="modalYesButton">Yes</button></a>
-                </div>
-            </div>
-        </div>
+                    <h1>Change role</h1>
 
-      </form>
+                    <ul class="cato-radio">
+                        <li th:each="role : ${member.groupRoleOptions}">
+                            <input type="radio" th:field="${member.role}" th:value="${role}">
+                            <label th:for="${#ids.prev('role')}" th:text="${role}"></label>
+                        </li>
+                    </ul>
+
+                    <div class="custom-control custom-switch">
+                        <input type="checkbox" class="custom-control-input" id="groupAdminSwitch" th:field="*{admin}">
+                        <label class="custom-control-label" for="groupAdminSwitch">Group admin</label>
+                    </div>
+                    <br>
+                    <button type="submit" class="catoButton">Save</button>
+                    <a type="button" th:href="@{/groups/options/{groupId}(groupId=${groupId})}" class="catoButton">Cancel</a>
+            </form>
     </div>
-  </div>
-
-    <script>
-        // Get the modal
-        var modal = document.getElementById("groupAdminModal");
-
-        // Get the button that opens the modal
-        var btn = document.getElementById("updateMemberBtn");
-
-        // Get the <span> element that closes the modal
-        var span = document.getElementsByClassName("close")[0];
-
-        // Get the button that opens the modal
-        var noBtn = document.getElementById("noBtn");
-
-        // When the user clicks the button, open the modal
-        btn.onclick = function() {
-            modal.style.display = "block";
-        }
-
-        // When the user clicks on <span> (x), close the modal
-        span.onclick = function() {
-            modal.style.display = "none";
-        }
-
-        noBtn.onclick = function() {
-            modal.style.display = "none";
-        }
-
-        // When the user clicks anywhere outside of the modal, close it
-        window.onclick = function(event) {
-            if (event.target === modal) {
-                modal.style.display = "none";
-            }
-        }
-
-        function adminChecked() {
-            if(!$('#groupAdminSwitch').is(":checked")) {
-                $(".modal").show();
-            } else {
-                $(".modal").hide();
-            }
-        }
-    </script>
+</div>
 </div>
 
 <div th:replace="fragments/general :: footer"></div>
