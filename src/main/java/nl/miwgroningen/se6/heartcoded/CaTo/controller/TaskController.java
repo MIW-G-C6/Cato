@@ -64,7 +64,7 @@ public class TaskController {
             return "redirect:/groups/" + groupId;
         }
         model.addAttribute("groupName", groupService.getById(groupId).getGroupName());
-        return "taskForm";
+        return "taskEdit";
     }
 
     @GetMapping("/groups/{groupId}/taskLists/{taskListId}/new")
