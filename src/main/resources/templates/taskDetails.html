@@ -47,7 +47,8 @@
                             <h6 class="mb-0">Assigned to</h6>
                         </div>
                         <div class="col-sm-9 text-secondary">
-                            <span th:text="${task.assignedUserName}"></span>
+                            <span th:if="${task.assignedUserName} == ''">-</span>
+                            <span th:unless="${task.assignedUserName} == ''" th:text="${task.assignedUserName}"></span>
                         </div>
                     </div>
             </div>
