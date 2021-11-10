@@ -26,6 +26,7 @@ public class ProfilePageController {
     protected String showProfilePage(@PathVariable("userId") Integer userId, Model model) {
         UserDTO userDTO = userService.getById(userId);
         model.addAttribute("user", userDTO);
+        model.addAttribute("userIsCurrentUser", userService.getCurrentUser().getUserId().equals(userId));
         return "profilePage";
     }
 }

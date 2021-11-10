@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<html lang="en" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org">
 <head th:replace="fragments/general :: baseHeader(~{:: title})" >
     <meta charset="UTF-8">
     <title>Profile page</title>
@@ -11,6 +11,7 @@
         <div th:replace="fragments/general :: previousButton"></div>
         <div class="breadCrumbs">
             <li><a th:href="@{/}">Home</a></li>
+            <li sec:authorize="hasAuthority('ROLE_ADMIN')"><a th:href="@{/siteAdminDashboard}">Site Admin Dashboard</a></li>
             <li>Profile</li>
         </div>
     </div>
@@ -40,7 +41,7 @@
             </div>
         </div>
         <br>
-        <a th:href="@{'/users/edit/' + ${user.userId}}"><button class="catoButton">Edit</button></a>
+        <a th:if="${userIsCurrentUser}" th:href="@{'/users/edit/' + ${user.userId}}"><button class="catoButton">Edit</button></a>
 
     </div>
 </div>

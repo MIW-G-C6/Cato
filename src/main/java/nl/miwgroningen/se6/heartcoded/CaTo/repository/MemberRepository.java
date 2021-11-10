@@ -15,6 +15,10 @@ public interface MemberRepository extends JpaRepository <Member, Integer> {
 
     Optional<Member> findMemberByUserAndGroup(User user, Group group);
 
+//    List<Member> findAllByUserUserIdAndAdmin(Integer userId, boolean admin);
+
+    List<Member> findAllByUserUserId(Integer userId);
+
     List<Member> getAllByUser(User user);
 
     List<Member> getAllByGroupGroupId(Integer groupId);

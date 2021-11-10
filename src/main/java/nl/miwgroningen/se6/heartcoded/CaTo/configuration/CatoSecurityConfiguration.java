@@ -43,19 +43,23 @@ public class CatoSecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
+                .antMatchers("/siteAdminDashboard").hasAuthority("ROLE_ADMIN")
+                .antMatchers("/users/delete/*").hasAuthority("ROLE_ADMIN")
                 .antMatchers("/css/**", "/webjars/**").permitAll()
                 .antMatchers("/","/registration").permitAll()
                 .antMatchers("/about", "/contact").permitAll()
                 .anyRequest().authenticated().and()
                 .formLogin()
                 .loginPage("/")
-                .defaultSuccessUrl("/groups")
-                .permitAll()
+                .defaultSuccessUrl("/loginRedirect", true)
                 .and()
                 .logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                 .logoutSuccessUrl("/")
-                .permitAll();
+                .permitAll()
+                .and()
+                .exceptionHandling()
+                .accessDeniedPage("/403");
     }
 
     @Bean

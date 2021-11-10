@@ -11,6 +11,7 @@ import nl.miwgroningen.se6.heartcoded.CaTo.service.mappers.GroupMapper;
 import nl.miwgroningen.se6.heartcoded.CaTo.service.mappers.UserLoginMapper;
 import nl.miwgroningen.se6.heartcoded.CaTo.service.mappers.UserMapper;
 import nl.miwgroningen.se6.heartcoded.CaTo.service.mappers.UserRegistrationMapper;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -50,6 +51,12 @@ public class UserService {
         return userMapper.toDTO(userRepository.findAll());
     }
 
+    public List<UserDTO> findAllRegisteredUsers() {
+        List<User> allUsers = userRepository.findAll();
+        allUsers.removeIf(user -> user.getAuthorities().stream().anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_ADMIN")));
+        return userMapper.toDTO(allUsers);
+    }
+
     public UserDTO getById(Integer userId) {
         return userMapper.toDTO(userRepository.getById(userId));
     }
@@ -61,17 +68,29 @@ public class UserService {
     public void editUser(UserDTO user) {
         User result = userMapper.toUser(user);
         result.setMemberList(userRepository.getById(user.getUserId()).getMemberList());
+        result.setUserRole("ROLE_USER");
         userRepository.save(result);
         //TODO maybe this needs an exception throw??
     }
 
-    public void saveNewUser(UserRegistrationDTO user) {
-        if(user.getPassword().equals(user.getPasswordCheck())) {
+    public void saveNewUser(UserRegistrationDTO userDTO) {
+        if(userDTO.getPassword().equals(userDTO.getPasswordCheck())) {
 
-            user.setPassword(passwordEncoder.encode(user.getPassword()));
-            userRepository.save(userRegistrationMapper.toUser(user));
+            userDTO.setPassword(passwordEncoder.encode(userDTO.getPassword()));
+            User user = userRegistrationMapper.toUser(userDTO);
+            user.setUserRole("ROLE_USER");
+            userRepository.save(user);
         }
         //TODO maybe this needs an exception throw??
+    }
+
+    public void saveAdmin() {
+        User adminUser = new User();
+        adminUser.setUserRole("ROLE_ADMIN");
+        adminUser.setName("Admin");
+        adminUser.setEmail("Admin@admin.com");
+        adminUser.setPassword(passwordEncoder.encode("admin"));
+        userRepository.save(adminUser);
     }
 
     public Optional<UserRegistrationDTO> findUserByEmail(String email) {
@@ -165,6 +184,19 @@ public class UserService {
         result.add(1, user.getGroupTwo());
         result.add(2, user.getGroupThree());
         return result;
+    }
+
+    public boolean currentUserIsSiteAdmin() {
+        return SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream()
+                .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
+    }
+
+    public boolean userIsSiteAdmin(Integer userId) {
+        Optional<User> user = userRepository.findById(userId);
+        if (user.isPresent()) {
+            return user.get().getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
+        }
+        return false;
     }
 
     public Integer getGroupOne(Integer userId) {

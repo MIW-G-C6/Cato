@@ -62,9 +62,9 @@ public class GroupController {
     }
 
     @GetMapping("/groups/delete/{groupId}")
-    protected String deleteGroupBySiteAdmin(@PathVariable("groupId") Integer groupId) {
+    protected String deleteGroupById(@PathVariable("groupId") Integer groupId) {
 
-        if (!memberService.userIsMemberOfGroup(groupId) || !memberService.userIsGroupAdmin(groupId)) {
+        if (!memberService.userIsGroupAdmin(groupId) && !userService.currentUserIsSiteAdmin()) {
             return "redirect:/403";
         }
 

@@ -1,25 +1,26 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<html lang="en" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org">
 <head th:replace="fragments/general :: baseHeader(~{:: title})" >
-    <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" th:href="@{/css/groupUpdateMember.css}">
-    <title>Edit member</title>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" type="text/css" th:href="@{/css/groupUpdateMember.css}">
+  <title>Edit member</title>
 </head>
 <body>
 <div id="main-body">
-    <div th:replace="fragments/general :: navbar"></div>
-    <div class="breadCrumbsBar">
-        <div th:replace="fragments/general :: previousButton"></div>
-        <div class="breadCrumbs">
-            <li><a th:href="@{/}">Home</a></li>
-            <li><a th:href="@{/groups}">Groups</a></li>
-            <li><a th:href="@{/groups/{groupId}(groupId=${groupId})}"><span th:text="${group.groupName}"></span></a></li>
-            <li><a th:href="@{/groups/options/{groupId}(groupId=${groupId})}">Options</a></li>
-            <li>Edit member</li>
-        </div>
+  <div th:replace="fragments/general :: navbar"></div>
+  <div class="breadCrumbsBar">
+    <div th:replace="fragments/general :: previousButton"></div>
+    <div class="breadCrumbs">
+        <li><a th:href="@{/}">Home</a></li>
+        <li sec:authorize="hasAuthority('ROLE_ADMIN')"><a th:href="@{/siteAdminDashboard}">Site Admin Dashboard</a></li>
+        <li><a th:href="@{/groups}">Groups</a></li>
+        <li><a th:href="@{/groups/{groupId}(groupId=${groupId})}"><span th:text="${group.groupName}"></span></a></li>
+        <li><a th:href="@{/groups/options/{groupId}(groupId=${groupId})}">Options</a></li>
+        <li>Edit member</li>
     </div>
+  </div>
 
-    <div class="container">
+  <div class="container">
 
     <div class="group-update-member">
             <form th:action="@{/groups/options/{groupId}/updatemember/{userId}(groupId=${groupId}, userId=${userId})}" method="post" th:object="${member}">

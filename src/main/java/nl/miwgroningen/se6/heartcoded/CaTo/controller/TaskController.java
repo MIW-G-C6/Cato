@@ -42,7 +42,7 @@ public class TaskController {
                                      @PathVariable("taskListId") Integer taskListId,
                                      @PathVariable("taskId") Integer taskId, Model model) {
 
-        if (!memberService.userIsMemberOfGroup(groupId)) {
+        if (!memberService.userIsMemberOfGroup(groupId) && !userService.currentUserIsSiteAdmin()) {
             return "redirect:/403";
         }
         if (doShowTaskDetailsOrTaskForm(taskListId, taskId, model)) {
@@ -57,21 +57,21 @@ public class TaskController {
                                         @PathVariable("taskListId") Integer taskListId,
                                         @PathVariable("taskId") Integer taskId, Model model) {
 
-        if (!memberService.userIsMemberOfGroup(groupId)) {
+        if (!memberService.userIsMemberOfGroup(groupId) && !userService.currentUserIsSiteAdmin()) {
             return "redirect:/403";
         }
         if (doShowTaskDetailsOrTaskForm(taskListId, taskId, model)) {
             return "redirect:/groups/" + groupId;
         }
         model.addAttribute("groupName", groupService.getById(groupId).getGroupName());
-        return "taskForm";
+        return "taskEdit";
     }
 
     @GetMapping("/groups/{groupId}/taskLists/{taskListId}/new")
     protected String showTaskForm(@PathVariable("taskListId") Integer taskListId,
                                   @PathVariable("groupId") Integer groupId,
                                   Model model) {
-        if (!memberService.userIsMemberOfGroup(groupId)) {
+        if (!memberService.userIsMemberOfGroup(groupId) && !userService.currentUserIsSiteAdmin()) {
             return "redirect:/403";
         }
         Optional<TaskListDTO> taskListDTO = taskListService.findById(taskListId);
@@ -88,7 +88,7 @@ public class TaskController {
     @GetMapping("/groups/{groupId}/task/{taskId}/assign")
     protected String assignTask(@PathVariable ("groupId") Integer groupId,
                                 @PathVariable ("taskId") Integer taskId) {
-        if (!memberService.userIsMemberOfGroup(groupId)) {
+        if (!memberService.userIsMemberOfGroup(groupId) && !userService.currentUserIsSiteAdmin()) {
             return "redirect:/403";
         }
         taskService.assignUser(taskId, userService.getCurrentUser().getUserId());
@@ -99,7 +99,7 @@ public class TaskController {
     @GetMapping("/groups/{groupId}/task/{taskId}/unassign")
     protected String unassignTask(@PathVariable ("groupId") Integer groupId,
                                 @PathVariable ("taskId") Integer taskId) {
-        if (!memberService.userIsMemberOfGroup(groupId)) {
+        if (!memberService.userIsMemberOfGroup(groupId) && !userService.currentUserIsSiteAdmin()) {
             return "redirect:/403";
         }
         taskService.unassignUser(taskId);
@@ -112,7 +112,7 @@ public class TaskController {
                                       @PathVariable("groupId") Integer groupId,
                                       @ModelAttribute("task") TaskDTO task, BindingResult result) {
 
-        if (!memberService.userIsMemberOfGroup(groupId)) {
+        if (!memberService.userIsMemberOfGroup(groupId) && !userService.currentUserIsSiteAdmin()) {
             return "redirect:/403";
         }
         if (!result.hasErrors()) {
@@ -124,7 +124,7 @@ public class TaskController {
     @GetMapping("/task/delete/{taskId}")
     protected String deleteTask(@PathVariable("taskId") Integer taskId) {
         Integer groupId = taskListService.getById(taskService.getTaskListIdByTaskId(taskId)).getGroupId();
-        if (!memberService.userIsMemberOfGroup(groupId)) {
+        if (!memberService.userIsMemberOfGroup(groupId) && !userService.currentUserIsSiteAdmin()) {
             return "redirect:/403";
         }
         taskService.deleteById(taskId);

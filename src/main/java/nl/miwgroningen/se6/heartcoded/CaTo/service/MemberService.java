@@ -182,6 +182,18 @@ public class MemberService {
         return false;
     }
 
+    public boolean userIsLastGroupAdminInAnyGroup(Integer userId) {
+        List<Member> allMembers = memberRepository.findAllByUserUserId(userId);
+
+        for (Member member : allMembers) {
+            if (getGroupAdminsByGroupId(member.getGroup().getGroupId()).size() == 1
+                    && member.isAdmin()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     private User getCurrentUser() {
         return (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     }

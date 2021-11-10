@@ -54,6 +54,10 @@ public class Seeder {
         if (taskService.findAllTasks().size() == 0) {
             seedTasks();
         }
+
+        if (!userService.emailInUse("admin@admin.com")) {
+            userService.saveAdmin();
+        }
     }
 
     private void seedUser() {

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<html lang="en" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org">
 <head th:replace="fragments/general :: baseHeader(~{:: title})" >
     <meta charset="UTF-8">
     <title>Group settings</title>
@@ -11,6 +11,7 @@
         <div th:replace="fragments/general :: previousButton"></div>
         <div class="breadCrumbs">
             <li><a th:href="@{/}">Home</a></li>
+            <li sec:authorize="hasAuthority('ROLE_ADMIN')"><a th:href="@{/siteAdminDashboard}">Site Admin Dashboard</a></li>
             <li><a th:href="@{/groups}">Groups</a></li>
             <li><a th:href="@{/groups/{groupId}(groupId=${thisGroup.getGroupId()})}"><span th:text="${thisGroup.groupName}"></span></a></li>
             <li>Options</li>
