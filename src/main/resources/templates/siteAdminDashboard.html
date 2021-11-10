@@ -11,6 +11,7 @@
 
     <div class="container">
         <h1>Site admin dashboard</h1>
+        <div th:if="${!error.equals('')}" class="alert alert-danger" th:text="${error}"></div>
         <div class="site-admin-dashboard-box">
             <div class="user-overview">
                 <h5>All users<a class="float-right" th:href="@{/registration}">Add new user</a></h5>
@@ -22,7 +23,6 @@
                         <td class="edit"><a th:href="@{'/users/edit/' + ${user.userId}}"><img th:src="@{/css/images/edit-icon.svg}" height="30" width="30"></a></td>
                         <td class="delete"><a th:href="@{'/users/delete/' + ${user.userId}}"><img th:src="@{/css/images/delete-icon.svg}" height="30" width="30"></a></td>
                     </tr>
-
                 </table>
                 <br>
             </div>

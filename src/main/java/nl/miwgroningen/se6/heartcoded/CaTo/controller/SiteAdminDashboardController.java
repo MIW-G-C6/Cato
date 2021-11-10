@@ -8,6 +8,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 
 /**
  * @author Erwin Wegter <ewegter@gmail.com>
@@ -28,7 +29,7 @@ public class SiteAdminDashboardController {
     }
 
     @GetMapping("/siteAdminDashboard")
-    protected String showSiteAdminDashboard(Model model) {
+    protected String showSiteAdminDashboard(@ModelAttribute("error") String error, Model model) {
         model.addAttribute("allUsers", userService.findAllRegisteredUsers());
         model.addAttribute("allClients", memberService.findAllClientsForSiteAdmin());
         model.addAttribute("allGroups", groupService.findAllGroups());
