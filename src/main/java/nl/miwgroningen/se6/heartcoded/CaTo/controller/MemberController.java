@@ -44,7 +44,7 @@ public class MemberController {
 
     @GetMapping("/{groupId}")
     protected String showGroupDashboard(@PathVariable("groupId") Integer groupId, Model model) {
-        if (!isGroupMember(groupId)) {
+        if (!isGroupMember(groupId) && isNotSiteAdmin()) {
             return "redirect:/403";
         }
         userService.addGroupToLastThreeGroups(groupId);
@@ -59,7 +59,7 @@ public class MemberController {
     @GetMapping("/options/{groupId}")
     protected String showGroupOptions(@PathVariable("groupId") Integer groupId,
                                       @ModelAttribute("error") String error, Model model) {
-        if (isNotGroupAdmin(groupId)) {
+        if (isNotGroupAdmin(groupId) && isNotSiteAdmin()) {
             return "redirect:/403";
         }
         model.addAttribute("thisGroup", groupService.getById(groupId));
@@ -69,7 +69,7 @@ public class MemberController {
 
     @GetMapping("/options/edit/{groupId}")
     protected String showGroupEdit(@PathVariable("groupId") Integer groupId, Model model) {
-        if (isNotGroupAdmin(groupId)) {
+        if (isNotGroupAdmin(groupId) && isNotSiteAdmin()) {
             return "redirect:/403";
         }
         model.addAttribute("thisGroup", groupService.getById(groupId));
@@ -78,7 +78,7 @@ public class MemberController {
 
     @PostMapping("/options/edit/{groupId}")
     protected String updateGroup(@ModelAttribute("group") GroupDTO group, BindingResult result) {
-        if (isNotGroupAdmin(group.getGroupId())) {
+        if (isNotGroupAdmin(group.getGroupId()) && isNotSiteAdmin()) {
             return "redirect:/403";
         }
         if (!result.hasErrors()) {
@@ -91,7 +91,7 @@ public class MemberController {
     protected String doAddUser(@PathVariable("groupId") Integer groupId, Model model, String email,
                                @ModelAttribute ("addMember") MemberDTO addMember,
                                BindingResult result) {
-        if (isNotGroupAdmin(groupId)) {
+        if (isNotGroupAdmin(groupId) && isNotSiteAdmin()) {
             return "redirect:/403";
         }
         if (email != null) {
@@ -116,7 +116,7 @@ public class MemberController {
                                            @PathVariable("groupId") Integer groupId, Model model) {
         boolean showGroupAdminWarning = false;
 
-        if (isNotGroupAdmin(groupId)) {
+        if (isNotGroupAdmin(groupId) && isNotSiteAdmin()) {
             return "redirect:/403";
         }
         Optional<MemberDTO> member = memberService.findByUserIdAndGroupId(userId, groupId);
@@ -137,7 +137,7 @@ public class MemberController {
     protected String updateGroupMember(@PathVariable("groupId") Integer groupId,
                                        @ModelAttribute("member") MemberDTO member,
                                        BindingResult result, Model model) {
-        if (isNotGroupAdmin(groupId)) {
+        if (isNotGroupAdmin(groupId) && isNotSiteAdmin()) {
             return "redirect:/403";
         }
         checkForErrorsUpdateGroupMember(groupId, member, result);
@@ -157,7 +157,7 @@ public class MemberController {
     protected String deleteUserFromGroup(@PathVariable("groupId") Integer groupId,
                                          @PathVariable("userId") Integer userId,
                                          RedirectAttributes redirectAttributes) {
-        if (isNotGroupAdmin(groupId)) {
+        if (isNotGroupAdmin(groupId) && isNotSiteAdmin()) {
             return "redirect:/403";
         }
         // checks first if the group member isn't the last group admin. If so, it can't be removed from the group.
@@ -218,6 +218,10 @@ public class MemberController {
     }
 
     private boolean isNotGroupAdmin(Integer groupId) {
-        return !memberService.userIsMemberOfGroup(groupId) || !memberService.userIsGroupAdmin(groupId);
+        return !memberService.userIsGroupAdmin(groupId);
+    }
+
+    private boolean isNotSiteAdmin() {
+        return !userService.currentUserIsSiteAdmin();
     }
 }

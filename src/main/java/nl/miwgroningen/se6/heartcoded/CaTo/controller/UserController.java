@@ -37,6 +37,9 @@ public class UserController {
 
     @GetMapping("/users/delete/{userId}")
     protected String deleteUser(@PathVariable("userId") Integer userId) {
+        if (!userService.currentUserIsSiteAdmin()) {
+            return "redirect:/403";
+        }
         userService.deleteUserById(userId);
         return "redirect:/siteAdminDashboard";
     }

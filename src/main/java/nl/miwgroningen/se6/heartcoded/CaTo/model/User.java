@@ -45,6 +45,8 @@ public class User implements UserDetails {
 
     private int groupThree;
 
+    private String userRole;
+
     public User(Integer userId, String name, String email) {
         this.userId = userId;
         this.name = name;
@@ -61,7 +63,7 @@ public class User implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> authorityList = new ArrayList<>();
-        authorityList.add(new SimpleGrantedAuthority("ROLE_USER"));
+        authorityList.add(new SimpleGrantedAuthority(userRole));
         return authorityList;
     }
 
@@ -158,5 +160,9 @@ public class User implements UserDetails {
 
     public void setMemberList(List<Member> memberList) {
         this.memberList = memberList;
+    }
+
+    public void setUserRole(String userRole) {
+        this.userRole = userRole;
     }
 }
