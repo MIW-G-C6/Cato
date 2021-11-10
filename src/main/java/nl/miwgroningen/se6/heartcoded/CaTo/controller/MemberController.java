@@ -51,8 +51,9 @@ public class MemberController {
         model.addAttribute("thisGroup", groupService.getById(groupId));
         model.addAttribute("taskListId", taskListService.getByGroupId(groupId).getTaskListId());
         model.addAttribute("taskList", taskService.getAllTasksByGroupId(groupId));
-        model.addAttribute("allMembersByGroupId", memberService.getAllByGroupId(groupId));
+        model.addAttribute("allCaregivers", memberService.findAllCaregiversByGroupId(groupId));
         model.addAttribute("thisUserIsAdmin", memberService.userIsGroupAdmin(groupId));
+        model.addAttribute("allClients", memberService. findAllClientsByGroupId(groupId));
         return "groupDashboard";
     }
 
