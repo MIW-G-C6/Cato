@@ -88,6 +88,26 @@ public class MemberService {
         return result;
     }
 
+    public List<MemberDTO> findAllClientsByGroupId(Integer groupId) {
+        List<MemberDTO> result = new ArrayList<>();
+        for (Member member : memberRepository.getAllByGroupGroupId(groupId)) {
+            if(member.getUserRole().equals("Client")) {
+                result.add(memberMapper.toDTO(member));
+            }
+        }
+        return result;
+    }
+
+    public List<MemberDTO> findAllCaregiversByGroupId(Integer groupId) {
+        List<MemberDTO> result = new ArrayList<>();
+        for (Member member : memberRepository.getAllByGroupGroupId(groupId)) {
+            if(member.getUserRole().equals("Caregiver")) {
+                result.add(memberMapper.toDTO(member));
+            }
+        }
+        return result;
+    }
+
     public List<MemberDTO> findAllClients() {
         List<MemberDTO> result = new ArrayList<>();
         for (Member member : memberRepository.findAll()) {
