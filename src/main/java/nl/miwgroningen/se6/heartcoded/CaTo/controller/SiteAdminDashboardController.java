@@ -29,7 +29,7 @@ public class SiteAdminDashboardController {
 
     @GetMapping("/siteAdminDashboard")
     protected String showSiteAdminDashboard(Model model) {
-        model.addAttribute("allUsers", userService.findAllUsers());
+        model.addAttribute("allUsers", userService.findAllRegisteredUsers());
         model.addAttribute("allClients", memberService.findAllClientsForSiteAdmin());
         model.addAttribute("allGroups", groupService.findAllGroups());
 

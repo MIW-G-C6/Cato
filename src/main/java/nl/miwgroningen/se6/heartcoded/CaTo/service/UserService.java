@@ -51,6 +51,12 @@ public class UserService {
         return userMapper.toDTO(userRepository.findAll());
     }
 
+    public List<UserDTO> findAllRegisteredUsers() {
+        List<User> allUsers = userRepository.findAll();
+        allUsers.removeIf(user -> user.getAuthorities().stream().anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_ADMIN")));
+        return userMapper.toDTO(allUsers);
+    }
+
     public UserDTO getById(Integer userId) {
         return userMapper.toDTO(userRepository.getById(userId));
     }
