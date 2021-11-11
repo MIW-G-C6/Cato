@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head th:replace="fragments/general :: baseHeader(~{:: title})" >
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+
+<div id="main-body">
+  <div th:replace="fragments/general :: navbar"></div>
+
+  <div class="container">
+
+    <div class="group-update-member">
+      <form th:action="@{/groups/options/{groupId}/updatemember/{userId}/changeAdminRole (groupId=${groupId}, userId=${userId})}" method="post" th:object="${member}">
+        <input type="hidden" th:field="${member.userName}" th:value="*{userName}">
+        <input type="hidden" th:field="${member.groupId}" th:value="*{groupId}">
+        <input type="hidden" th:field="${member.userId}" th:value="*{userId}">
+        <input type="hidden" th:field="${member.role}" th:value="*{role}">
+        <input type="hidden" th:field="${member.admin}" th:value="*{admin}">
+        <h1>Are you sure?</h1>
+        <br>
+        <p>Are you sure you don't want to be a group admin anymore?</p>
+        <p>You are not able to come back to the group options page</p>
+        <br>
+        <button type="submit" class="catoYesWarningButton" >Yes</button>
+        <a type="button" th:href="@{/groups/options/{groupId}/updatemember/{userId}(groupId=${groupId}, userId=${userId})}" class="catoButton">No</a>
+      </form>
+    </div>
+  </div>
+  </div>
+</div>
+
+<div th:replace="fragments/general :: footer"></div>
+<div th:replace="fragments/general :: bottomScripts"></div>
+</body>
+</html>

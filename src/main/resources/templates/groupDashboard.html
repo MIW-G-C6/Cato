@@ -18,57 +18,61 @@
     </div>
 
     <div class="container">
-        <h1>Group dashboard for <span th:text="${thisGroup.groupName}"></span></h1>
+        <h1><span th:text="${thisGroup.groupName}"></span></h1>
         <br>
         <div class="cato-group-dashboard-flex">
-            <div class="gd-groupmember">
-                <h5>Group members</h5>
-                <hr>
-                <table>
-                    <tr th:each="thisMember : ${allMembersByGroupId}" >
+            <div class="gd-groupmembers">
+                <div class="gd-clients">
+                    <h5 class="gd-header">Clients</h5>
+                    <table>
+                        <tr th:each="thisClient : ${allClients}">
+                            <td><span th:if="${thisClient.admin}"><i class="fa fa-key"></i></span>
+                                <span th:text="${thisClient.admin} ? '' : '&emsp;'"></span>
+                                <span><a th:href="@{/profilepage/{userId}(userId=${thisClient.userId})}" th:text="${thisClient.userName}"></a></span></td>
+                        </tr>
+                    </table>
+                </div>
+                <br>
+                <div class="gd-caregivers">
+                    <h5 class="gd-header">Caregivers</h5>
+                    <table>
+                        <tr th:each="thisCaregiver : ${allCaregivers}" >
 
-                        <td><span th:if="${thisMember.admin}"><i class="fa fa-key"></i></span>
-                            <span th:text="${thisMember.admin} ? '' : '&emsp;'"></span>
-                            <span><a th:href="@{/profilepage/{userId}(userId=${thisMember.userId})}" th:text="${thisMember.userName}"></a></span></td>
-
-                        </td><td th:text="${thisMember.role}"></td>
-                    </tr>
-                </table>
+                            <td><span th:if="${thisCaregiver.admin}"><i class="fa fa-key"></i></span>
+                                <span th:text="${thisCaregiver.admin} ? '' : '&emsp;'"></span>
+                                <span><a th:href="@{/profilepage/{userId}(userId=${thisCaregiver.userId})}" th:text="${thisCaregiver.userName}"></a></span></td>
+                        </tr>
+                    </table>
+                </div>
             </div>
             <div class="gd-tasklist">
-                <h5>Task List</h5>
-                <hr>
+                <h5 class="gd-header">Task List</h5>
                 <table>
                     <tr th:each="task : ${taskList}">
-                        <td><a th:href="@{/groups/{groupId}/taskLists/{taskListId}/{taskId} (groupId=${groupId}, taskListId=${taskListId}, taskId=${task.taskId})}" th:text="${task.description}" title="show task details"></a></td>
+                        <td id="task-description">
+                            <a th:href="@{/groups/{groupId}/taskLists/{taskListId}/{taskId} (groupId=${groupId}, taskListId=${taskListId}, taskId=${task.taskId})}" th:text="${task.description}" title="show task details"></a>
+                        </td>
                         <td>
                             <span th:text="${task.priority}"></span>
                             <span th:text="priority"></span>
                         </td>
-
-
                         <td title="assigned to">
                             <span th:if="${task.assignedUserName == ''}">
                                 <a th:href="@{/groups/{groupId}/task/{taskId}/assign(taskId=${task.taskId}, groupId=${groupId})}">Assign to me</a>
                             </span>
                             <span th:unless="${task.assignedUserName == ''}" th:text="${task.assignedUserName}"></span>
                         </td>
-
-
                         <td class="delete"><a th:href="@{'/task/delete/' + ${task.taskId}}"><img th:src="@{/css/images/checkmark-icon.svg}" height="20" width="20" title="Task completed"></a></td>
                     </tr>
                 </table>
             </div>
-
-
-            <div>
-                <ul class="cato-ul">
-                    <li><a class="float-right" th:href="@{/groups/{groupId}/taskLists/{taskListId}/new(groupId=${groupId}, taskListId=${taskListId})}">Add new task</a></li>
-                    <li><br></li>
-                    <li th:if="${thisUserIsAdmin}"><hr></li>
-                    <li th:if="${thisUserIsAdmin}"><a th:href="@{/groups/options/{groupId}(groupId=${thisGroup.groupId})}">group settings</a></li>
-                </ul>
-            </div>
+            <br>
+            <ul class="cato-ul">
+                <li><a class="float-right" th:href="@{/groups/{groupId}/taskLists/{taskListId}/new(groupId=${groupId}, taskListId=${taskListId})}">Add new task</a></li>
+                <li><br></li>
+                <li th:if="${thisUserIsAdmin}"><hr></li>
+                <li th:if="${thisUserIsAdmin}"><a th:href="@{/groups/options/{groupId}(groupId=${thisGroup.groupId})}">group settings</a></li>
+            </ul>
         </div>
     </div>
 </div>

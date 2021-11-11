@@ -88,6 +88,16 @@ public class MemberService {
         return result;
     }
 
+    public List<MemberDTO> findAllCaregiversByGroupId(Integer groupId) {
+        List<MemberDTO> result = new ArrayList<>();
+        for (Member member : memberRepository.getAllByGroupGroupId(groupId)) {
+            if(member.getUserRole().equals("Caregiver")) {
+                result.add(memberMapper.toDTO(member));
+            }
+        }
+        return result;
+    }
+
     public List<MemberDTO> findAllClients() {
         List<MemberDTO> result = new ArrayList<>();
         for (Member member : memberRepository.findAll()) {
@@ -107,7 +117,6 @@ public class MemberService {
             }
         }
         return result;
-
     }
 
     public List<MemberSiteAdminDTO> findAllClientsForSiteAdmin() {
@@ -141,11 +150,7 @@ public class MemberService {
 
     public boolean findOutIfMemberIsAdmin(MemberDTO memberDTO) {
         Optional<MemberDTO> memberOptional = findByUserIdAndGroupId(memberDTO.getUserId(), memberDTO.getGroupId());
-        if (memberOptional.isPresent()) {
-            Member member = memberMapper.toMember(memberOptional.get());
-            return member.isAdmin();
-        }
-        return false;
+        return memberOptional.map(MemberDTO::isAdmin).orElse(false);
     }
 
     public boolean isClientInOtherGroup(Integer userid, Integer groupId) {

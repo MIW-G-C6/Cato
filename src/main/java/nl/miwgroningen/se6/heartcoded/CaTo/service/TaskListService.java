@@ -1,23 +1,14 @@
 package nl.miwgroningen.se6.heartcoded.CaTo.service;
 
 import nl.miwgroningen.se6.heartcoded.CaTo.dto.GroupDTO;
-import nl.miwgroningen.se6.heartcoded.CaTo.dto.TaskDTO;
 import nl.miwgroningen.se6.heartcoded.CaTo.dto.TaskListDTO;
-import nl.miwgroningen.se6.heartcoded.CaTo.dto.UserDTO;
 import nl.miwgroningen.se6.heartcoded.CaTo.model.Group;
-import nl.miwgroningen.se6.heartcoded.CaTo.model.Member;
 import nl.miwgroningen.se6.heartcoded.CaTo.model.TaskList;
-import nl.miwgroningen.se6.heartcoded.CaTo.model.User;
 import nl.miwgroningen.se6.heartcoded.CaTo.repository.GroupRepository;
-import nl.miwgroningen.se6.heartcoded.CaTo.repository.MemberRepository;
 import nl.miwgroningen.se6.heartcoded.CaTo.repository.TaskListRepository;
-import nl.miwgroningen.se6.heartcoded.CaTo.repository.UserRepository;
 import nl.miwgroningen.se6.heartcoded.CaTo.service.mappers.TaskListMapper;
-import nl.miwgroningen.se6.heartcoded.CaTo.service.mappers.UserMapper;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 

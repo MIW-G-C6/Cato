@@ -7,6 +7,7 @@
     <title th:replace="${title}">Dit is de algemene titel</title>
     <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
     <link rel="stylesheet" type="text/css" th:href="@{/css/general.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/calendar.css}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <script>
@@ -57,7 +58,7 @@
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
         <br><br><br>
         <a class="nav-link" th:href="@{/}">Home</a>
-        <a class="nav-link" th:href="@{/groups}">Groups</a>
+        <a class="nav-link" sec:authorize="isAuthenticated()" th:href="@{/groups}">Groups</a>
         <a class="nav-link" sec:authorize="hasAuthority('ROLE_ADMIN')" th:href="@{/siteAdminDashboard}">Site admin dashboard</a>
         <a class="nav-link" th:href="@{/about}">About</a>
         <a class="nav-link" th:href="@{/contact}">Contact</a>

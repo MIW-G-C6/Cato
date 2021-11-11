@@ -1,6 +1,5 @@
 package nl.miwgroningen.se6.heartcoded.CaTo.configuration;
 
-import nl.miwgroningen.se6.heartcoded.CaTo.model.User;
 import nl.miwgroningen.se6.heartcoded.CaTo.service.CatoUserDetailService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

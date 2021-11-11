@@ -27,6 +27,17 @@ public class Task {
     @OneToOne
     private User assignedUser;
 
+    public Task(Integer taskId, String description, TaskList taskList, String priority, User assignedUser) {
+        this.taskId = taskId;
+        this.description = description;
+        this.taskList = taskList;
+        this.priority = priority;
+        this.assignedUser = assignedUser;
+    }
+
+    public Task() {
+    }
+
     public Integer getTaskId() {
         return taskId;
     }
