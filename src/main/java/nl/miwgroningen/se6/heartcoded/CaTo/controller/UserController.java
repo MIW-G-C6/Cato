@@ -59,20 +59,22 @@ public class UserController {
 
     @GetMapping("/users/edit/{userId}")
     protected String showEditUserForm(@PathVariable("userId") Integer userId, Model model) {
-        if (!userService.getCurrentUser().getUserId().equals(userId)) {
+        if (!userService.getCurrentUser().getUserId().equals(userId) && !userService.currentUserIsSiteAdmin()) {
             return "redirect:/403";
         }
         UserDTO user = userService.getById(userId);
+        model.addAttribute("userIsCurrentUser", userService.getCurrentUser().getUserId().equals(userId));
         model.addAttribute("user", user);
         return "editUserForm";
     }
 
     @GetMapping("/users/edit/password/{userId}")
     protected String showEditPasswordForm(@PathVariable("userId") Integer userId, Model model) {
-        if (!userService.getCurrentUser().getUserId().equals(userId)) {
+        if (!userService.getCurrentUser().getUserId().equals(userId) && !userService.currentUserIsSiteAdmin()) {
             return "redirect:/403";
         }
         UserEditPasswordDTO user = userService.getUserEditDTOById(userId);
+        model.addAttribute("userIsCurrentUser", userService.getCurrentUser().getUserId().equals(userId));
         model.addAttribute("user", user);
         return "editPasswordForm";
     }
@@ -95,10 +97,12 @@ public class UserController {
     protected String editUser(@ModelAttribute("user") UserDTO user,
                               BindingResult result) {
         UserDTO currentUser = userService.getCurrentUser();
-        if (!userService.getCurrentUser().getUserId().equals(user.getUserId())) {
+        if (!userService.getCurrentUser().getUserId().equals(user.getUserId())
+                && !userService.currentUserIsSiteAdmin()) {
             return "redirect:/403";
         }
-        if (userService.emailInUse(user.getEmail()) && !user.getEmail().equals(currentUser.getEmail())) {
+        if (userService.emailInUse(user.getEmail())
+                && !user.getEmail().equals(userService.getById(user.getUserId()).getEmail())) {
             ObjectError error = new ObjectError("globalError", "Email is already in use");
             result.addError(error);
         }
@@ -112,13 +116,17 @@ public class UserController {
     @PostMapping("users/edit/password/{userId}")
     protected String editUserPassword(@ModelAttribute("user") UserEditPasswordDTO user,
                               BindingResult result) {
-//        UserDTO currentUser = userService.getCurrentUser();
-        if (!userService.getCurrentUser().getUserId().equals(user.getUserId())) {
+
+        if (!userService.getCurrentUser().getUserId().equals(user.getUserId())
+                && !userService.currentUserIsSiteAdmin()) {
             return "redirect:/403";
         }
-        if (!userService.passwordMatches(user.getOldPassword(), user.getUserId())) {
-            ObjectError error = new ObjectError("globalError", "Incorrect password");
-            result.addError(error);
+
+        if (!userService.currentUserIsSiteAdmin()) {
+            if (!userService.passwordMatches(user.getOldPassword(), user.getUserId())) {
+                ObjectError error = new ObjectError("globalError", "Incorrect password");
+                result.addError(error);
+            }
         }
         if (!user.getNewPassword().equals(user.getConfirmNewPassword())) {
             ObjectError error = new ObjectError("globalError", "Passwords do not match");

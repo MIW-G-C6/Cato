@@ -27,6 +27,7 @@ public class ProfilePageController {
         UserDTO userDTO = userService.getById(userId);
         model.addAttribute("user", userDTO);
         model.addAttribute("userIsCurrentUser", userService.getCurrentUser().getUserId().equals(userId));
+        model.addAttribute("currentUserIsSiteAdmin", userService.currentUserIsSiteAdmin());
         return "profilePage";
     }
 }
