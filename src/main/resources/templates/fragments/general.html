@@ -59,6 +59,10 @@
         <br><br><br>
         <a class="nav-link" th:href="@{/}">Home</a>
         <a class="nav-link" sec:authorize="isAuthenticated()" th:href="@{/groups}">Groups</a>
+        <div class="nav-group" th:each="group : ${session.navbarGroups}">
+            <a th:href="@{/groups/{groupId}(groupId=${group.groupId})}"><div th:text="${group.groupName}"></div></a>
+        </div>
+
         <a class="nav-link" sec:authorize="hasAuthority('ROLE_ADMIN')" th:href="@{/siteAdminDashboard}">Site admin dashboard</a>
         <a class="nav-link" th:href="@{/about}">About</a>
         <a class="nav-link" th:href="@{/contact}">Contact</a>

@@ -238,6 +238,11 @@ a.nav-link{
     color: black;
 }
 
+.nav-group a {
+    font-size: 14px;
+    margin-left: 40px;
+}
+
 .sidenav .closebtn {
     display: flex;
     padding: 0;

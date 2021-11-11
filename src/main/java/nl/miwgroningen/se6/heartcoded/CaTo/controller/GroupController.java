@@ -8,11 +8,16 @@ import nl.miwgroningen.se6.heartcoded.CaTo.service.MemberService;
 import nl.miwgroningen.se6.heartcoded.CaTo.service.GroupService;
 import nl.miwgroningen.se6.heartcoded.CaTo.service.TaskListService;
 import nl.miwgroningen.se6.heartcoded.CaTo.service.UserService;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -38,9 +43,10 @@ public class GroupController {
     }
 
     @GetMapping("/groups")
-    protected String showGroupOverview(Model model) {
+    protected String showGroupOverview(HttpSession session, Model model) {
         userService.checkForGroupDeletion();
         Integer currentUser = userService.getCurrentUser().getUserId();
+        session.setAttribute("navbarGroups", memberService.getAllGroupsByUserId(currentUser));
         model.addAttribute("clientsGroupOne",
                 memberService.findAllClientsInGroup(userService.getGroupOne(currentUser)));
         model.addAttribute("clientsGroupTwo",
