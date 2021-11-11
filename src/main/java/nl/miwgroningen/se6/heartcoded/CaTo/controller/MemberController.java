@@ -53,7 +53,7 @@ public class MemberController {
         model.addAttribute("taskList", taskService.getAllTasksByGroupId(groupId));
         model.addAttribute("allCaregivers", memberService.findAllCaregiversByGroupId(groupId));
         model.addAttribute("thisUserIsAdmin", memberService.userIsGroupAdmin(groupId));
-        model.addAttribute("allClients", memberService. findAllClientsByGroupId(groupId));
+        model.addAttribute("allClients", memberService.findAllClientsInGroup(groupId));
         return "groupDashboard";
     }
 
