@@ -1,6 +1,6 @@
 package nl.miwgroningen.se6.heartcoded.CaTo.service;
 
-import nl.miwgroningen.se6.heartcoded.CaTo.dto.UserEditDTO;
+import nl.miwgroningen.se6.heartcoded.CaTo.dto.UserEditPasswordDTO;
 import nl.miwgroningen.se6.heartcoded.CaTo.model.User;
 import nl.miwgroningen.se6.heartcoded.CaTo.repository.GroupRepository;
 import nl.miwgroningen.se6.heartcoded.CaTo.repository.UserRepository;
@@ -27,7 +27,7 @@ class UserServiceTest {
     private GroupMapper groupMapper;
     private UserLoginMapper userLoginMapper;
     private UserRegistrationMapper userRegistrationMapper;
-    private UserEditMapper userEditMapper;
+    private UserEditPasswordMapper userEditPasswordMapper;
 
     private UserService userService;
 
@@ -41,10 +41,10 @@ class UserServiceTest {
         groupMapper = new GroupMapper();
         userLoginMapper = new UserLoginMapper();
         userRegistrationMapper = new UserRegistrationMapper();
-        userEditMapper = new UserEditMapper();
+        userEditPasswordMapper = new UserEditPasswordMapper();
 
         userService = new UserService(groupRepository, userRepository, userMapper, groupMapper,
-                userLoginMapper, userRegistrationMapper, userEditMapper, passwordEncoder);
+                userLoginMapper, userRegistrationMapper, userEditPasswordMapper, passwordEncoder);
     }
 
     @Test
@@ -53,7 +53,7 @@ class UserServiceTest {
 
         when(userRepository.getById(1)).thenReturn(user);
 
-        UserEditDTO result = userService.getUserEditDTOById(1);
+        UserEditPasswordDTO result = userService.getUserEditDTOById(1);
 
         assertNotNull(result);
         assertEquals(1, result.getUserId());
@@ -63,18 +63,18 @@ class UserServiceTest {
 
     @Test
     void editUserTest() {
-        UserEditDTO userEditDTO = new UserEditDTO();
-        userEditDTO.setUserId(1);
-        userEditDTO.setName("First");
-        userEditDTO.setEmail("test@test.com");
-        userEditDTO.setNewPassword("NewPassword");
+        UserEditPasswordDTO userEditPasswordDTO = new UserEditPasswordDTO();
+        userEditPasswordDTO.setUserId(1);
+        userEditPasswordDTO.setName("First");
+        userEditPasswordDTO.setEmail("test@test.com");
+        userEditPasswordDTO.setNewPassword("NewPassword");
 
         User user = new User(1, "First", "test@test.com");
 
         when(userRepository.getById(user.getUserId())).thenReturn(user);
         when(userRepository.save(user)).thenReturn(user);
 
-        userService.editUser(userEditDTO);
+        userService.editPassword(userEditPasswordDTO);
 
         Mockito.verify(userRepository, times(1)).save(any(User.class));
     }

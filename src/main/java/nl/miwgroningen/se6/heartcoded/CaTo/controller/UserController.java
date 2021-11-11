@@ -1,10 +1,9 @@
 package nl.miwgroningen.se6.heartcoded.CaTo.controller;
 
 import nl.miwgroningen.se6.heartcoded.CaTo.dto.UserDTO;
-import nl.miwgroningen.se6.heartcoded.CaTo.dto.UserEditDTO;
+import nl.miwgroningen.se6.heartcoded.CaTo.dto.UserEditPasswordDTO;
 import nl.miwgroningen.se6.heartcoded.CaTo.dto.UserRegistrationDTO;
 import nl.miwgroningen.se6.heartcoded.CaTo.service.MemberService;
-import nl.miwgroningen.se6.heartcoded.CaTo.service.TaskListService;
 import nl.miwgroningen.se6.heartcoded.CaTo.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -63,9 +62,19 @@ public class UserController {
         if (!userService.getCurrentUser().getUserId().equals(userId)) {
             return "redirect:/403";
         }
-        UserEditDTO user = userService.getUserEditDTOById(userId);
+        UserDTO user = userService.getById(userId);
         model.addAttribute("user", user);
         return "editUserForm";
+    }
+
+    @GetMapping("/users/edit/password/{userId}")
+    protected String showEditPasswordForm(@PathVariable("userId") Integer userId, Model model) {
+        if (!userService.getCurrentUser().getUserId().equals(userId)) {
+            return "redirect:/403";
+        }
+        UserEditPasswordDTO user = userService.getUserEditDTOById(userId);
+        model.addAttribute("user", user);
+        return "editPasswordForm";
     }
 
     @PostMapping("/registration")
@@ -83,16 +92,29 @@ public class UserController {
     }
 
     @PostMapping("users/edit/{userId}")
-    protected String editUser(@ModelAttribute("user") UserEditDTO user,
+    protected String editUser(@ModelAttribute("user") UserDTO user,
                               BindingResult result) {
         UserDTO currentUser = userService.getCurrentUser();
-        if (!userService.getCurrentUser().getUserId().equals(user.getUserId()) ||
-                userService.currentUserIsSiteAdmin()) {
+        if (!userService.getCurrentUser().getUserId().equals(user.getUserId())) {
             return "redirect:/403";
         }
         if (userService.emailInUse(user.getEmail()) && !user.getEmail().equals(currentUser.getEmail())) {
             ObjectError error = new ObjectError("globalError", "Email is already in use");
             result.addError(error);
+        }
+        if (result.hasErrors()) {
+            return "editUserForm";
+        }
+        userService.editUserInfo(user);
+        return "redirect:/profilepage/" + user.getUserId();
+    }
+
+    @PostMapping("users/edit/password/{userId}")
+    protected String editUserPassword(@ModelAttribute("user") UserEditPasswordDTO user,
+                              BindingResult result) {
+//        UserDTO currentUser = userService.getCurrentUser();
+        if (!userService.getCurrentUser().getUserId().equals(user.getUserId())) {
+            return "redirect:/403";
         }
         if (!userService.passwordMatches(user.getOldPassword(), user.getUserId())) {
             ObjectError error = new ObjectError("globalError", "Incorrect password");
@@ -103,9 +125,10 @@ public class UserController {
             result.addError(error);
         }
         if (result.hasErrors()) {
-            return "editUserForm";
+            return "editPasswordForm";
         }
-        userService.editUser(user);
+        userService.editPassword(user);
         return "redirect:/profilepage/" + user.getUserId();
     }
+
 }

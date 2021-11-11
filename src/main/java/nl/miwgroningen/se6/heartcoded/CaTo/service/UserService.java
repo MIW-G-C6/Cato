@@ -2,14 +2,13 @@ package nl.miwgroningen.se6.heartcoded.CaTo.service;
 
 import nl.miwgroningen.se6.heartcoded.CaTo.dto.GroupDTO;
 import nl.miwgroningen.se6.heartcoded.CaTo.dto.UserDTO;
-import nl.miwgroningen.se6.heartcoded.CaTo.dto.UserEditDTO;
+import nl.miwgroningen.se6.heartcoded.CaTo.dto.UserEditPasswordDTO;
 import nl.miwgroningen.se6.heartcoded.CaTo.dto.UserRegistrationDTO;
 import nl.miwgroningen.se6.heartcoded.CaTo.model.Group;
 import nl.miwgroningen.se6.heartcoded.CaTo.model.User;
 import nl.miwgroningen.se6.heartcoded.CaTo.repository.GroupRepository;
 import nl.miwgroningen.se6.heartcoded.CaTo.repository.UserRepository;
 import nl.miwgroningen.se6.heartcoded.CaTo.service.mappers.*;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -33,12 +32,12 @@ public class UserService {
     private final GroupMapper groupMapper;
     private final UserLoginMapper userLoginMapper;
     private final UserRegistrationMapper userRegistrationMapper;
-    private final UserEditMapper userEditMapper;
+    private final UserEditPasswordMapper userEditPasswordMapper;
     private PasswordEncoder passwordEncoder;
 
     public UserService(GroupRepository groupRepository, UserRepository userRepository, UserMapper userMapper,
                        GroupMapper groupMapper, UserLoginMapper userLoginMapper,
-                       UserRegistrationMapper userRegistrationMapper, UserEditMapper userEditMapper,
+                       UserRegistrationMapper userRegistrationMapper, UserEditPasswordMapper userEditPasswordMapper,
                        PasswordEncoder passwordEncoder) {
         this.groupRepository = groupRepository;
         this.userRepository = userRepository;
@@ -46,7 +45,7 @@ public class UserService {
         this.groupMapper = groupMapper;
         this.userLoginMapper = userLoginMapper;
         this.userRegistrationMapper = userRegistrationMapper;
-        this.userEditMapper = userEditMapper;
+        this.userEditPasswordMapper = userEditPasswordMapper;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -68,14 +67,21 @@ public class UserService {
         userRepository.deleteById(userId);
     }
 
-    public UserEditDTO getUserEditDTOById(Integer userId) {
-        return userEditMapper.toDTO(userRepository.getById(userId));
+    public UserEditPasswordDTO getUserEditDTOById(Integer userId) {
+        return userEditPasswordMapper.toDTO(userRepository.getById(userId));
     }
 
-    public void editUser(UserEditDTO user) {
-        User result = userEditMapper.toUser(user);
-        result.setMemberList(userRepository.getById(user.getUserId()).getMemberList());
-        result.setUserRole("ROLE_USER");
+    public void editUserInfo(UserDTO user) {
+        User result = userRepository.getById(user.getUserId());
+
+        result.setName(user.getName());
+        result.setEmail(user.getEmail());
+
+        userRepository.save(result);
+    }
+
+    public void editPassword(UserEditPasswordDTO user) {
+        User result = userRepository.getById(user.getUserId());
 
         result.setPassword(passwordEncoder.encode(user.getNewPassword()));
 

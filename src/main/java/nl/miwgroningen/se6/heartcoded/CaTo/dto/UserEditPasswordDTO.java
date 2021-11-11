@@ -4,10 +4,11 @@ package nl.miwgroningen.se6.heartcoded.CaTo.dto;
  * @author Remco Lantinga <remco_lantinga@hotmail.com>
  * DTO object of user that is used for editing passwords
  */
-public class UserEditDTO {
+public class UserEditPasswordDTO {
 
     private Integer userId;
     private String name;
+    //TODO remove email
     private String email;
     private String oldPassword;
     private String newPassword;
