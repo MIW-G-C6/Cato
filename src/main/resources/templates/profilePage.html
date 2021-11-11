@@ -41,7 +41,8 @@
             </div>
         </div>
         <br>
-        <a th:if="${userIsCurrentUser}" th:href="@{'/users/edit/' + ${user.userId}}"><button class="catoButton">Edit</button></a>
+        <a th:if="${userIsCurrentUser || currentUserIsSiteAdmin}" th:href="@{'/users/edit/' + ${user.userId}}"><button class="catoButton">Edit</button></a>
+        <a th:if="${userIsCurrentUser || currentUserIsSiteAdmin}" th:href="@{'/users/edit/password/' + ${user.userId}}"><button class="catoButton">Change password</button></a>
 
     </div>
 </div>

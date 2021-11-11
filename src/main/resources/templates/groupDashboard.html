@@ -49,7 +49,7 @@
                 <h5 class="gd-header">Task List</h5>
                 <table>
                     <tr th:each="task : ${taskList}">
-                        <td>
+                        <td id="task-description">
                             <a th:href="@{/groups/{groupId}/taskLists/{taskListId}/{taskId} (groupId=${groupId}, taskListId=${taskListId}, taskId=${task.taskId})}" th:text="${task.description}" title="show task details"></a>
                         </td>
                         <td>

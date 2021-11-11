@@ -84,9 +84,11 @@ class TaskListServiceTest {
 
     @Test
     void saveTaskListTest() {
-        TaskList testTaskList = new TaskList(new Group(1, "testName", new ArrayList<>()));
+        Group testGroup = new Group(1, "testName", new ArrayList<>());
+        TaskList testTaskList = new TaskList(testGroup);
         testTaskList.setTaskListId(1);
 
+        when(groupRepository.getById(1)).thenReturn(testGroup);
         when(taskListRepository.save(testTaskList)).thenReturn(testTaskList);
 
         taskListService.save(taskListMapper.toDTO(testTaskList));

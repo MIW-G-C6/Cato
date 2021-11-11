@@ -30,7 +30,6 @@ public class User implements UserDetails {
 
     private String name;
 
-    @Column(updatable = false)
     private String password;
 
     @Column(unique = true)
