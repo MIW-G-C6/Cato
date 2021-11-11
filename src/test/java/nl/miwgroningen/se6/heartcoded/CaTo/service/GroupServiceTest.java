@@ -2,6 +2,8 @@ package nl.miwgroningen.se6.heartcoded.CaTo.service;
 
 import nl.miwgroningen.se6.heartcoded.CaTo.dto.GroupDTO;
 import nl.miwgroningen.se6.heartcoded.CaTo.model.Group;
+import nl.miwgroningen.se6.heartcoded.CaTo.model.Member;
+import nl.miwgroningen.se6.heartcoded.CaTo.model.User;
 import nl.miwgroningen.se6.heartcoded.CaTo.repository.GroupRepository;
 import nl.miwgroningen.se6.heartcoded.CaTo.repository.MemberRepository;
 import nl.miwgroningen.se6.heartcoded.CaTo.service.mappers.GroupMapper;
@@ -62,7 +64,18 @@ class GroupServiceTest {
 
     @Test
     void saveGroupTest() {
+        List<Member> memberList = new ArrayList<>();
+
         Group testGroup = new Group(1, "testGroup", new ArrayList<>());
+
+        memberList.add(new Member(testGroup, new User(), "Caregiver", true));
+        memberList.add(new Member(testGroup, new User(), "Client", false));
+        memberList.add(new Member(testGroup, new User(), "Caregiver", false));
+        memberList.add(new Member(testGroup, new User(), "Client", true));
+
+        testGroup.setMemberList(memberList);
+
+        when(memberRepository.getAllByGroupGroupId(1)).thenReturn(memberList);
         when(groupRepository.save(testGroup)).thenReturn(testGroup);
 
         groupService.saveGroup(groupMapper.toDTO(testGroup));
