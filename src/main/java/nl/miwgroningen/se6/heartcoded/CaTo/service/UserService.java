@@ -53,7 +53,7 @@ public class UserService {
 
     public List<UserDTO> findAllRegisteredUsers() {
         List<User> allUsers = userRepository.findAll();
-        allUsers.removeIf(user -> user.getAuthorities().stream().anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_ADMIN")));
+        removeSiteAdminFromList(allUsers);
         return userMapper.toDTO(allUsers);
     }
 
@@ -211,5 +211,12 @@ public class UserService {
         return userRepository.getById(userId).getGroupThree();
     }
 
-
+    public List<UserDTO> findWithNameContains(String keyword) {
+        List<User> userList = userRepository.findByNameContains(keyword);
+        removeSiteAdminFromList(userList);
+        return userMapper.toDTO(userList);
+    }
+    private void removeSiteAdminFromList(List<User> userList) {
+        userList.removeIf(user -> user.getAuthorities().stream().anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_ADMIN")));
+    }
 }

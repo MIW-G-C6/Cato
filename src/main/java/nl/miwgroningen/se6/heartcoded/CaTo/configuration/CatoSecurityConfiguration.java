@@ -45,7 +45,7 @@ public class CatoSecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/siteAdminDashboard").hasAuthority("ROLE_ADMIN")
                 .antMatchers("/users/delete/*").hasAuthority("ROLE_ADMIN")
-                .antMatchers("/css/**", "/webjars/**").permitAll()
+                .antMatchers("/css/**", "/webjars/**", "/javascript/**").permitAll()
                 .antMatchers("/","/registration").permitAll()
                 .antMatchers("/about", "/contact").permitAll()
                 .anyRequest().authenticated().and()
