@@ -64,7 +64,7 @@ class MemberMapperTest {
     }
 
     @Test
-    void ListToDTO() {
+    void listToDTO() {
         List<Member> testList = new ArrayList<>();
         testList.add(member1);
         testList.add(member2);
@@ -72,14 +72,14 @@ class MemberMapperTest {
     }
 
     @Test
-    void OptionalEmptyToDTO() {
+    void optionalEmptyToDTO() {
         Optional<Member> optionalMember = Optional.empty();
 
         assertTrue(memberMapper.toDTO(optionalMember).isEmpty());
     }
 
     @Test
-    void OptionalPresentToDTO() {
+    void optionalPresentToDTO() {
         Optional<Member> optionalMember = Optional.of(member1);
 
         assertTrue(memberMapper.toDTO(optionalMember).isPresent());

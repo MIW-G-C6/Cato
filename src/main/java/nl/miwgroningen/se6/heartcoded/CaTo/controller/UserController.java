@@ -1,6 +1,7 @@
 package nl.miwgroningen.se6.heartcoded.CaTo.controller;
 
 import nl.miwgroningen.se6.heartcoded.CaTo.dto.UserDTO;
+import nl.miwgroningen.se6.heartcoded.CaTo.dto.UserEditDTO;
 import nl.miwgroningen.se6.heartcoded.CaTo.dto.UserRegistrationDTO;
 import nl.miwgroningen.se6.heartcoded.CaTo.service.MemberService;
 import nl.miwgroningen.se6.heartcoded.CaTo.service.TaskListService;
@@ -62,7 +63,7 @@ public class UserController {
         if (!userService.getCurrentUser().getUserId().equals(userId)) {
             return "redirect:/403";
         }
-        UserDTO user = userService.getById(userId);
+        UserEditDTO user = userService.getUserEditDTOById(userId);
         model.addAttribute("user", user);
         return "editUserForm";
     }
@@ -82,7 +83,7 @@ public class UserController {
     }
 
     @PostMapping("users/edit/{userId}")
-    protected String editUser(@ModelAttribute("user") UserDTO user,
+    protected String editUser(@ModelAttribute("user") UserEditDTO user,
                               BindingResult result) {
         UserDTO currentUser = userService.getCurrentUser();
         if (!userService.getCurrentUser().getUserId().equals(user.getUserId()) ||
@@ -91,6 +92,14 @@ public class UserController {
         }
         if (userService.emailInUse(user.getEmail()) && !user.getEmail().equals(currentUser.getEmail())) {
             ObjectError error = new ObjectError("globalError", "Email is already in use");
+            result.addError(error);
+        }
+        if (!userService.passwordMatches(user.getOldPassword(), user.getUserId())) {
+            ObjectError error = new ObjectError("globalError", "Incorrect password");
+            result.addError(error);
+        }
+        if (!user.getNewPassword().equals(user.getConfirmNewPassword())) {
+            ObjectError error = new ObjectError("globalError", "Passwords do not match");
             result.addError(error);
         }
         if (result.hasErrors()) {
