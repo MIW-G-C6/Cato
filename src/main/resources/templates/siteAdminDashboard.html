@@ -5,6 +5,7 @@
     <title>Site admin dashboard</title>
 </head>
 <body>
+
 <div id="main-body">
     <div th:replace="fragments/general :: navbar"></div>
     <div th:replace="fragments/general :: previousButton"></div>
@@ -16,13 +17,12 @@
             <div class="user-overview">
                 <h5>All users<a class="float-right" th:href="@{/registration}">Add new user</a></h5>
                 <hr>
-                <table>
-                    <tr th:each="user : ${allUsers}">
-                        <td><a th:href="@{/profilepage/{userId}(userId=${user.userId})}" th:text="${user.name}"></a></td>
-                        <td th:text="${user.email}"></td>
-                        <td class="edit"><a th:href="@{'/users/edit/' + ${user.userId}}"><img th:src="@{/css/images/edit-icon.svg}" height="30" width="30"></a></td>
-                        <td class="delete"><a th:href="@{'/users/delete/' + ${user.userId}}"><img th:src="@{/css/images/delete-icon.svg}" height="30" width="30"></a></td>
-                    </tr>
+                <form id="search-form">
+                    <input class="cato-form cato-text-field" oninput="fire_ajax_submit()" id="keywordsBox" type="text" placeholder="Search for users">
+                </form>
+                <table id="resultTable">
+                    <tbody>
+                    </tbody>
                 </table>
                 <br>
             </div>
@@ -58,5 +58,6 @@
 
 <div th:replace="fragments/general :: footer"></div>
 <div th:replace="fragments/general :: bottomScripts"></div>
+<script type="text/javascript" th:src="@{/javascript/userSearchAjax.js}"></script>
 </body>
 </html>
