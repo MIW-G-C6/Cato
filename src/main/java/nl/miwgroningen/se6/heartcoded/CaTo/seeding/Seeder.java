@@ -96,7 +96,7 @@ public class Seeder {
         userService.saveNewUser(new UserRegistrationDTO("Riley-Jay Handley", "s;~A7jLdUX9?p^/&%Fzf_Hn@[YD}C8", "s;~A7jLdUX9?p^/&%Fzf_Hn@[YD}C8", "kspiteri@hotmail.com"));
         userService.saveNewUser(new UserRegistrationDTO("Braxton Matthews", "xG&[Nm@/_JqDTzc$9d{hb#}7M,;^]+", "xG&[Nm@/_JqDTzc$9d{hb#}7M,;^]+", "horrocks@comcast.net"));
         userService.saveNewUser(new UserRegistrationDTO("Colleen Castro", "LG-j3^m9qRuc;{X=tUw?/ayMk),C~5", "LG-j3^m9qRuc;{X=tUw?/ayMk),C~5", "mjewell@msn.com"));
-        userService.saveNewUser(new UserRegistrationDTO("Aine Drake", "uTp@xjzQkEcnVsAUv>(;5aMeG.J]+_", "uTp@xjzQkEcnVsAUv>(;5aMeG.J]+_", "killmenow@aol.com"));
+        userService.saveNewUser(new UserRegistrationDTO("Aine Drake", "uTp@xjzQkEcnVsAUv>(;5aMeG.J]+_", "uTp@xjzQkEcnVsAUv>(;5aMeG.J]+_", "ilovelife55@aol.com"));
         userService.saveNewUser(new UserRegistrationDTO("India Zhang", "H!hdk5r~(A=+GuS<7FbnV#Yc{sPZ2>", "H!hdk5r~(A=+GuS<7FbnV#Yc{sPZ2>", "metzzo@me.com"));
         userService.saveNewUser(new UserRegistrationDTO("Avni Holman", "LJ}s;gKGX-)S2@]#m?z3nCB!7b+jqD", "LJ}s;gKGX-)S2@]#m?z3nCB!7b+jqD", "wayward@att.net"));
         userService.saveNewUser(new UserRegistrationDTO("Fionnuala Burt", "fFEendJ,6XQc}xNU>9;k#m!wY~7%@R", "fFEendJ,6XQc}xNU>9;k#m!wY~7%@R", "geoffr@sbcglobal.net"));
