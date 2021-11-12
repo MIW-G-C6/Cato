@@ -61,16 +61,16 @@ public class Seeder {
     }
 
     private void seedUser() {
-        userService.saveNewUser(new UserRegistrationDTO("Piet", "a", "a", "Piet@example.com"));
-        userService.saveNewUser(new UserRegistrationDTO("Henk", "a", "a", "Henk@example.com"));
-        userService.saveNewUser(new UserRegistrationDTO("Klaas", "a", "a", "Klaas@example.com"));
-        userService.saveNewUser(new UserRegistrationDTO("Willem", "a", "a", "Willem@example.com"));
-        userService.saveNewUser(new UserRegistrationDTO("Noah", "a", "a", "Noah@example.com"));
-        userService.saveNewUser(new UserRegistrationDTO("Bram", "a", "a", "Bram@example.com"));
-        userService.saveNewUser(new UserRegistrationDTO("Aart", "a", "a", "Aart@example.com"));
-        userService.saveNewUser(new UserRegistrationDTO("Steven", "a", "a", "Steven@example.com"));
-        userService.saveNewUser(new UserRegistrationDTO("Niels", "a", "a", "Niels@example.com"));
-        userService.saveNewUser(new UserRegistrationDTO("Wouter", "a", "a", "Wouter@example.com"));
+        userService.saveNewUser(new UserRegistrationDTO("Piet Bakker", "a", "a", "piet@example.com"));
+        userService.saveNewUser(new UserRegistrationDTO("Henk Janssen", "a", "a", "henk@example.com"));
+        userService.saveNewUser(new UserRegistrationDTO("Klaas Smit", "a", "a", "klaas@example.com"));
+        userService.saveNewUser(new UserRegistrationDTO("Willem Visser", "a", "a", "willem@example.com"));
+        userService.saveNewUser(new UserRegistrationDTO("Noah van den Berg", "a", "a", "noah@example.com"));
+        userService.saveNewUser(new UserRegistrationDTO("Bram Snor", "a", "a", "bram@example.com"));
+        userService.saveNewUser(new UserRegistrationDTO("Aart Lutjes", "a", "a", "aart@example.com"));
+        userService.saveNewUser(new UserRegistrationDTO("Steven van der Gracht", "a", "a", "steven@example.com"));
+        userService.saveNewUser(new UserRegistrationDTO("Niels Wolkers", "a", "a", "niels@example.com"));
+        userService.saveNewUser(new UserRegistrationDTO("Wouter Geestra", "a", "a", "wouter@example.com"));
 
         userService.saveNewUser(new UserRegistrationDTO("Harry Carroll", "h3;#DvVwr[", "h3;#DvVwr[", "keijser@comcast.net"));
         userService.saveNewUser(new UserRegistrationDTO("Jaydn Wiggins", "H/V86P7s=v", "H/V86P7s=v", "eimear@outlook.com"));
