@@ -10,6 +10,7 @@ import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpSession;
 import java.util.Optional;
 
 /**
@@ -43,11 +44,13 @@ public class MemberController {
     }
 
     @GetMapping("/{groupId}")
-    protected String showGroupDashboard(@PathVariable("groupId") Integer groupId, Model model) {
+    protected String showGroupDashboard(@PathVariable("groupId") Integer groupId, Model model, HttpSession session) {
         if (!isGroupMember(groupId) && isNotSiteAdmin()) {
             return "redirect:/403";
         }
         userService.addGroupToLastThreeGroups(groupId);
+        Integer currentUser = userService.getCurrentUser().getUserId();
+        session.setAttribute("navbarGroups", memberService.getAllGroupsByUserId(currentUser));
         model.addAttribute("thisGroup", groupService.getById(groupId));
         model.addAttribute("taskListId", taskListService.getByGroupId(groupId).getTaskListId());
         model.addAttribute("taskList", taskService.getAllTasksByGroupId(groupId));
