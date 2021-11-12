@@ -61,11 +61,11 @@ public class Seeder {
     }
 
     private void seedUser() {
-        userService.saveNewUser(new UserRegistrationDTO("Piet", "a", "a", "piet@example.com"));
+        userService.saveNewUser(new UserRegistrationDTO("Piet", "a", "a", "Piet@example.com"));
         userService.saveNewUser(new UserRegistrationDTO("Henk", "a", "a", "Henk@example.com"));
         userService.saveNewUser(new UserRegistrationDTO("Klaas", "a", "a", "Klaas@example.com"));
         userService.saveNewUser(new UserRegistrationDTO("Willem", "a", "a", "Willem@example.com"));
-        userService.saveNewUser(new UserRegistrationDTO("Noah", "a", "a", "noah@example.com"));
+        userService.saveNewUser(new UserRegistrationDTO("Noah", "a", "a", "Noah@example.com"));
         userService.saveNewUser(new UserRegistrationDTO("Bram", "a", "a", "Bram@example.com"));
         userService.saveNewUser(new UserRegistrationDTO("Aart", "a", "a", "Aart@example.com"));
         userService.saveNewUser(new UserRegistrationDTO("Steven", "a", "a", "Steven@example.com"));
