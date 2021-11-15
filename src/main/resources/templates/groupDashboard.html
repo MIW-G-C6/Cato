@@ -22,8 +22,8 @@
         <br>
         <div class="cato-group-dashboard-flex">
             <div class="gd-groupmembers">
-                <div class="gd-clients">
-                    <h5 class="gd-header">Clients</h5>
+                <div class="general-table-layout">
+                    <h5 class="table-header">Clients</h5>
                     <table>
                         <tr th:each="thisClient : ${allClients}">
                             <td><span th:if="${thisClient.admin}"><i class="fa fa-key"></i></span>
@@ -33,8 +33,8 @@
                     </table>
                 </div>
                 <br>
-                <div class="gd-caregivers">
-                    <h5 class="gd-header">Caregivers</h5>
+                <div class="general-table-layout">
+                    <h5 class="table-header">Caregivers</h5>
                     <table>
                         <tr th:each="thisCaregiver : ${allCaregivers}" >
 
@@ -45,8 +45,8 @@
                     </table>
                 </div>
             </div>
-            <div class="gd-tasklist">
-                <h5 class="gd-header">Task List</h5>
+            <div class="general-table-layout" id="gd-tasklist">
+                <h5 class="table-header">Task List</h5>
                 <table>
                     <tr th:each="task : ${taskList}">
                         <td id="task-description">
