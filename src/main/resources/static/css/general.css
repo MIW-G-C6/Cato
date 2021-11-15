@@ -300,6 +300,23 @@ a.nav-link{
     cursor: pointer;
 }
 
+.catoButton-logIn{
+    text-decoration: none;
+    display: inline-block;
+    padding: 0px 16px;
+    color: black;
+    background-color: transparent;
+    border: 1px solid black;
+    border-radius: 4px;
+}
+
+.catoButton-logIn:hover {
+    text-decoration: none;
+    background-color: #cafad9;
+    color: black;
+    cursor: pointer;
+}
+
 .catoYesWarningButton {
     text-decoration: none;
     display: inline-block;
@@ -531,7 +548,6 @@ button {
     display: block;
     margin: auto;
 }
-
 
 input[type=email], input[type=password], input[type=text] {
     width: 100%;
