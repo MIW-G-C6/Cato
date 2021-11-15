@@ -84,7 +84,7 @@ class CircleServiceTest {
     }
 
     @Test
-    void getGroupByIdTest() {
+    void getCircleByIdTest() {
         Circle testCircle = new Circle(1, "testCircle", new ArrayList<>());
 
         when(circleRepository.getById(1)).thenReturn(testCircle);
