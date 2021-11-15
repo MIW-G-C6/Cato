@@ -711,6 +711,11 @@ input[type=email], input[type=password], input[type=text] {
     color: black;
 }
 
+#search-form {
+    width: 90%;
+    margin: auto;
+}
+
 #keywordsBox {
     background-color: #fafafa;
 }
