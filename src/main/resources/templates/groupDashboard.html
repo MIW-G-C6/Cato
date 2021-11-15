@@ -25,6 +25,9 @@
                 <div class="general-table-layout">
                     <h5 class="table-header">Clients</h5>
                     <table>
+                        <tr th:if="${allClients.isEmpty()}">
+                        <td>There are no clients yet</td>
+                        </tr>
                         <tr th:each="thisClient : ${allClients}">
                             <td><span th:if="${thisClient.admin}"><i class="fa fa-key"></i></span>
                                 <span th:text="${thisClient.admin} ? '' : '&emsp;'"></span>
@@ -48,6 +51,9 @@
             <div class="general-table-layout" id="gd-tasklist">
                 <h5 class="table-header">Task List</h5>
                 <table>
+                    <tr th:if="${taskList.isEmpty()}">
+                    <td>There are no tasks yet. You can add a new task</td>
+                    </tr>
                     <tr th:each="task : ${taskList}">
                         <td id="task-description">
                             <a th:href="@{/groups/{groupId}/taskLists/{taskListId}/{taskId} (groupId=${groupId}, taskListId=${taskListId}, taskId=${task.taskId})}" th:text="${task.description}" title="show task details"></a>
