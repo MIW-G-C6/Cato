@@ -1,6 +1,6 @@
 package nl.miwgroningen.se6.heartcoded.CaTo.controller;
 
-import nl.miwgroningen.se6.heartcoded.CaTo.dto.GroupDTO;
+import nl.miwgroningen.se6.heartcoded.CaTo.dto.CircleDTO;
 import nl.miwgroningen.se6.heartcoded.CaTo.dto.MemberDTO;
 import nl.miwgroningen.se6.heartcoded.CaTo.service.*;
 import org.springframework.stereotype.Controller;
@@ -16,240 +16,240 @@ import java.util.Optional;
 /**
  * @author Paul Romkes <p.r.romkes@gmail.com
  *
- * Controls the groupDashboard page
+ * Controls the circleDashboard page
  */
 
 @Controller
-@RequestMapping("/groups")
+@RequestMapping("/circles")
 public class MemberController {
 
-    private static final String ONLY_GROUP_ADMIN_ERROR = "Cannot remove group admin if this is the only group admin";
+    private static final String ONLY_CIRCLE_ADMIN_ERROR = "Cannot remove circle admin if this is the only circle admin";
     private static final String NO_ACCOUNT_WITH_EMAIL_ERROR = "No existing account found with this email address";
     private static final String SAME_USER_TWICE_ERROR = "Not able to add the same user twice";
-    private static final String ALREADY_CLIENT_ERROR = "User is already a client in another group";
+    private static final String ALREADY_CLIENT_ERROR = "User is already a client in another circle";
 
-    private GroupService groupService;
+    private CircleService circleService;
     private MemberService memberService;
     private UserService userService;
     private TaskListService taskListService;
     private TaskService taskService;
 
-    public MemberController(GroupService groupService, MemberService memberService,
+    public MemberController(CircleService circleService, MemberService memberService,
                             UserService userService, TaskListService taskListService, TaskService taskService) {
-        this.groupService = groupService;
+        this.circleService = circleService;
         this.memberService = memberService;
         this.userService = userService;
         this.taskListService = taskListService;
         this.taskService = taskService;
     }
 
-    @GetMapping("/{groupId}")
-    protected String showGroupDashboard(@PathVariable("groupId") Integer groupId, Model model, HttpSession session) {
-        if (!isGroupMember(groupId) && isNotSiteAdmin()) {
+    @GetMapping("/{circleId}")
+    protected String showCircleDashboard(@PathVariable("circleId") Integer circleId, Model model, HttpSession session) {
+        if (!isCircleMember(circleId) && isNotSiteAdmin()) {
             return "redirect:/403";
         }
-        userService.addGroupToLastThreeGroups(groupId);
+        userService.addCircleToLastThreeCircles(circleId);
         Integer currentUser = userService.getCurrentUser().getUserId();
-        session.setAttribute("navbarGroups", memberService.getAllGroupsByUserId(currentUser));
-        model.addAttribute("thisGroup", groupService.getById(groupId));
-        model.addAttribute("taskListId", taskListService.getByGroupId(groupId).getTaskListId());
-        model.addAttribute("taskList", taskService.getAllTasksByGroupId(groupId));
-        model.addAttribute("allCaregivers", memberService.findAllCaregiversByGroupId(groupId));
-        model.addAttribute("thisUserIsAdmin", memberService.userIsGroupAdmin(groupId));
-        model.addAttribute("allClients", memberService.findAllClientsInGroup(groupId));
-        return "groupDashboard";
+        session.setAttribute("navbarCircles", memberService.getAllCirclesByUserId(currentUser));
+        model.addAttribute("thisCircle", circleService.getById(circleId));
+        model.addAttribute("taskListId", taskListService.getByCircleId(circleId).getTaskListId());
+        model.addAttribute("taskList", taskService.getAllTasksByCircleId(circleId));
+        model.addAttribute("allCaregivers", memberService.findAllCaregiversByCircleId(circleId));
+        model.addAttribute("thisUserIsAdmin", memberService.userIsCircleAdmin(circleId));
+        model.addAttribute("allClients", memberService.findAllClientsInCircle(circleId));
+        return "circleDashboard";
     }
 
-    @GetMapping("/options/{groupId}")
-    protected String showGroupOptions(@PathVariable("groupId") Integer groupId,
+    @GetMapping("/options/{circleId}")
+    protected String showCircleOptions(@PathVariable("circleId") Integer circleId,
                                       @ModelAttribute("error") String error, Model model) {
-        if (isNotGroupAdmin(groupId) && isNotSiteAdmin()) {
+        if (isNotCircleAdmin(circleId) && isNotSiteAdmin()) {
             return "redirect:/403";
         }
-        model.addAttribute("thisGroup", groupService.getById(groupId));
-        model.addAttribute("allMembersByGroupId", memberService.getAllByGroupId(groupId));
-        return "groupOptions";
+        model.addAttribute("thisCircle", circleService.getById(circleId));
+        model.addAttribute("allMembersByCircleId", memberService.getAllByCircleId(circleId));
+        return "circleOptions";
     }
 
-    @GetMapping("/options/edit/{groupId}")
-    protected String showGroupEdit(@PathVariable("groupId") Integer groupId, Model model) {
-        if (isNotGroupAdmin(groupId) && isNotSiteAdmin()) {
+    @GetMapping("/options/edit/{circleId}")
+    protected String showCircleEdit(@PathVariable("circleId") Integer circleId, Model model) {
+        if (isNotCircleAdmin(circleId) && isNotSiteAdmin()) {
             return "redirect:/403";
         }
-        model.addAttribute("thisGroup", groupService.getById(groupId));
-        return "groupEdit";
+        model.addAttribute("thisCircle", circleService.getById(circleId));
+        return "circleEdit";
     }
 
-    @PostMapping("/options/edit/{groupId}")
-    protected String updateGroup(@ModelAttribute("group") GroupDTO group, BindingResult result) {
-        if (isNotGroupAdmin(group.getGroupId()) && isNotSiteAdmin()) {
+    @PostMapping("/options/edit/{circleId}")
+    protected String updateCircle(@ModelAttribute("circle") CircleDTO circle, BindingResult result) {
+        if (isNotCircleAdmin(circle.getCircleId()) && isNotSiteAdmin()) {
             return "redirect:/403";
         }
         if (!result.hasErrors()) {
-            groupService.saveGroup(group);
+            circleService.saveCircle(circle);
         }
-        return "redirect:/groups/options/{groupId}";
+        return "redirect:/circles/options/{circleId}";
     }
 
-    @RequestMapping(value = "/options/{groupId}/addmember")
-    protected String doAddUser(@PathVariable("groupId") Integer groupId, Model model, String email,
+    @RequestMapping(value = "/options/{circleId}/addmember")
+    protected String doAddUser(@PathVariable("circleId") Integer circleId, Model model, String email,
                                @ModelAttribute ("addMember") MemberDTO addMember,
                                BindingResult result) {
-        if (isNotGroupAdmin(groupId) && isNotSiteAdmin()) {
+        if (isNotCircleAdmin(circleId) && isNotSiteAdmin()) {
             return "redirect:/403";
         }
         if (email != null) {
             Optional<Integer> userId = userService.findUserIdByEmail(email);
 
-            checkIfAccountExists(groupId, addMember, result, userId);
+            checkIfAccountExists(circleId, addMember, result, userId);
 
             if (!result.hasErrors()) {
                 memberService.saveMember(addMember);
-                return "redirect:/groups/options/{groupId}";
+                return "redirect:/circles/options/{circleId}";
             }
         }
 
-        model.addAttribute("groupUserRole", new MemberDTO());
-        model.addAttribute("thisGroup", groupService.getById(groupId));
-        model.addAttribute("member", memberService.getAllByGroupId(groupId));
-        return "groupAddMember";
+        model.addAttribute("circleUserRole", new MemberDTO());
+        model.addAttribute("thisCircle", circleService.getById(circleId));
+        model.addAttribute("member", memberService.getAllByCircleId(circleId));
+        return "circleAddMember";
     }
 
-    @GetMapping("/options/{groupId}/updatemember/{userId}")
-    protected String showGroupUpdateMember(@PathVariable("userId") Integer userId,
-                                           @PathVariable("groupId") Integer groupId, Model model) {
+    @GetMapping("/options/{circleId}/updatemember/{userId}")
+    protected String showCircleUpdateMember(@PathVariable("userId") Integer userId,
+                                            @PathVariable("circleId") Integer circleId, Model model) {
 
-        if (isNotGroupAdmin(groupId) && isNotSiteAdmin()) {
+        if (isNotCircleAdmin(circleId) && isNotSiteAdmin()) {
             return "redirect:/403";
         }
-        Optional<MemberDTO> member = memberService.findByUserIdAndGroupId(userId, groupId);
+        Optional<MemberDTO> member = memberService.findByUserIdAndCircleId(userId, circleId);
         if (member.isEmpty()) {
-            return "redirect:/groups/options/{groupId}";
+            return "redirect:/circles/options/{circleId}";
         }
-        model.addAttribute("group", groupService.getById(groupId));
+        model.addAttribute("circle", circleService.getById(circleId));
         model.addAttribute("member", member.get());
-        return "groupUpdateMember";
+        return "circleUpdateMember";
     }
 
-    @PostMapping("/options/{groupId}/updatemember/{userId}")
-    protected String updateGroupMember(@PathVariable("groupId") Integer groupId,
-                                       @ModelAttribute("member") MemberDTO member,
-                                       BindingResult result, Model model, RedirectAttributes redirectAttributes) {
-        if (isNotGroupAdmin(groupId) && isNotSiteAdmin()) {
+    @PostMapping("/options/{circleId}/updatemember/{userId}")
+    protected String updateCircleMember(@PathVariable("circleId") Integer circleId,
+                                        @ModelAttribute("member") MemberDTO member,
+                                        BindingResult result, Model model, RedirectAttributes redirectAttributes) {
+        if (isNotCircleAdmin(circleId) && isNotSiteAdmin()) {
             return "redirect:/403";
         }
-        checkForErrorsUpdateGroupMember(groupId, member, result);
+        checkForErrorsUpdateCircleMember(circleId, member, result);
         if (result.hasErrors()) {
-            model.addAttribute("group", groupService.getById(groupId));
+            model.addAttribute("circle", circleService.getById(circleId));
             model.addAttribute("member", member);
-            return "groupUpdateMember";
+            return "circleUpdateMember";
         }
-        if (groupAdminRemoveOwnRights(member)) {
+        if (circleAdminRemoveOwnRights(member)) {
             redirectAttributes.addFlashAttribute("member", member);
-            return "redirect:/groups/options/{groupId}/updatemember/{userId}/changeAdminRole";
+            return "redirect:/circles/options/{circleId}/updatemember/{userId}/changeAdminRole";
         }
         memberService.saveMember(member);
         if (!member.isAdmin() && member.getUserId().equals(userService.getCurrentUser().getUserId())) {
-            return "redirect:/groups/{groupId}";
+            return "redirect:/circles/{circleId}";
         }
-        return "redirect:/groups/options/{groupId}";
+        return "redirect:/circles/options/{circleId}";
     }
 
-    @GetMapping("/options/{groupId}/updatemember/{userId}/changeAdminRole")
-    protected String changeAdminRoleWarning(@PathVariable("groupId") Integer groupId,
+    @GetMapping("/options/{circleId}/updatemember/{userId}/changeAdminRole")
+    protected String changeAdminRoleWarning(@PathVariable("circleId") Integer circleId,
                                             @PathVariable("userId") Integer userId,
                                             @ModelAttribute("member") MemberDTO member) {
-        return "groupUpdateMemberWarning";
+        return "circleUpdateMemberWarning";
     }
 
-    @PostMapping("/options/{groupId}/updatemember/{userId}/changeAdminRole")
-    protected String updateChangeAdminRoleWarning(@PathVariable("groupId") Integer groupId,
+    @PostMapping("/options/{circleId}/updatemember/{userId}/changeAdminRole")
+    protected String updateChangeAdminRoleWarning(@PathVariable("circleId") Integer circleId,
                                                   @PathVariable("userId") Integer userId,
                                                   @ModelAttribute("member") MemberDTO member) {
         memberService.saveMember(member);
-        return "redirect:/groups/" + groupId;
+        return "redirect:/circles/" + circleId;
     }
 
 
-    @GetMapping("/options/{groupId}/delete/{userId}")
-    protected String deleteUserFromGroup(@PathVariable("groupId") Integer groupId,
-                                         @PathVariable("userId") Integer userId,
-                                         RedirectAttributes redirectAttributes) {
-        if (isNotGroupAdmin(groupId) && isNotSiteAdmin()) {
+    @GetMapping("/options/{circleId}/delete/{userId}")
+    protected String deleteUserFromCircle(@PathVariable("circleId") Integer circleId,
+                                          @PathVariable("userId") Integer userId,
+                                          RedirectAttributes redirectAttributes) {
+        if (isNotCircleAdmin(circleId) && isNotSiteAdmin()) {
             return "redirect:/403";
         }
-        // checks first if the group member isn't the last group admin. If so, it can't be removed from the group.
-        Optional<MemberDTO> member = memberService.findByUserIdAndGroupId(userId, groupId);
+        // checks first if the circle member isn't the last circle admin. If so, it can't be removed from the circle.
+        Optional<MemberDTO> member = memberService.findByUserIdAndCircleId(userId, circleId);
         if (member.isPresent()) {
-            if (isLastAdminInGroup(member.get())) {
-                redirectAttributes.addAttribute("error", ONLY_GROUP_ADMIN_ERROR);
+            if (isLastAdminInCircle(member.get())) {
+                redirectAttributes.addAttribute("error", ONLY_CIRCLE_ADMIN_ERROR);
             } else {
-                memberService.deleteByUserId(userId, groupId);
+                memberService.deleteByUserId(userId, circleId);
             }
         }
         if (member.get().getUserId().equals(userService.getCurrentUser().getUserId()) && !member.get().isAdmin() && memberService.findOutIfMemberIsAdmin(member.get()));
 
-        return "redirect:/groups/options/{groupId}";
+        return "redirect:/circles/options/{circleId}";
     }
 
-    private void checkIfAccountExists(Integer groupId, MemberDTO addMember, BindingResult result,
+    private void checkIfAccountExists(Integer circleId, MemberDTO addMember, BindingResult result,
                                       Optional<Integer> userId) {
         if (!userId.isEmpty()) {
-            addMember.setGroupId(groupId);
+            addMember.setCircleId(circleId);
             addMember.setUserId(userId.get());;
-            checkForErrorsAddMember(groupId, addMember, result, userId);
+            checkForErrorsAddMember(circleId, addMember, result, userId);
         } else {
             result.addError(new ObjectError("globalError", NO_ACCOUNT_WITH_EMAIL_ERROR));
         }
     }
 
-    private void checkForErrorsAddMember(Integer groupId, MemberDTO makeMember, BindingResult result,
+    private void checkForErrorsAddMember(Integer circleId, MemberDTO makeMember, BindingResult result,
                                          Optional<Integer> userId) {
-        if (memberService.userInGroupExists(makeMember)) {
+        if (memberService.userInCircleExists(makeMember)) {
             result.addError(new ObjectError("globalError", SAME_USER_TWICE_ERROR));
         }
 
-        if (isAlreadyClient(groupId, makeMember, userId.get())) {
+        if (isAlreadyClient(circleId, makeMember, userId.get())) {
             result.addError(new ObjectError("globalError", ALREADY_CLIENT_ERROR));
         }
     }
 
-    private void checkForErrorsUpdateGroupMember(Integer groupId, MemberDTO member, BindingResult result) {
-        if (isAlreadyClient(groupId, member, member.getUserId())) {
+    private void checkForErrorsUpdateCircleMember(Integer circleId, MemberDTO member, BindingResult result) {
+        if (isAlreadyClient(circleId, member, member.getUserId())) {
             result.addError(new ObjectError("globalError", ALREADY_CLIENT_ERROR));
         }
 
-        if (isLastAdminInGroup(member) && !member.isAdmin()) {
-            result.addError(new ObjectError("globalError", ONLY_GROUP_ADMIN_ERROR));
+        if (isLastAdminInCircle(member) && !member.isAdmin()) {
+            result.addError(new ObjectError("globalError", ONLY_CIRCLE_ADMIN_ERROR));
         }
     }
 
-    private boolean isAlreadyClient(Integer groupId, MemberDTO member, Integer userId) {
-        return memberService.isClient(member) && memberService.isClientInOtherGroup(userId, groupId);
+    private boolean isAlreadyClient(Integer circleId, MemberDTO member, Integer userId) {
+        return memberService.isClient(member) && memberService.isClientInOtherCircle(userId, circleId);
     }
 
-    private boolean isLastAdminInGroup(MemberDTO member) {
+    private boolean isLastAdminInCircle(MemberDTO member) {
         return memberService.findOutIfMemberIsAdmin(member) &&
-                memberService.getGroupAdminsByGroupId(member.getGroupId()).size() == 1;
+                memberService.getCircleAdminsByCircleId(member.getCircleId()).size() == 1;
     }
 
-    private boolean isGroupMember(Integer groupId) {
-        return memberService.userIsMemberOfGroup(groupId);
+    private boolean isCircleMember(Integer circleId) {
+        return memberService.userIsMemberOfCircle(circleId);
     }
 
-    private boolean isNotGroupAdmin(Integer groupId) {
-        return !memberService.userIsGroupAdmin(groupId);
+    private boolean isNotCircleAdmin(Integer circleId) {
+        return !memberService.userIsCircleAdmin(circleId);
     }
 
     private boolean isNotSiteAdmin() {
         return !userService.currentUserIsSiteAdmin();
     }
 
-    private boolean groupAdminRemoveOwnRights (MemberDTO memberDTO) {
+    private boolean circleAdminRemoveOwnRights(MemberDTO memberDTO) {
         Integer currentUserId = userService.getCurrentUser().getUserId();
         if (!memberDTO.isAdmin()
                 && memberService.findOutIfMemberIsAdmin(
-                        memberService.findByUserIdAndGroupId(currentUserId , memberDTO.getGroupId()).get())
+                        memberService.findByUserIdAndCircleId(currentUserId , memberDTO.getCircleId()).get())
                 && memberDTO.getUserId().equals(currentUserId)) {
             return true;
         }

@@ -1,7 +1,7 @@
 package nl.miwgroningen.se6.heartcoded.CaTo.service.mappers;
 
 import nl.miwgroningen.se6.heartcoded.CaTo.dto.TaskListDTO;
-import nl.miwgroningen.se6.heartcoded.CaTo.model.Group;
+import nl.miwgroningen.se6.heartcoded.CaTo.model.Circle;
 import nl.miwgroningen.se6.heartcoded.CaTo.model.TaskList;;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -25,21 +25,21 @@ class TaskListMapperTest {
     void toDTOTaskListId() {
         TaskList taskList = new TaskList();
         taskList.setTaskListId(1);
-        taskList.setGroup(new Group());
+        taskList.setCircle(new Circle());
         TaskListDTO taskListDTO = taskListMapper.toDTO(taskList);
         assertEquals(1, taskListDTO.getTaskListId());
     }
 
     @Test
-    void toDTOGroupId() {
+    void toDTOCircleId() {
         TaskList taskList = new TaskList();
-        Group group = new Group();
-        group.setGroupId(100);
+        Circle circle = new Circle();
+        circle.setCircleId(100);
 
-        taskList.setGroup(group);
+        taskList.setCircle(circle);
 
         TaskListDTO taskListDTO = taskListMapper.toDTO(taskList);
-        assertEquals(100, taskListDTO.getGroupId());
+        assertEquals(100, taskListDTO.getCircleId());
     }
 
     @Test
@@ -55,8 +55,8 @@ class TaskListMapperTest {
         taskList.add(taskList1);
         taskList.add(taskList2);
 
-        taskList.get(0).setGroup(new Group());
-        taskList.get(1).setGroup(new Group());
+        taskList.get(0).setCircle(new Circle());
+        taskList.get(1).setCircle(new Circle());
 
         List<TaskListDTO> taskListDTOList = new ArrayList<>();
         for (TaskList task : taskList) {
@@ -86,17 +86,17 @@ class TaskListMapperTest {
     void presentOptionalToDTO() {
         TaskList taskList = new TaskList();
 
-        Group group = new Group();
-        group.setGroupId(1);
+        Circle circle = new Circle();
+        circle.setCircleId(1);
 
         taskList.setTaskListId(1);
-        taskList.setGroup(group);
+        taskList.setCircle(circle);
 
         Optional<TaskList> optionalTaskList = Optional.of(taskList);
         Optional<TaskListDTO> optionalTaskListDTO = taskListMapper.toDTO(optionalTaskList);
 
         assertTrue(optionalTaskListDTO.isPresent());
-        assertEquals(1, optionalTaskListDTO.get().getGroupId());
+        assertEquals(1, optionalTaskListDTO.get().getCircleId());
         assertEquals(1, optionalTaskListDTO.get().getTaskListId());
     }
 }

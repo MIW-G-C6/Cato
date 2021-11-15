@@ -24,111 +24,111 @@ public class TaskController {
 
     private TaskService taskService;
     private TaskListService taskListService;
-    private GroupService groupService;
+    private CircleService circleService;
     private MemberService memberService;
     private UserService userService;
 
-    public TaskController(TaskService taskService, TaskListService taskListService, GroupService groupService,
+    public TaskController(TaskService taskService, TaskListService taskListService, CircleService circleService,
                           MemberService memberService, UserService userService) {
         this.taskService = taskService;
         this.taskListService = taskListService;
-        this.groupService = groupService;
+        this.circleService = circleService;
         this.memberService = memberService;
         this.userService = userService;
     }
 
-    @GetMapping("/groups/{groupId}/taskLists/{taskListId}/{taskId}")
-    protected String showTaskDetails(@PathVariable("groupId") Integer groupId,
+    @GetMapping("/circles/{circleId}/taskLists/{taskListId}/{taskId}")
+    protected String showTaskDetails(@PathVariable("circleId") Integer circleId,
                                      @PathVariable("taskListId") Integer taskListId,
                                      @PathVariable("taskId") Integer taskId, Model model) {
 
-        if (!memberService.userIsMemberOfGroup(groupId) && !userService.currentUserIsSiteAdmin()) {
+        if (!memberService.userIsMemberOfCircle(circleId) && !userService.currentUserIsSiteAdmin()) {
             return "redirect:/403";
         }
         if (doShowTaskDetailsOrTaskForm(taskListId, taskId, model)) {
-            return "redirect:/groups/" + groupId;
+            return "redirect:/circles/" + circleId;
         }
-        model.addAttribute("groupName", groupService.getById(groupId).getGroupName());
+        model.addAttribute("circleName", circleService.getById(circleId).getCircleName());
         return "taskDetails";
     }
 
-    @GetMapping("/groups/{groupId}/taskLists/{taskListId}/update/{taskId}")
-    protected String showUpdateTaskForm(@PathVariable("groupId") Integer groupId,
+    @GetMapping("/circles/{circleId}/taskLists/{taskListId}/update/{taskId}")
+    protected String showUpdateTaskForm(@PathVariable("circleId") Integer circleId,
                                         @PathVariable("taskListId") Integer taskListId,
                                         @PathVariable("taskId") Integer taskId, Model model) {
 
-        if (!memberService.userIsMemberOfGroup(groupId) && !userService.currentUserIsSiteAdmin()) {
+        if (!memberService.userIsMemberOfCircle(circleId) && !userService.currentUserIsSiteAdmin()) {
             return "redirect:/403";
         }
         if (doShowTaskDetailsOrTaskForm(taskListId, taskId, model)) {
-            return "redirect:/groups/" + groupId;
+            return "redirect:/circles/" + circleId;
         }
-        model.addAttribute("groupName", groupService.getById(groupId).getGroupName());
+        model.addAttribute("circleName", circleService.getById(circleId).getCircleName());
         return "taskEdit";
     }
 
-    @GetMapping("/groups/{groupId}/taskLists/{taskListId}/new")
+    @GetMapping("/circles/{circleId}/taskLists/{taskListId}/new")
     protected String showTaskForm(@PathVariable("taskListId") Integer taskListId,
-                                  @PathVariable("groupId") Integer groupId,
+                                  @PathVariable("circleId") Integer circleId,
                                   Model model) {
-        if (!memberService.userIsMemberOfGroup(groupId) && !userService.currentUserIsSiteAdmin()) {
+        if (!memberService.userIsMemberOfCircle(circleId) && !userService.currentUserIsSiteAdmin()) {
             return "redirect:/403";
         }
         Optional<TaskListDTO> taskListDTO = taskListService.findById(taskListId);
 
         if (taskListDTO.isEmpty()) {
-            return "redirect:/groups/" + groupId;
+            return "redirect:/circles/" + circleId;
         }
         model.addAttribute("task", new TaskDTO());
-        model.addAttribute("groupName", groupService.getById(groupId).getGroupName());
+        model.addAttribute("circleName", circleService.getById(circleId).getCircleName());
         model.addAttribute("taskList", taskListService.getById(taskListId));
         return "taskForm";
     }
 
-    @GetMapping("/groups/{groupId}/task/{taskId}/assign")
-    protected String assignTask(@PathVariable ("groupId") Integer groupId,
+    @GetMapping("/circles/{circleId}/task/{taskId}/assign")
+    protected String assignTask(@PathVariable ("circleId") Integer circleId,
                                 @PathVariable ("taskId") Integer taskId) {
-        if (!memberService.userIsMemberOfGroup(groupId) && !userService.currentUserIsSiteAdmin()) {
+        if (!memberService.userIsMemberOfCircle(circleId) && !userService.currentUserIsSiteAdmin()) {
             return "redirect:/403";
         }
         taskService.assignUser(taskId, userService.getCurrentUser().getUserId());
 
-        return "redirect:/groups/{groupId}";
+        return "redirect:/circles/{circleId}";
     }
 
-    @GetMapping("/groups/{groupId}/task/{taskId}/unassign")
-    protected String unassignTask(@PathVariable ("groupId") Integer groupId,
+    @GetMapping("/circles/{circleId}/task/{taskId}/unassign")
+    protected String unassignTask(@PathVariable ("circleId") Integer circleId,
                                 @PathVariable ("taskId") Integer taskId) {
-        if (!memberService.userIsMemberOfGroup(groupId) && !userService.currentUserIsSiteAdmin()) {
+        if (!memberService.userIsMemberOfCircle(circleId) && !userService.currentUserIsSiteAdmin()) {
             return "redirect:/403";
         }
         taskService.unassignUser(taskId);
 
-        return "redirect:/groups/{groupId}";
+        return "redirect:/circles/{circleId}";
     }
 
-    @PostMapping("/groups/{groupId}/taskLists/{taskListId}/new")
+    @PostMapping("/circles/{circleId}/taskLists/{taskListId}/new")
     protected String saveOrUpdateTask(@PathVariable ("taskListId") Integer taskListId,
-                                      @PathVariable("groupId") Integer groupId,
+                                      @PathVariable("circleId") Integer circleId,
                                       @ModelAttribute("task") TaskDTO task, BindingResult result) {
 
-        if (!memberService.userIsMemberOfGroup(groupId) && !userService.currentUserIsSiteAdmin()) {
+        if (!memberService.userIsMemberOfCircle(circleId) && !userService.currentUserIsSiteAdmin()) {
             return "redirect:/403";
         }
         if (!result.hasErrors()) {
             taskService.save(task, taskListId);
         }
-        return "redirect:/groups/{groupId}";
+        return "redirect:/circles/{circleId}";
     }
 
     @GetMapping("/task/delete/{taskId}")
     protected String deleteTask(@PathVariable("taskId") Integer taskId) {
-        Integer groupId = taskListService.getById(taskService.getTaskListIdByTaskId(taskId)).getGroupId();
-        if (!memberService.userIsMemberOfGroup(groupId) && !userService.currentUserIsSiteAdmin()) {
+        Integer circleId = taskListService.getById(taskService.getTaskListIdByTaskId(taskId)).getCircleId();
+        if (!memberService.userIsMemberOfCircle(circleId) && !userService.currentUserIsSiteAdmin()) {
             return "redirect:/403";
         }
         taskService.deleteById(taskId);
-        return "redirect:/groups/" + groupId;
+        return "redirect:/circles/" + circleId;
     }
 
     private boolean doShowTaskDetailsOrTaskForm(@PathVariable("taskListId") Integer taskListId,

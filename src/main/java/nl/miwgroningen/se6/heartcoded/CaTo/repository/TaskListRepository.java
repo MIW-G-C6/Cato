@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public interface TaskListRepository extends JpaRepository<TaskList, Integer> {
 
-    TaskList getByGroupGroupId(Integer groupId);
+    TaskList getByCircleCircleId(Integer circleId);
 
-    Optional<TaskList> findByGroupGroupId(Integer groupId);
+    Optional<TaskList> findByCircleCircleId(Integer circleId);
 }

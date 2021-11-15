@@ -1,9 +1,7 @@
 package nl.miwgroningen.se6.heartcoded.CaTo.service.mappers;
 
 import nl.miwgroningen.se6.heartcoded.CaTo.dto.MemberDTO;
-import nl.miwgroningen.se6.heartcoded.CaTo.dto.UserDTO;
 import nl.miwgroningen.se6.heartcoded.CaTo.model.Member;
-import nl.miwgroningen.se6.heartcoded.CaTo.model.User;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -22,10 +20,10 @@ public class MemberMapper {
     public MemberDTO toDTO(Member member) {
         MemberDTO result = new MemberDTO();
 
-        result.setGroupRoleOptions(Member.getGroupRoleOptions());
+        result.setCircleRoleOptions(Member.getCircleRoleOptions());
         result.setUserId(member.getUser().getUserId());
         result.setUserName(member.getUser().getName());
-        result.setGroupId(member.getGroup().getGroupId());
+        result.setCircleId(member.getCircle().getCircleId());
         result.setRole(member.getUserRole());
         result.setAdmin(member.isAdmin());
 

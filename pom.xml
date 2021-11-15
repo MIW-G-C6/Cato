@@ -3,12 +3,12 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>org.springframework.boot</groupId>
+		<circleId>org.springframework.boot</circleId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>2.5.5</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>nl.miwgroningen.se6.heartcoded</groupId>
+	<circleId>nl.miwgroningen.se6.heartcoded</circleId>
 	<artifactId>CaTo</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>CaTo</name>
@@ -18,64 +18,64 @@
 	</properties>
 	<dependencies>
 		<dependency>
-			<groupId>org.thymeleaf.extras</groupId>
+			<circleId>org.thymeleaf.extras</circleId>
 			<artifactId>thymeleaf-extras-springsecurity5</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
+			<circleId>org.springframework.boot</circleId>
 			<artifactId>spring-boot-starter-security</artifactId>
 			<version>2.5.4</version>
 		</dependency>
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
+			<circleId>org.springframework.boot</circleId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
+			<circleId>org.springframework.boot</circleId>
 			<artifactId>spring-boot-starter-thymeleaf</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
+			<circleId>org.springframework.boot</circleId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.webjars</groupId>
+			<circleId>org.webjars</circleId>
 			<artifactId>bootstrap</artifactId>
 			<version>4.6.0</version>
 		</dependency>
 		<dependency>
-			<groupId>org.webjars</groupId>
+			<circleId>org.webjars</circleId>
 			<artifactId>jquery</artifactId>
 			<version>3.6.0</version>
 		</dependency>
 		<dependency>
-			<groupId>org.webjars</groupId>
+			<circleId>org.webjars</circleId>
 			<artifactId>webjars-locator-core</artifactId>
 			<version>0.42</version>
 		</dependency>
 
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
+			<circleId>org.springframework.boot</circleId>
 			<artifactId>spring-boot-devtools</artifactId>
 			<scope>runtime</scope>
 			<optional>true</optional>
 		</dependency>
 		<dependency>
-			<groupId>mysql</groupId>
+			<circleId>mysql</circleId>
 			<artifactId>mysql-connector-java</artifactId>
 			<scope>runtime</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
+			<circleId>org.springframework.boot</circleId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
+			<circleId>org.springframework.boot</circleId>
 			<artifactId>spring-boot-starter-validation</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>xml-apis</groupId>
+			<circleId>xml-apis</circleId>
 			<artifactId>xml-apis</artifactId>
 			<version>1.3.04</version>
 		</dependency>
@@ -84,7 +84,7 @@
 	<build>
 		<plugins>
 			<plugin>
-				<groupId>org.springframework.boot</groupId>
+				<circleId>org.springframework.boot</circleId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 		</plugins>

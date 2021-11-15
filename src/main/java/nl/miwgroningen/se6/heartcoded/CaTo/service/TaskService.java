@@ -1,11 +1,7 @@
 package nl.miwgroningen.se6.heartcoded.CaTo.service;
 
 import nl.miwgroningen.se6.heartcoded.CaTo.dto.TaskDTO;
-import nl.miwgroningen.se6.heartcoded.CaTo.dto.TaskListDTO;
-import nl.miwgroningen.se6.heartcoded.CaTo.model.Group;
 import nl.miwgroningen.se6.heartcoded.CaTo.model.Task;
-import nl.miwgroningen.se6.heartcoded.CaTo.model.TaskList;
-import nl.miwgroningen.se6.heartcoded.CaTo.model.User;
 import nl.miwgroningen.se6.heartcoded.CaTo.repository.*;
 import nl.miwgroningen.se6.heartcoded.CaTo.service.mappers.TaskMapper;
 import org.springframework.stereotype.Service;
@@ -70,8 +66,8 @@ public class TaskService {
         return taskRepository.getById(taskId).getTaskList().getTaskListId();
     }
 
-    public List<TaskDTO> getAllTasksByGroupId(Integer groupId) {
-        List<Task> listOfTasks = new ArrayList<>(taskListRepository.getByGroupGroupId(groupId).getTaskList());
+    public List<TaskDTO> getAllTasksByCircleId(Integer circleId) {
+        List<Task> listOfTasks = new ArrayList<>(taskListRepository.getByCircleCircleId(circleId).getTaskList());
         return taskMapper.toDTO(listOfTasks);
     }
 }

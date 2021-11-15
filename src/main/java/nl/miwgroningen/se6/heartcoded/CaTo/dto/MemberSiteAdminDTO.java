@@ -10,9 +10,9 @@ public class MemberSiteAdminDTO {
 
     private String userName;
 
-    private Integer groupId;
+    private Integer circleId;
 
-    private String groupName;
+    private String circleName;
 
     public Integer getUserId() {
         return userId;
@@ -30,19 +30,19 @@ public class MemberSiteAdminDTO {
         this.userName = userName;
     }
 
-    public Integer getGroupId() {
-        return groupId;
+    public Integer getCircleId() {
+        return circleId;
     }
 
-    public void setGroupId(Integer groupId) {
-        this.groupId = groupId;
+    public void setCircleId(Integer circleId) {
+        this.circleId = circleId;
     }
 
-    public String getGroupName() {
-        return groupName;
+    public String getCircleName() {
+        return circleName;
     }
 
-    public void setGroupName(String groupName) {
-        this.groupName = groupName;
+    public void setCircleName(String circleName) {
+        this.circleName = circleName;
     }
 }

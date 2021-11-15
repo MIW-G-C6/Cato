@@ -19,10 +19,10 @@ public class TaskList {
     private List<Task> taskList;
 
     @OneToOne
-    private Group group;
+    private Circle circle;
 
-    public TaskList(Group group) {
-        this.group = group;
+    public TaskList(Circle circle) {
+        this.circle = circle;
         this.taskList = new ArrayList<>();
     }
 
@@ -45,11 +45,11 @@ public class TaskList {
         this.taskList = taskList;
     }
 
-    public Group getGroup() {
-        return group;
+    public Circle getCircle() {
+        return circle;
     }
 
-    public void setGroup(Group group) {
-        this.group = group;
+    public void setCircle(Circle circle) {
+        this.circle = circle;
     }
 }

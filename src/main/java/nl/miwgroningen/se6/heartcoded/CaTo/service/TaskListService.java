@@ -1,10 +1,10 @@
 package nl.miwgroningen.se6.heartcoded.CaTo.service;
 
-import nl.miwgroningen.se6.heartcoded.CaTo.dto.GroupDTO;
+import nl.miwgroningen.se6.heartcoded.CaTo.dto.CircleDTO;
 import nl.miwgroningen.se6.heartcoded.CaTo.dto.TaskListDTO;
-import nl.miwgroningen.se6.heartcoded.CaTo.model.Group;
+import nl.miwgroningen.se6.heartcoded.CaTo.model.Circle;
 import nl.miwgroningen.se6.heartcoded.CaTo.model.TaskList;
-import nl.miwgroningen.se6.heartcoded.CaTo.repository.GroupRepository;
+import nl.miwgroningen.se6.heartcoded.CaTo.repository.CircleRepository;
 import nl.miwgroningen.se6.heartcoded.CaTo.repository.TaskListRepository;
 import nl.miwgroningen.se6.heartcoded.CaTo.service.mappers.TaskListMapper;
 import org.springframework.stereotype.Service;
@@ -22,13 +22,13 @@ import java.util.Optional;
 public class TaskListService {
 
     private final TaskListRepository taskListRepository;
-    private final GroupRepository groupRepository;
+    private final CircleRepository circleRepository;
     private final TaskListMapper taskListMapper;
 
-    public TaskListService(TaskListRepository taskListRepository, GroupRepository groupRepository,
+    public TaskListService(TaskListRepository taskListRepository, CircleRepository circleRepository,
                            TaskListMapper taskListMapper) {
         this.taskListRepository = taskListRepository;
-        this.groupRepository = groupRepository;
+        this.circleRepository = circleRepository;
         this.taskListMapper = taskListMapper;
     }
 
@@ -46,23 +46,23 @@ public class TaskListService {
 
     public void save(TaskListDTO taskListDTO) {
         TaskList taskList = taskListMapper.toTaskList(taskListDTO);
-        taskList.setGroup(groupRepository.getById(taskListDTO.getGroupId()));
+        taskList.setCircle(circleRepository.getById(taskListDTO.getCircleId()));
 
         taskListRepository.save(taskList);
     }
 
-    public void saveNew(GroupDTO groupDTO) {
-        Group group = groupRepository.getById(groupDTO.getGroupId());
-        TaskList taskList = new TaskList(group);
+    public void saveNew(CircleDTO circleDTO) {
+        Circle circle = circleRepository.getById(circleDTO.getCircleId());
+        TaskList taskList = new TaskList(circle);
         taskListRepository.save(taskList);
     }
 
-    public TaskListDTO getByGroupId(Integer groupId) {
-        return taskListMapper.toDTO(taskListRepository.getByGroupGroupId(groupId));
+    public TaskListDTO getByCircleId(Integer circleId) {
+        return taskListMapper.toDTO(taskListRepository.getByCircleCircleId(circleId));
     }
 
-    public void deleteByGroupId(Integer groupId) {
-        Optional<TaskList> taskList = taskListRepository.findByGroupGroupId(groupId);
+    public void deleteByCircleId(Integer circleId) {
+        Optional<TaskList> taskList = taskListRepository.findByCircleCircleId(circleId);
         taskList.ifPresent(list -> taskListRepository.deleteById(list.getTaskListId()));
      }
 }

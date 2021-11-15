@@ -38,11 +38,11 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Member> memberList;
 
-    private int groupOne;
+    private int circleOne;
 
-    private int groupTwo;
+    private int circleTwo;
 
-    private int groupThree;
+    private int circleThree;
 
     private String userRole;
 
@@ -51,9 +51,9 @@ public class User implements UserDetails {
         this.name = name;
         this.email = email;
         this.password = "";
-        this.groupOne = 0;
-        this.groupTwo = 0;
-        this.groupThree = 0;
+        this.circleOne = 0;
+        this.circleTwo = 0;
+        this.circleThree = 0;
     }
 
     public User() {
@@ -123,34 +123,34 @@ public class User implements UserDetails {
         this.name = name;
     }
 
-    public int getGroupOne() {
-        return groupOne;
+    public int getCircleOne() {
+        return circleOne;
     }
 
-    public void setGroupOne(int groupOne) {
-        this.groupOne = groupOne;
+    public void setCircleOne(int circleOne) {
+        this.circleOne = circleOne;
     }
 
-    public int getGroupTwo() {
-        return groupTwo;
+    public int getCircleTwo() {
+        return circleTwo;
     }
 
-    public void setGroupTwo(int groupTwo) {
-        this.groupTwo = groupTwo;
+    public void setCircleTwo(int circleTwo) {
+        this.circleTwo = circleTwo;
     }
 
-    public int getGroupThree() {
-        return groupThree;
+    public int getCircleThree() {
+        return circleThree;
     }
 
-    public void setGroupThree(int groupThree) {
-        this.groupThree = groupThree;
+    public void setCircleThree(int circleThree) {
+        this.circleThree = circleThree;
     }
 
-    public void setAllThreeGroups (List<Integer> groupIdList, Integer groupId) {
-        this.groupOne = groupId;
-        this.groupTwo = groupIdList.get(0);
-        this.groupThree = groupIdList.get(1);
+    public void setAllThreeCircles(List<Integer> circleIdList, Integer circleId) {
+        this.circleOne = circleId;
+        this.circleTwo = circleIdList.get(0);
+        this.circleThree = circleIdList.get(1);
     }
 
     public List<Member> getMemberList() {

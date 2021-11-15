@@ -1,13 +1,13 @@
 package nl.miwgroningen.se6.heartcoded.CaTo.service;
 
 import nl.miwgroningen.se6.heartcoded.CaTo.dto.MemberDTO;
-import nl.miwgroningen.se6.heartcoded.CaTo.model.Group;
+import nl.miwgroningen.se6.heartcoded.CaTo.model.Circle;
 import nl.miwgroningen.se6.heartcoded.CaTo.model.Member;
 import nl.miwgroningen.se6.heartcoded.CaTo.model.User;
-import nl.miwgroningen.se6.heartcoded.CaTo.repository.GroupRepository;
+import nl.miwgroningen.se6.heartcoded.CaTo.repository.CircleRepository;
 import nl.miwgroningen.se6.heartcoded.CaTo.repository.MemberRepository;
 import nl.miwgroningen.se6.heartcoded.CaTo.repository.UserRepository;
-import nl.miwgroningen.se6.heartcoded.CaTo.service.mappers.GroupMapper;
+import nl.miwgroningen.se6.heartcoded.CaTo.service.mappers.CircleMapper;
 import nl.miwgroningen.se6.heartcoded.CaTo.service.mappers.MemberMapper;
 import nl.miwgroningen.se6.heartcoded.CaTo.service.mappers.MemberSiteAdminMapper;
 import org.junit.jupiter.api.BeforeEach;
@@ -28,42 +28,42 @@ class MemberServiceTest {
     @BeforeEach
     void setUp() {
         MemberMapper memberMapper = new MemberMapper();
-        GroupMapper groupMapper = new GroupMapper();
+        CircleMapper circleMapper = new CircleMapper();
         MemberSiteAdminMapper memberSiteAdminMapper = new MemberSiteAdminMapper();
 
-        GroupRepository groupRepository = Mockito.mock(GroupRepository.class);
+        CircleRepository circleRepository = Mockito.mock(CircleRepository.class);
         UserRepository userRepository = Mockito.mock(UserRepository.class);
         memberRepository = Mockito.mock(MemberRepository.class);
 
-        memberService = new MemberService(memberMapper, groupMapper, memberSiteAdminMapper,
-                groupRepository, userRepository, memberRepository);
+        memberService = new MemberService(memberMapper, circleMapper, memberSiteAdminMapper,
+                circleRepository, userRepository, memberRepository);
     }
 
     @Test
-    void findAllCaregiversInAGroupTest() {
+    void findAllCaregiversInACircleTest() {
         List<Member> memberList = new ArrayList<>();
 
-        Group testGroup = new Group(1, "testGroup1", new ArrayList<>());
+        Circle testCircle = new Circle(1, "testCircle1", new ArrayList<>());
         User testUser1 = new User();
         User testUser2 = new User();
 
         testUser1.setUserId(1);
         testUser2.setUserId(2);
 
-        memberList.add(new Member(testGroup, testUser1, "Caregiver", true));
-        memberList.add(new Member(testGroup, new User(), "Client", false));
-        memberList.add(new Member(testGroup, testUser2, "Caregiver", false));
-        memberList.add(new Member(testGroup, new User(), "Client", true));
+        memberList.add(new Member(testCircle, testUser1, "Caregiver", true));
+        memberList.add(new Member(testCircle, new User(), "Client", false));
+        memberList.add(new Member(testCircle, testUser2, "Caregiver", false));
+        memberList.add(new Member(testCircle, new User(), "Client", true));
 
-        when(memberRepository.getAllByGroupGroupId(1)).thenReturn(memberList);
+        when(memberRepository.getAllByCircleCircleId(1)).thenReturn(memberList);
 
-        List<MemberDTO> result = memberService.findAllCaregiversByGroupId(1);
+        List<MemberDTO> result = memberService.findAllCaregiversByCircleId(1);
 
         assertNotNull(result);
         assertEquals(2, result.size());
 
-        assertEquals(1, result.get(0).getGroupId());
-        assertEquals(1, result.get(1).getGroupId());
+        assertEquals(1, result.get(0).getCircleId());
+        assertEquals(1, result.get(1).getCircleId());
 
         assertEquals(1, result.get(0).getUserId());
         assertEquals(2, result.get(1).getUserId());
@@ -73,30 +73,31 @@ class MemberServiceTest {
     }
 
     @Test
-    void findAllClientsInAGroupTest() {
+    void findAllClientsInACircleTest() {
+
         List<Member> memberList = new ArrayList<>();
 
-        Group testGroup = new Group(1, "testGroup1", new ArrayList<>());
+        Circle testCircle = new Circle(1, "testCircle1", new ArrayList<>());
         User testUser1 = new User();
         User testUser2 = new User();
 
         testUser1.setUserId(1);
         testUser2.setUserId(2);
 
-        memberList.add(new Member(testGroup, new User() , "Caregiver", true));
-        memberList.add(new Member(testGroup, testUser1, "Client", false));
-        memberList.add(new Member(testGroup, new User(), "Caregiver", false));
-        memberList.add(new Member(testGroup, testUser2, "Client", true));
+        memberList.add(new Member(testCircle, new User() , "Caregiver", true));
+        memberList.add(new Member(testCircle, testUser1, "Client", false));
+        memberList.add(new Member(testCircle, new User(), "Caregiver", false));
+        memberList.add(new Member(testCircle, testUser2, "Client", true));
 
-        when(memberRepository.getAllByGroupGroupId(1)).thenReturn(memberList);
+        when(memberRepository.getAllByCircleCircleId(1)).thenReturn(memberList);
 
-        List<MemberDTO> result = memberService.findAllClientsInGroup(1);
+        List<MemberDTO> result = memberService.findAllClientsInCircle(1);
 
         assertNotNull(result);
         assertEquals(2, result.size());
 
-        assertEquals(1, result.get(0).getGroupId());
-        assertEquals(1, result.get(1).getGroupId());
+        assertEquals(1, result.get(0).getCircleId());
+        assertEquals(1, result.get(1).getCircleId());
 
         assertEquals(1, result.get(0).getUserId());
         assertEquals(2, result.get(1).getUserId());

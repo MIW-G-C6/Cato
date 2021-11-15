@@ -1,9 +1,9 @@
 package nl.miwgroningen.se6.heartcoded.CaTo.service;
 
 import nl.miwgroningen.se6.heartcoded.CaTo.dto.TaskListDTO;
-import nl.miwgroningen.se6.heartcoded.CaTo.model.Group;
+import nl.miwgroningen.se6.heartcoded.CaTo.model.Circle;
 import nl.miwgroningen.se6.heartcoded.CaTo.model.TaskList;
-import nl.miwgroningen.se6.heartcoded.CaTo.repository.GroupRepository;
+import nl.miwgroningen.se6.heartcoded.CaTo.repository.CircleRepository;
 import nl.miwgroningen.se6.heartcoded.CaTo.repository.TaskListRepository;
 import nl.miwgroningen.se6.heartcoded.CaTo.service.mappers.TaskListMapper;
 import org.junit.jupiter.api.BeforeEach;
@@ -21,22 +21,22 @@ import static org.mockito.Mockito.*;
 class TaskListServiceTest {
 
     private TaskListService taskListService;
-    private GroupRepository groupRepository;
+    private CircleRepository circleRepository;
     private TaskListMapper taskListMapper;
     private TaskListRepository taskListRepository;
 
     @BeforeEach
     void setUp() {
         taskListRepository = Mockito.mock(TaskListRepository.class);
-        groupRepository = Mockito.mock(GroupRepository.class);
+        circleRepository = Mockito.mock(CircleRepository.class);
         taskListMapper = new TaskListMapper();
-        taskListService = new TaskListService(taskListRepository, groupRepository, taskListMapper);
+        taskListService = new TaskListService(taskListRepository, circleRepository, taskListMapper);
     }
 
     @Test
     void findAllTaskListsTest() {
-        TaskList taskList1 = new TaskList(new Group());
-        TaskList taskList2 = new TaskList(new Group());
+        TaskList taskList1 = new TaskList(new Circle());
+        TaskList taskList2 = new TaskList(new Circle());
 
         taskList1.setTaskListId(1);
         taskList2.setTaskListId(2);
@@ -58,7 +58,7 @@ class TaskListServiceTest {
 
     @Test
     void findTaskListByIdTest() {
-        TaskList taskList = new TaskList(new Group());
+        TaskList taskList = new TaskList(new Circle());
         taskList.setTaskListId(1);
 
         when(taskListRepository.findById(taskList.getTaskListId())).thenReturn(Optional.of(taskList));
@@ -71,7 +71,7 @@ class TaskListServiceTest {
 
     @Test
     void getTaskListByIdTest() {
-        TaskList taskList = new TaskList(new Group(1, "testGroup", new ArrayList<>()));
+        TaskList taskList = new TaskList(new Circle(1, "testCircle", new ArrayList<>()));
         taskList.setTaskListId(1);
 
         when(taskListRepository.getById(1)).thenReturn(taskList);
@@ -79,16 +79,16 @@ class TaskListServiceTest {
         TaskListDTO result = taskListService.getById(1);
 
         assertEquals(1, result.getTaskListId());
-        assertEquals(1, result.getGroupId());
+        assertEquals(1, result.getCircleId());
     }
 
     @Test
     void saveTaskListTest() {
-        Group testGroup = new Group(1, "testName", new ArrayList<>());
-        TaskList testTaskList = new TaskList(testGroup);
+        Circle testCircle = new Circle(1, "testName", new ArrayList<>());
+        TaskList testTaskList = new TaskList(testCircle);
         testTaskList.setTaskListId(1);
 
-        when(groupRepository.getById(1)).thenReturn(testGroup);
+        when(circleRepository.getById(1)).thenReturn(testCircle);
         when(taskListRepository.save(testTaskList)).thenReturn(testTaskList);
 
         taskListService.save(taskListMapper.toDTO(testTaskList));
@@ -97,16 +97,16 @@ class TaskListServiceTest {
     }
 
     @Test
-    void getTaskListByGroupIdTest() {
-        TaskList taskList = new TaskList(new Group(3, "testGroup", new ArrayList<>()));
+    void getTaskListByCircleIdTest() {
+        TaskList taskList = new TaskList(new Circle(3, "testCircle", new ArrayList<>()));
         taskList.setTaskListId(1);
 
-        when(taskListRepository.getByGroupGroupId(3)).thenReturn(taskList);
+        when(taskListRepository.getByCircleCircleId(3)).thenReturn(taskList);
 
-        TaskListDTO result = taskListService.getByGroupId(3);
+        TaskListDTO result = taskListService.getByCircleId(3);
 
         assertNotNull(result);
-        assertEquals(3, result.getGroupId());
+        assertEquals(3, result.getCircleId());
         assertEquals(1, result.getTaskListId());
     }
 }

@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org">
 <head th:replace="fragments/general :: baseHeader(~{:: title})" >
   <meta charset="UTF-8">
-  <link rel="stylesheet" type="text/css" th:href="@{/css/groupUpdateMember.css}">
+  <link rel="stylesheet" type="text/css" th:href="@{/css/circleUpdateMember.css}">
   <title>Edit member</title>
 </head>
 <body>
@@ -13,36 +13,36 @@
     <div class="breadCrumbs">
         <li><a th:href="@{/}">Home</a></li>
         <li sec:authorize="hasAuthority('ROLE_ADMIN')"><a th:href="@{/siteAdminDashboard}">Site Admin Dashboard</a></li>
-        <li><a th:href="@{/groups}">Groups</a></li>
-        <li><a th:href="@{/groups/{groupId}(groupId=${groupId})}"><span th:text="${group.groupName}"></span></a></li>
-        <li><a th:href="@{/groups/options/{groupId}(groupId=${groupId})}">Options</a></li>
+        <li><a th:href="@{/circles}">Care Circles</a></li>
+        <li><a th:href="@{/circles/{circleId}(circleId=${circleId})}"><span th:text="${circle.circleName}"></span></a></li>
+        <li><a th:href="@{/circles/options/{circleId}(circleId=${circleId})}">Options</a></li>
         <li>Edit member</li>
     </div>
   </div>
 
   <div class="container">
 
-    <div class="group-update-member">
-            <form th:action="@{/groups/options/{groupId}/updatemember/{userId}(groupId=${groupId}, userId=${userId})}" method="post" th:object="${member}">
+    <div class="circle-update-member">
+            <form th:action="@{/circles/options/{circleId}/updatemember/{userId}(circleId=${circleId}, userId=${userId})}" method="post" th:object="${member}">
                 <div th:if="${#fields.hasErrors()}">
                     <p th:each="err : ${#fields.errors('global')}" th:text="${err}" class="error" />
                 </div>
                     <h1>Change role</h1>
 
                     <ul class="cato-radio">
-                        <li th:each="role : ${member.groupRoleOptions}">
+                        <li th:each="role : ${member.circleRoleOptions}">
                             <input type="radio" th:field="${member.role}" th:value="${role}">
                             <label th:for="${#ids.prev('role')}" th:text="${role}"></label>
                         </li>
                     </ul>
 
                     <div class="custom-control custom-switch">
-                        <input type="checkbox" class="custom-control-input" id="groupAdminSwitch" th:field="*{admin}">
-                        <label class="custom-control-label" for="groupAdminSwitch">Group admin</label>
+                        <input type="checkbox" class="custom-control-input" id="circleAdminSwitch" th:field="*{admin}">
+                        <label class="custom-control-label" for="circleAdminSwitch">Circle admin</label>
                     </div>
                     <br>
                     <button type="submit" class="catoButton">Save</button>
-                    <a type="button" th:href="@{/groups/options/{groupId}(groupId=${groupId})}" class="catoButton">Cancel</a>
+                    <a type="button" th:href="@{/circles/options/{circleId}(circleId=${circleId})}" class="catoButton">Cancel</a>
             </form>
     </div>
 </div>

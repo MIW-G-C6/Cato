@@ -1,0 +1,88 @@
+package nl.miwgroningen.se6.heartcoded.CaTo.controller;
+
+import nl.miwgroningen.se6.heartcoded.CaTo.dto.CircleDTO;
+import nl.miwgroningen.se6.heartcoded.CaTo.dto.MemberDTO;
+import nl.miwgroningen.se6.heartcoded.CaTo.dto.UserDTO;
+import nl.miwgroningen.se6.heartcoded.CaTo.service.MemberService;
+import nl.miwgroningen.se6.heartcoded.CaTo.service.CircleService;
+import nl.miwgroningen.se6.heartcoded.CaTo.service.TaskListService;
+import nl.miwgroningen.se6.heartcoded.CaTo.service.UserService;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpSession;
+
+/**
+ * @author Shalena Omapersad <shalenao@hotmail.com>
+ *
+ * Controls the circle overview page.
+ */
+
+@Controller
+public class CircleController {
+
+    private CircleService circleService;
+    private MemberService memberService;
+    private UserService userService;
+    private TaskListService taskListService;
+
+    public CircleController(CircleService circleService, MemberService memberService, UserService userService,
+                            TaskListService taskListService) {
+        this.circleService = circleService;
+        this.memberService = memberService;
+        this.userService = userService;
+        this.taskListService = taskListService;
+    }
+
+    @GetMapping("/circles")
+    protected String showCircleOverview(HttpSession session, Model model) {
+        userService.checkForCircleDeletion();
+        Integer currentUser = userService.getCurrentUser().getUserId();
+        session.setAttribute("navbarCircles", memberService.getAllCirclesByUserId(currentUser));
+        model.addAttribute("clientsCircleOne",
+                memberService.findAllClientsInCircle(userService.getCircleOne(currentUser)));
+        model.addAttribute("clientsCircleTwo",
+                memberService.findAllClientsInCircle(userService.getCircleTwo(currentUser)));
+        model.addAttribute("clientsCircleThree",
+                memberService.findAllClientsInCircle(userService.getCircleThree(currentUser)));
+        model.addAttribute("lastThreeCircles", userService.getLastThreeCirclesByUserId(currentUser));
+        model.addAttribute("allCircles", memberService.getAllCirclesByUserId(currentUser));
+        return "circleOverview";
+    }
+
+    @GetMapping("/circles/new")
+    protected String showCircleForm(Model model) {
+        model.addAttribute("user", new UserDTO());
+        model.addAttribute("allUsers", userService.findAllUsers());
+        model.addAttribute("circle", new CircleDTO());
+        model.addAttribute("allCircles", circleService.findAllCircles());
+        return "circleForm";
+    }
+
+    @GetMapping("/circles/delete/{circleId}")
+    protected String deleteCircleById(@PathVariable("circleId") Integer circleId) {
+
+        if (!memberService.userIsCircleAdmin(circleId) && !userService.currentUserIsSiteAdmin()) {
+            return "redirect:/403";
+        }
+
+        taskListService.deleteByCircleId(circleId);
+        circleService.deleteCircleById(circleId);
+        return "redirect:/circleId";
+    }
+
+    @PostMapping("/circles/new")
+    protected String saveOrUpdateCircle(@ModelAttribute("circle") CircleDTO circle,
+                                        @ModelAttribute("member") MemberDTO member, BindingResult result) {
+        if (!result.hasErrors()) {
+            circleService.saveCircle(circle);
+            UserDTO userDTO = userService.getCurrentUser();
+            memberService.saveMember(new MemberDTO(userDTO.getUserId(), userDTO.getName(), circle.getCircleId(),
+                    "Caregiver", true));
+            taskListService.saveNew(circle);
+        }
+        return "redirect:/circles/" + circle.getCircleId();
+    }
+}

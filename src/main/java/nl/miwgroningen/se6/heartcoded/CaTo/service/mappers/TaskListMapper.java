@@ -21,7 +21,7 @@ public class TaskListMapper {
         TaskListDTO result = new TaskListDTO();
 
         result.setTaskListId(taskList.getTaskListId());
-        result.setGroupId(taskList.getGroup().getGroupId());
+        result.setCircleId(taskList.getCircle().getCircleId());
 
         return result;
     }

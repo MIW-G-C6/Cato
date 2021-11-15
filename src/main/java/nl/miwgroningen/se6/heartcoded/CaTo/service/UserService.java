@@ -1,12 +1,12 @@
 package nl.miwgroningen.se6.heartcoded.CaTo.service;
 
-import nl.miwgroningen.se6.heartcoded.CaTo.dto.GroupDTO;
+import nl.miwgroningen.se6.heartcoded.CaTo.dto.CircleDTO;
 import nl.miwgroningen.se6.heartcoded.CaTo.dto.UserDTO;
 import nl.miwgroningen.se6.heartcoded.CaTo.dto.UserEditPasswordDTO;
 import nl.miwgroningen.se6.heartcoded.CaTo.dto.UserRegistrationDTO;
-import nl.miwgroningen.se6.heartcoded.CaTo.model.Group;
+import nl.miwgroningen.se6.heartcoded.CaTo.model.Circle;
 import nl.miwgroningen.se6.heartcoded.CaTo.model.User;
-import nl.miwgroningen.se6.heartcoded.CaTo.repository.GroupRepository;
+import nl.miwgroningen.se6.heartcoded.CaTo.repository.CircleRepository;
 import nl.miwgroningen.se6.heartcoded.CaTo.repository.UserRepository;
 import nl.miwgroningen.se6.heartcoded.CaTo.service.mappers.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -26,23 +26,23 @@ import java.util.Optional;
 @Service
 public class UserService {
 
-    private final GroupRepository groupRepository;
+    private final CircleRepository circleRepository;
     private final UserRepository userRepository;
     private final UserMapper userMapper;
-    private final GroupMapper groupMapper;
+    private final CircleMapper circleMapper;
     private final UserLoginMapper userLoginMapper;
     private final UserRegistrationMapper userRegistrationMapper;
     private final UserEditPasswordMapper userEditPasswordMapper;
     private PasswordEncoder passwordEncoder;
 
-    public UserService(GroupRepository groupRepository, UserRepository userRepository, UserMapper userMapper,
-                       GroupMapper groupMapper, UserLoginMapper userLoginMapper,
+    public UserService(CircleRepository circleRepository, UserRepository userRepository, UserMapper userMapper,
+                       CircleMapper circleMapper, UserLoginMapper userLoginMapper,
                        UserRegistrationMapper userRegistrationMapper, UserEditPasswordMapper userEditPasswordMapper,
                        PasswordEncoder passwordEncoder) {
-        this.groupRepository = groupRepository;
+        this.circleRepository = circleRepository;
         this.userRepository = userRepository;
         this.userMapper = userMapper;
-        this.groupMapper = groupMapper;
+        this.circleMapper = circleMapper;
         this.userLoginMapper = userLoginMapper;
         this.userRegistrationMapper = userRegistrationMapper;
         this.userEditPasswordMapper = userEditPasswordMapper;
@@ -134,72 +134,72 @@ public class UserService {
         return getById(user.getUserId());
     }
 
-    public List<GroupDTO> getLastThreeGroupsByUserId(Integer userId) {
-        List<GroupDTO> result = new ArrayList<>();
-        List<Integer> groupList = getLastThreeGroupIdByUserId(userId);
-        for (Integer groupId : groupList) {
-            if(!(groupId == 0)) {
-                result.add(groupMapper.toDTO(groupRepository.getById(groupId)));
+    public List<CircleDTO> getLastThreeCirclesByUserId(Integer userId) {
+        List<CircleDTO> result = new ArrayList<>();
+        List<Integer> circleList = getLastThreeCircleIdByUserId(userId);
+        for (Integer circleId : circleList) {
+            if(!(circleId == 0)) {
+                result.add(circleMapper.toDTO(circleRepository.getById(circleId)));
             } else {
-                GroupDTO groupZero = new GroupDTO();
-                groupZero.setGroupId(0);
-                groupZero.setGroupName("Non-existing group");
-                result.add(groupZero);
+                CircleDTO circleZero = new CircleDTO();
+                circleZero.setCircleId(0);
+                circleZero.setCircleName("Non-existing circle");
+                result.add(circleZero);
             }
         }
         return result;
     }
 
-    public void checkForGroupDeletion() {
+    public void checkForCircleDeletion() {
         User user = userRepository.getById(getCurrentUser().getUserId());
-        List<Integer> groupList = getLastThreeGroupIdByUserId(user.getUserId());
-        for (Integer groupId : groupList) {
-            Optional<Group> group = groupRepository.findById(groupId);
-            if (group.isEmpty()) {
-                ifGroupIsDeletedSetGroups(user, groupId);
+        List<Integer> circleList = getLastThreeCircleIdByUserId(user.getUserId());
+        for (Integer circleId : circleList) {
+            Optional<Circle> circle = circleRepository.findById(circleId);
+            if (circle.isEmpty()) {
+                ifCircleIsDeletedSetCircles(user, circleId);
             }
         }
         userRepository.save(user);
     }
 
-    public void ifGroupIsDeletedSetGroups(User user,Integer groupId) {
-        if(user.getGroupOne() == groupId) {
-            user.setGroupOne(user.getGroupTwo());
-            user.setGroupTwo(user.getGroupThree());
-            user.setGroupThree(0);
-        } else if(user.getGroupTwo() == groupId) {
-            user.setGroupTwo(user.getGroupThree());
-            user.setGroupThree(0);
-        } else if(user.getGroupThree() == groupId) {
-            user.setGroupThree(0);
+    public void ifCircleIsDeletedSetCircles(User user, Integer circleId) {
+        if(user.getCircleOne() == circleId) {
+            user.setCircleOne(user.getCircleTwo());
+            user.setCircleTwo(user.getCircleThree());
+            user.setCircleThree(0);
+        } else if(user.getCircleTwo() == circleId) {
+            user.setCircleTwo(user.getCircleThree());
+            user.setCircleThree(0);
+        } else if(user.getCircleThree() == circleId) {
+            user.setCircleThree(0);
         }
     }
 
-    public void addGroupToLastThreeGroups(Integer groupId) {
+    public void addCircleToLastThreeCircles(Integer circleId) {
         User user = userRepository.getById(getCurrentUser().getUserId());
-        List<Integer> lastThreeGroupList = getLastThreeGroupIdByUserId(user.getUserId());
-        if(lastThreeGroupList.contains(groupId)) {
-            if (lastThreeGroupList.get(1).equals(groupId)) {
-                user.setGroupTwo(lastThreeGroupList.get(0));
-                user.setGroupOne(groupId);
-            } else if (lastThreeGroupList.get(2).equals(groupId)) {
-                user.setGroupThree(lastThreeGroupList.get(1));
-                user.setGroupTwo(lastThreeGroupList.get(0));
-                user.setGroupOne(groupId);
+        List<Integer> lastThreeCircleList = getLastThreeCircleIdByUserId(user.getUserId());
+        if(lastThreeCircleList.contains(circleId)) {
+            if (lastThreeCircleList.get(1).equals(circleId)) {
+                user.setCircleTwo(lastThreeCircleList.get(0));
+                user.setCircleOne(circleId);
+            } else if (lastThreeCircleList.get(2).equals(circleId)) {
+                user.setCircleThree(lastThreeCircleList.get(1));
+                user.setCircleTwo(lastThreeCircleList.get(0));
+                user.setCircleOne(circleId);
             }
         } else {
-            user.setAllThreeGroups(lastThreeGroupList, groupId);
+            user.setAllThreeCircles(lastThreeCircleList, circleId);
         }
         userRepository.save(user);
     }
 
 
-    private List<Integer> getLastThreeGroupIdByUserId(Integer userId) {
+    private List<Integer> getLastThreeCircleIdByUserId(Integer userId) {
         User user = userRepository.getById(userId);
         List<Integer> result = new ArrayList<>();
-        result.add(0, user.getGroupOne());
-        result.add(1, user.getGroupTwo());
-        result.add(2, user.getGroupThree());
+        result.add(0, user.getCircleOne());
+        result.add(1, user.getCircleTwo());
+        result.add(2, user.getCircleThree());
         return result;
     }
 
@@ -216,16 +216,16 @@ public class UserService {
         return false;
     }
 
-    public Integer getGroupOne(Integer userId) {
-       return userRepository.getById(userId).getGroupOne();
+    public Integer getCircleOne(Integer userId) {
+       return userRepository.getById(userId).getCircleOne();
     }
 
-    public Integer getGroupTwo(Integer userId) {
-        return userRepository.getById(userId).getGroupTwo();
+    public Integer getCircleTwo(Integer userId) {
+        return userRepository.getById(userId).getCircleTwo();
     }
 
-    public Integer getGroupThree(Integer userId) {
-        return userRepository.getById(userId).getGroupThree();
+    public Integer getCircleThree(Integer userId) {
+        return userRepository.getById(userId).getCircleThree();
     }
 
     public List<UserDTO> findWithNameContains(String keyword) {

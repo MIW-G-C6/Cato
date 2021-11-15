@@ -2,7 +2,7 @@ package nl.miwgroningen.se6.heartcoded.CaTo.service;
 
 import nl.miwgroningen.se6.heartcoded.CaTo.dto.UserEditPasswordDTO;
 import nl.miwgroningen.se6.heartcoded.CaTo.model.User;
-import nl.miwgroningen.se6.heartcoded.CaTo.repository.GroupRepository;
+import nl.miwgroningen.se6.heartcoded.CaTo.repository.CircleRepository;
 import nl.miwgroningen.se6.heartcoded.CaTo.repository.UserRepository;
 import nl.miwgroningen.se6.heartcoded.CaTo.service.mappers.*;
 import org.junit.jupiter.api.BeforeEach;
@@ -18,13 +18,13 @@ import static org.mockito.Mockito.when;
 
 class UserServiceTest {
 
-    private GroupRepository groupRepository;
+    private CircleRepository circleRepository;
     private UserRepository userRepository;
 
     private PasswordEncoder passwordEncoder;
 
     private UserMapper userMapper;
-    private GroupMapper groupMapper;
+    private CircleMapper circleMapper;
     private UserLoginMapper userLoginMapper;
     private UserRegistrationMapper userRegistrationMapper;
     private UserEditPasswordMapper userEditPasswordMapper;
@@ -34,16 +34,16 @@ class UserServiceTest {
     @BeforeEach
     void setUp() {
         userRepository = Mockito.mock(UserRepository.class);
-        groupRepository = Mockito.mock(GroupRepository.class);
+        circleRepository = Mockito.mock(CircleRepository.class);
 
         passwordEncoder = new BCryptPasswordEncoder();
         userMapper = new UserMapper();
-        groupMapper = new GroupMapper();
+        circleMapper = new CircleMapper();
         userLoginMapper = new UserLoginMapper();
         userRegistrationMapper = new UserRegistrationMapper();
         userEditPasswordMapper = new UserEditPasswordMapper();
 
-        userService = new UserService(groupRepository, userRepository, userMapper, groupMapper,
+        userService = new UserService(circleRepository, userRepository, userMapper, circleMapper,
                 userLoginMapper, userRegistrationMapper, userEditPasswordMapper, passwordEncoder);
     }
 
