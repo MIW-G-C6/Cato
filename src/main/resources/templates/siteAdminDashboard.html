@@ -14,9 +14,8 @@
         <h1>Site admin dashboard</h1>
         <div th:if="${!error.equals('')}" class="alert alert-danger" th:text="${error}"></div>
         <div class="site-admin-dashboard-box">
-            <div class="user-overview">
-                <h5>All users<a class="float-right" th:href="@{/registration}">Add new user</a></h5>
-                <hr>
+            <div  class="general-table-layout" id="user-overview">
+                <h5 class="table-header">All users<a class="float-right" th:href="@{/registration}">Add new user</a></h5>
                 <form id="search-form">
                     <input class="cato-form cato-text-field" oninput="fire_ajax_submit()" id="keywordsBox" type="text" placeholder="Search for users">
                 </form>
@@ -27,10 +26,8 @@
                 <br>
             </div>
 
-            <div class="circle-overview-dashboard">
-                <h5>All circles<a class="float-right" th:href="@{/circles/new}">Create new circle</a>
-                </h5>
-                <hr>
+            <div class="general-table-layout" id="group-overview-dashboard">
+                <h5 class="table-header">All groups<a class="float-right" th:href="@{/groups/new}">Create new group</a></h5>
                 <table>
                     <tr th:each="circle : ${allCircles}">
                         <td><a th:href="@{/circles/{circleId}(circleId=${circle.circleId})}"><div th:text="${circle.circleName}"></div></a></td>
@@ -38,9 +35,8 @@
                 </table>
             </div>
 
-            <div class="client-overview-dashboard">
-                <h5>All clients</h5>
-                <hr>
+            <div class="general-table-layout" id="client-overview-dashboard">
+                <h5 class="table-header">All clients</h5>
                 <table>
                     <tr th:each="client : ${allClients}">
                         <td>

@@ -17,7 +17,8 @@
     </div>
 
     <div class="container">
-        <h1 th:if="${!(lastThreeCircles.get(0).circleId == 0)}">Last visited</h1>
+        <h5 th:if="${!(lastThreeCircles.get(0).circleId == 0)}">Last visited</h5>
+        <br>
         <div th:class="cato-three-circles-placing" th:if="${!(lastThreeCircles.get(0).circleId == 0)}" th:object="${lastThreeCircles}" >
             <div th:if="${!(lastThreeCircles.get(0).circleId == 0)}" class="circle-overview-circle-banner" th:onclick="|window.location.href='@{/circles/{circleId}(circleId=${lastThreeCircles.get(0).circleId})}'|">
                 <h2 th:text="*{get(0).circleName}"></h2>

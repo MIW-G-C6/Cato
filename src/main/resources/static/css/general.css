@@ -300,6 +300,23 @@ a.nav-link{
     cursor: pointer;
 }
 
+.catoButton-logIn{
+    text-decoration: none;
+    display: inline-block;
+    padding: 0px 16px;
+    color: black;
+    background-color: transparent;
+    border: 1px solid black;
+    border-radius: 4px;
+}
+
+.catoButton-logIn:hover {
+    text-decoration: none;
+    background-color: #cafad9;
+    color: black;
+    cursor: pointer;
+}
+
 .catoYesWarningButton {
     text-decoration: none;
     display: inline-block;
@@ -467,6 +484,7 @@ h1 a {
 
 h5 a {
     font-size: 14px;
+    padding-right: 10px;
 }
 
 /*contains general layout for footer*/
@@ -531,7 +549,6 @@ button {
     margin: auto;
 }
 
-
 input[type=email], input[type=password], input[type=text] {
     width: 100%;
     padding: 12px 20px;
@@ -572,7 +589,7 @@ input[type=email], input[type=password], input[type=text] {
     width: 50%;
 }
 
-.circle-overview-dashboard {
+#circle-overview-dashboard {
     width: 30%
 }
 
@@ -580,7 +597,7 @@ input[type=email], input[type=password], input[type=text] {
     width: 50%;
 }
 
-.client-overview-dashboard {
+#client-overview-dashboard {
     width: 20%;
 }
 
@@ -588,8 +605,8 @@ input[type=email], input[type=password], input[type=text] {
     width: 50%;
 }
 
-.user-overview {
-    width: 30%;
+#user-overview {
+    width: 40%;
 }
 
 .error {
@@ -610,20 +627,17 @@ input[type=email], input[type=password], input[type=text] {
     width: 40%;
 }
 
-.gd-clients {
+.general-table-layout {
     box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
     background-color: #fafafa;
+    height: fit-content;
 }
 
-.gd-header {
+.table-header {
     padding-left: 10px;
     padding-top: 10px;
 }
 
-.gd-caregivers {
-    box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
-    background-color: #fafafa;
-}
 
 .gd-circlemembers {
     display: block;
@@ -636,12 +650,9 @@ input[type=email], input[type=password], input[type=text] {
     padding: 7px;
 }
 
-.gd-tasklist {
-    box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
-    height: fit-content;
+#gd-tasklist {
     width: 60%;
     display: block;
-    background-color: #fafafa;
     word-break: break-word;
 }
 
@@ -698,4 +709,13 @@ input[type=email], input[type=password], input[type=text] {
     font-size: 30px;
     text-decoration: none;
     color: black;
+}
+
+#search-form {
+    width: 90%;
+    margin: auto;
+}
+
+#keywordsBox {
+    background-color: #fafafa;
 }

@@ -25,8 +25,7 @@
             <div class="form-circle" sec:authorize="isAnonymous()" th:if="${#authorization.expression('isAnonymous()')}">
                 <form th:action="@{/}" method="post">
                     <div th:if="${param.error}">
-                        <div class="alert alert-danger">Invalid username or password.
-                        </div>
+                        <div class="alert alert-danger">Invalid username or password.</div>
                     </div>
                     <input type="email" id="username" name="username" class="form-control" autofocus="autofocus" placeholder="Enter email" />
                     <br>
@@ -34,7 +33,7 @@
                     <br>
                     <div class="row">
                         <div class="col-sm-12 col-sm-offset-3">
-                            <input type="submit" name="login-submit" id="login-submit" class="form-control catoButton" value="Log in" />
+                            <input type="submit" name="login-submit" id="login-submit" class="form-control catoButton-logIn" value="Log in" />
                         </div>
                     </div>
                     <br>
