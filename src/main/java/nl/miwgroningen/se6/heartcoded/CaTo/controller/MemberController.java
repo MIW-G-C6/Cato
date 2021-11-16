@@ -57,6 +57,7 @@ public class MemberController {
         model.addAttribute("allCaregivers", memberService.findAllCaregiversByCircleId(circleId));
         model.addAttribute("thisUserIsAdmin", memberService.userIsCircleAdmin(circleId));
         model.addAttribute("allClients", memberService.findAllClientsInCircle(circleId));
+        model.addAttribute("currentUserIsSiteAdmin", userService.currentUserIsSiteAdmin());
         return "circleDashboard";
     }
 

@@ -15,7 +15,7 @@
         <li sec:authorize="hasAuthority('ROLE_ADMIN')"><a th:href="@{/siteAdminDashboard}">Site Admin Dashboard</a></li>
         <li><a th:href="@{/circles}">Care Circles</a></li>
         <li><a th:href="@{/circles/{circleId}(circleId=${circleId})}"><span th:text="${circle.circleName}"></span></a></li>
-        <li><a th:href="@{/circles/options/{circleId}(circleId=${circleId})}">Options</a></li>
+        <li><a th:href="@{/circles/options/{circleId}(circleId=${circleId})}">Settings</a></li>
         <li>Edit member</li>
     </div>
   </div>

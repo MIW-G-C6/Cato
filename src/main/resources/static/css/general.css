@@ -760,3 +760,11 @@ input[type=email], input[type=password], input[type=text] {
 .circle-header-key i {
     font-size: 23px;
 }
+
+#group-settings-table {
+    width: 50%;
+}
+
+#group-settings-name {
+    width: 40%;
+}
