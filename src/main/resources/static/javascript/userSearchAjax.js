@@ -6,6 +6,7 @@ document.getElementById("deleteUserModal").innerHTML =`
             </div>
             <div class="modal-body">
                 <p>Are you sure you want to delete this user?</p>
+                <span id="userNameSpan" ></span>
             </div>
             <div class="modal-footer">
                 <button type="button" class="catoButton" id="noBtn">No</button>
@@ -83,7 +84,7 @@ function fillTable(resultData) {
             let aDelete = document.createElement('a');
             let hrefUser = document.createAttribute('href');
             let hrefEdit = document.createAttribute('href');
-            let hrefDelete = document.createAttribute('href');
+            // let hrefDelete = document.createAttribute('href');
             let imgEdit = document.createElement('img');
             let imgDelete = document.createElement('img');
             let imgHeightEdit = document.createAttribute('height');
@@ -106,16 +107,18 @@ function fillTable(resultData) {
             imgDelete.setAttributeNode(imgWidthDelete);
             hrefUser.value = "profilepage/" + user["userId"];
             hrefEdit.value = "users/edit/" + user["userId"];
-            hrefDelete.value = "users/delete/" + user["userId"];
+            // hrefDelete.value = "users/delete/" + user["userId"];
             aUser.setAttributeNode(hrefUser);
             aEdit.setAttributeNode(hrefEdit);
             // aDelete.setAttributeNode(hrefDelete);
+            aDelete.classList.add('pointer');
             aDelete.onclick = function () {
                 $('#deleteUserModal').modal('show');
             }
            modalYesBtn.onclick = function() {
                    window.location = "users/delete/" + user["userId"];
            }
+           document.getElementById("userNameSpan").innerHTML=user["username"];
             aUser.text = user["name"];
             tdEmail.textContent = user["email"];
             let editClass = document.createAttribute('class');

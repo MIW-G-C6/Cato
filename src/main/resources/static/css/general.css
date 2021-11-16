@@ -38,7 +38,14 @@ a.nav-link{
     color: #d60000;
 }
 
+.pointer {
+    cursor: pointer;
+}
+
+
 /* The Modal (background) */
+
+/*the modal backdrop is the standard grey that greys out the rest of the site, dont change the z-index*/
 .modal-backdrop {
     z-index: 500;
 }
