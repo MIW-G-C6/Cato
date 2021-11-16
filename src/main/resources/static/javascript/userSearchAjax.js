@@ -1,3 +1,28 @@
+document.getElementById("deleteUserModal").innerHTML =`
+    <div class="modal-content" id="deleteThisUserModal">
+            <div class="modal-header">
+                <h2 class="modal-title">Warning!</h2>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to delete this user?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="catoButton" id="noBtn">No</button>
+                <button type="button" class="btn btn-primary" id="modalYesButton">Yes</button>
+            </div>
+        </div>`;
+
+var modal = document.getElementById("deleteThisUserModal");
+
+var modalCloseBtn = document.getElementsByClassName("close")[0];
+
+var modalNoBtn = document.getElementById("noBtn");
+
+var modalYesBtn = document.getElementById("modalYesButton")
+
+
+
 $(document).ready(function () {
 
     $("#search-form").submit(function (event) {
@@ -40,7 +65,7 @@ function fire_ajax_submit() {
 function fillTable(resultData) {
     let new_tbody = document.createElement('tbody');
 
-    if (resultData["responseJSON"]["users"].length == 0) {
+    if (resultData["responseJSON"]["users"].length === 0) {
         let td = document.createElement('td');
         let tr = document.createElement('tr');
         td.textContent = "No users found";
@@ -84,7 +109,13 @@ function fillTable(resultData) {
             hrefDelete.value = "users/delete/" + user["userId"];
             aUser.setAttributeNode(hrefUser);
             aEdit.setAttributeNode(hrefEdit);
-            aDelete.setAttributeNode(hrefDelete);
+            // aDelete.setAttributeNode(hrefDelete);
+            aDelete.onclick = function () {
+                $('#deleteUserModal').modal('show');
+            }
+           modalYesBtn.onclick = function() {
+                   window.location = "users/delete/" + user["userId"];
+           }
             aUser.text = user["name"];
             tdEmail.textContent = user["email"];
             let editClass = document.createAttribute('class');
@@ -107,3 +138,17 @@ function fillTable(resultData) {
     let old_tbody = document.getElementById("resultTable").tBodies.item(0);
     document.getElementById("resultTable").replaceChild(new_tbody, old_tbody);
 }
+
+    modalCloseBtn.onclick = function() {
+        $('#deleteUserModal').modal('hide');
+    }
+
+    modalNoBtn.onclick = function() {
+        $('#deleteUserModal').modal('hide');
+    }
+
+    window.onclick = function(event) {
+        if (event.target === modal) {
+            $('#deleteUserModal').modal('hide');
+        }
+    }
