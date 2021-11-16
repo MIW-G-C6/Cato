@@ -30,7 +30,7 @@ public class HomepageController {
     @GetMapping("/loginRedirect")
     protected String redirectAfterSuccessfulLogin() {
         if (userService.currentUserIsSiteAdmin()) {
-            return "redirect:/siteAdminDashboard";
+            return "redirect:/siteAdmin/dashboard";
         }
         return "redirect:/circles";
     }
