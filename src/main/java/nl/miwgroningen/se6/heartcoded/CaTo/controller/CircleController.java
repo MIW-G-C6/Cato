@@ -48,7 +48,7 @@ public class CircleController {
         model.addAttribute("clientsCircleThree",
                 memberService.findAllClientsInCircle(userService.getCircleThree(currentUser)));
         model.addAttribute("lastThreeCircles", userService.getLastThreeCirclesByUserId(currentUser));
-        model.addAttribute("allGroups", memberService.allCirclesByUserIdWithAdminCheck(currentUser));
+        model.addAttribute("allCircles", memberService.allCirclesByUserIdWithAdminCheck(currentUser));
         return "circleOverview";
     }
 
