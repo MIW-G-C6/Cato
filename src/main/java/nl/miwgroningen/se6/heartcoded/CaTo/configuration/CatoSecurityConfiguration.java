@@ -42,7 +42,7 @@ public class CatoSecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/siteAdminDashboard").hasAuthority("ROLE_ADMIN")
+                .antMatchers("/siteAdmin/dashboard").hasAuthority("ROLE_ADMIN")
                 .antMatchers("/users/delete/*").hasAuthority("ROLE_ADMIN")
                 .antMatchers("/css/**", "/webjars/**", "/javascript/**").permitAll()
                 .antMatchers("/","/registration").permitAll()
