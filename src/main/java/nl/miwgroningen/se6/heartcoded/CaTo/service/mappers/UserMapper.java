@@ -24,6 +24,7 @@ public class UserMapper {
         result.setUserId(user.getUserId());
         result.setName(user.getName());
         result.setEmail(user.getEmail());
+        result.setProfilePicture(user.getProfilePicture());
         return result;
     }
 
@@ -44,6 +45,7 @@ public class UserMapper {
         result.setUserId(userDTO.getUserId());
         result.setName(userDTO.getName());
         result.setEmail(userDTO.getEmail());
+        result.setProfilePicture(userDTO.getProfilePicture());
         return result;
     }
 }

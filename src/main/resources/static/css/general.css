@@ -723,3 +723,14 @@ input[type=email], input[type=password], input[type=text] {
 #keywordsBox {
     background-color: #fafafa;
 }
+
+.profile-picture {
+    width: 250px;
+    padding-top: 60px;
+    padding-left: 50px;
+}
+
+.profile-page-box {
+    display: flex;
+    flex-flow: row;
+}

@@ -13,6 +13,7 @@ public class UserDTO {
     private Integer userId;
     private String name;
     private String email;
+    private byte[] profilePicture;
 
     public Integer getUserId() {
         return userId;
@@ -36,5 +37,13 @@ public class UserDTO {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public byte[] getProfilePicture() {
+        return profilePicture;
+    }
+
+    public void setProfilePicture(byte[] profilePicture) {
+        this.profilePicture = profilePicture;
     }
 }
