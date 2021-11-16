@@ -10,6 +10,8 @@ public class CircleDTO {
 
     private String circleName;
 
+    private Boolean currentUserIsCircleAdmin;
+
     public CircleDTO(String circleName) {
         this.circleName = circleName;
     }
@@ -31,5 +33,13 @@ public class CircleDTO {
 
     public void setCircleName(String circleName) {
         this.circleName = circleName;
+    }
+
+    public Boolean getCurrentUserIsCircleAdmin() {
+        return currentUserIsCircleAdmin;
+    }
+
+    public void setCurrentUserIsCircleAdmin(Boolean currentUserIsCircleAdmin) {
+        this.currentUserIsCircleAdmin = currentUserIsCircleAdmin;
     }
 }

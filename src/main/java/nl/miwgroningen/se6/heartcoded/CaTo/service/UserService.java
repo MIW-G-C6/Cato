@@ -10,6 +10,7 @@ import nl.miwgroningen.se6.heartcoded.CaTo.repository.CircleRepository;
 import nl.miwgroningen.se6.heartcoded.CaTo.repository.UserRepository;
 import nl.miwgroningen.se6.heartcoded.CaTo.service.mappers.*;
 import org.apache.commons.io.IOUtils;
+import nl.miwgroningen.se6.heartcoded.CaTo.testing.unittesting.mappers.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -259,5 +260,4 @@ public class UserService {
     public boolean passwordMatches(String oldPassword, Integer userId) {
         return passwordEncoder.matches(oldPassword, userRepository.getById(userId).getPassword());
     }
-
 }

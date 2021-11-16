@@ -38,15 +38,26 @@ a.nav-link{
     color: #d60000;
 }
 
+.pointer {
+    cursor: pointer;
+}
+
+
 .cato-hyperlink {
     font-size: 1rem;
 }
 
 /* The Modal (background) */
+
+/*the modal backdrop is the standard grey that greys out the rest of the site, dont change the z-index*/
+.modal-backdrop {
+    z-index: 500;
+}
+
 .modal {
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top */
+    z-index: 1000; /* Sit on top */
     padding-top: 100px; /* Location of the box */
     left: 0;
     top: 0;
@@ -585,7 +596,7 @@ input[type=email], input[type=password], input[type=text] {
     width: 50%;
 }
 
-.circle-options-table {
+.group-options-table {
     width: 40%;
 }
 

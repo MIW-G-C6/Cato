@@ -6,9 +6,9 @@ import nl.miwgroningen.se6.heartcoded.CaTo.model.User;
 import nl.miwgroningen.se6.heartcoded.CaTo.repository.MemberRepository;
 import nl.miwgroningen.se6.heartcoded.CaTo.repository.CircleRepository;
 import nl.miwgroningen.se6.heartcoded.CaTo.repository.UserRepository;
-import nl.miwgroningen.se6.heartcoded.CaTo.service.mappers.CircleMapper;
-import nl.miwgroningen.se6.heartcoded.CaTo.service.mappers.MemberMapper;
-import nl.miwgroningen.se6.heartcoded.CaTo.service.mappers.MemberSiteAdminMapper;
+import nl.miwgroningen.se6.heartcoded.CaTo.testing.unittesting.mappers.CircleMapper;
+import nl.miwgroningen.se6.heartcoded.CaTo.testing.unittesting.mappers.MemberMapper;
+import nl.miwgroningen.se6.heartcoded.CaTo.testing.unittesting.mappers.MemberSiteAdminMapper;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -203,5 +203,17 @@ public class MemberService {
 
     private User getCurrentUser() {
         return (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    }
+
+    public List<CircleDTO> allCirclesByUserIdWithAdminCheck(Integer currentUserId) {
+        List<CircleDTO> result = new ArrayList<>();
+        List<CircleDTO> temp = getAllCirclesByUserId(currentUserId);
+        for (CircleDTO circleDTO : temp) {
+            if (userIsCircleAdmin(circleDTO.getCircleId())) {
+                circleDTO.setCurrentUserIsCircleAdmin(true);
+            }
+            result.add(circleDTO);
+        }
+        return result;
     }
 }

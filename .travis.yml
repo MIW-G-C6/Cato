@@ -1,0 +1,19 @@
+language: java
+jdk:
+  - oraclejdk11
+
+cache:
+  directories:
+  - $HOME/.m2
+
+services:
+  - mysql
+  
+before_install:
+  - mysql -u root --password="" < sql/initdb.sql
+
+script: 
+    - >
+        bash scripts/build.sh && 
+        bash scripts/componenttests.sh && 
+        bash scripts/integrationtests.sh

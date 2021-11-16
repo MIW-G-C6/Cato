@@ -23,11 +23,18 @@ public class SiteAdminDashboardController {
         this.memberService = memberService;
     }
 
-    @GetMapping("/siteAdminDashboard")
+    @GetMapping("/siteAdmin/dashboard")
     protected String showSiteAdminDashboard(@ModelAttribute("error") String error, Model model) {
         model.addAttribute("allClients", memberService.findAllClientsForSiteAdmin());
         model.addAttribute("allCircles", circleService.findAllCircles());
 
         return "siteAdminDashboard";
+    }
+
+    @GetMapping("/siteAdmin/userOverview")
+    protected String showSiteAdminUserOverview(@ModelAttribute("error") String error, Model model) {
+        model.addAttribute("allClients", memberService.findAllClientsForSiteAdmin());
+
+        return "siteAdminUserOverview";
     }
 }
