@@ -2,13 +2,11 @@ package nl.miwgroningen.se6.heartcoded.CaTo.service;
 
 import nl.miwgroningen.se6.heartcoded.CaTo.dto.*;
 import nl.miwgroningen.se6.heartcoded.CaTo.model.Member;
-import nl.miwgroningen.se6.heartcoded.CaTo.model.TaskList;
 import nl.miwgroningen.se6.heartcoded.CaTo.model.User;
 import nl.miwgroningen.se6.heartcoded.CaTo.repository.MemberRepository;
-import nl.miwgroningen.se6.heartcoded.CaTo.repository.GroupRepository;
-import nl.miwgroningen.se6.heartcoded.CaTo.repository.TaskListRepository;
+import nl.miwgroningen.se6.heartcoded.CaTo.repository.CircleRepository;
 import nl.miwgroningen.se6.heartcoded.CaTo.repository.UserRepository;
-import nl.miwgroningen.se6.heartcoded.CaTo.service.mappers.GroupMapper;
+import nl.miwgroningen.se6.heartcoded.CaTo.service.mappers.CircleMapper;
 import nl.miwgroningen.se6.heartcoded.CaTo.service.mappers.MemberMapper;
 import nl.miwgroningen.se6.heartcoded.CaTo.service.mappers.MemberSiteAdminMapper;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -30,19 +28,19 @@ import java.util.Optional;
 public class MemberService {
 
     private final MemberMapper memberMapper;
-    private final GroupMapper groupMapper;
+    private final CircleMapper circleMapper;
     private final MemberSiteAdminMapper memberSiteAdminMapper;
-    private final GroupRepository groupRepository;
+    private final CircleRepository circleRepository;
     private final UserRepository userRepository;
     private final MemberRepository memberRepository;
 
-    public MemberService(MemberMapper memberMapper, GroupMapper groupMapper,
-                         MemberSiteAdminMapper memberSiteAdminMapper, GroupRepository groupRepository,
+    public MemberService(MemberMapper memberMapper, CircleMapper circleMapper,
+                         MemberSiteAdminMapper memberSiteAdminMapper, CircleRepository circleRepository,
                          UserRepository userRepository, MemberRepository memberRepository) {
         this.memberMapper = memberMapper;
-        this.groupMapper = groupMapper;
+        this.circleMapper = circleMapper;
         this.memberSiteAdminMapper = memberSiteAdminMapper;
-        this.groupRepository = groupRepository;
+        this.circleRepository = circleRepository;
         this.userRepository = userRepository;
         this.memberRepository = memberRepository;
     }
@@ -54,43 +52,43 @@ public class MemberService {
     public void saveMember(MemberDTO memberDTO) {
         Member member = memberMapper.toMember(memberDTO);
         member.setUser(userRepository.getById(memberDTO.getUserId()));
-        member.setGroup(groupRepository.getById(memberDTO.getGroupId()));
+        member.setCircle(circleRepository.getById(memberDTO.getCircleId()));
         member.setAdmin(memberDTO.isAdmin());
         memberRepository.save(member);
     }
 
-    public List<MemberDTO> getAllByGroupId(Integer groupId) {
-        return memberMapper.toDTO(memberRepository.getAllByGroupGroupId(groupId));
+    public List<MemberDTO> getAllByCircleId(Integer circleId) {
+        return memberMapper.toDTO(memberRepository.getAllByCircleCircleId(circleId));
     }
 
     @Transactional
-    public void deleteByUserId(Integer userId, Integer groupId) {
-        memberRepository.deleteByUserAndGroup(userRepository.getById(userId), groupRepository.getById(groupId));
+    public void deleteByUserId(Integer userId, Integer cirlceId) {
+        memberRepository.deleteByUserAndCircle(userRepository.getById(userId), circleRepository.getById(cirlceId));
     }
 
-    public Optional<MemberDTO> findByUserIdAndGroupId(Integer userId, Integer groupId) {
+    public Optional<MemberDTO> findByUserIdAndCircleId(Integer userId, Integer circleId) {
         Optional<MemberDTO> result = Optional.empty();
-        Optional<Member> member = memberRepository.findMemberByUserAndGroup(
+        Optional<Member> member = memberRepository.findMemberByUserAndCircle(
                 userRepository.getById(userId),
-                groupRepository.getById(groupId));
+                circleRepository.getById(circleId));
         if(member.isPresent()) {
             result = memberMapper.toDTO(member);
         }
         return result;
     }
 
-    public List<GroupDTO> getAllGroupsByUserId(Integer userId) {
-        List<GroupDTO> result = new ArrayList<>();
-        List<Member> groupsHasUserList = memberRepository.getAllByUser(userRepository.getById(userId));
-        for (Member member : groupsHasUserList) {
-            result.add(groupMapper.toDTO(member.getGroup()));
+    public List<CircleDTO> getAllCirclesByUserId(Integer userId) {
+        List<CircleDTO> result = new ArrayList<>();
+        List<Member> memberList = memberRepository.getAllByUser(userRepository.getById(userId));
+        for (Member member : memberList) {
+            result.add(circleMapper.toDTO(member.getCircle()));
         }
         return result;
     }
 
-    public List<MemberDTO> findAllCaregiversByGroupId(Integer groupId) {
+    public List<MemberDTO> findAllCaregiversByCircleId(Integer circleId) {
         List<MemberDTO> result = new ArrayList<>();
-        for (Member member : memberRepository.getAllByGroupGroupId(groupId)) {
+        for (Member member : memberRepository.getAllByCircleCircleId(circleId)) {
             if(member.getUserRole().equals("Caregiver")) {
                 result.add(memberMapper.toDTO(member));
             }
@@ -108,9 +106,9 @@ public class MemberService {
         return result;
     }
 
-    public List<MemberDTO> findAllClientsInGroup(Integer groupId) {
+    public List<MemberDTO> findAllClientsInCircle(Integer circleId) {
         List<MemberDTO> result = new ArrayList<>();
-        List<MemberDTO> memberList = getAllByGroupId(groupId);
+        List<MemberDTO> memberList = getAllByCircleId(circleId);
         for (MemberDTO member : memberList) {
             if(member.getRole().equals("Client")) {
                 result.add(member);
@@ -129,18 +127,18 @@ public class MemberService {
         return result;
     }
 
-    public boolean userInGroupExists(MemberDTO member) {
-        if (findByUserIdAndGroupId(member.getUserId(), member.getGroupId()).isPresent()) {
+    public boolean userInCircleExists(MemberDTO member) {
+        if (findByUserIdAndCircleId(member.getUserId(), member.getCircleId()).isPresent()) {
                 return true;
             }
         return false;
     }
 
-    public List<MemberDTO> getGroupAdminsByGroupId(Integer groupId) {
-        List<MemberDTO> allMembersInGroup = memberMapper.toDTO(memberRepository.getAllByGroupGroupId(groupId));
+    public List<MemberDTO> getCircleAdminsByCircleId(Integer circleId) {
+        List<MemberDTO> allMembersInCircle = memberMapper.toDTO(memberRepository.getAllByCircleCircleId(circleId));
         List<MemberDTO> result = new ArrayList<>();
 
-        for (MemberDTO member : allMembersInGroup) {
+        for (MemberDTO member : allMembersInCircle) {
             if (member.isAdmin()) {
                 result.add(member);
             }
@@ -149,17 +147,17 @@ public class MemberService {
     }
 
     public boolean findOutIfMemberIsAdmin(MemberDTO memberDTO) {
-        Optional<MemberDTO> memberOptional = findByUserIdAndGroupId(memberDTO.getUserId(), memberDTO.getGroupId());
+        Optional<MemberDTO> memberOptional = findByUserIdAndCircleId(memberDTO.getUserId(), memberDTO.getCircleId());
         return memberOptional.map(MemberDTO::isAdmin).orElse(false);
     }
 
-    public boolean isClientInOtherGroup(Integer userid, Integer groupId) {
+    public boolean isClientInOtherCircle(Integer userid, Integer circleId) {
         boolean result = false;
         List<MemberDTO> allClients = findAllClients();
 
         for (MemberDTO client : allClients) {
             if (Objects.equals(userid, client.getUserId()) &&
-                    !Objects.equals(client.getGroupId(), groupId)) {
+                    !Objects.equals(client.getCircleId(), circleId)) {
                 result = true;
                 break;
             }
@@ -168,12 +166,12 @@ public class MemberService {
     }
 
     public boolean isClient(MemberDTO member) {
-        return member.getRole().equals(member.getGroupRoleOptions()[1]);
+        return member.getRole().equals(member.getCircleRoleOptions()[1]);
     }
 
-    public boolean userIsMemberOfGroup(Integer groupId) {
+    public boolean userIsMemberOfCircle(Integer circleId) {
         Integer userId = getCurrentUser().getUserId();
-        List<Member> memberList = memberRepository.getAllByGroupGroupId(groupId);
+        List<Member> memberList = memberRepository.getAllByCircleCircleId(circleId);
         for (Member member : memberList) {
             if (Objects.equals(userId, member.getUser().getUserId())) {
                 return true;
@@ -182,20 +180,20 @@ public class MemberService {
         return false;
     }
 
-    public boolean userIsGroupAdmin(Integer groupId) {
+    public boolean userIsCircleAdmin(Integer circleId) {
         Integer userId = getCurrentUser().getUserId();
-        Optional<Member> member = memberRepository.findMemberByUserUserIdAndGroupGroupId(userId, groupId);
+        Optional<Member> member = memberRepository.findMemberByUserUserIdAndCircleCircleId(userId, circleId);
         if (member.isPresent()) {
             return member.get().isAdmin();
         }
         return false;
     }
 
-    public boolean userIsLastGroupAdminInAnyGroup(Integer userId) {
+    public boolean userIsLastCircleAdminInAnyCircle(Integer userId) {
         List<Member> allMembers = memberRepository.findAllByUserUserId(userId);
 
         for (Member member : allMembers) {
-            if (getGroupAdminsByGroupId(member.getGroup().getGroupId()).size() == 1
+            if (getCircleAdminsByCircleId(member.getCircle().getCircleId()).size() == 1
                     && member.isAdmin()) {
                 return true;
             }
@@ -205,5 +203,17 @@ public class MemberService {
 
     private User getCurrentUser() {
         return (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    }
+
+    public List<CircleDTO> allCirclesByUserIdWithAdminCheck(Integer currentUserId) {
+        List<CircleDTO> result = new ArrayList<>();
+        List<CircleDTO> temp = getAllCirclesByUserId(currentUserId);
+        for (CircleDTO circleDTO : temp) {
+            if (userIsCircleAdmin(circleDTO.getCircleId())) {
+                circleDTO.setCurrentUserIsCircleAdmin(true);
+            }
+            result.add(circleDTO);
+        }
+        return result;
     }
 }

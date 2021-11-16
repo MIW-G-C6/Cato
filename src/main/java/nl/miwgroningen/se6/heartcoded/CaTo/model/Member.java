@@ -6,18 +6,18 @@ import javax.persistence.*;
 /**
  * @author Paul Romkes <p.r.romkes@gmail.com
  *
- * Users in a specific groups that get a specific role for that group
+ * Users in a specific circle that get a specific role for that circle
  */
 
 @Entity
 @IdClass(MemberId.class)
 public class Member {
 
-    private static final String[] GROUP_ROLE_OPTIONS = {"Caregiver", "Client"};
+    private static final String[] CIRCLE_ROLE_OPTIONS = {"Caregiver", "Client"};
 
     @Id
     @ManyToOne
-    private Group group;
+    private Circle circle;
 
     @Id
     @ManyToOne
@@ -27,8 +27,8 @@ public class Member {
 
     private boolean isAdmin;
 
-    public Member(Group group, User user, String userRole, boolean isAdmin) {
-        this.group = group;
+    public Member(Circle circle, User user, String userRole, boolean isAdmin) {
+        this.circle = circle;
         this.user = user;
         this.userRole = userRole;
         this.isAdmin = isAdmin;
@@ -37,12 +37,12 @@ public class Member {
     public Member() {
     }
 
-    public Group getGroup() {
-        return group;
+    public Circle getCircle() {
+        return circle;
     }
 
-    public void setGroup(Group group) {
-        this.group = group;
+    public void setCircle(Circle circle) {
+        this.circle = circle;
     }
 
     public User getUser() {
@@ -69,7 +69,7 @@ public class Member {
         isAdmin = admin;
     }
 
-    public static String[] getGroupRoleOptions() {
-        return GROUP_ROLE_OPTIONS;
+    public static String[] getCircleRoleOptions() {
+        return CIRCLE_ROLE_OPTIONS;
     }
 }

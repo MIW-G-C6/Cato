@@ -5,41 +5,41 @@ import nl.miwgroningen.se6.heartcoded.CaTo.model.Member;
 /**
  * @author Shalena Omapersad <shalenao@hotmail.com>
  *
- * DTO version of model GroupHasUsers with userId, username and role.
+ * DTO version of model Member with userId, username and role.
  */
 
 public class MemberDTO {
 
-    private String[] groupRoleOptions;
+    private String[] circleRoleOptions;
 
     private Integer userId;
 
     private String userName;
 
-    private Integer groupId;
+    private Integer circleId;
 
     private String role;
 
     private boolean isAdmin;
 
-    public MemberDTO(Integer userId, String userName, Integer groupId, String role, boolean isAdmin) {
+    public MemberDTO(Integer userId, String userName, Integer circleId, String role, boolean isAdmin) {
         this.userId = userId;
         this.userName = userName;
-        this.groupId = groupId;
+        this.circleId = circleId;
         this.role = role;
         this.isAdmin = isAdmin;
     }
 
     public MemberDTO() {
-        this.groupRoleOptions = Member.getGroupRoleOptions();
+        this.circleRoleOptions = Member.getCircleRoleOptions();
     }
 
-    public String[] getGroupRoleOptions() {
-        return groupRoleOptions;
+    public String[] getCircleRoleOptions() {
+        return circleRoleOptions;
     }
 
-    public void setGroupRoleOptions(String[] groupRoleOptions) {
-        this.groupRoleOptions = groupRoleOptions;
+    public void setCircleRoleOptions(String[] circleRoleOptions) {
+        this.circleRoleOptions = circleRoleOptions;
     }
 
     public Integer getUserId() {
@@ -58,12 +58,12 @@ public class MemberDTO {
         this.userName = userName;
     }
 
-    public Integer getGroupId() {
-        return groupId;
+    public Integer getCircleId() {
+        return circleId;
     }
 
-    public void setGroupId(Integer groupId) {
-        this.groupId = groupId;
+    public void setCircleId(Integer circleId) {
+        this.circleId = circleId;
     }
 
     public String getRole() {

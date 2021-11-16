@@ -10,11 +10,11 @@ public class TaskListDTO {
 
     private Integer taskListId;
 
-    private Integer groupId;
+    private Integer circleId;
 
-    public TaskListDTO(Integer taskListId, Integer groupId) {
+    public TaskListDTO(Integer taskListId, Integer circleId) {
         this.taskListId = taskListId;
-        this.groupId = groupId;
+        this.circleId = circleId;
     }
 
     public TaskListDTO() {
@@ -28,11 +28,11 @@ public class TaskListDTO {
         this.taskListId = taskListId;
     }
 
-    public Integer getGroupId() {
-        return groupId;
+    public Integer getCircleId() {
+        return circleId;
     }
 
-    public void setGroupId(Integer groupId) {
-        this.groupId = groupId;
+    public void setCircleId(Integer circleId) {
+        this.circleId = circleId;
     }
 }

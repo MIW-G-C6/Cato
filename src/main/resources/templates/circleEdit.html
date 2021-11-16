@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org">
 <head th:replace="fragments/general :: baseHeader(~{:: title})" >
   <meta charset="UTF-8">
-  <title>Edit group name</title>
+  <title>Edit circle name</title>
 </head>
 <body>
 <div id="main-body">
@@ -12,26 +12,26 @@
     <div class="breadCrumbs">
       <li><a th:href="@{/}">Home</a></li>
       <li sec:authorize="hasAuthority('ROLE_ADMIN')"><a th:href="@{/siteAdminDashboard}">Site Admin Dashboard</a></li>
-      <li><a th:href="@{/groups}">Groups</a></li>
-      <li><a th:href="@{/groups/{groupId}(groupId=${thisGroup.groupId})}"><span th:text="${thisGroup.groupName}"></span></a></li>
-      <li><a th:href="@{/groups/options/{groupId}(groupId=${thisGroup.groupId})}">Options</a></li>
-      <li>Edit group name</li>
+      <li><a th:href="@{/circles}">Care Circles</a></li>
+      <li><a th:href="@{/circles/{circleId}(circleId=${thisCircle.circleId})}"><span th:text="${thisCircle.circleName}"></span></a></li>
+      <li><a th:href="@{/circles/options/{circleId}(circleId=${thisCircle.circleId})}">Options</a></li>
+      <li>Edit circle name</li>
     </div>
   </div>
 
   <div class="container">
-    <h1>Edit group name</h1>
-    <form class="cato-form" th:action="@{/groups/options/edit/{groupId}(groupId=${thisGroup.groupId})}" method="post" th:object="${thisGroup}">
+    <h1>Edit Care Circle name</h1>
+    <form class="cato-form" th:action="@{/circles/options/edit/{circleId}(circleId=${thisCircle.circleId})}" method="post" th:object="${thisCircle}">
       <div>
-        <input type="text" placeholder="Group name" id="groupName" required pattern=".*\S+.*"
-               oninvalid="this.setCustomValidity('Name of group cannot be empty')"
+        <input type="text" placeholder="Circle name" id="circleName" required pattern=".*\S+.*"
+               oninvalid="this.setCustomValidity('Name of circle cannot be empty')"
                oninput="this.setCustomValidity('')"
-               th:field="*{groupName}">
+               th:field="*{circleName}">
       </div>
         <br>
       <div>
         <button type="submit" class="catoButton">Save</button>
-        <a type="button" th:href="@{/groups/options/{groupId}(groupId=${groupId})}" class="catoButton">Cancel</a>
+        <a type="button" th:href="@{/circles/options/{circleId}(circleId=${circleId})}" class="catoButton">Cancel</a>
       </div>
     </form>
 

@@ -26,11 +26,11 @@
                 <br>
             </div>
 
-            <div class="general-table-layout" id="group-overview-dashboard">
-                <h5 class="table-header">All groups<a class="float-right" th:href="@{/groups/new}">Create new group</a></h5>
+            <div class="general-table-layout" id="circle-overview-dashboard">
+                <h5 class="table-header">All Care Circle<a class="float-right" th:href="@{/circles/new}">Create new Care Circle</a></h5>
                 <table>
-                    <tr th:each="group : ${allGroups}">
-                        <td><a th:href="@{/groups/{groupId}(groupId=${group.groupId})}"><div th:text="${group.groupName}"></div></a></td>
+                    <tr th:each="circle : ${allCircles}">
+                        <td><a th:href="@{/circles/{circleId}(circleId=${circle.circleId})}"><div th:text="${circle.circleName}"></div></a></td>
                     </tr>
                 </table>
             </div>
@@ -43,7 +43,7 @@
                             <div th:text="${client.userName}"></div>
                         </td>
                         <td>
-                            <a th:href="@{/groups/{groupId}(groupId=${client.groupId})}"><div th:text="${client.groupName}"></div></a>
+                            <a th:href="@{/circles/{circleId}(circleId=${client.circleId})}"><div th:text="${client.circleName}"></div></a>
                         </td>
                     </tr>
                 </table>

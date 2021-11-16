@@ -19,16 +19,16 @@ import java.util.List;
 public class Seeder {
 
     private UserService userService;
-    private GroupService groupService;
+    private CircleService circleService;
     private MemberService memberService;
     private TaskService taskService;
     private TaskListService taskListService;
 
     @Autowired
-    public Seeder(UserService userService, GroupService groupService, MemberService memberService,
+    public Seeder(UserService userService, CircleService circleService, MemberService memberService,
                   TaskService taskService, TaskListService taskListService) {
         this.userService = userService;
-        this.groupService = groupService;
+        this.circleService = circleService;
         this.memberService = memberService;
         this.taskService = taskService;
         this.taskListService = taskListService;
@@ -40,8 +40,8 @@ public class Seeder {
             seedUser();
         }
 
-        if (groupService.findAllGroups().size() == 0) {
-            seedGroups();
+        if (circleService.findAllCircles().size() == 0) {
+            seedCircles();
             if (taskListService.findAllTaskLists().size() == 0) {
                 seedTaskLists();
             }
@@ -104,47 +104,47 @@ public class Seeder {
         userService.saveNewUser(new UserRegistrationDTO("Ralphy Meza", "xTkutzd];Hya$c.9fB2{:SM~ANpr)}", "xTkutzd];Hya$c.9fB2{:SM~ANpr)}", "yangyan@optonline.net"));
     }
 
-    private void seedGroups() {
-        groupService.saveGroup(new GroupDTO("The Caring Hand"));
-        groupService.saveGroup(new GroupDTO("Happy At Home"));
-        groupService.saveGroup(new GroupDTO("House And Home"));
-        groupService.saveGroup(new GroupDTO("Precise Care"));
-        groupService.saveGroup(new GroupDTO("Sunrise Home Care"));
-        groupService.saveGroup(new GroupDTO("Helping Hands At Home"));
-        groupService.saveGroup(new GroupDTO("Custom Home Care Solutions"));
-        groupService.saveGroup(new GroupDTO("Senior Serenity"));
-        groupService.saveGroup(new GroupDTO("Ease Of Effort"));
-        groupService.saveGroup(new GroupDTO("Slick Home Care"));
+    private void seedCircles() {
+        circleService.saveCircle(new CircleDTO("The Caring Hand"));
+        circleService.saveCircle(new CircleDTO("Happy At Home"));
+        circleService.saveCircle(new CircleDTO("House And Home"));
+        circleService.saveCircle(new CircleDTO("Precise Care"));
+        circleService.saveCircle(new CircleDTO("Sunrise Home Care"));
+        circleService.saveCircle(new CircleDTO("Helping Hands At Home"));
+        circleService.saveCircle(new CircleDTO("Custom Home Care Solutions"));
+        circleService.saveCircle(new CircleDTO("Senior Serenity"));
+        circleService.saveCircle(new CircleDTO("Ease Of Effort"));
+        circleService.saveCircle(new CircleDTO("Slick Home Care"));
     }
 
     private void seedMembers() {
         List<UserDTO> allUsers = userService.findAllUsers();
-        List<GroupDTO> allGroups = groupService.findAllGroups();
+        List<CircleDTO> allCircles = circleService.findAllCircles();
         List<UserDTO> mainUsers = allUsers.subList(0, 10);
         List<UserDTO> extraUsers = allUsers.subList(10, allUsers.size() - 1);
 
         int i = 0;
         for (UserDTO user : mainUsers) {
-            memberService.saveMember(new MemberDTO(user.getUserId(), user.getName(), allGroups.get(i).getGroupId(), "Caregiver", true));
-            i = increment(allGroups, i);
-            memberService.saveMember(new MemberDTO(user.getUserId(), user.getName(), allGroups.get(i).getGroupId(), "Caregiver", false));
-            i = increment(allGroups, i);
-            memberService.saveMember(new MemberDTO(user.getUserId(), user.getName(), allGroups.get(i).getGroupId(), "Caregiver", false));
+            memberService.saveMember(new MemberDTO(user.getUserId(), user.getName(), allCircles.get(i).getCircleId(), "Caregiver", true));
+            i = increment(allCircles, i);
+            memberService.saveMember(new MemberDTO(user.getUserId(), user.getName(), allCircles.get(i).getCircleId(), "Caregiver", false));
+            i = increment(allCircles, i);
+            memberService.saveMember(new MemberDTO(user.getUserId(), user.getName(), allCircles.get(i).getCircleId(), "Caregiver", false));
         }
 
         i = 0;
         for (UserDTO user : extraUsers) {
-            memberService.saveMember(new MemberDTO(user.getUserId(), user.getName(), allGroups.get(i).getGroupId(), "Caregiver", true));
-            i = increment(allGroups, i);
-            memberService.saveMember(new MemberDTO(user.getUserId(), user.getName(), allGroups.get(i).getGroupId(), "Client", false));
-            i = increment(allGroups, i);
-            memberService.saveMember(new MemberDTO(user.getUserId(), user.getName(), allGroups.get(i).getGroupId(), "Caregiver", false));
-            i = increment(allGroups, i);
+            memberService.saveMember(new MemberDTO(user.getUserId(), user.getName(), allCircles.get(i).getCircleId(), "Caregiver", true));
+            i = increment(allCircles, i);
+            memberService.saveMember(new MemberDTO(user.getUserId(), user.getName(), allCircles.get(i).getCircleId(), "Client", false));
+            i = increment(allCircles, i);
+            memberService.saveMember(new MemberDTO(user.getUserId(), user.getName(), allCircles.get(i).getCircleId(), "Caregiver", false));
+            i = increment(allCircles, i);
         }
     }
 
-    private int increment(List<GroupDTO> allGroups, int i) {
-        if (i == allGroups.size() - 1) {
+    private int increment(List<CircleDTO> allCircles, int i) {
+        if (i == allCircles.size() - 1) {
             i = 0;
         } else {
             i++;
@@ -153,9 +153,9 @@ public class Seeder {
     }
 
     private void seedTaskLists() {
-        List<GroupDTO> allGroups = groupService.findAllGroups();
-        for (GroupDTO group : allGroups) {
-            taskListService.saveNew(group);
+        List<CircleDTO> allCircles = circleService.findAllCircles();
+        for (CircleDTO circle : allCircles) {
+            taskListService.saveNew(circle);
         }
     }
 

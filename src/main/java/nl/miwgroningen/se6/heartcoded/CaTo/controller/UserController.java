@@ -24,7 +24,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 public class UserController {
 
-    private static final String USER_IS_THE_LAST_ADMIN_IN_A_GROUP = "User is the last admin in a group";
+    private static final String USER_IS_THE_LAST_ADMIN_IN_A_CIRCLE = "User is the last admin in a circle";
     private static final String SITE_ADMIN_DELETE_ERROR = "Unable to delete site admin";
 
     private UserService userService;
@@ -47,8 +47,8 @@ public class UserController {
         if (!userService.currentUserIsSiteAdmin()) {
             return "redirect:/403";
         }
-        if (memberService.userIsLastGroupAdminInAnyGroup(userId)) {
-            redirectAttributes.addAttribute("error", USER_IS_THE_LAST_ADMIN_IN_A_GROUP);
+        if (memberService.userIsLastCircleAdminInAnyCircle(userId)) {
+            redirectAttributes.addAttribute("error", USER_IS_THE_LAST_ADMIN_IN_A_CIRCLE);
         } else if (userService.userIsSiteAdmin(userId)) {
             redirectAttributes.addAttribute("error", SITE_ADMIN_DELETE_ERROR);
         } else {
@@ -90,7 +90,7 @@ public class UserController {
             return "registrationForm";
         }
         userService.saveNewUser(userRegistrationDTO);
-        return "redirect:/groups";
+        return "redirect:/circles";
     }
 
     @PostMapping("users/edit/{userId}")

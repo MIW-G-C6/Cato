@@ -32,6 +32,6 @@ public class HomepageController {
         if (userService.currentUserIsSiteAdmin()) {
             return "redirect:/siteAdminDashboard";
         }
-        return "redirect:/groups";
+        return "redirect:/circles";
     }
 }

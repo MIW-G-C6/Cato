@@ -4,7 +4,7 @@
 
 **Client** - registeredUser, the person that needs to be cared of
 
-**GroupAdmin** - The user that is the admin of a self created group
+**CircleAdmin** - The user that is the admin of a self created circle
 
 **Calendar**
 
@@ -14,21 +14,21 @@
 
 **Task** - The task that is made by the client and being done by the caregiver
 
-**Group** - containing at least one client and one caregiver
+**Circle** - containing at least one client and one caregiver
 
 **Superadmin** - Site admin, can control the complete user database and all site features
 
-**groupmember** - a member of a group either a caregiver or client
+**circlemember** - a member of a circle either a caregiver or client
 
 **User** - this can be a superadmin, caregiver or client
 
 **Notification** - pushbericht
 
-**groupOverview** - page where one can see all the groups where one is a member off and have an option to create a new group.
+**circleOverview** - page where one can see all the circles where one is a member off and have an option to create a new circle.
 
-**groupDashboard** - page of the group where one can see all the clients, their most urgent tasks, a link to their clientDashboard and other groupmembers of a certain group.
+**circleDashboard** - page of the circle where one can see all the clients, their most urgent tasks, a link to their clientDashboard and other circlemembers of a certain circle.
 
-**groupOptions**-page where the groupAdministrator can add or remove group members and change their roles in the group. Also the groupname can be changed here.
+**circleOptions**-page where the circleAdministrator can add or remove circle members and change their roles in the circle. Also the circlename can be changed here.
 
 **clientDashboard** - page where one can see the tasklist and calendar of a certain client
 

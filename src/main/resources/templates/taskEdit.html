@@ -12,9 +12,9 @@
     <div class="breadCrumbs">
       <li><a th:href="@{/}">Home</a></li>
       <li sec:authorize="hasAuthority('ROLE_ADMIN')"><a th:href="@{/siteAdminDashboard}">Site Admin Dashboard</a></li>
-      <li><a th:href="@{/groups}">Groups</a></li>
-      <li><a th:href="@{/groups/{groupId}(groupId=${groupId})}"><span th:text="${groupName}"></span></a></li>
-      <li><a th:href="@{/groups/{groupId}/taskLists/{taskListId}/{taskId}(groupId=${groupId}, taskListId=${taskListId}, taskId=${taskId})}">Task Details</a></li>
+      <li><a th:href="@{/circles}">Care Circles</a></li>
+      <li><a th:href="@{/circles/{circleId}(circleId=${circleId})}"><span th:text="${circleName}"></span></a></li>
+      <li><a th:href="@{/circles/{circleId}/taskLists/{taskListId}/{taskId}(circleId=${circleId}, taskListId=${taskListId}, taskId=${taskId})}">Task Details</a></li>
       <li>Task</li>
     </div>
   </div>
@@ -23,7 +23,7 @@
   <div class="container">
     <h1>Edit task</h1>
 
-    <form class="cato-form" th:action="@{/groups/{groupId}/taskLists/{taskListId}/new(groupId=${groupId}, taskListId=${taskListId})}" method="post" th:object="${task}">
+    <form class="cato-form" th:action="@{/circles/{circleId}/taskLists/{taskListId}/new(circleId=${circleId}, taskListId=${taskListId})}" method="post" th:object="${task}">
 
       <input type="hidden" th:field="*{taskId}">
       <div>
@@ -42,7 +42,7 @@
       </div>
       <div>
         <button type="submit" class="catoButton">Save</button>
-        <a type="button" th:href="@{/groups/{groupId}/taskLists/{taskListId}/{taskId}(groupId=${groupId}, taskListId=${taskListId}, taskId=${taskId})}" class="catoButton">Cancel</a>
+        <a type="button" th:href="@{/circles/{circleId}/taskLists/{taskListId}/{taskId}(circleId=${circleId}, taskListId=${taskListId}, taskId=${taskId})}" class="catoButton">Cancel</a>
       </div>
       <script>
         document.getElementById("priority1").setAttribute("checked", "checked");
