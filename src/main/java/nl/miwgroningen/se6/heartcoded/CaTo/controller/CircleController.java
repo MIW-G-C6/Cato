@@ -70,7 +70,7 @@ public class CircleController {
 
         taskListService.deleteByCircleId(circleId);
         circleService.deleteCircleById(circleId);
-        return "redirect:/circleId";
+        return "redirect:/circles";
     }
 
     @PostMapping("/circles/new")
