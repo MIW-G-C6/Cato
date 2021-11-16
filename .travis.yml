@@ -15,5 +15,4 @@ before_install:
 script: 
     - >
         bash scripts/build.sh && 
-        bash scripts/componenttests.sh &&
         bash scripts/integrationtests.sh
