@@ -1,9 +1,7 @@
-package nl.miwgroningen.se6.heartcoded.CaTo.service.mappers;
+package nl.miwgroningen.se6.heartcoded.CaTo.testing.unittesting.mappers;
 
 import nl.miwgroningen.se6.heartcoded.CaTo.dto.UserDTO;
-import nl.miwgroningen.se6.heartcoded.CaTo.model.Member;
 import nl.miwgroningen.se6.heartcoded.CaTo.model.User;
-import org.apache.catalina.mapper.Mapper;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

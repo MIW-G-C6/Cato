@@ -1,4 +1,4 @@
-package nl.miwgroningen.se6.heartcoded.CaTo.service;
+package nl.miwgroningen.se6.heartcoded.CaTo.testing.unittesting;
 
 import nl.miwgroningen.se6.heartcoded.CaTo.dto.TaskDTO;
 import nl.miwgroningen.se6.heartcoded.CaTo.model.Task;
@@ -7,7 +7,8 @@ import nl.miwgroningen.se6.heartcoded.CaTo.model.User;
 import nl.miwgroningen.se6.heartcoded.CaTo.repository.TaskListRepository;
 import nl.miwgroningen.se6.heartcoded.CaTo.repository.TaskRepository;
 import nl.miwgroningen.se6.heartcoded.CaTo.repository.UserRepository;
-import nl.miwgroningen.se6.heartcoded.CaTo.service.mappers.TaskMapper;
+import nl.miwgroningen.se6.heartcoded.CaTo.service.TaskService;
+import nl.miwgroningen.se6.heartcoded.CaTo.testing.unittesting.mappers.TaskMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
