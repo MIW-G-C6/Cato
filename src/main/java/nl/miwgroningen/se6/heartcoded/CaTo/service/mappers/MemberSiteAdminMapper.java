@@ -14,8 +14,8 @@ public class MemberSiteAdminMapper {
 
     public MemberSiteAdminDTO toDTO(Member member) {
         MemberSiteAdminDTO memberSiteAdminDTO = new MemberSiteAdminDTO();
-        memberSiteAdminDTO.setGroupId(member.getGroup().getGroupId());
-        memberSiteAdminDTO.setGroupName(member.getGroup().getGroupName());
+        memberSiteAdminDTO.setCircleId(member.getCircle().getCircleId());
+        memberSiteAdminDTO.setCircleName(member.getCircle().getCircleName());
         memberSiteAdminDTO.setUserId(member.getUser().getUserId());
         memberSiteAdminDTO.setUserName(member.getUser().getName());
         return  memberSiteAdminDTO;

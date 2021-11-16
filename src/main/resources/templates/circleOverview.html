@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org">
+<head th:replace="fragments/general :: baseHeader(~{:: title})" >
+    <meta charset="UTF-8">
+    <title>My circles</title>
+</head>
+<body>
+<div id="main-body">
+    <div th:replace="fragments/general :: navbar"></div>
+    <div class="breadCrumbsBar">
+        <div th:replace="fragments/general :: previousButton"></div>
+        <div class="breadCrumbs">
+            <li><a th:href="@{/}">Home</a></li>
+            <li sec:authorize="hasAuthority('ROLE_ADMIN')"><a th:href="@{/siteAdminDashboard}">Site Admin Dashboard</a></li>
+            <li>Care Circles</li>
+        </div>
+    </div>
+
+    <div class="container">
+        <h5 th:if="${!(lastThreeCircles.get(0).circleId == 0)}">Last visited</h5>
+        <br>
+        <div th:class="cato-three-circles-placing" th:if="${!(lastThreeCircles.get(0).circleId == 0)}" th:object="${lastThreeCircles}" >
+            <div th:if="${!(lastThreeCircles.get(0).circleId == 0)}" class="circle-overview-circle-banner" th:onclick="|window.location.href='@{/circles/{circleId}(circleId=${lastThreeCircles.get(0).circleId})}'|">
+                <h2 th:text="*{get(0).circleName}"></h2>
+                <table >
+                    <tr>Clients</tr>
+                    <br>
+                    <tr class="tr-plain" th:if="${(clientsCircleOne.isEmpty())}">There are no clients in this circle</tr>
+                    <tr class="tr-plain" th:if="${!(clientsCircleOne.isEmpty())}" th:each="client : ${clientsCircleOne}">
+                        <td th:text="${client.userName}"></td>
+                    </tr>
+                </table>
+            </div>
+            <div th:if="${!(lastThreeCircles.get(1).circleId == 0)}" class="circle-overview-circle-banner" th:onclick="|window.location.href='@{/circles/{circleId}(circleId=${lastThreeCircles.get(1).circleId})}'|">
+                <h2 th:text="*{get(1).circleName}"></h2>
+                <table >
+                    <tr>Clients</tr>
+                    <br>
+                    <tr class="tr-plain" th:if="${(clientsCircleTwo.isEmpty())}">There are no clients in this circle</tr>
+                    <tr class="tr-plain" th:if="${!(clientsCircleTwo.isEmpty())}" th:each="client : ${clientsCircleTwo}">
+                        <td th:text="${client.userName}"></td>
+                    </tr>
+                </table>
+            </div>
+            <div th:if="${!(lastThreeCircles.get(2).circleId == 0)}" class="circle-overview-circle-banner" th:onclick="|window.location.href='@{/circles/{circleId}(circleId=${lastThreeCircles.get(2).circleId})}'|">
+                <h1 th:text="*{get(2).circleName}"></h1>
+                <table >
+                    <tr>Clients</tr>
+                    <br>
+                    <tr class="tr-plain" th:if="${(clientsCircleThree.isEmpty())}">There are no clients in this circle</tr>
+                    <tr class="tr-plain" th:if="${!(clientsCircleThree.isEmpty())}" th:each="client : ${clientsCircleThree}">
+                        <td th:text="${client.userName}"></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <br>
+        <div class="cato-edit-flex">
+            <div class="cato-table">
+                <br>
+                <h5>My Care Circles</h5>
+                <hr>
+                <table>
+                    <tr th:if="${allCircles.isEmpty()}">You are not a member of a Care Circle yet</tr><br>
+                    <tr th:if="${allCircles.isEmpty()}">Create a new Care Circle or ask a circle admin to add you to a Care Circle</tr>
+                    <tr th:each="circle : ${allCircles}">
+                        <td><a th:href="@{/circles/{circleId}(circleId=${circle.circleId})}"><div th:text="${circle.circleName}"></div></a></td>
+                    </tr>
+                </table>
+            </div>
+            <div class="cato-option-row">
+                <ul class="cato-ul">
+                    <li><a th:href="@{/circles/new}">Create new Care Circle</a></li>
+                </ul>
+            </div>
+        </div>
+        <br>
+    </div>
+</div>
+
+<div th:replace="fragments/general :: footer"></div>
+<div th:replace="fragments/general :: bottomScripts"></div>
+</body>
+</html>

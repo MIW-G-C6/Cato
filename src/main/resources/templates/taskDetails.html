@@ -12,8 +12,8 @@
         <div class="breadCrumbs">
             <li><a th:href="@{/}">Home</a></li>
             <li sec:authorize="hasAuthority('ROLE_ADMIN')"><a th:href="@{/siteAdminDashboard}">Site Admin Dashboard</a></li>
-            <li><a th:href="@{/groups}">Groups</a></li>
-            <li><a th:href="@{/groups/{groupId}(groupId=${groupId})}"><span th:text="${groupName}"></span></a></li>
+            <li><a th:href="@{/circles}">Care Circles</a></li>
+            <li><a th:href="@{/circles/{circleId}(circleId=${circleId})}"><span th:text="${circleName}"></span></a></li>
             <li>Task</li>
         </div>
     </div>
@@ -54,9 +54,9 @@
             </div>
             <div class="cato-option-row">
                 <ul class="cato-ul">
-                    <li><a th:href="@{/groups/{groupId}/taskLists/{taskListId}/update/{taskId}(groupId=${groupId}, taskListId=${taskList.taskListId}, taskId=${task.taskId})}">Edit task</a></li>
-                    <br>
-                    <li><a th:href="@{/groups/{groupId}/task/{taskId}/unassign(groupId=${groupId}, taskId=${taskId})}">Unassign</a></li>
+                    <li><a th:href="@{/circles/{circleId}/taskLists/{taskListId}/update/{taskId}(circleId=${circleId}, taskListId=${taskList.taskListId}, taskId=${task.taskId})}">Edit task</a></li>
+                    <br th:unless="${task.assignedUserName} == ''">
+                    <li><a th:unless="${task.assignedUserName} == ''" th:href="@{/circles/{circleId}/task/{taskId}/unassign(circleId=${circleId}, taskId=${taskId})}">Unassign</a></li>
                     <li><hr></li>
                     <li><a id="cato-delete-link" th:href="@{'/task/delete/' + ${task.taskId}}">Delete task</a></li>
                 </ul>

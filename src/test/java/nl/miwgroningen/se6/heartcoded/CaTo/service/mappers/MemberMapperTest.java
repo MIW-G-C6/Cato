@@ -1,7 +1,7 @@
 package nl.miwgroningen.se6.heartcoded.CaTo.service.mappers;
 
 import nl.miwgroningen.se6.heartcoded.CaTo.dto.MemberDTO;
-import nl.miwgroningen.se6.heartcoded.CaTo.model.Group;
+import nl.miwgroningen.se6.heartcoded.CaTo.model.Circle;
 import nl.miwgroningen.se6.heartcoded.CaTo.model.Member;
 import nl.miwgroningen.se6.heartcoded.CaTo.model.User;
 import org.junit.jupiter.api.BeforeEach;
@@ -18,8 +18,8 @@ class MemberMapperTest {
     private MemberMapper memberMapper;
     private User user1;
     private User user2;
-    private Group group1;
-    private Group group2;
+    private Circle circle1;
+    private Circle circle2;
     private Member member1;
     private Member member2;
 
@@ -28,8 +28,8 @@ class MemberMapperTest {
         memberMapper = new MemberMapper();
         user1 = new User();
         user2 = new User();
-        group1 = new Group();
-        group2 = new Group();
+        circle1 = new Circle();
+        circle2 = new Circle();
         member1 = new Member();
         member2 = new Member();
 
@@ -38,27 +38,27 @@ class MemberMapperTest {
         user2.setUserId(2);
         user2.setName("Second");
 
-        group1.setGroupId(3);
-        group1.setGroupName("Group1");
-        group2.setGroupId(4);
-        group2.setGroupName("Group2");
+        circle1.setCircleId(3);
+        circle1.setCircleName("Circle1");
+        circle2.setCircleId(4);
+        circle2.setCircleName("Circle2");
 
         member1.setUser(user1);
-        member1.setGroup(group1);
+        member1.setCircle(circle1);
         member1.setUserRole("TestRole1");
         member1.setAdmin(true);
 
         member2.setUser(user2);
-        member2.setGroup(group2);
+        member2.setCircle(circle2);
     }
 
     @Test
     void toDTO() {
         MemberDTO memberDTO = memberMapper.toDTO(member1);
-        assertEquals(Member.getGroupRoleOptions(), memberDTO.getGroupRoleOptions());
+        assertEquals(Member.getCircleRoleOptions(), memberDTO.getCircleRoleOptions());
         assertEquals(user1.getUserId(), memberDTO.getUserId());
         assertEquals(user1.getName(), memberDTO.getUserName());
-        assertEquals(group1.getGroupId(), memberDTO.getGroupId());
+        assertEquals(circle1.getCircleId(), memberDTO.getCircleId());
         assertEquals(member1.getUserRole(), memberDTO.getRole());
         assertEquals(member1.isAdmin(), memberDTO.isAdmin());
     }

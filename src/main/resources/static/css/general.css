@@ -14,7 +14,7 @@ a.nav-link{
     justify-content: space-between;
 }
 
-.cato-group-dashboard-flex {  /* Same as .cato-edit.flex */
+.cato-circle-dashboard-flex {  /* Same as .cato-edit.flex */
     display: flex;
     flex-flow: row;
     justify-content: space-between;
@@ -94,14 +94,14 @@ a.nav-link{
     cursor: pointer;
 }
 
-/*Group Overview Page*/
-.cato-three-groups-placing {
+/*Circle Overview Page*/
+.cato-three-circles-placing {
     display: flex;
     flex-flow: row;
     justify-content: space-around;
 }
 
-.group-overview-group-banner {
+.circle-overview-circle-banner {
     width: 30%;
     min-height: 150px;
     text-decoration: none;
@@ -113,7 +113,7 @@ a.nav-link{
     box-shadow: 0 0 11px rgba(33,33,33,.2);
 }
 
-.group-overview-group-banner:hover {
+.circle-overview-circle-banner:hover {
     background-color: #cafad9;
     cursor: pointer;
 }
@@ -238,7 +238,7 @@ a.nav-link{
     color: black;
 }
 
-.nav-group a {
+.nav-circle a {
     font-size: 14px;
     margin-left: 40px;
 }
@@ -543,7 +543,7 @@ button {
     cursor: pointer;
 }
 
-.form-group {
+.form-circle {
     width: 30%;
     display: block;
     margin: auto;
@@ -581,16 +581,16 @@ input[type=email], input[type=password], input[type=text] {
     width: 50%;
 }
 
-.group-options-table {
+.circle-options-table {
     width: 40%;
 }
 
-.group-overview {
+.circle-overview {
     width: 50%;
 }
 
-#group-overview-dashboard {
-    width: 30%;
+#circle-overview-dashboard {
+    width: 30%
 }
 
 .client-overview {
@@ -601,7 +601,7 @@ input[type=email], input[type=password], input[type=text] {
     width: 20%;
 }
 
-.group-settings {
+.circle-settings {
     width: 50%;
 }
 
@@ -618,7 +618,7 @@ input[type=email], input[type=password], input[type=text] {
     flex-flow: row;
 }
 
-.cd-groupmember {
+.cd-circlemember {
     width: 33%;
     padding-right: 100px;
 }
@@ -639,14 +639,14 @@ input[type=email], input[type=password], input[type=text] {
 }
 
 
-.gd-groupmembers {
+.gd-circlemembers {
     display: block;
     width: 25%;
     padding-right: 50px;
     border-radius: 4px;
 }
 
-.gd-groupmembers td {
+.gd-circlemembers td {
     padding: 7px;
 }
 
@@ -668,7 +668,7 @@ input[type=email], input[type=password], input[type=text] {
     width: 50%;
 }
 
-#groupName {
+#circleName {
     padding: 5px 10px;
     border: none;
     border-bottom: 1px solid black;
@@ -704,7 +704,7 @@ input[type=email], input[type=password], input[type=text] {
     width: 93px;
 }
 
-#group-options-header {
+#circle-options-header {
     padding: 10px 0 10px 0;
     font-size: 30px;
     text-decoration: none;

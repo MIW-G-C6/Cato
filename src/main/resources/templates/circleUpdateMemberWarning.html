@@ -11,20 +11,20 @@
 
   <div class="container">
 
-    <div class="group-update-member">
-      <form th:action="@{/groups/options/{groupId}/updatemember/{userId}/changeAdminRole (groupId=${groupId}, userId=${userId})}" method="post" th:object="${member}">
+    <div class="circle-update-member">
+      <form th:action="@{/circles/options/{circleId}/updatemember/{userId}/changeAdminRole (circleId=${circleId}, userId=${userId})}" method="post" th:object="${member}">
         <input type="hidden" th:field="${member.userName}" th:value="*{userName}">
-        <input type="hidden" th:field="${member.groupId}" th:value="*{groupId}">
+        <input type="hidden" th:field="${member.circleId}" th:value="*{circleId}">
         <input type="hidden" th:field="${member.userId}" th:value="*{userId}">
         <input type="hidden" th:field="${member.role}" th:value="*{role}">
         <input type="hidden" th:field="${member.admin}" th:value="*{admin}">
         <h1>Are you sure?</h1>
         <br>
-        <p>Are you sure you don't want to be a group admin anymore?</p>
-        <p>You are not able to come back to the group options page</p>
+        <p>Are you sure you don't want to be a circle admin anymore?</p>
+        <p>You are not able to come back to the circle options page</p>
         <br>
         <button type="submit" class="catoYesWarningButton" >Yes</button>
-        <a type="button" th:href="@{/groups/options/{groupId}/updatemember/{userId}(groupId=${groupId}, userId=${userId})}" class="catoButton">No</a>
+        <a type="button" th:href="@{/circles/options/{circleId}/updatemember/{userId}(circleId=${circleId}, userId=${userId})}" class="catoButton">No</a>
       </form>
     </div>
   </div>
