@@ -113,12 +113,12 @@ function fillTable(resultData) {
             // aDelete.setAttributeNode(hrefDelete);
             aDelete.classList.add('pointer');
             aDelete.onclick = function () {
+                modalYesBtn.onclick = function() {
+                    window.location = "/users/delete/" + user["userId"];
+                }
                 $('#deleteUserModal').modal('show');
+                document.getElementById("userNameSpan").innerHTML=user["name"];
             }
-           modalYesBtn.onclick = function() {
-                   window.location = "/users/delete/" + user["userId"];
-           }
-           document.getElementById("userNameSpan").innerHTML=user["username"];
             aUser.text = user["name"];
             tdEmail.textContent = user["email"];
             let editClass = document.createAttribute('class');

@@ -24,7 +24,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 public class UserController {
 
-    private static final String USER_IS_THE_LAST_ADMIN_IN_A_CIRCLE = "User is the last admin in a circle";
+    private static final String USER_IS_THE_LAST_ADMIN_IN_A_CIRCLE = "User is the last admin in a care circle";
     private static final String SITE_ADMIN_DELETE_ERROR = "Unable to delete site admin";
 
     private UserService userService;
@@ -43,7 +43,8 @@ public class UserController {
     }
 
     @GetMapping("/users/delete/{userId}")
-    protected String deleteUser(@PathVariable("userId") Integer userId, RedirectAttributes redirectAttributes) {
+    protected String deleteUser(@PathVariable("userId") Integer userId,
+                                @ModelAttribute("returnPageString") String returnString, RedirectAttributes redirectAttributes) {
         if (!userService.currentUserIsSiteAdmin()) {
             return "redirect:/403";
         }
@@ -54,7 +55,7 @@ public class UserController {
         } else {
             userService.deleteUserById(userId);
         }
-        return "redirect:/siteAdmin/dashboard";
+        return "redirect:/siteAdmin/userOverview";
     }
 
     @GetMapping("/users/edit/{userId}")
