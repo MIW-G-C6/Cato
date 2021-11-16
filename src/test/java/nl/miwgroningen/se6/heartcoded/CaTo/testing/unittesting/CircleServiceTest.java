@@ -1,4 +1,4 @@
-package nl.miwgroningen.se6.heartcoded.CaTo.service;
+package nl.miwgroningen.se6.heartcoded.CaTo.testing.unittesting;
 
 import nl.miwgroningen.se6.heartcoded.CaTo.dto.CircleDTO;
 import nl.miwgroningen.se6.heartcoded.CaTo.model.Circle;
@@ -6,7 +6,8 @@ import nl.miwgroningen.se6.heartcoded.CaTo.model.Member;
 import nl.miwgroningen.se6.heartcoded.CaTo.model.User;
 import nl.miwgroningen.se6.heartcoded.CaTo.repository.CircleRepository;
 import nl.miwgroningen.se6.heartcoded.CaTo.repository.MemberRepository;
-import nl.miwgroningen.se6.heartcoded.CaTo.service.mappers.CircleMapper;
+import nl.miwgroningen.se6.heartcoded.CaTo.service.CircleService;
+import nl.miwgroningen.se6.heartcoded.CaTo.testing.unittesting.mappers.CircleMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;

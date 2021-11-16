@@ -4,7 +4,7 @@ import nl.miwgroningen.se6.heartcoded.CaTo.dto.CircleDTO;
 import nl.miwgroningen.se6.heartcoded.CaTo.model.Circle;
 import nl.miwgroningen.se6.heartcoded.CaTo.repository.CircleRepository;
 import nl.miwgroningen.se6.heartcoded.CaTo.repository.MemberRepository;
-import nl.miwgroningen.se6.heartcoded.CaTo.service.mappers.CircleMapper;
+import nl.miwgroningen.se6.heartcoded.CaTo.testing.unittesting.mappers.CircleMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package nl.miwgroningen.se6.heartcoded.CaTo.service.mappers;
+package nl.miwgroningen.se6.heartcoded.CaTo.testing.unittesting.mappers;
 
 import nl.miwgroningen.se6.heartcoded.CaTo.dto.CircleDTO;
 import nl.miwgroningen.se6.heartcoded.CaTo.model.Circle;
