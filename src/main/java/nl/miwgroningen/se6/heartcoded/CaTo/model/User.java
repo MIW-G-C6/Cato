@@ -1,6 +1,8 @@
 package nl.miwgroningen.se6.heartcoded.CaTo.model;
 
 import javax.persistence.*;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 import org.springframework.security.core.GrantedAuthority;
@@ -34,6 +36,9 @@ public class User implements UserDetails {
 
     @Column(unique = true)
     private String email;
+
+    @Lob
+    private byte[] profilePicture;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Member> memberList;
@@ -113,6 +118,14 @@ public class User implements UserDetails {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public byte[] getProfilePicture() {
+        return profilePicture;
+    }
+
+    public void setProfilePicture(byte[] profilePicture) {
+        this.profilePicture = profilePicture;
     }
 
     public String getName() {

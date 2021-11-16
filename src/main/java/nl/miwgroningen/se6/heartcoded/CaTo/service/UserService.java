@@ -8,14 +8,19 @@ import nl.miwgroningen.se6.heartcoded.CaTo.model.Circle;
 import nl.miwgroningen.se6.heartcoded.CaTo.model.User;
 import nl.miwgroningen.se6.heartcoded.CaTo.repository.CircleRepository;
 import nl.miwgroningen.se6.heartcoded.CaTo.repository.UserRepository;
+import org.apache.commons.io.IOUtils;
 import nl.miwgroningen.se6.heartcoded.CaTo.testing.unittesting.mappers.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
+import static org.aspectj.bridge.MessageUtil.fail;
 
 /**
  * @author Shalena Omapersad <shalenao@hotmail.com>
@@ -96,6 +101,21 @@ public class UserService {
             userDTO.setPassword(passwordEncoder.encode(userDTO.getPassword()));
             User user = userRegistrationMapper.toUser(userDTO);
             user.setUserRole("ROLE_USER");
+
+            try {
+                InputStream inputStream = getClass()
+                        .getClassLoader()
+                        .getResourceAsStream("static/css/images/Default-Profile-Picture.png");
+
+                if (inputStream == null) {
+                    fail("Unable to find resource");
+                } else {
+                    user.setProfilePicture(IOUtils.toByteArray(inputStream));
+                }
+            } catch (IOException ioException) {
+                System.out.println(ioException.getMessage());
+            }
+
             userRepository.save(user);
         }
         //TODO maybe this needs an exception throw??

@@ -7,6 +7,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import java.util.Base64;
+
 /**
  * @author Shalena Omapersad <shalenao@hotmail.com>
  *
@@ -26,6 +28,11 @@ public class ProfilePageController {
     protected String showProfilePage(@PathVariable("userId") Integer userId, Model model) {
         UserDTO userDTO = userService.getById(userId);
         model.addAttribute("user", userDTO);
+        if (userDTO.getProfilePicture() == null) {
+            model.addAttribute("profilePicture", "");
+        } else {
+            model.addAttribute("profilePicture", Base64.getEncoder().encodeToString(userDTO.getProfilePicture()));
+        }
         model.addAttribute("userIsCurrentUser", userService.getCurrentUser().getUserId().equals(userId));
         model.addAttribute("currentUserIsSiteAdmin", userService.currentUserIsSiteAdmin());
         return "profilePage";
