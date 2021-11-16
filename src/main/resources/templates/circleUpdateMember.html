@@ -25,7 +25,7 @@
     <div class="circle-update-member">
             <form th:action="@{/circles/options/{circleId}/updatemember/{userId}(circleId=${circleId}, userId=${userId})}" method="post" th:object="${member}">
                 <div th:if="${#fields.hasErrors()}">
-                    <p th:each="err : ${#fields.errors('global')}" th:text="${err}" class="error" />
+                    <p th:each="err : ${#fields.errors('global')}" th:text="${err}" class="alert alert-danger" />
                 </div>
                     <h1>Change role</h1>
 
