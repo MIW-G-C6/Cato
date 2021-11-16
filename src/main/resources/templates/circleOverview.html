@@ -21,7 +21,10 @@
         <br>
         <div th:class="cato-three-circles-placing" th:if="${!(lastThreeCircles.get(0).circleId == 0)}" th:object="${lastThreeCircles}" >
             <div th:if="${!(lastThreeCircles.get(0).circleId == 0)}" class="circle-overview-circle-banner" th:onclick="|window.location.href='@{/circles/{circleId}(circleId=${lastThreeCircles.get(0).circleId})}'|">
-                <h2 th:text="*{get(0).circleName}"></h2>
+                <div class="last-three-circle-header">
+                    <span class="circle-header-key" th:if="*{get(0).currentUserIsCircleAdmin}"><i class="fa fa-key"></i></span>
+                    <h1 th:text="*{get(0).circleName}"></h1>
+                </div>
                 <table >
                     <tr>Clients</tr>
                     <br>
@@ -32,7 +35,10 @@
                 </table>
             </div>
             <div th:if="${!(lastThreeCircles.get(1).circleId == 0)}" class="circle-overview-circle-banner" th:onclick="|window.location.href='@{/circles/{circleId}(circleId=${lastThreeCircles.get(1).circleId})}'|">
-                <h2 th:text="*{get(1).circleName}"></h2>
+                <div class="last-three-circle-header">
+                    <span class="circle-header-key" th:if="*{get(1).currentUserIsCircleAdmin}"><i class="fa fa-key"></i></span>
+                    <h1 th:text="*{get(1).circleName}"></h1>
+                </div>
                 <table >
                     <tr>Clients</tr>
                     <br>
@@ -43,7 +49,10 @@
                 </table>
             </div>
             <div th:if="${!(lastThreeCircles.get(2).circleId == 0)}" class="circle-overview-circle-banner" th:onclick="|window.location.href='@{/circles/{circleId}(circleId=${lastThreeCircles.get(2).circleId})}'|">
-                <h1 th:text="*{get(2).circleName}"></h1>
+                <div class="last-three-circle-header">
+                    <span class="circle-header-key" th:if="*{get(2).currentUserIsCircleAdmin}"><i class="fa fa-key"></i></span>
+                    <h1 th:text="*{get(2).circleName}"></h1>
+                </div>
                 <table >
                     <tr>Clients</tr>
                     <br>

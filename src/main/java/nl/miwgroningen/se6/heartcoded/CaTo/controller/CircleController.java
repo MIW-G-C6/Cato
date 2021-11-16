@@ -38,7 +38,7 @@ public class CircleController {
 
     @GetMapping("/circles")
     protected String showCircleOverview(HttpSession session, Model model) {
-        userService.checkForCircleDeletion();
+        memberService.checkForCircleDeletion();
         Integer currentUser = userService.getCurrentUser().getUserId();
         session.setAttribute("navbarCircles", memberService.getAllCirclesByUserId(currentUser));
         model.addAttribute("clientsCircleOne",
@@ -47,7 +47,7 @@ public class CircleController {
                 memberService.findAllClientsInCircle(userService.getCircleTwo(currentUser)));
         model.addAttribute("clientsCircleThree",
                 memberService.findAllClientsInCircle(userService.getCircleThree(currentUser)));
-        model.addAttribute("lastThreeCircles", userService.getLastThreeCirclesByUserId(currentUser));
+        model.addAttribute("lastThreeCircles", memberService.getLastThreeCirclesByUserId(currentUser));
         model.addAttribute("allCircles", memberService.allCirclesByUserIdWithAdminCheck(currentUser));
         return "circleOverview";
     }

@@ -48,7 +48,7 @@ public class MemberController {
         if (!isCircleMember(circleId) && isNotSiteAdmin()) {
             return "redirect:/403";
         }
-        userService.addCircleToLastThreeCircles(circleId);
+        memberService.addCircleToLastThreeCircles(circleId);
         Integer currentUser = userService.getCurrentUser().getUserId();
         session.setAttribute("navbarCircles", memberService.getAllCirclesByUserId(currentUser));
         model.addAttribute("thisCircle", circleService.getById(circleId));
