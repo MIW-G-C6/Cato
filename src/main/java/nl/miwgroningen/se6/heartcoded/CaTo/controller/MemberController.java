@@ -145,7 +145,7 @@ public class MemberController {
             model.addAttribute("member", member);
             return "circleUpdateMember";
         }
-        if (circleAdminRemoveOwnRights(member)) {
+        if (isNotSiteAdmin() && circleAdminRemoveOwnRights(member)) {
             redirectAttributes.addFlashAttribute("member", member);
             return "redirect:/circles/options/{circleId}/updatemember/{userId}/changeAdminRole";
         }
