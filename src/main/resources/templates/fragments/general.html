@@ -62,7 +62,8 @@
             <a th:href="@{/circles/{circleId}(circleId=${circle.circleId})}"><div th:text="${circle.circleName}"></div></a>
         </div>
 
-        <a class="nav-link" sec:authorize="hasAuthority('ROLE_ADMIN')" th:href="@{/siteAdminDashboard}">Site admin dashboard</a>
+        <a class="nav-link" sec:authorize="hasAuthority('ROLE_ADMIN')" th:href="@{/siteAdmin/dashboard}">Site admin dashboard</a>
+        <a class="nav-link" sec:authorize="hasAuthority('ROLE_ADMIN')" th:href="@{/siteAdmin/userOverview}">User overview</a>
         <a class="nav-link" th:href="@{/about}">About</a>
         <a class="nav-link" th:href="@{/contact}">Contact</a>
 

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head th:replace="fragments/general :: baseHeader(~{:: title})" >
+  <meta charset="UTF-8">
+  <title>Site admin dashboard</title>
+</head>
+<body>
+
+<div id="main-body">
+  <div th:replace="fragments/general :: navbar"></div>
+  <div th:replace="fragments/general :: previousButton"></div>
+
+  <div class="container">
+    <h1>Site admin dashboard</h1>
+    <div th:if="${!error.equals('')}" class="alert alert-danger" th:text="${error}"></div>
+    <div class="site-admin-dashboard-box">
+      <div  class="general-table-layout" id="user-overview">
+        <h5 class="table-header">All users<a class="float-right" th:href="@{/registration}">Add new user</a></h5>
+        <form id="search-form">
+          <input class="cato-form cato-text-field" oninput="fire_ajax_submit()" id="keywordsBox" type="text" placeholder="Search for users">
+        </form>
+        <table id="resultTable">
+          <tbody>
+          </tbody>
+        </table>
+        <br>
+      </div>
+
+      <div id="deleteUserModal" class="modal"></div>
+    </div>
+  </div>
+</div>
+
+<div th:replace="fragments/general :: footer"></div>
+<div th:replace="fragments/general :: bottomScripts"></div>
+<script type="text/javascript" th:src="@{/javascript/userSearchAjax.js}"></script>
+</body>
+</html>
