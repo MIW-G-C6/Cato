@@ -206,4 +206,16 @@ public class MemberService {
     private User getCurrentUser() {
         return (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     }
+
+    public List<GroupDTO> allGroupsByUserIdWithAdminCheck(Integer currentUserId) {
+        List<GroupDTO> result = new ArrayList<>();
+        List<GroupDTO> temp = getAllGroupsByUserId(currentUserId);
+        for (GroupDTO groupDTO : temp) {
+            if (userIsGroupAdmin(groupDTO.getGroupId())) {
+                groupDTO.setCurrentUserIsGroupAdmin(true);
+            }
+            result.add(groupDTO);
+        }
+        return result;
+    }
 }

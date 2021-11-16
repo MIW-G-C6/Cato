@@ -64,7 +64,10 @@
                     <tr th:if="${allGroups.isEmpty()}">You are not a member of a group yet</tr><br>
                     <tr th:if="${allGroups.isEmpty()}">Create a new group or ask a group admin to add you to a group</tr>
                     <tr th:each="group : ${allGroups}">
-                        <td><a th:href="@{/groups/{groupId}(groupId=${group.groupId})}"><div th:text="${group.groupName}"></div></a></td>
+                        <td><span th:if="${group.currentUserIsGroupAdmin}"><i class="fa fa-key"></i></span>
+                            <span th:text="${group.currentUserIsGroupAdmin} ? '' : '&emsp;'"></span>
+                            <span><a th:href="@{/groups/{groupId}(groupId=${group.groupId})}" th:text="${group.groupName}"></a></span>
+                        </td>
                     </tr>
                 </table>
             </div>

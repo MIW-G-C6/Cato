@@ -54,7 +54,8 @@ public class GroupController {
         model.addAttribute("clientsGroupThree",
                 memberService.findAllClientsInGroup(userService.getGroupThree(currentUser)));
         model.addAttribute("lastThreeGroups", userService.getLastThreeGroupsByUserId(currentUser));
-        model.addAttribute("allGroups", memberService.getAllGroupsByUserId(currentUser));
+        model.addAttribute("allGroups", memberService.allGroupsByUserIdWithAdminCheck(currentUser));
+
         return "groupOverview";
     }
 

@@ -10,6 +10,8 @@ public class GroupDTO {
 
     private String groupName;
 
+    private Boolean currentUserIsGroupAdmin;
+
     public GroupDTO(String groupName) {
         this.groupName = groupName;
     }
@@ -31,5 +33,13 @@ public class GroupDTO {
 
     public void setGroupName(String groupName) {
         this.groupName = groupName;
+    }
+
+    public Boolean getCurrentUserIsGroupAdmin() {
+        return currentUserIsGroupAdmin;
+    }
+
+    public void setCurrentUserIsGroupAdmin(Boolean currentUserIsGroupAdmin) {
+        this.currentUserIsGroupAdmin = currentUserIsGroupAdmin;
     }
 }
