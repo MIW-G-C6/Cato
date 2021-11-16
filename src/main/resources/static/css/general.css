@@ -38,6 +38,10 @@ a.nav-link{
     color: #d60000;
 }
 
+.cato-hyperlink {
+    font-size: 1rem;
+}
+
 /* The Modal (background) */
 .modal {
     display: none; /* Hidden by default */
