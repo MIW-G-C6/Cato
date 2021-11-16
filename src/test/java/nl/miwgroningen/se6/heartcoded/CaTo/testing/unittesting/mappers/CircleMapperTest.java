@@ -1,6 +1,7 @@
 package nl.miwgroningen.se6.heartcoded.CaTo.testing.unittesting.mappers;
 
 import nl.miwgroningen.se6.heartcoded.CaTo.dto.CircleDTO;
+import nl.miwgroningen.se6.heartcoded.CaTo.mappers.CircleMapper;
 import nl.miwgroningen.se6.heartcoded.CaTo.model.Circle;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;

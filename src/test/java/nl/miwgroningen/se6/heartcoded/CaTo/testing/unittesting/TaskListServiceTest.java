@@ -6,7 +6,7 @@ import nl.miwgroningen.se6.heartcoded.CaTo.model.TaskList;
 import nl.miwgroningen.se6.heartcoded.CaTo.repository.CircleRepository;
 import nl.miwgroningen.se6.heartcoded.CaTo.repository.TaskListRepository;
 import nl.miwgroningen.se6.heartcoded.CaTo.service.TaskListService;
-import nl.miwgroningen.se6.heartcoded.CaTo.testing.unittesting.mappers.TaskListMapper;
+import nl.miwgroningen.se6.heartcoded.CaTo.mappers.TaskListMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;

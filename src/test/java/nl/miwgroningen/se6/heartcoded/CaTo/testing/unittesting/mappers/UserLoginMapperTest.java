@@ -1,6 +1,7 @@
 package nl.miwgroningen.se6.heartcoded.CaTo.testing.unittesting.mappers;
 
 import nl.miwgroningen.se6.heartcoded.CaTo.dto.UserLoginDTO;
+import nl.miwgroningen.se6.heartcoded.CaTo.mappers.UserLoginMapper;
 import nl.miwgroningen.se6.heartcoded.CaTo.model.User;
 import org.junit.jupiter.api.Test;
 

@@ -1,4 +1,4 @@
-package nl.miwgroningen.se6.heartcoded.CaTo.testing.unittesting.mappers;
+package nl.miwgroningen.se6.heartcoded.CaTo.mappers;
 
 import nl.miwgroningen.se6.heartcoded.CaTo.dto.TaskListDTO;
 import nl.miwgroningen.se6.heartcoded.CaTo.model.TaskList;

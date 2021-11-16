@@ -1,6 +1,7 @@
 package nl.miwgroningen.se6.heartcoded.CaTo.testing.unittesting.mappers;
 
 import nl.miwgroningen.se6.heartcoded.CaTo.dto.UserDTO;
+import nl.miwgroningen.se6.heartcoded.CaTo.mappers.UserMapper;
 import nl.miwgroningen.se6.heartcoded.CaTo.model.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

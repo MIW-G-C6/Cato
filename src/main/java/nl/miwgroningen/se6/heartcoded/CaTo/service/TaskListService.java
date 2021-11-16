@@ -6,7 +6,7 @@ import nl.miwgroningen.se6.heartcoded.CaTo.model.Circle;
 import nl.miwgroningen.se6.heartcoded.CaTo.model.TaskList;
 import nl.miwgroningen.se6.heartcoded.CaTo.repository.CircleRepository;
 import nl.miwgroningen.se6.heartcoded.CaTo.repository.TaskListRepository;
-import nl.miwgroningen.se6.heartcoded.CaTo.testing.unittesting.mappers.TaskListMapper;
+import nl.miwgroningen.se6.heartcoded.CaTo.mappers.TaskListMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

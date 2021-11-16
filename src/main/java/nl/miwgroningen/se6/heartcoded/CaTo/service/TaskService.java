@@ -3,7 +3,7 @@ package nl.miwgroningen.se6.heartcoded.CaTo.service;
 import nl.miwgroningen.se6.heartcoded.CaTo.dto.TaskDTO;
 import nl.miwgroningen.se6.heartcoded.CaTo.model.Task;
 import nl.miwgroningen.se6.heartcoded.CaTo.repository.*;
-import nl.miwgroningen.se6.heartcoded.CaTo.testing.unittesting.mappers.TaskMapper;
+import nl.miwgroningen.se6.heartcoded.CaTo.mappers.TaskMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
