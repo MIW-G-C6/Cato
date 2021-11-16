@@ -1,6 +1,7 @@
 package nl.miwgroningen.se6.heartcoded.CaTo.testing.unittesting.mappers;
 
 import nl.miwgroningen.se6.heartcoded.CaTo.dto.MemberDTO;
+import nl.miwgroningen.se6.heartcoded.CaTo.mappers.MemberMapper;
 import nl.miwgroningen.se6.heartcoded.CaTo.model.Circle;
 import nl.miwgroningen.se6.heartcoded.CaTo.model.Member;
 import nl.miwgroningen.se6.heartcoded.CaTo.model.User;

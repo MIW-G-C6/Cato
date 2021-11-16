@@ -1,11 +1,11 @@
 package nl.miwgroningen.se6.heartcoded.CaTo.testing.unittesting;
 
 import nl.miwgroningen.se6.heartcoded.CaTo.dto.UserEditPasswordDTO;
+import nl.miwgroningen.se6.heartcoded.CaTo.mappers.*;
 import nl.miwgroningen.se6.heartcoded.CaTo.model.User;
 import nl.miwgroningen.se6.heartcoded.CaTo.repository.CircleRepository;
 import nl.miwgroningen.se6.heartcoded.CaTo.repository.UserRepository;
 import nl.miwgroningen.se6.heartcoded.CaTo.service.UserService;
-import nl.miwgroningen.se6.heartcoded.CaTo.testing.unittesting.mappers.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
