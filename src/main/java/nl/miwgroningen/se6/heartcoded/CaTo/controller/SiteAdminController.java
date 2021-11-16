@@ -13,12 +13,12 @@ import org.springframework.web.bind.annotation.ModelAttribute;
  * Controls the site admin dashboard page
  */
 @Controller
-public class SiteAdminDashboardController {
+public class SiteAdminController {
 
     private CircleService circleService;
     private MemberService memberService;
 
-    public SiteAdminDashboardController(CircleService circleService, MemberService memberService) {
+    public SiteAdminController(CircleService circleService, MemberService memberService) {
         this.circleService = circleService;
         this.memberService = memberService;
     }
@@ -32,9 +32,14 @@ public class SiteAdminDashboardController {
     }
 
     @GetMapping("/siteAdmin/userOverview")
-    protected String showSiteAdminUserOverview(@ModelAttribute("error") String error, Model model) {
-        model.addAttribute("allClients", memberService.findAllClientsForSiteAdmin());
-
+    protected String showSiteAdminUserOverview(@ModelAttribute("error") String error) {
         return "siteAdminUserOverview";
+    }
+
+    @GetMapping("/siteAdmin/CircleClientOverview")
+    protected String showSiteAdminCircleClientOverview(@ModelAttribute("error") String error, Model model) {
+        model.addAttribute("allClients", memberService.findAllClientsForSiteAdmin());
+        model.addAttribute("allCircles", circleService.findAllCircles());
+        return "siteAdminCircle";
     }
 }

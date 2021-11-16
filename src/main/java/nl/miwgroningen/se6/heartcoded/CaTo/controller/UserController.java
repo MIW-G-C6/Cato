@@ -54,7 +54,7 @@ public class UserController {
         } else {
             userService.deleteUserById(userId);
         }
-        return "redirect:/siteAdminDashboard";
+        return "redirect:/siteAdmin/dashboard";
     }
 
     @GetMapping("/users/edit/{userId}")

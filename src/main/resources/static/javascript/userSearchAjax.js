@@ -105,8 +105,8 @@ function fillTable(resultData) {
             imgDelete.setAttributeNode(deleteSrc);
             imgDelete.setAttributeNode(imgHeightDelete);
             imgDelete.setAttributeNode(imgWidthDelete);
-            hrefUser.value = "profilepage/" + user["userId"];
-            hrefEdit.value = "users/edit/" + user["userId"];
+            hrefUser.value = "/profilepage/" + user["userId"];
+            hrefEdit.value = "/users/edit/" + user["userId"];
             // hrefDelete.value = "users/delete/" + user["userId"];
             aUser.setAttributeNode(hrefUser);
             aEdit.setAttributeNode(hrefEdit);
@@ -116,7 +116,7 @@ function fillTable(resultData) {
                 $('#deleteUserModal').modal('show');
             }
            modalYesBtn.onclick = function() {
-                   window.location = "users/delete/" + user["userId"];
+                   window.location = "/users/delete/" + user["userId"];
            }
            document.getElementById("userNameSpan").innerHTML=user["username"];
             aUser.text = user["name"];
