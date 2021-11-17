@@ -3,7 +3,7 @@ package nl.miwgroningen.se6.heartcoded.CaTo.dto;
 /**
  * @author Paul Romkes <p.r.romkes@gmail.com
  *
- * UserDTO containing all attributes to create a new User
+ * UserDTO containing all attributes to create a new User.
  */
 
 public class UserRegistrationDTO {

@@ -7,10 +7,12 @@ import java.util.List;
 /**
  * @author Erwin Wegter <ewegter@gmail.com>
  *
- * List of tasks
+ * List of tasks.
  */
+
 @Entity
 public class TaskList {
+
     @Id
     @GeneratedValue
     private Integer taskListId;

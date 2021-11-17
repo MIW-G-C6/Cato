@@ -2,8 +2,10 @@ package nl.miwgroningen.se6.heartcoded.CaTo.dto;
 
 /**
  * @author Remco Lantinga <remco_lantinga@hotmail.com>
- * DTO object of user that is used for editing passwords
+ *
+ * DTO object of user that is used for editing passwords.
  */
+
 public class UserEditPasswordDTO {
 
     private Integer userId;

@@ -1,8 +1,6 @@
 package nl.miwgroningen.se6.heartcoded.CaTo.model;
 
 import javax.persistence.*;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.List;
 
 import org.springframework.security.core.GrantedAuthority;
@@ -15,7 +13,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import java.util.ArrayList;
 import java.util.Collection;
-
 
 /**
  * @author Shalena Omapersad <shalenao@hotmail.com>
@@ -68,6 +65,7 @@ public class User implements UserDetails {
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> authorityList = new ArrayList<>();
         authorityList.add(new SimpleGrantedAuthority(userRole));
+
         return authorityList;
     }
 

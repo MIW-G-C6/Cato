@@ -4,7 +4,10 @@ import java.util.List;
 
 /**
  * @author Erwin Wegter <ewegter@gmail.com>
+ *
+ * Contains a list of users found with ajax search function.
  */
+
 public class UserSearchAjaxResponseBody {
 
     private String msg;

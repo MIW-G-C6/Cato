@@ -4,6 +4,8 @@ import java.util.List;
 
 /**
  * @author Paul Romkes <p.r.romkes@gmail.com
+ *
+ * Contains a list of circles found with ajax search funtion.
  */
 
 public class CircleSearchResponseBody {

@@ -2,28 +2,22 @@ package nl.miwgroningen.se6.heartcoded.CaTo.dto;
 
 import nl.miwgroningen.se6.heartcoded.CaTo.model.Task;
 
-import java.util.List;
-
 /**
  * @author Erwin Wegter <ewegter@gmail.com>
  *
- * TaskDTO containing all information for tasks
+ * TaskDTO containing all information for tasks.
  */
+
 public class TaskDTO {
 
     private String[] priorityOptions;
-
     private Integer taskId;
-
     private String priority;
-
     private String description;
-
     private Integer taskListId;
 
     //nodig om op te slaan wie de taak reserveert (voor nu alleen currentUser --> later ook anderen kunnen assignen)
     private Integer assignedUserId;
-
     //nodig om te laten zien in de view (default lege string? --> view laat knopje zien: assign)
     private String assignedUserName;
 

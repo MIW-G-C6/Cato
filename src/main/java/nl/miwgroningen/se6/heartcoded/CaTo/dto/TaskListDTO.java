@@ -3,13 +3,12 @@ package nl.miwgroningen.se6.heartcoded.CaTo.dto;
 /**
  * @author Erwin Wegter <ewegter@gmail.com>
  *
- * TaskListDTO containing all information for taskList
+ * TaskListDTO containing all information for taskList.
  */
 
 public class TaskListDTO {
 
     private Integer taskListId;
-
     private Integer circleId;
 
     public TaskListDTO(Integer taskListId, Integer circleId) {

@@ -3,15 +3,14 @@ package nl.miwgroningen.se6.heartcoded.CaTo.dto;
 /**
  * @author Erwin Wegter <ewegter@gmail.com>
  *
- *     DTO version of Member model with the information needed for the site admin dashboard
+ * DTO version of Member model with the information needed for the site admin dashboard.
  */
+
 public class MemberSiteAdminDTO {
+
     private Integer userId;
-
     private String userName;
-
     private Integer circleId;
-
     private String circleName;
 
     public Integer getUserId() {

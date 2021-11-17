@@ -11,8 +11,9 @@ import java.util.Optional;
 /**
  * @author Erwin Wegter <ewegter@gmail.com>
  *
- * Maps Task models to DTOs and back
+ * Maps Task models to DTOs and back.
  */
+
 @Component
 public class TaskMapper {
 
@@ -23,6 +24,7 @@ public class TaskMapper {
         taskDTO.setDescription(task.getDescription());
         taskDTO.setPriority(task.getPriority());
         taskDTO.setTaskListId(task.getTaskList().getTaskListId());
+
         if (task.getAssignedUser() == null) {
             taskDTO.setAssignedUserId(0);
             taskDTO.setAssignedUserName("");
@@ -40,14 +42,17 @@ public class TaskMapper {
         if (task.isPresent()) {
             taskDTO = Optional.of(toDTO(task.get()));
         }
+
         return taskDTO;
     }
 
     public List<TaskDTO> toDTO(List<Task> listOfTasks) {
         List<TaskDTO> taskDTOList = new ArrayList<>();
+
         for (Task task : listOfTasks) {
             taskDTOList.add(toDTO(task));
         }
+
         return taskDTOList;
     }
 
@@ -56,6 +61,7 @@ public class TaskMapper {
         task.setTaskId(taskDTO.getTaskId());
         task.setPriority(taskDTO.getPriority());
         task.setDescription(taskDTO.getDescription());
+
         return task;
     }
 }

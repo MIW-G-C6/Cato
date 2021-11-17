@@ -5,21 +5,16 @@ import nl.miwgroningen.se6.heartcoded.CaTo.model.Member;
 /**
  * @author Shalena Omapersad <shalenao@hotmail.com>
  *
- * DTO version of model Member with userId, username and role.
+ * DTO version of model Member with userId, username, circleId, role, and isAdmin.
  */
 
 public class MemberDTO {
 
     private String[] circleRoleOptions;
-
     private Integer userId;
-
     private String userName;
-
     private Integer circleId;
-
     private String role;
-
     private boolean isAdmin;
 
     public MemberDTO(Integer userId, String userName, Integer circleId, String role, boolean isAdmin) {

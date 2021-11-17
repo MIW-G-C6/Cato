@@ -16,7 +16,7 @@ import java.util.Optional;
 /**
  * @author Erwin Wegter <ewegter@gmail.com>
  *
- * Controls all pages about tasks
+ * Controls all pages about tasks.
  */
 
 @Controller
@@ -41,13 +41,14 @@ public class TaskController {
     protected String showTaskDetails(@PathVariable("circleId") Integer circleId,
                                      @PathVariable("taskListId") Integer taskListId,
                                      @PathVariable("taskId") Integer taskId, Model model) {
-
         if (!memberService.userIsMemberOfCircle(circleId) && !userService.currentUserIsSiteAdmin()) {
             return "redirect:/403";
         }
+
         if (doShowTaskDetailsOrTaskForm(taskListId, taskId, model)) {
             return "redirect:/circles/" + circleId;
         }
+
         model.addAttribute("circleName", circleService.getById(circleId).getCircleName());
         return "taskDetails";
     }
@@ -60,25 +61,28 @@ public class TaskController {
         if (!memberService.userIsMemberOfCircle(circleId) && !userService.currentUserIsSiteAdmin()) {
             return "redirect:/403";
         }
+
         if (doShowTaskDetailsOrTaskForm(taskListId, taskId, model)) {
             return "redirect:/circles/" + circleId;
         }
+
         model.addAttribute("circleName", circleService.getById(circleId).getCircleName());
         return "taskEdit";
     }
 
     @GetMapping("/circles/{circleId}/taskLists/{taskListId}/new")
     protected String showTaskForm(@PathVariable("taskListId") Integer taskListId,
-                                  @PathVariable("circleId") Integer circleId,
-                                  Model model) {
+                                  @PathVariable("circleId") Integer circleId, Model model) {
         if (!memberService.userIsMemberOfCircle(circleId) && !userService.currentUserIsSiteAdmin()) {
             return "redirect:/403";
         }
+
         Optional<TaskListDTO> taskListDTO = taskListService.findById(taskListId);
 
         if (taskListDTO.isEmpty()) {
             return "redirect:/circles/" + circleId;
         }
+
         model.addAttribute("task", new TaskDTO());
         model.addAttribute("circleName", circleService.getById(circleId).getCircleName());
         model.addAttribute("taskList", taskListService.getById(taskListId));
@@ -91,8 +95,8 @@ public class TaskController {
         if (!memberService.userIsMemberOfCircle(circleId) && !userService.currentUserIsSiteAdmin()) {
             return "redirect:/403";
         }
-        taskService.assignUser(taskId, userService.getCurrentUser().getUserId());
 
+        taskService.assignUser(taskId, userService.getCurrentUser().getUserId());
         return "redirect:/circles/{circleId}";
     }
 
@@ -102,8 +106,8 @@ public class TaskController {
         if (!memberService.userIsMemberOfCircle(circleId) && !userService.currentUserIsSiteAdmin()) {
             return "redirect:/403";
         }
-        taskService.unassignUser(taskId);
 
+        taskService.unassignUser(taskId);
         return "redirect:/circles/{circleId}";
     }
 
@@ -111,22 +115,25 @@ public class TaskController {
     protected String saveOrUpdateTask(@PathVariable ("taskListId") Integer taskListId,
                                       @PathVariable("circleId") Integer circleId,
                                       @ModelAttribute("task") TaskDTO task, BindingResult result) {
-
         if (!memberService.userIsMemberOfCircle(circleId) && !userService.currentUserIsSiteAdmin()) {
             return "redirect:/403";
         }
+
         if (!result.hasErrors()) {
             taskService.save(task, taskListId);
         }
+
         return "redirect:/circles/{circleId}";
     }
 
     @GetMapping("/task/delete/{taskId}")
     protected String deleteTask(@PathVariable("taskId") Integer taskId) {
         Integer circleId = taskListService.getById(taskService.getTaskListIdByTaskId(taskId)).getCircleId();
+
         if (!memberService.userIsMemberOfCircle(circleId) && !userService.currentUserIsSiteAdmin()) {
             return "redirect:/403";
         }
+
         taskService.deleteById(taskId);
         return "redirect:/circles/" + circleId;
     }
@@ -137,6 +144,7 @@ public class TaskController {
         if (task.isEmpty()) {
             return true;
         }
+
         model.addAttribute("task", task.get());
         model.addAttribute("taskList", taskListService.getById(taskListId));
         return false;

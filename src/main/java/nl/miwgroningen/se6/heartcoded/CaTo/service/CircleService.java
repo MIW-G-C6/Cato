@@ -50,6 +50,10 @@ public class CircleService {
         return result;
     }
 
+    public Long totalNumberOfCircles() {
+        return circleRepository.count();
+    }
+
     public void deleteCircleById(Integer circleId) {
         circleRepository.deleteById(circleId);
     }
@@ -61,8 +65,8 @@ public class CircleService {
         circleDTO.setCircleId(result.getCircleId());
     }
 
-    public CircleDTO getById(Integer cirlceId) {
-        return circleMapper.toDTO(circleRepository.getById(cirlceId));
+    public CircleDTO getById(Integer circleId) {
+        return circleMapper.toDTO(circleRepository.getById(circleId));
     }
 
 

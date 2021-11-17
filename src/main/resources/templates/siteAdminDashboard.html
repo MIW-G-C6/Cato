@@ -18,48 +18,26 @@
     </div>
 
     <div class="container">
-        <h1>Site admin dashboard</h1>
-        <div th:if="${!error.equals('')}" class="alert alert-danger" th:text="${error}"></div>
+        <h1>Site statistics</h1>
         <div class="site-admin-dashboard-box">
-            <div  class="general-table-layout" id="user-overview">
-                <h5 class="table-header">All users<a class="float-right" th:href="@{/registration}">Add new user</a></h5>
-                <form id="search-form">
-                    <input class="cato-form cato-text-field" oninput="fire_ajax_submit()" id="keywordsBox" type="text" placeholder="Search for users">
-                </form>
-                <table id="resultTable">
-                    <tbody>
-                    </tbody>
-                </table>
-                <br>
-            </div>
-
-            <div class="general-table-layout" id="circle-overview-dashboard">
-                <h5 class="table-header">All Care Circles<a class="float-right" th:href="@{/circles/new}">Create new Care Circle</a></h5>
-                <table>
-                    <tr th:each="circle : ${allCircles}">
-                        <td><a th:href="@{/circles/{circleId}(circleId=${circle.circleId})}"><div th:text="${circle.circleName}"></div></a></td>
-                    </tr>
+            <div>
+                <table class="general-table-layout">
+                    <tr><td><h5>Total number of users:</h5><hr> </td><td class="h4" th:text="'&emsp;&emsp;&emsp;' + ${numberOfUsers}"></td></tr>
+                    <tr><td><h5>Total number of Care Circles:</h5><hr></td> <td class="h4" th:text="'&emsp;&emsp;&emsp;' + ${numberOfCircles}"></td></tr>
+                    <tr><td><h5>Total number of clients:</h5> <hr></td><td class="h4" th:text="'&emsp;&emsp;&emsp;' + ${numberOfClients}"></td></tr>
+                    <tr><td><h5>Total number of tasks:</h5><hr></td> <td class="h4" th:text="'&emsp;&emsp;&emsp;' + ${numberOfTasks}"></td></tr>
+                    <tr><td><h5>Total number of reserved tasks:</h5> <hr></td><td class="h4" th:text="'&emsp;&emsp;&emsp;' + ${numberOfReservedTasks}"></td></tr>
                 </table>
             </div>
-
-            <div class="general-table-layout" id="client-overview-dashboard">
-                <h5 class="table-header">All clients</h5>
-                <table>
-                    <tr th:each="client : ${allClients}">
-                        <td>
-                            <div th:text="${client.userName}"></div>
-                        </td>
-                        <td>
-                            <a th:href="@{/circles/{circleId}(circleId=${client.circleId})}"><div th:text="${client.circleName}"></div></a>
-                        </td>
-                    </tr>
-                </table>
+            <div>
+                <ul class="cato-ul">
+                    <li><a th:href="@{/siteAdmin/userOverview}">User overview</a> </li>
+                    <li><hr></li>
+                    <li><a th:href="@{/siteAdmin/circleClientOverview}">Circle overview</a></li>
+                </ul>
             </div>
         </div>
     </div>
-
-    <div id="deleteUserModal" class="modal"></div>
-
 </div>
 
 <div th:replace="fragments/general :: footer"></div>

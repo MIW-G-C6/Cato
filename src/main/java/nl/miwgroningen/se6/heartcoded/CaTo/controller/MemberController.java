@@ -2,7 +2,6 @@ package nl.miwgroningen.se6.heartcoded.CaTo.controller;
 
 import nl.miwgroningen.se6.heartcoded.CaTo.dto.CircleDTO;
 import nl.miwgroningen.se6.heartcoded.CaTo.dto.MemberDTO;
-import nl.miwgroningen.se6.heartcoded.CaTo.dto.UserDTO;
 import nl.miwgroningen.se6.heartcoded.CaTo.service.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,7 +16,7 @@ import java.util.Optional;
 /**
  * @author Paul Romkes <p.r.romkes@gmail.com
  *
- * Controls the circleDashboard page
+ * Controls the circleDashboard page.
  */
 
 @Controller
@@ -35,8 +34,8 @@ public class MemberController {
     private TaskListService taskListService;
     private TaskService taskService;
 
-    public MemberController(CircleService circleService, MemberService memberService,
-                            UserService userService, TaskListService taskListService, TaskService taskService) {
+    public MemberController(CircleService circleService, MemberService memberService, UserService userService,
+                            TaskListService taskListService, TaskService taskService) {
         this.circleService = circleService;
         this.memberService = memberService;
         this.userService = userService;
@@ -46,14 +45,16 @@ public class MemberController {
 
     @GetMapping("/{circleId}")
     protected String showCircleDashboard(@PathVariable("circleId") Integer circleId,
-                                         @ModelAttribute("error") String error,
-                                         Model model, HttpSession session) {
+                                         @ModelAttribute("error") String error, Model model, HttpSession session) {
         if (!isCircleMember(circleId) && isNotSiteAdmin()) {
             return "redirect:/403";
         }
+
         memberService.addCircleToLastThreeCircles(circleId);
+
         Integer currentUser = userService.getCurrentUser().getUserId();
         session.setAttribute("navbarCircles", memberService.getAllCirclesByUserId(currentUser));
+
         model.addAttribute("thisCircle", circleService.getById(circleId));
         model.addAttribute("taskListId", taskListService.getByCircleId(circleId).getTaskListId());
         model.addAttribute("taskList", taskService.getAllTasksByCircleId(circleId));
@@ -66,12 +67,13 @@ public class MemberController {
 
     @GetMapping("/options/{circleId}")
     protected String showCircleOptions(@PathVariable("circleId") Integer circleId,
-                                      @ModelAttribute("error") String error, Model model,
-                                       HttpSession session) {
+                                       @ModelAttribute("error") String error, Model model, HttpSession session) {
         if (isNotCircleAdmin(circleId) && isNotSiteAdmin()) {
             return "redirect:/403";
         }
+
         session.setAttribute("circleDeleteRedirect", "redirect:/circles");
+
         model.addAttribute("thisCircle", circleService.getById(circleId));
         model.addAttribute("allMembersByCircleId", memberService.getAllByCircleId(circleId));
         return "circleOptions";
@@ -82,6 +84,7 @@ public class MemberController {
         if (isNotCircleAdmin(circleId) && isNotSiteAdmin()) {
             return "redirect:/403";
         }
+
         model.addAttribute("thisCircle", circleService.getById(circleId));
         return "circleEdit";
     }
@@ -91,6 +94,7 @@ public class MemberController {
         if (isNotCircleAdmin(circle.getCircleId()) && isNotSiteAdmin()) {
             return "redirect:/403";
         }
+
         if (!result.hasErrors()) {
             circleService.saveCircle(circle);
         }
@@ -99,11 +103,11 @@ public class MemberController {
 
     @RequestMapping(value = "/options/{circleId}/addmember")
     protected String doAddUser(@PathVariable("circleId") Integer circleId, Model model, String email,
-                               @ModelAttribute ("addMember") MemberDTO addMember,
-                               BindingResult result) {
+                               @ModelAttribute ("addMember") MemberDTO addMember, BindingResult result) {
         if (isNotCircleAdmin(circleId) && isNotSiteAdmin()) {
             return "redirect:/403";
         }
+
         if (email != null) {
             Optional<Integer> userId = userService.findUserIdByEmail(email);
 
@@ -128,10 +132,12 @@ public class MemberController {
         if (isNotCircleAdmin(circleId) && isNotSiteAdmin()) {
             return "redirect:/403";
         }
+
         Optional<MemberDTO> member = memberService.findByUserIdAndCircleId(userId, circleId);
         if (member.isEmpty()) {
             return "redirect:/circles/options/{circleId}";
         }
+
         model.addAttribute("circle", circleService.getById(circleId));
         model.addAttribute("member", member.get());
         return "circleUpdateMember";
@@ -144,17 +150,21 @@ public class MemberController {
         if (isNotCircleAdmin(circleId) && isNotSiteAdmin()) {
             return "redirect:/403";
         }
+
         checkForErrorsUpdateCircleMember(circleId, member, result);
         if (result.hasErrors()) {
             model.addAttribute("circle", circleService.getById(circleId));
             model.addAttribute("member", member);
             return "circleUpdateMember";
         }
+
         if (isNotSiteAdmin() && circleAdminRemoveOwnRights(member)) {
             redirectAttributes.addFlashAttribute("member", member);
             return "redirect:/circles/options/{circleId}/updatemember/{userId}/changeAdminRole";
         }
+
         memberService.saveMember(member);
+
         if (!member.isAdmin() && member.getUserId().equals(userService.getCurrentUser().getUserId())) {
             return "redirect:/circles/{circleId}";
         }
@@ -176,7 +186,6 @@ public class MemberController {
         return "redirect:/circles/" + circleId;
     }
 
-
     @GetMapping("/options/{circleId}/delete/{userId}")
     protected String deleteUserFromCircle(@PathVariable("circleId") Integer circleId,
                                           @PathVariable("userId") Integer userId,
@@ -187,6 +196,7 @@ public class MemberController {
         if (isNotCircleAdmin(circleId) && isNotSiteAdmin() && (!currentUserIsTargetUser)) {
             return "redirect:/403";
         }
+
         // checks first if the circle member isn't the last circle admin. If so, it can't be removed from the circle.
         Optional<MemberDTO> member = memberService.findByUserIdAndCircleId(userId, circleId);
         if (member.isPresent()) {
@@ -202,7 +212,6 @@ public class MemberController {
         } else if (currentUserIsTargetUser && redirectAttributes.containsAttribute("error")) {
             return "redirect:/circles/{circleId}";
         }
-
         return "redirect:/circles/options/{circleId}";
     }
 
@@ -261,6 +270,7 @@ public class MemberController {
 
     private boolean circleAdminRemoveOwnRights(MemberDTO memberDTO) {
         Integer currentUserId = userService.getCurrentUser().getUserId();
+
         if (!memberDTO.isAdmin()
                 && memberService.findOutIfMemberIsAdmin(
                         memberService.findByUserIdAndCircleId(currentUserId , memberDTO.getCircleId()).get())

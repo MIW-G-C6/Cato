@@ -5,29 +5,15 @@ import nl.miwgroningen.se6.heartcoded.CaTo.dto.UserEditPasswordDTO;
 import nl.miwgroningen.se6.heartcoded.CaTo.dto.UserRegistrationDTO;
 import nl.miwgroningen.se6.heartcoded.CaTo.service.MemberService;
 import nl.miwgroningen.se6.heartcoded.CaTo.service.UserService;
-import org.apache.commons.io.IOUtils;
-import org.apache.tomcat.util.http.fileupload.impl.FileSizeLimitExceededException;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartResolver;
-import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.Arrays;
-
-import static org.aspectj.bridge.MessageUtil.fail;
+import javax.servlet.http.HttpSession;
 
 /**
  * @author Shalena Omapersad <shalenao@hotmail.com>
@@ -61,6 +47,7 @@ public class UserController {
         if (!userService.currentUserIsSiteAdmin()) {
             return "redirect:/403";
         }
+
         if (memberService.userIsLastCircleAdminInAnyCircle(userId)) {
             redirectAttributes.addAttribute("error", USER_IS_THE_LAST_ADMIN_IN_A_CIRCLE);
         } else if (userService.userIsSiteAdmin(userId)) {
@@ -68,16 +55,20 @@ public class UserController {
         } else {
             userService.deleteUserById(userId);
         }
+
         return "redirect:/siteAdmin/userOverview";
     }
 
     @GetMapping("/users/edit/{userId}")
     protected String showEditUserForm(@PathVariable("userId") Integer userId, @ModelAttribute("error") String error,
-                                      Model model) {
+                                      Model model, HttpSession session) {
+        session.setAttribute("lastUserId", userId);
         if (!userService.getCurrentUser().getUserId().equals(userId) && !userService.currentUserIsSiteAdmin()) {
             return "redirect:/403";
         }
+
         UserDTO user = userService.getById(userId);
+
         model.addAttribute("userIsCurrentUser", userService.getCurrentUser().getUserId().equals(userId));
         model.addAttribute("user", user);
         return "editUserForm";
@@ -88,7 +79,9 @@ public class UserController {
         if (!userService.getCurrentUser().getUserId().equals(userId) && !userService.currentUserIsSiteAdmin()) {
             return "redirect:/403";
         }
+
         UserEditPasswordDTO user = userService.getUserEditDTOById(userId);
+
         model.addAttribute("userIsCurrentUser", userService.getCurrentUser().getUserId().equals(userId));
         model.addAttribute("user", user);
         return "editPasswordForm";
@@ -101,9 +94,11 @@ public class UserController {
             ObjectError error = new ObjectError("globalError", "Email is already in use");
             result.addError(error);
         }
+
         if (result.hasErrors()) {
             return "registrationForm";
         }
+
         userService.saveNewUser(userRegistrationDTO);
         return "redirect:/circles";
     }
@@ -124,14 +119,17 @@ public class UserController {
                 && !userService.currentUserIsSiteAdmin()) {
             return "redirect:/403";
         }
+
         if (userService.emailInUse(user.getEmail())
                 && !user.getEmail().equals(userService.getById(user.getUserId()).getEmail())) {
             ObjectError error = new ObjectError("globalError", "Email is already in use");
             result.addError(error);
         }
+
         if (result.hasErrors()) {
             return "editUserForm";
         }
+
         userService.editUserInfo(user);
         return "redirect:/profilepage/" + user.getUserId();
     }
@@ -139,7 +137,6 @@ public class UserController {
     @PostMapping("users/edit/password/{userId}")
     protected String editUserPassword(@ModelAttribute("user") UserEditPasswordDTO user,
                               BindingResult result, Model model) {
-
         if (!userService.getCurrentUser().getUserId().equals(user.getUserId())
                 && !userService.currentUserIsSiteAdmin()) {
             return "redirect:/403";
@@ -151,17 +148,19 @@ public class UserController {
                 result.addError(error);
             }
         }
+
         if (!user.getNewPassword().equals(user.getConfirmNewPassword())) {
             ObjectError error = new ObjectError("globalError", "Passwords do not match");
             result.addError(error);
         }
+
         if (result.hasErrors()) {
             model.addAttribute("userIsCurrentUser",
                     userService.getCurrentUser().getUserId().equals(user.getUserId()));
             return "editPasswordForm";
         }
+
         userService.editPassword(user);
         return "redirect:/profilepage/" + user.getUserId();
     }
-
 }

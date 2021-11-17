@@ -14,8 +14,9 @@ import java.util.stream.Collectors;
 /**
  * @author Erwin Wegter <ewegter@gmail.com>
  *
- * Controls the search function response on the siteAdminDashboard page
+ * Controls the search function response on the siteAdminDashboard page.
  */
+
 @RestController
 public class SiteAdminSearchController {
 
@@ -28,14 +29,12 @@ public class SiteAdminSearchController {
     }
 
     @PostMapping("/siteAdmin/dashboard/searchList")
-    protected ResponseEntity<?> getUserSearchResult(@Valid @RequestBody UserSearchDTO keywords, Errors errors) {
-
+    protected ResponseEntity<?> getUserSearchResult(@Valid @RequestBody SearchDTO keywords, Errors errors) {
         UserSearchAjaxResponseBody result = new UserSearchAjaxResponseBody();
 
         if (errors.hasErrors()) {
             result.setMsg(errors.getAllErrors().stream().map(x -> x.getDefaultMessage())
                     .collect(Collectors.joining(",")));
-
             return ResponseEntity.badRequest().body(result);
         }
 
@@ -46,20 +45,18 @@ public class SiteAdminSearchController {
         } else {
             result.setMsg("Succes");
         }
-        result.setUsers(userList);
 
+        result.setUsers(userList);
         return ResponseEntity.ok(result);
     }
 
     @PostMapping("/siteAdmin/circleClientOverview/searchList")
-    protected ResponseEntity<?> getCircleSearchResult(@Valid @RequestBody CircleSearchDTO keywords, Errors errors) {
-
+    protected ResponseEntity<?> getCircleSearchResult(@Valid @RequestBody SearchDTO keywords, Errors errors) {
         CircleSearchResponseBody result = new CircleSearchResponseBody();
 
         if (errors.hasErrors()) {
             result.setMsg(errors.getAllErrors().stream().map(x -> x.getDefaultMessage())
                     .collect(Collectors.joining(",")));
-
             return ResponseEntity.badRequest().body(result);
         }
 
@@ -70,9 +67,8 @@ public class SiteAdminSearchController {
         } else {
             result.setMsg("Succes");
         }
-        result.setCircles(circleClientList);
 
+        result.setCircles(circleClientList);
         return ResponseEntity.ok(result);
     }
-
 }

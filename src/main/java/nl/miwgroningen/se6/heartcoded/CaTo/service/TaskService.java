@@ -36,6 +36,14 @@ public class TaskService {
         return taskMapper.toDTO(taskRepository.findAll());
     }
 
+    public Long totalNumberOfTasks() {
+        return taskRepository.count();
+    }
+
+    public Integer totalNumberOfReservedTasks() {
+        return taskRepository.countAllByAssignedUserNotNull();
+    }
+
     public Optional<TaskDTO> findById(Integer taskId) {
         return taskMapper.toDTO(taskRepository.findById(taskId));
     }
