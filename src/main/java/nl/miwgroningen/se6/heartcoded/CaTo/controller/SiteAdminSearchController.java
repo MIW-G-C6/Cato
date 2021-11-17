@@ -63,14 +63,14 @@ public class SiteAdminSearchController {
             return ResponseEntity.badRequest().body(result);
         }
 
-        List<CircleDTO> circleList = circleService.findWithNameContains(keywords.getKeywords());
+        List<CircleClientDTO> circleClientList = circleService.findWithNameContains(keywords.getKeywords());
 
-        if (circleList.isEmpty()) {
+        if (circleClientList.isEmpty()) {
             result.setMsg("No care circles found");
         } else {
             result.setMsg("Succes");
         }
-        result.setCircles(circleList);
+        result.setCircles(circleClientList);
 
         return ResponseEntity.ok(result);
     }
