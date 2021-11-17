@@ -376,6 +376,10 @@ a.nav-link{
     box-shadow: 0 0 0 0.2rem rgba(202, 250, 217, 1);
 }
 
+#pp-edit-button {
+    padding-left: 40px;
+}
+
 /*contains layout for columns on about page*/
 .flex-column {
     float: left;
@@ -410,7 +414,12 @@ html, body {
     display: flex;
 }
 
-
+.profile-information {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-right: 100px;
+}
 
 .stackedHeaderAndInfo {
     display: flex;
@@ -598,6 +607,11 @@ input[type=email], input[type=password], input[type=text] {
 
 .cato-table {
     width: 50%;
+    padding-top: 60px;
+}
+
+.cato-table br {
+    display: none;
 }
 
 .group-options-table {
@@ -649,6 +663,10 @@ input[type=email], input[type=password], input[type=text] {
     list-style-type: none;
 }
 
+.general-table-layout br {
+    display: none;
+}
+
 .table-header {
     padding-left: 10px;
     padding-top: 10px;
@@ -674,6 +692,10 @@ input[type=email], input[type=password], input[type=text] {
 
 #task-description {
     width: 40%;
+}
+
+#overview-circles {
+    width: 30%;
 }
 
 .title-taskdetails {
@@ -740,15 +762,33 @@ input[type=email], input[type=password], input[type=text] {
     background-color: #fafafa;
 }
 
+.profile-container {
+    float: left;
+    margin-left: 50px;
+}
+
 .profile-picture {
-    width: 250px;
-    padding-top: 60px;
-    padding-left: 50px;
+    width: auto;
+    min-height: 175px;
+    min-width: 175px;
+    max-width: 250px;
+    max-height: 210px;
+    margin-right: 50px;
+    box-shadow: 0 0 11px rgba(33,33,33,.4);
+    border-radius: 4px;
+}
+
+.profile-picture-box {
+    min-width: 250px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .profile-page-box {
     display: flex;
     flex-flow: row;
+    align-items: flex-start;
 }
 
 .last-three-circle-header {

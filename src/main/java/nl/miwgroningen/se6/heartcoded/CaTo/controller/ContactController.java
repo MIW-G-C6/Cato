@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 /**
  * @author Shalena Omapersad <shalenao@hotmail.com>
  *
- *Contact information.
+ * Controls the contact page.
  */
 
 @Controller

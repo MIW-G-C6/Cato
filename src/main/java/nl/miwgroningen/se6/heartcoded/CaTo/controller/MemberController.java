@@ -2,6 +2,7 @@ package nl.miwgroningen.se6.heartcoded.CaTo.controller;
 
 import nl.miwgroningen.se6.heartcoded.CaTo.dto.CircleDTO;
 import nl.miwgroningen.se6.heartcoded.CaTo.dto.MemberDTO;
+import nl.miwgroningen.se6.heartcoded.CaTo.dto.UserDTO;
 import nl.miwgroningen.se6.heartcoded.CaTo.service.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,7 +24,7 @@ import java.util.Optional;
 @RequestMapping("/circles")
 public class MemberController {
 
-    private static final String ONLY_CIRCLE_ADMIN_ERROR = "Cannot remove circle admin if this is the only circle admin";
+    private static final String ONLY_CIRCLE_ADMIN_ERROR = "Cannot remove the last circle admin";
     private static final String NO_ACCOUNT_WITH_EMAIL_ERROR = "No existing account found with this email address";
     private static final String SAME_USER_TWICE_ERROR = "Not able to add the same user twice";
     private static final String ALREADY_CLIENT_ERROR = "User is already a client in another circle";
@@ -44,7 +45,9 @@ public class MemberController {
     }
 
     @GetMapping("/{circleId}")
-    protected String showCircleDashboard(@PathVariable("circleId") Integer circleId, Model model, HttpSession session) {
+    protected String showCircleDashboard(@PathVariable("circleId") Integer circleId,
+                                         @ModelAttribute("error") String error,
+                                         Model model, HttpSession session) {
         if (!isCircleMember(circleId) && isNotSiteAdmin()) {
             return "redirect:/403";
         }
@@ -178,7 +181,10 @@ public class MemberController {
     protected String deleteUserFromCircle(@PathVariable("circleId") Integer circleId,
                                           @PathVariable("userId") Integer userId,
                                           RedirectAttributes redirectAttributes) {
-        if (isNotCircleAdmin(circleId) && isNotSiteAdmin()) {
+
+        boolean currentUserIsTargetUser = userId.equals(userService.getCurrentUser().getUserId());
+
+        if (isNotCircleAdmin(circleId) && isNotSiteAdmin() && (!currentUserIsTargetUser)) {
             return "redirect:/403";
         }
         // checks first if the circle member isn't the last circle admin. If so, it can't be removed from the circle.
@@ -190,7 +196,12 @@ public class MemberController {
                 memberService.deleteByUserId(userId, circleId);
             }
         }
-        if (member.get().getUserId().equals(userService.getCurrentUser().getUserId()) && !member.get().isAdmin() && memberService.findOutIfMemberIsAdmin(member.get()));
+
+        if (currentUserIsTargetUser && !redirectAttributes.containsAttribute("error")) {
+            return "redirect:/circles";
+        } else if (currentUserIsTargetUser && redirectAttributes.containsAttribute("error")) {
+            return "redirect:/circles/{circleId}";
+        }
 
         return "redirect:/circles/options/{circleId}";
     }
