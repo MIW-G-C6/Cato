@@ -13,7 +13,7 @@ import java.util.Optional;
 /**
  * @author Paul Romkes <p.r.romkes@gmail.com
  *
- * Gets data from the task repository and gives it to the controllers
+ * Gets data from the task repository and gives it to the controllers.
  */
 
 @Service
@@ -22,6 +22,7 @@ public class TaskService {
     private final TaskRepository taskRepository;
     private final TaskListRepository taskListRepository;
     private final UserRepository userRepository;
+
     private final TaskMapper taskMapper;
 
     public TaskService(TaskRepository taskRepository, TaskListRepository taskListRepository,
@@ -55,18 +56,21 @@ public class TaskService {
     public void save(TaskDTO taskDTO, Integer taskListId) {
         Task task = taskMapper.toTask(taskDTO);
         task.setTaskList(taskListRepository.getById(taskListId));
+
         taskRepository.save(task);
     }
 
     public void assignUser(Integer taskId, Integer userId) {
         Task task = taskRepository.getById(taskId);
         task.setAssignedUser(userRepository.getById(userId));
+
         taskRepository.save(task);
     }
 
     public void unassignUser(Integer taskId) {
         Task task = taskRepository.getById(taskId);
         task.setAssignedUser(null);
+
         taskRepository.save(task);
     }
 
@@ -76,6 +80,7 @@ public class TaskService {
 
     public List<TaskDTO> getAllTasksByCircleId(Integer circleId) {
         List<Task> listOfTasks = new ArrayList<>(taskListRepository.getByCircleCircleId(circleId).getTaskList());
+
         return taskMapper.toDTO(listOfTasks);
     }
 }

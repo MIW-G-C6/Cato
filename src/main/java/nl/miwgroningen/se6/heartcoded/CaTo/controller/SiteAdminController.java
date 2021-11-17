@@ -8,8 +8,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 
 /**
  * @author Erwin Wegter <ewegter@gmail.com>
@@ -35,6 +38,12 @@ public class SiteAdminController {
 
     @GetMapping("/siteAdmin/dashboard")
     protected String showSiteAdminDashboard(Model model) {
+        if (isNotSiteAdmin()) {
+            return "redirect:/403";
+        }
+
+        model.addAttribute("allClients", memberService.findAllClientsForSiteAdmin());
+        model.addAttribute("allCircles", circleService.findAllCircles());
         model.addAttribute("numberOfUsers", userService.totalNumberOfUsers());
         model.addAttribute("numberOfCircles", circleService.totalNumberOfCircles());
         model.addAttribute("numberOfClients", memberService.totalNumberOfClients());
@@ -45,12 +54,24 @@ public class SiteAdminController {
 
     @GetMapping("/siteAdmin/userOverview")
     protected String showSiteAdminUserOverview(@ModelAttribute("error") String error) {
+        if (isNotSiteAdmin()) {
+            return "redirect:/403";
+        }
         return "siteAdminUserOverview";
     }
 
     @GetMapping("/siteAdmin/circleClientOverview")
     protected String showSiteAdminCircleClientOverview(@ModelAttribute("error") String error, HttpSession session) {
+        if (isNotSiteAdmin()) {
+            return "redirect:/403";
+        }
+
         session.setAttribute("circleDeleteRedirect", "redirect:/siteAdmin/circleClientOverview");
         return "siteAdminCircleClientOverview";
     }
+
+    private boolean isNotSiteAdmin() {
+        return !userService.currentUserIsSiteAdmin();
+    }
+
 }

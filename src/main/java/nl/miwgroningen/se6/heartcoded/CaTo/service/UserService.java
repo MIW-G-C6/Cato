@@ -1,11 +1,9 @@
 package nl.miwgroningen.se6.heartcoded.CaTo.service;
 
-import nl.miwgroningen.se6.heartcoded.CaTo.dto.CircleDTO;
 import nl.miwgroningen.se6.heartcoded.CaTo.dto.UserDTO;
 import nl.miwgroningen.se6.heartcoded.CaTo.dto.UserEditPasswordDTO;
 import nl.miwgroningen.se6.heartcoded.CaTo.dto.UserRegistrationDTO;
 import nl.miwgroningen.se6.heartcoded.CaTo.mappers.*;
-import nl.miwgroningen.se6.heartcoded.CaTo.model.Circle;
 import nl.miwgroningen.se6.heartcoded.CaTo.model.User;
 import nl.miwgroningen.se6.heartcoded.CaTo.repository.CircleRepository;
 import nl.miwgroningen.se6.heartcoded.CaTo.repository.UserRepository;
@@ -16,7 +14,6 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,24 +28,19 @@ import static org.aspectj.bridge.MessageUtil.fail;
 @Service
 public class UserService {
 
-    private final CircleRepository circleRepository;
     private final UserRepository userRepository;
+
     private final UserMapper userMapper;
-    private final CircleMapper circleMapper;
-    private final UserLoginMapper userLoginMapper;
     private final UserRegistrationMapper userRegistrationMapper;
     private final UserEditPasswordMapper userEditPasswordMapper;
+
     private PasswordEncoder passwordEncoder;
 
-    public UserService(CircleRepository circleRepository, UserRepository userRepository, UserMapper userMapper,
-                       CircleMapper circleMapper, UserLoginMapper userLoginMapper,
+    public UserService(UserRepository userRepository, UserMapper userMapper,
                        UserRegistrationMapper userRegistrationMapper, UserEditPasswordMapper userEditPasswordMapper,
                        PasswordEncoder passwordEncoder) {
-        this.circleRepository = circleRepository;
         this.userRepository = userRepository;
         this.userMapper = userMapper;
-        this.circleMapper = circleMapper;
-        this.userLoginMapper = userLoginMapper;
         this.userRegistrationMapper = userRegistrationMapper;
         this.userEditPasswordMapper = userEditPasswordMapper;
         this.passwordEncoder = passwordEncoder;
@@ -60,12 +52,6 @@ public class UserService {
 
     public Integer totalNumberOfUsers() {
         return userRepository.countAllByUserRoleIsNot("ROLE_ADMIN");
-    }
-
-    public List<UserDTO> findAllRegisteredUsers() {
-        List<User> allUsers = userRepository.findAll();
-        removeSiteAdminFromList(allUsers);
-        return userMapper.toDTO(allUsers);
     }
 
     public UserDTO getById(Integer userId) {
@@ -82,9 +68,9 @@ public class UserService {
 
     public void editUserInfo(UserDTO user) {
         User result = userRepository.getById(user.getUserId());
-
         result.setName(user.getName());
         result.setEmail(user.getEmail());
+
         if (user.getProfilePicture().length != 0) {
             result.setProfilePicture(user.getProfilePicture());
         }
@@ -94,17 +80,14 @@ public class UserService {
 
     public void editPassword(UserEditPasswordDTO user) {
         User result = userRepository.getById(user.getUserId());
-
         result.setPassword(passwordEncoder.encode(user.getNewPassword()));
 
         userRepository.save(result);
-
         //TODO maybe this needs an exception throw??
     }
 
     public void saveNewUser(UserRegistrationDTO userDTO) {
         if(userDTO.getPassword().equals(userDTO.getPasswordCheck())) {
-
             userDTO.setPassword(passwordEncoder.encode(userDTO.getPassword()));
             User user = userRegistrationMapper.toUser(userDTO);
             user.setUserRole("ROLE_USER");
@@ -134,6 +117,7 @@ public class UserService {
         adminUser.setName("Admin");
         adminUser.setEmail("Admin@admin.com");
         adminUser.setPassword(passwordEncoder.encode("admin"));
+
         userRepository.save(adminUser);
     }
 
@@ -158,6 +142,7 @@ public class UserService {
 
     public UserDTO getCurrentUser() {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
         return getById(user.getUserId());
     }
 
@@ -168,9 +153,11 @@ public class UserService {
 
     public boolean userIsSiteAdmin(Integer userId) {
         Optional<User> user = userRepository.findById(userId);
+
         if (user.isPresent()) {
             return user.get().getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
         }
+
         return false;
     }
 
@@ -189,11 +176,15 @@ public class UserService {
     public List<UserDTO> findWithNameContains(String keyword) {
         List<User> userList = userRepository.findByNameContains(keyword);
         removeSiteAdminFromList(userList);
+
         return userMapper.toDTO(userList);
     }
+
     private void removeSiteAdminFromList(List<User> userList) {
-        userList.removeIf(user -> user.getAuthorities().stream().anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_ADMIN")));
+        userList.removeIf(user -> user.getAuthorities().stream()
+                .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_ADMIN")));
     }
+
     public boolean passwordMatches(String oldPassword, Integer userId) {
         return passwordEncoder.matches(oldPassword, userRepository.getById(userId).getPassword());
     }
