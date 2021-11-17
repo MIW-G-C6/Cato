@@ -17,20 +17,26 @@ import static org.junit.jupiter.api.Assertions.*;
 class MemberMapperTest {
 
     private MemberMapper memberMapper;
+
     private User user1;
     private User user2;
+
     private Circle circle1;
     private Circle circle2;
+
     private Member member1;
     private Member member2;
 
     @BeforeEach
     void setUp() {
         memberMapper = new MemberMapper();
+
         user1 = new User();
         user2 = new User();
+
         circle1 = new Circle();
         circle2 = new Circle();
+
         member1 = new Member();
         member2 = new Member();
 
@@ -56,6 +62,7 @@ class MemberMapperTest {
     @Test
     void toDTO() {
         MemberDTO memberDTO = memberMapper.toDTO(member1);
+
         assertEquals(Member.getCircleRoleOptions(), memberDTO.getCircleRoleOptions());
         assertEquals(user1.getUserId(), memberDTO.getUserId());
         assertEquals(user1.getName(), memberDTO.getUserName());
@@ -69,6 +76,7 @@ class MemberMapperTest {
         List<Member> testList = new ArrayList<>();
         testList.add(member1);
         testList.add(member2);
+
         assertEquals(2, memberMapper.toDTO(testList).size());
     }
 
@@ -92,6 +100,7 @@ class MemberMapperTest {
         memberDTO.setRole("TestRole");
         memberDTO.setAdmin(true);
         Member member = memberMapper.toMember(memberDTO);
+
         assertEquals(memberDTO.getRole(), member.getUserRole());
         assertTrue(member.isAdmin());
     }

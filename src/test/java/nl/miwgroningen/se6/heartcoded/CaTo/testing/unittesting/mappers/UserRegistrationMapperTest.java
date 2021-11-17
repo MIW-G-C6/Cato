@@ -16,7 +16,6 @@ class UserRegistrationMapperTest {
 
     private User user1;
 
-
     @BeforeEach
     void setUp() {
         userRegistrationMapper = new UserRegistrationMapper();
@@ -60,6 +59,5 @@ class UserRegistrationMapperTest {
         assertEquals("Test100", user.getName());
         assertEquals("100@test.com", user.getEmail());
         assertEquals("PW123", user.getPassword());
-
     }
 }

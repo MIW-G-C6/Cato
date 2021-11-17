@@ -28,6 +28,7 @@ class TaskListMapperTest {
         taskList.setTaskListId(1);
         taskList.setCircle(new Circle());
         TaskListDTO taskListDTO = taskListMapper.toDTO(taskList);
+
         assertEquals(1, taskListDTO.getTaskListId());
     }
 
@@ -38,8 +39,8 @@ class TaskListMapperTest {
         circle.setCircleId(100);
 
         taskList.setCircle(circle);
-
         TaskListDTO taskListDTO = taskListMapper.toDTO(taskList);
+
         assertEquals(100, taskListDTO.getCircleId());
     }
 
@@ -73,6 +74,7 @@ class TaskListMapperTest {
         TaskListDTO taskListDTO = new TaskListDTO();
         taskListDTO.setTaskListId(1);
         TaskList taskList = taskListMapper.toTaskList(taskListDTO);
+
         assertEquals(1, taskList.getTaskListId());
     }
 
@@ -80,6 +82,7 @@ class TaskListMapperTest {
     void emptyOptionalToDTO() {
         Optional<TaskList> optionalTaskList = Optional.empty();
         Optional<TaskListDTO> optionalTaskListDTO = taskListMapper.toDTO(optionalTaskList);
+
         assertTrue(optionalTaskListDTO.isEmpty());
     }
 

@@ -3,7 +3,6 @@ package nl.miwgroningen.se6.heartcoded.CaTo.testing.unittesting;
 import nl.miwgroningen.se6.heartcoded.CaTo.dto.UserEditPasswordDTO;
 import nl.miwgroningen.se6.heartcoded.CaTo.mappers.*;
 import nl.miwgroningen.se6.heartcoded.CaTo.model.User;
-import nl.miwgroningen.se6.heartcoded.CaTo.repository.CircleRepository;
 import nl.miwgroningen.se6.heartcoded.CaTo.repository.UserRepository;
 import nl.miwgroningen.se6.heartcoded.CaTo.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,9 +18,9 @@ import static org.mockito.Mockito.when;
 
 class UserServiceTest {
 
-    private UserRepository userRepository;
-
     private PasswordEncoder passwordEncoder;
+
+    private UserRepository userRepository;
 
     private UserMapper userMapper;
     private UserRegistrationMapper userRegistrationMapper;

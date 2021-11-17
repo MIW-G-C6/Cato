@@ -24,6 +24,7 @@ import static org.mockito.Mockito.when;
 class MemberServiceTest {
 
     private MemberRepository memberRepository;
+
     private MemberService memberService;
 
     @BeforeEach

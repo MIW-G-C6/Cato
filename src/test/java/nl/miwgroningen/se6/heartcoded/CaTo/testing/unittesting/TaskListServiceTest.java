@@ -18,19 +18,21 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-
 class TaskListServiceTest {
 
-    private TaskListService taskListService;
     private CircleRepository circleRepository;
-    private TaskListMapper taskListMapper;
     private TaskListRepository taskListRepository;
+
+    private TaskListMapper taskListMapper;
+
+    private TaskListService taskListService;
 
     @BeforeEach
     void setUp() {
-        taskListRepository = Mockito.mock(TaskListRepository.class);
         circleRepository = Mockito.mock(CircleRepository.class);
+        taskListRepository = Mockito.mock(TaskListRepository.class);
         taskListMapper = new TaskListMapper();
+
         taskListService = new TaskListService(taskListRepository, circleRepository, taskListMapper);
     }
 
