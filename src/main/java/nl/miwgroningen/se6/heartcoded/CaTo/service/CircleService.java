@@ -19,7 +19,7 @@ import java.util.List;
 /**
  * @author Paul Romkes <p.r.romkes@gmail.com
  *
- * Gets data from the circle repository and gives it to the controllers
+ * Gets data from the circle repository and gives it to the controllers.
  */
 
 @Service
@@ -28,12 +28,12 @@ public class CircleService {
     private final MemberRepository memberRepository;
     private final CircleRepository circleRepository;
     private final UserRepository userRepository;
+
     private final CircleMapper circleMapper;
     private final MemberMapper memberMapper;
 
     public CircleService(MemberRepository memberRepository, CircleRepository circleRepository,
-                         UserRepository userRepository,
-                         CircleMapper circleMapper, MemberMapper memberMapper) {
+                         UserRepository userRepository, CircleMapper circleMapper, MemberMapper memberMapper) {
         this.memberRepository = memberRepository;
         this.circleRepository = circleRepository;
         this.userRepository = userRepository;
@@ -44,9 +44,11 @@ public class CircleService {
     public List<CircleDTO> findAllCircles() {
         List<Circle> allCircles = circleRepository.findAll();
         List<CircleDTO> result = new ArrayList<>();
+
         for (Circle circle : allCircles) {
             result.add(circleMapper.toDTO(circle));
         }
+
         return result;
     }
 
@@ -61,6 +63,7 @@ public class CircleService {
     public void saveCircle(CircleDTO circleDTO) {
         Circle result = circleMapper.toCircle(circleDTO);
         result.setMemberList(memberRepository.getAllByCircleCircleId(result.getCircleId()));
+
         circleRepository.save(result);
         circleDTO.setCircleId(result.getCircleId());
     }
@@ -68,7 +71,6 @@ public class CircleService {
     public CircleDTO getById(Integer circleId) {
         return circleMapper.toDTO(circleRepository.getById(circleId));
     }
-
 
     public List<CircleClientDTO> findWithNameContains(String keyword) {
         List<CircleClientDTO> listFindByClientName = findWithClientName(keyword);
@@ -79,12 +81,14 @@ public class CircleService {
                 result.add(DTOFromClientName);
             }
         }
+
         return result;
     }
 
     private List<CircleClientDTO> findWithClientName(String keyword) {
         List<Member> clientList = new ArrayList<>();
         List<User> userList = userRepository.findByNameContains(keyword);
+
         for (User user : userList) {
             List<Member> memberListOfThisUser = memberRepository.findAllByUserUserId(user.getUserId());
             for (Member member : memberListOfThisUser) {
@@ -93,6 +97,7 @@ public class CircleService {
                 }
             }
         }
+
         List<CircleClientDTO> result = new ArrayList<>();
         if(!clientList.isEmpty()) {
             for (Member client : clientList) {
@@ -103,6 +108,7 @@ public class CircleService {
                 }
             }
         }
+
         return result;
     }
 
@@ -119,7 +125,7 @@ public class CircleService {
             List<MemberDTO> clientList = getClientsByCircleId(circle.getCircleId());
             result.add(new CircleClientDTO(circle.getCircleId(), circle.getCircleName(), clientList));
         }
+
         return result;
     }
-
 }

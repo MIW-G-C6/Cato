@@ -173,6 +173,5 @@ public class Seeder {
             taskService.save(new TaskDTO("low", "Check blood pressure", taskList.getTaskListId()), taskList.getTaskListId());
             taskService.save(new TaskDTO("medium", "Prepare dinner", taskList.getTaskListId()), taskList.getTaskListId());
         }
-
     }
 }

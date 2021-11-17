@@ -15,7 +15,7 @@ import java.util.Optional;
 /**
  * @author Paul Romkes <p.r.romkes@gmail.com
  *
- * Gets data from the task repository and gives it to the controllers
+ * Gets data from the task repository and gives it to the controllers.
  */
 
 @Service
@@ -23,6 +23,7 @@ public class TaskListService {
 
     private final TaskListRepository taskListRepository;
     private final CircleRepository circleRepository;
+
     private final TaskListMapper taskListMapper;
 
     public TaskListService(TaskListRepository taskListRepository, CircleRepository circleRepository,
@@ -54,6 +55,7 @@ public class TaskListService {
     public void saveNew(CircleDTO circleDTO) {
         Circle circle = circleRepository.getById(circleDTO.getCircleId());
         TaskList taskList = new TaskList(circle);
+
         taskListRepository.save(taskList);
     }
 
