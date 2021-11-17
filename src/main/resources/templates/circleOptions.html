@@ -46,12 +46,12 @@
                     <li><hr></li>
                     <li><a th:href="@{/circles/options/edit/{circleId}(circleId=${thisCircle.circleId})}">Edit circle name</a></li>
                     <li><hr></li>
-                    <li><a id="cato-delete-link">Delete circle</a></td></li>
+                    <li><a id="cato-delete-link">Delete circle</a></li>
                 </ul>
         </div>
     </div>
 
-    <div id="myModal" class="modal">
+    <div id="deleteCircleModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
                 <h2 class="modal-title">Warning!</h2>
@@ -70,7 +70,7 @@
 
     <script>
         // Get the modal
-        var modal = document.getElementById("myModal");
+        var modal = document.getElementById("deleteCircleModal");
 
         // Get the button that opens the modal
         var btn = document.getElementById("cato-delete-link");
@@ -78,7 +78,7 @@
         // Get the <span> element that closes the modal
         var span = document.getElementsByClassName("close")[0];
 
-        // Get the button that opens the modal
+        // Get the button that closes the modal
         var noBtn = document.getElementById("noBtn");
 
         // When the user clicks the button, open the modal
