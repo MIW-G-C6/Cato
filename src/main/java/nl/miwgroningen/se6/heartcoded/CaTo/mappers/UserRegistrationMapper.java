@@ -9,7 +9,7 @@ import java.util.Optional;
 /**
  * @author Paul Romkes <p.r.romkes@gmail.com
  *
- * Maps the User tot the UserRegistrationDTO and vice versa
+ * Maps the User tot the UserRegistrationDTO and back.
  */
 
 @Component
@@ -27,9 +27,11 @@ public class UserRegistrationMapper {
 
     public Optional<UserRegistrationDTO> toDTO(Optional<User> user) {
         Optional<UserRegistrationDTO> userRegistrationDTO = Optional.empty();
+
         if (user.isPresent()) {
             userRegistrationDTO = Optional.of(toDTO(user.get()));
         }
+
         return userRegistrationDTO;
     }
 

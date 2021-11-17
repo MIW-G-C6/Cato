@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 /**
  * @author Paul Romkes <p.r.romkes@gmail.com
  *
- * Maps the User to UserLoginDTO
+ * Maps the User to UserLoginDTO.
  */
 
 @Component
@@ -17,6 +17,7 @@ public class UserLoginMapper {
         UserLoginDTO result = new UserLoginDTO();
         result.setPassword(user.getPassword());
         result.setEmail(user.getEmail());
+
         return result;
     }
 }

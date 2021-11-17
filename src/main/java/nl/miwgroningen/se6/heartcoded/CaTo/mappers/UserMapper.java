@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 /**
  * @author Paul Romkes <p.r.romkes@gmail.com
  *
- * Maps User tot UserDTO
+ * Maps User tot UserDTO and back.
  */
 
 @Component
@@ -23,6 +23,7 @@ public class UserMapper {
         result.setName(user.getName());
         result.setEmail(user.getEmail());
         result.setProfilePicture(user.getProfilePicture());
+
         return result;
     }
 
@@ -32,9 +33,11 @@ public class UserMapper {
 
     public Optional<UserDTO> toDTO(Optional<User> user) {
         Optional<UserDTO> result = Optional.empty();
+
         if(user.isPresent()) {
             result = Optional.of(toDTO(user.get()));
         }
+
         return result;
     }
 
@@ -44,6 +47,7 @@ public class UserMapper {
         result.setName(userDTO.getName());
         result.setEmail(userDTO.getEmail());
         result.setProfilePicture(userDTO.getProfilePicture());
+
         return result;
     }
 }

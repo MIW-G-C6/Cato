@@ -10,8 +10,10 @@ import java.util.stream.Collectors;
 
 /**
  * @author Remco Lantinga <remco_lantinga@hotmail.com>
- * Maps User to UserEditDTO and reverse
+ *
+ * Maps User to UserEditDTO and back.
  */
+
 @Component
 public class UserEditPasswordMapper {
 
@@ -20,6 +22,7 @@ public class UserEditPasswordMapper {
         result.setUserId(user.getUserId());
         result.setName(user.getName());
         result.setEmail(user.getEmail());
+
         return result;
     }
 
@@ -29,9 +32,11 @@ public class UserEditPasswordMapper {
 
     public Optional<UserEditPasswordDTO> toDTO(Optional<User> user) {
         Optional<UserEditPasswordDTO> result = Optional.empty();
+
         if(user.isPresent()) {
             result = Optional.of(toDTO(user.get()));
         }
+
         return result;
     }
 
@@ -41,6 +46,7 @@ public class UserEditPasswordMapper {
         result.setUserId(userEditPasswordDTO.getUserId());
         result.setName(userEditPasswordDTO.getName());
         result.setEmail(userEditPasswordDTO.getEmail());
+
         return result;
     }
 }

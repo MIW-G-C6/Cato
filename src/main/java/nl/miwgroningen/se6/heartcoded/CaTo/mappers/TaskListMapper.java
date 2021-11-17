@@ -19,7 +19,6 @@ public class TaskListMapper {
 
     public TaskListDTO toDTO(TaskList taskList) {
         TaskListDTO result = new TaskListDTO();
-
         result.setTaskListId(taskList.getTaskListId());
         result.setCircleId(taskList.getCircle().getCircleId());
 
@@ -32,20 +31,24 @@ public class TaskListMapper {
         if (taskList.isPresent()) {
             taskListDTO = Optional.of(toDTO(taskList.get()));
         }
+
         return taskListDTO;
     }
 
     public List<TaskListDTO> toDTO(List<TaskList> taskLists) {
         List<TaskListDTO> taskListDTOS = new ArrayList<>();
+
         for (TaskList taskList : taskLists) {
             taskListDTOS.add(toDTO(taskList));
         }
+
         return taskListDTOS;
     }
 
     public TaskList toTaskList(TaskListDTO taskListDTO) {
         TaskList result = new TaskList();
         result.setTaskListId(taskListDTO.getTaskListId());
+
         return result;
     }
 }
