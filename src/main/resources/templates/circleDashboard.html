@@ -95,7 +95,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="catoButton" id="noBtn">No</button>
-                <a th:href="@{'/circles/options/{circleId}/delete/' + ${session.currentUserId}(circleId=${circleId})}"><button type="button" class="btn btn-primary" id="modalYesButton">Yes</button></a>
+                <a th:href="@{'/circles/options/{circleId}/delete/' + ${session.currentUserId}(circleId=${circleId})}"><button type="button" class="catoYesWarningButton" id="modalYesButton">Yes</button></a>
             </div>
         </div>
     </div>

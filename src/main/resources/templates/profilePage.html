@@ -11,7 +11,7 @@
         <div th:replace="fragments/general :: previousButton"></div>
         <div class="breadCrumbs">
             <li><a th:href="@{/}">Home</a></li>
-            <li sec:authorize="hasAuthority('ROLE_ADMIN')"><a th:href="@{/siteAdminDashboard}">Site Admin Dashboard</a></li>
+            <li sec:authorize="hasAuthority('ROLE_ADMIN')"><a th:href="@{/siteAdmin/dashboard}">Site Admin Dashboard</a></li>
             <li>Profile</li>
         </div>
     </div>
@@ -21,7 +21,7 @@
             <div class="profile-picture-box">
                 <img th:unless="${profilePicture} == ''" th:src="@{'data:image/jpeg;base64,'+${profilePicture}}" class="profile-picture"/>
             </div>
-            <div>
+            <div class="profile-information">
                 <div class="profileInfoBar">
                     <div class="profileIcon">
                         <i class="fa fa-user"></i>
@@ -44,10 +44,12 @@
                     </div>
                 </div>
                 <br>
-                <a th:if="${userIsCurrentUser || currentUserIsSiteAdmin}" th:href="@{'/users/edit/' + ${user.userId}}"><button class="catoButton">Edit</button></a>
-                <a th:if="${userIsCurrentUser || currentUserIsSiteAdmin}" th:href="@{'/users/edit/password/' + ${user.userId}}"><button class="catoButton">Change password</button></a>
+                <div id="pp-edit-button">
+                    <a th:if="${userIsCurrentUser || currentUserIsSiteAdmin}" th:href="@{'/users/edit/' + ${user.userId}}"><button class="catoButton">Edit</button></a>
+                    <a th:if="${userIsCurrentUser || currentUserIsSiteAdmin}" th:href="@{'/users/edit/password/' + ${user.userId}}"><button class="catoButton">Change password</button></a>
+                </div>
             </div>
-            <div th:if="${userIsCurrentUser || currentUserIsSiteAdmin}" class="general-table-layout">
+            <div th:if="${userIsCurrentUser || currentUserIsSiteAdmin}" class="general-table-layout" id="overview-circles">
                 <h5 class="table-header">My Care Circles</h5>
                 <table>
                     <tr th:if="${allCircles.isEmpty()}">You are not a member of a Care Circle yet</tr><br>
