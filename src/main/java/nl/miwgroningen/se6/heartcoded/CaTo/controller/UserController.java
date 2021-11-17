@@ -5,15 +5,29 @@ import nl.miwgroningen.se6.heartcoded.CaTo.dto.UserEditPasswordDTO;
 import nl.miwgroningen.se6.heartcoded.CaTo.dto.UserRegistrationDTO;
 import nl.miwgroningen.se6.heartcoded.CaTo.service.MemberService;
 import nl.miwgroningen.se6.heartcoded.CaTo.service.UserService;
+import org.apache.commons.io.IOUtils;
+import org.apache.tomcat.util.http.fileupload.impl.FileSizeLimitExceededException;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MaxUploadSizeExceededException;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartResolver;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Arrays;
+
+import static org.aspectj.bridge.MessageUtil.fail;
 
 /**
  * @author Shalena Omapersad <shalenao@hotmail.com>
@@ -43,8 +57,7 @@ public class UserController {
     }
 
     @GetMapping("/users/delete/{userId}")
-    protected String deleteUser(@PathVariable("userId") Integer userId,
-                                @ModelAttribute("returnPageString") String returnString, RedirectAttributes redirectAttributes) {
+    protected String deleteUser(@PathVariable("userId") Integer userId, RedirectAttributes redirectAttributes) {
         if (!userService.currentUserIsSiteAdmin()) {
             return "redirect:/403";
         }
@@ -59,7 +72,8 @@ public class UserController {
     }
 
     @GetMapping("/users/edit/{userId}")
-    protected String showEditUserForm(@PathVariable("userId") Integer userId, Model model) {
+    protected String showEditUserForm(@PathVariable("userId") Integer userId, @ModelAttribute("error") String error,
+                                      Model model) {
         if (!userService.getCurrentUser().getUserId().equals(userId) && !userService.currentUserIsSiteAdmin()) {
             return "redirect:/403";
         }
@@ -95,8 +109,17 @@ public class UserController {
     }
 
     @PostMapping("users/edit/{userId}")
-    protected String editUser(@ModelAttribute("user") UserDTO user,
+    protected String editUser (@ModelAttribute("user") UserDTO user, @ModelAttribute("image") MultipartFile image,
                               BindingResult result) {
+        try {
+            byte[] imageContent = image.getBytes();
+            if (image.getSize() < 1048576) {
+                user.setProfilePicture(imageContent);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         if (!userService.getCurrentUser().getUserId().equals(user.getUserId())
                 && !userService.currentUserIsSiteAdmin()) {
             return "redirect:/403";

@@ -4,6 +4,9 @@ import nl.miwgroningen.se6.heartcoded.CaTo.dto.CircleDTO;
 import nl.miwgroningen.se6.heartcoded.CaTo.model.Circle;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 /**
  * @author Erwin Wegter <ewegter@gmail.com>
  *
@@ -19,6 +22,10 @@ public class CircleMapper {
         circleDTO.setCircleName(circle.getCircleName());
 
         return circleDTO;
+    }
+
+    public List<CircleDTO> toDTO(List<Circle> circleList) {
+        return circleList.stream().map(this::toDTO).collect(Collectors.toList());
     }
 
     public Circle toCircle(CircleDTO circleDTO) {
