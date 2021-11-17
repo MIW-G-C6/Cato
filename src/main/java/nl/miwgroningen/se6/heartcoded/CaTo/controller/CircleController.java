@@ -38,7 +38,7 @@ public class CircleController {
 
     @GetMapping("/circles")
     protected String showCircleOverview(HttpSession session, Model model) {
-        userService.checkForCircleDeletion();
+        memberService.checkForCircleDeletion();
         Integer currentUser = userService.getCurrentUser().getUserId();
         session.setAttribute("navbarCircles", memberService.getAllCirclesByUserId(currentUser));
         session.setAttribute("currentUserId", userService.getCurrentUser().getUserId());
@@ -48,7 +48,7 @@ public class CircleController {
                 memberService.findAllClientsInCircle(userService.getCircleTwo(currentUser)));
         model.addAttribute("clientsCircleThree",
                 memberService.findAllClientsInCircle(userService.getCircleThree(currentUser)));
-        model.addAttribute("lastThreeCircles", userService.getLastThreeCirclesByUserId(currentUser));
+        model.addAttribute("lastThreeCircles", memberService.getLastThreeCirclesByUserId(currentUser));
         model.addAttribute("allCircles", memberService.allCirclesByUserIdWithAdminCheck(currentUser));
         return "circleOverview";
     }
@@ -63,15 +63,17 @@ public class CircleController {
     }
 
     @GetMapping("/circles/delete/{circleId}")
-    protected String deleteCircleById(@PathVariable("circleId") Integer circleId) {
+    protected String deleteCircleById(@PathVariable("circleId") Integer circleId,
+                                      HttpSession session) {
 
         if (!memberService.userIsCircleAdmin(circleId) && !userService.currentUserIsSiteAdmin()) {
             return "redirect:/403";
         }
 
+        String circleDeleteRedirect = (String)session.getAttribute("circleDeleteRedirect");
         taskListService.deleteByCircleId(circleId);
         circleService.deleteCircleById(circleId);
-        return "redirect:/circleId";
+        return circleDeleteRedirect;
     }
 
     @PostMapping("/circles/new")

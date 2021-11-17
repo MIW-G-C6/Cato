@@ -38,7 +38,7 @@ import static org.aspectj.bridge.MessageUtil.fail;
 @Controller
 public class UserController {
 
-    private static final String USER_IS_THE_LAST_ADMIN_IN_A_CIRCLE = "User is the last admin in a circle";
+    private static final String USER_IS_THE_LAST_ADMIN_IN_A_CIRCLE = "User is the last admin in a care circle";
     private static final String SITE_ADMIN_DELETE_ERROR = "Unable to delete site admin";
 
     private UserService userService;
@@ -68,7 +68,7 @@ public class UserController {
         } else {
             userService.deleteUserById(userId);
         }
-        return "redirect:/siteAdmin/dashboard";
+        return "redirect:/siteAdmin/userOverview";
     }
 
     @GetMapping("/users/edit/{userId}")
@@ -138,7 +138,7 @@ public class UserController {
 
     @PostMapping("users/edit/password/{userId}")
     protected String editUserPassword(@ModelAttribute("user") UserEditPasswordDTO user,
-                              BindingResult result) {
+                              BindingResult result, Model model) {
 
         if (!userService.getCurrentUser().getUserId().equals(user.getUserId())
                 && !userService.currentUserIsSiteAdmin()) {
@@ -156,6 +156,8 @@ public class UserController {
             result.addError(error);
         }
         if (result.hasErrors()) {
+            model.addAttribute("userIsCurrentUser",
+                    userService.getCurrentUser().getUserId().equals(user.getUserId()));
             return "editPasswordForm";
         }
         userService.editPassword(user);

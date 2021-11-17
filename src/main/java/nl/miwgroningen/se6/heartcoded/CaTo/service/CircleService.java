@@ -52,4 +52,8 @@ public class CircleService {
     public CircleDTO getById(Integer cirlceId) {
         return circleMapper.toDTO(circleRepository.getById(cirlceId));
     }
+
+    public List<CircleDTO> findWithNameContains(String keyword) {
+        return circleMapper.toDTO(circleRepository.findByCircleNameContains(keyword));
+    }
 }

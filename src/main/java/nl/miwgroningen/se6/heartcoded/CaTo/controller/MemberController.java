@@ -48,7 +48,7 @@ public class MemberController {
         if (!isCircleMember(circleId) && isNotSiteAdmin()) {
             return "redirect:/403";
         }
-        userService.addCircleToLastThreeCircles(circleId);
+        memberService.addCircleToLastThreeCircles(circleId);
         Integer currentUser = userService.getCurrentUser().getUserId();
         session.setAttribute("navbarCircles", memberService.getAllCirclesByUserId(currentUser));
         model.addAttribute("thisCircle", circleService.getById(circleId));
@@ -57,15 +57,18 @@ public class MemberController {
         model.addAttribute("allCaregivers", memberService.findAllCaregiversByCircleId(circleId));
         model.addAttribute("thisUserIsAdmin", memberService.userIsCircleAdmin(circleId));
         model.addAttribute("allClients", memberService.findAllClientsInCircle(circleId));
+        model.addAttribute("currentUserIsSiteAdmin", userService.currentUserIsSiteAdmin());
         return "circleDashboard";
     }
 
     @GetMapping("/options/{circleId}")
     protected String showCircleOptions(@PathVariable("circleId") Integer circleId,
-                                      @ModelAttribute("error") String error, Model model) {
+                                      @ModelAttribute("error") String error, Model model,
+                                       HttpSession session) {
         if (isNotCircleAdmin(circleId) && isNotSiteAdmin()) {
             return "redirect:/403";
         }
+        session.setAttribute("circleDeleteRedirect", "redirect:/circles");
         model.addAttribute("thisCircle", circleService.getById(circleId));
         model.addAttribute("allMembersByCircleId", memberService.getAllByCircleId(circleId));
         return "circleOptions";
@@ -144,7 +147,7 @@ public class MemberController {
             model.addAttribute("member", member);
             return "circleUpdateMember";
         }
-        if (circleAdminRemoveOwnRights(member)) {
+        if (isNotSiteAdmin() && circleAdminRemoveOwnRights(member)) {
             redirectAttributes.addFlashAttribute("member", member);
             return "redirect:/circles/options/{circleId}/updatemember/{userId}/changeAdminRole";
         }

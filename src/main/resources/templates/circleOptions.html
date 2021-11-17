@@ -14,24 +14,23 @@
             <li sec:authorize="hasAuthority('ROLE_ADMIN')"><a th:href="@{/siteAdminDashboard}">Site Admin Dashboard</a></li>
             <li><a th:href="@{/circles}">Care Circles</a></li>
             <li><a th:href="@{/circles/{circleId}(circleId=${thisCircle.getCircleId()})}"><span th:text="${thisCircle.circleName}"></span></a></li>
-            <li>Options</li>
+            <li>Settings</li>
         </div>
     </div>
 
     <div class="container">
-
+        <h1>
+            <a id="circle-options-header" th:href="@{/circles/{circleId}(circleId=${thisCircle.getCircleId()})}"><span th:text="${thisCircle.circleName}"></span></a>
+            settings
+        </h1>
+        <br>
         <div class="cato-edit-flex">
-            <div class="cato-table">
-                <h1>
-                    <a id="circle-options-header" th:href="@{/circles/{circleId}(circleId=${thisCircle.getCircleId()})}"><span th:text="${thisCircle.circleName}"></span></a>
-                </h1>
-                <br>
-                <h5>Care Circle members</h5>
-                <hr>
+            <div class="general-table-layout" id="group-settings-table">
+                <h5 class="table-header">Care Circle members</h5>
                 <table>
                     <tr> <div th:if="${!error.equals('')}" class="alert alert-danger" th:text="${error}"></div></tr>
                     <tr th:each="thisMember : ${allMembersByCircleId}" >
-                        <td><span th:if="${thisMember.admin}"><i class="fa fa-key"></i></span>
+                        <td id="group-settings-name"><span th:if="${thisMember.admin}"><i class="fa fa-key"></i></span>
                             <span th:text="${thisMember.admin} ? '' : '&emsp;'"></span>
                             <span th:text="' '+ ${thisMember.userName}"></span></td>
                         <td class="circle-options-table">
@@ -41,8 +40,6 @@
                     </tr>
                 </table>
             </div>
-
-            <div class="cato-option-row">
                 <ul class="cato-ul">
                     <li><a class="float-right" th:href="@{/circles/options/{circleId}/addmember(circleId=${thisCircle.circleId})}">Add circle member</a></li>
                     <li><br></li>
@@ -51,7 +48,6 @@
                     <li><hr></li>
                     <li><a id="cato-delete-link">Delete circle</a></td></li>
                 </ul>
-            </div>
         </div>
     </div>
 
@@ -67,7 +63,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="catoButton" id="noBtn">No</button>
-                <a th:href="@{'/circles/delete/' + ${thisCircle.circleId}}"><button type="button" class="btn btn-primary" id="modalYesButton">Yes</button></a>
+                <a th:href="@{'/circles/delete/' + ${thisCircle.circleId}}"><button type="button" class="btn btn-primary" id="userModalYesButton">Yes</button></a>
             </div>
         </div>
     </div>

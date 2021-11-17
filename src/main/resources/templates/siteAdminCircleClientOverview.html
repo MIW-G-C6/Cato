@@ -14,49 +14,28 @@
         <h1>Site admin dashboard</h1>
         <div th:if="${!error.equals('')}" class="alert alert-danger" th:text="${error}"></div>
         <div class="site-admin-dashboard-box">
-            <div  class="general-table-layout" id="user-overview">
-                <h5 class="table-header">All users<a class="float-right" th:href="@{/registration}">Add new user</a></h5>
-                <form id="search-form">
-                    <input class="cato-form cato-text-field" oninput="fire_ajax_submit()" id="keywordsBox" type="text" placeholder="Search for users">
+
+            <div class="general-table-layout" id="circle-overview-dashboard">
+                <h5 class="table-header">All Care Circle<a class="float-right" th:href="@{/circles/new}">Create new Care Circle</a></h5>
+
+                <form id="circle-search-form">
+                    <input class="cato-form cato-text-field" oninput="circle_fire_ajax_submit()" id="circleKeywordsBox" type="text" placeholder="Search for care circles">
                 </form>
-                <table id="resultTable">
+                <table id="circleResultTable">
                     <tbody>
                     </tbody>
                 </table>
                 <br>
             </div>
-
-            <div class="general-table-layout" id="circle-overview-dashboard">
-                <h5 class="table-header">All Care Circle<a class="float-right" th:href="@{/circles/new}">Create new Care Circle</a></h5>
-                <table>
-                    <tr th:each="circle : ${allCircles}">
-                        <td><a th:href="@{/circles/{circleId}(circleId=${circle.circleId})}"><div th:text="${circle.circleName}"></div></a></td>
-                    </tr>
-                </table>
-            </div>
-
-            <div class="general-table-layout" id="client-overview-dashboard">
-                <h5 class="table-header">All clients</h5>
-                <table>
-                    <tr th:each="client : ${allClients}">
-                        <td>
-                            <div th:text="${client.userName}"></div>
-                        </td>
-                        <td>
-                            <a th:href="@{/circles/{circleId}(circleId=${client.circleId})}"><div th:text="${client.circleName}"></div></a>
-                        </td>
-                    </tr>
-                </table>
-            </div>
         </div>
     </div>
 
-    <div id="deleteUserModal" class="modal"></div>
+    <div id="deleteCircleModal" class="modal"></div>
 
 </div>
 
 <div th:replace="fragments/general :: footer"></div>
 <div th:replace="fragments/general :: bottomScripts"></div>
-<script type="text/javascript" th:src="@{/javascript/userSearchAjax.js}"></script>
+<script type="text/javascript" th:src="@{/javascript/circleSearchAjax.js}"></script>
 </body>
 </html>
