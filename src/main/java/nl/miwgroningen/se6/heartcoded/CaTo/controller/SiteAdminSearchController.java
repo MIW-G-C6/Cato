@@ -14,8 +14,9 @@ import java.util.stream.Collectors;
 /**
  * @author Erwin Wegter <ewegter@gmail.com>
  *
- * Controls the search function response on the siteAdminDashboard page
+ * Controls the search function response on the siteAdminDashboard page.
  */
+
 @RestController
 public class SiteAdminSearchController {
 
