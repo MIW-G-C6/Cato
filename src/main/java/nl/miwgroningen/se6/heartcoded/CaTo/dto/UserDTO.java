@@ -1,11 +1,9 @@
 package nl.miwgroningen.se6.heartcoded.CaTo.dto;
 
-import javax.persistence.Column;
-
 /**
  * @author Paul Romkes <p.r.romkes@gmail.com
  *
- * DTO object of user for the base information about user
+ * DTO object of user for the base information about user.
  */
 
 public class UserDTO {

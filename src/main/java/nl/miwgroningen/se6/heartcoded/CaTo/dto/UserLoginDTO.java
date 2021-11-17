@@ -1,7 +1,5 @@
 package nl.miwgroningen.se6.heartcoded.CaTo.dto;
 
-import javax.persistence.Column;
-
 /**
 
  * @author Shalena Omapersad <shalenao@hotmail.com>
