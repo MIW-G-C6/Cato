@@ -5,7 +5,7 @@ import javax.persistence.*;
 /**
  * @author Erwin Wegter <ewegter@gmail.com>
  *
- * Tasks that are added to a task list
+ * Tasks that are added to a task list.
  */
 
 @Entity
