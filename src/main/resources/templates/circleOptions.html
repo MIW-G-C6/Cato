@@ -28,7 +28,7 @@
             <div class="general-table-layout" id="group-settings-table">
                 <h5 class="table-header">Care Circle members</h5>
                 <table>
-                    <tr> <div th:if="${!error.equals('')}" class="alert alert-danger" th:text="${error}"></div></tr>
+                    <tr><div th:if="${!error.equals('')}" class="alert alert-danger" th:text="${error}"></div></tr>
                     <tr th:each="thisMember : ${allMembersByCircleId}" >
                         <td id="group-settings-name"><span th:if="${thisMember.admin}"><i class="fa fa-key"></i></span>
                             <span th:text="${thisMember.admin} ? '' : '&emsp;'"></span>

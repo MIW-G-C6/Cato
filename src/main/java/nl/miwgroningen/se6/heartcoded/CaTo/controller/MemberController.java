@@ -45,7 +45,9 @@ public class MemberController {
     }
 
     @GetMapping("/{circleId}")
-    protected String showCircleDashboard(@PathVariable("circleId") Integer circleId, Model model, HttpSession session) {
+    protected String showCircleDashboard(@PathVariable("circleId") Integer circleId,
+                                         @ModelAttribute("error") String error,
+                                         Model model, HttpSession session) {
         if (!isCircleMember(circleId) && isNotSiteAdmin()) {
             return "redirect:/403";
         }
@@ -197,6 +199,8 @@ public class MemberController {
 
         if (currentUserIsTargetUser && !redirectAttributes.containsAttribute("error")) {
             return "redirect:/circles";
+        } else if (currentUserIsTargetUser && redirectAttributes.containsAttribute("error")) {
+            return "redirect:/circles/{circleId}";
         }
 
         return "redirect:/circles/options/{circleId}";
