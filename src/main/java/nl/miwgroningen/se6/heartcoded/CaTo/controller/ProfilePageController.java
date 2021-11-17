@@ -1,6 +1,7 @@
 package nl.miwgroningen.se6.heartcoded.CaTo.controller;
 
 import nl.miwgroningen.se6.heartcoded.CaTo.dto.UserDTO;
+import nl.miwgroningen.se6.heartcoded.CaTo.service.MemberService;
 import nl.miwgroningen.se6.heartcoded.CaTo.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,14 +20,17 @@ import java.util.Base64;
 public class ProfilePageController {
 
     private UserService userService;
+    private MemberService memberService;
 
-    public ProfilePageController(UserService userService) {
+    public ProfilePageController(UserService userService, MemberService memberService) {
         this.userService = userService;
+        this.memberService = memberService;
     }
 
     @GetMapping("/profilepage/{userId}")
     protected String showProfilePage(@PathVariable("userId") Integer userId, Model model) {
         UserDTO userDTO = userService.getById(userId);
+
         model.addAttribute("user", userDTO);
         if (userDTO.getProfilePicture() == null) {
             model.addAttribute("profilePicture", "");
@@ -35,6 +39,7 @@ public class ProfilePageController {
         }
         model.addAttribute("userIsCurrentUser", userService.getCurrentUser().getUserId().equals(userId));
         model.addAttribute("currentUserIsSiteAdmin", userService.currentUserIsSiteAdmin());
+        model.addAttribute("allCircles", memberService.allCirclesByUserIdWithAdminCheck(userId));
         return "profilePage";
     }
 }

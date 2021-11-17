@@ -288,7 +288,7 @@ public class MemberService {
         List<Integer> circleList = getLastThreeCircleIdByUserId(user.getUserId());
         for (Integer circleId : circleList) {
             Optional<Circle> circle = circleRepository.findById(circleId);
-            if (circle.isEmpty()) {
+            if (circle.isEmpty() || !userIsMemberOfCircle(circleId)) {
                 ifCircleIsDeletedSetCircles(user, circleId);
             }
         }
