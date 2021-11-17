@@ -76,8 +76,8 @@
             <ul class="cato-ul">
                 <li><a class="float-right" th:href="@{/circles/{circleId}/taskLists/{taskListId}/new(circleId=${circleId}, taskListId=${taskListId})}">Add new task</a></li>
                 <li><br></li>
-                <li th:if="${thisUserIsAdmin}"><hr></li>
-                <li th:if="${thisUserIsAdmin}"><a th:href="@{/circles/options/{circleId}(circleId=${thisCircle.circleId})}">Circle settings</a></li>
+                <li th:if="${thisUserIsAdmin || currentUserIsSiteAdmin}"><hr></li>
+                <li th:if="${thisUserIsAdmin || currentUserIsSiteAdmin}"><a th:href="@{/circles/options/{circleId}(circleId=${thisCircle.circleId})}">Circle settings</a></li>
             </ul>
         </div>
     </div>
