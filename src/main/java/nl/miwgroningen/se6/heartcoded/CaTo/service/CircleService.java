@@ -1,10 +1,16 @@
 package nl.miwgroningen.se6.heartcoded.CaTo.service;
 
+import nl.miwgroningen.se6.heartcoded.CaTo.dto.CircleClientDTO;
 import nl.miwgroningen.se6.heartcoded.CaTo.dto.CircleDTO;
+import nl.miwgroningen.se6.heartcoded.CaTo.dto.MemberDTO;
+import nl.miwgroningen.se6.heartcoded.CaTo.mappers.MemberMapper;
 import nl.miwgroningen.se6.heartcoded.CaTo.model.Circle;
+import nl.miwgroningen.se6.heartcoded.CaTo.model.Member;
+import nl.miwgroningen.se6.heartcoded.CaTo.model.User;
 import nl.miwgroningen.se6.heartcoded.CaTo.repository.CircleRepository;
 import nl.miwgroningen.se6.heartcoded.CaTo.repository.MemberRepository;
 import nl.miwgroningen.se6.heartcoded.CaTo.mappers.CircleMapper;
+import nl.miwgroningen.se6.heartcoded.CaTo.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -21,13 +27,18 @@ public class CircleService {
 
     private final MemberRepository memberRepository;
     private final CircleRepository circleRepository;
+    private final UserRepository userRepository;
     private final CircleMapper circleMapper;
+    private final MemberMapper memberMapper;
 
     public CircleService(MemberRepository memberRepository, CircleRepository circleRepository,
-                         CircleMapper circleMapper) {
+                         UserRepository userRepository,
+                         CircleMapper circleMapper, MemberMapper memberMapper) {
         this.memberRepository = memberRepository;
         this.circleRepository = circleRepository;
+        this.userRepository = userRepository;
         this.circleMapper = circleMapper;
+        this.memberMapper = memberMapper;
     }
 
     public List<CircleDTO> findAllCircles() {
@@ -58,7 +69,57 @@ public class CircleService {
         return circleMapper.toDTO(circleRepository.getById(circleId));
     }
 
-    public List<CircleDTO> findWithNameContains(String keyword) {
-        return circleMapper.toDTO(circleRepository.findByCircleNameContains(keyword));
+
+    public List<CircleClientDTO> findWithNameContains(String keyword) {
+        List<CircleClientDTO> listFindByClientName = findWithClientName(keyword);
+        List<CircleClientDTO> result = findCircleWithName(keyword);
+
+        for (CircleClientDTO DTOFromClientName : listFindByClientName) {
+            if(!result.contains(DTOFromClientName)) {
+                result.add(DTOFromClientName);
+            }
+        }
+        return result;
     }
+
+    private List<CircleClientDTO> findWithClientName(String keyword) {
+        List<Member> clientList = new ArrayList<>();
+        List<User> userList = userRepository.findByNameContains(keyword);
+        for (User user : userList) {
+            List<Member> memberListOfThisUser = memberRepository.findAllByUserUserId(user.getUserId());
+            for (Member member : memberListOfThisUser) {
+                if (member.getUserRole().equals("Client")){
+                    clientList.add(member);
+                }
+            }
+        }
+        List<CircleClientDTO> result = new ArrayList<>();
+        if(!clientList.isEmpty()) {
+            for (Member client : clientList) {
+                Integer circleId = client.getCircle().getCircleId();
+                List<MemberDTO> clientDTOList = getClientsByCircleId(circleId);
+                if (!result.contains(clientDTOList)) {
+                    result.add(new CircleClientDTO(circleId, client.getCircle().getCircleName(), clientDTOList));
+                }
+            }
+        }
+        return result;
+    }
+
+    private List<MemberDTO> getClientsByCircleId(Integer circleId) {
+        return memberMapper.toDTO(
+                memberRepository.getMemberByCircle_CircleIdAndUserRoleContains(circleId, "Client"));
+    }
+
+    private List<CircleClientDTO> findCircleWithName(String keyword) {
+        List<Circle> circleList = circleRepository.findByCircleNameContains(keyword);
+
+        List<CircleClientDTO> result = new ArrayList<>();
+        for (Circle circle : circleList) {
+            List<MemberDTO> clientList = getClientsByCircleId(circle.getCircleId());
+            result.add(new CircleClientDTO(circle.getCircleId(), circle.getCircleName(), clientList));
+        }
+        return result;
+    }
+
 }

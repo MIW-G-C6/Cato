@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 /**
  * @author Remco Lantinga <remco_lantinga@hotmail.com>
+ *
  * Controls the about page.
  */
 
@@ -15,6 +16,4 @@ public class AboutController {
     protected String showAboutPage() {
         return "aboutPage";
     }
-
-
 }

@@ -52,8 +52,7 @@
             <div th:if="${userIsCurrentUser || currentUserIsSiteAdmin}" class="general-table-layout" id="overview-circles">
                 <h5 class="table-header">My Care Circles</h5>
                 <table>
-                    <tr th:if="${allCircles.isEmpty()}">You are not a member of a Care Circle yet</tr><br>
-                    <tr th:if="${allCircles.isEmpty()}">Create a new Care Circle or ask a circle admin to add you to a Care Circle</tr>
+                    <tr th:if="${allCircles.isEmpty()}">&ensp;You are not a member of a Care Circle yet</tr><br>
                     <tr th:each="circle : ${allCircles}">
                         <td><span th:if="${circle.currentUserIsCircleAdmin}"><i class="fa fa-key"></i></span>
                             <span th:text="${circle.currentUserIsCircleAdmin} ? '' : '&emsp;'"></span>

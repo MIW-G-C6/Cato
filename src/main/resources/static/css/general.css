@@ -8,6 +8,10 @@ a.nav-link{
     justify-content: space-between;
 }
 
+.site-admin-circleClientOverview {
+
+}
+
 .cato-edit-flex {
     display: flex;
     flex-flow: row;
@@ -648,10 +652,6 @@ input[type=email], input[type=password], input[type=text] {
     width: 50%;
 }
 
-#user-overview {
-    width: 40%;
-}
-
 .error {
     color: red;
 }
@@ -674,6 +674,7 @@ input[type=email], input[type=password], input[type=text] {
     box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
     background-color: #fafafa;
     height: fit-content;
+    list-style-type: none;
 }
 
 .general-table-layout br {
@@ -762,12 +763,16 @@ input[type=email], input[type=password], input[type=text] {
     color: black;
 }
 
-#search-form {
+.siteAdminLinks a{
+    font-size: medium;
+}
+
+.search-form {
     width: 90%;
     margin: auto;
 }
 
-#keywordsBox {
+.keywordsBox {
     background-color: #fafafa;
 }
 

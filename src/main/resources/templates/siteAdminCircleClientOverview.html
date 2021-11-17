@@ -13,13 +13,13 @@
     <div class="container">
         <h1>Site admin dashboard</h1>
         <div th:if="${!error.equals('')}" class="alert alert-danger" th:text="${error}"></div>
-        <div class="site-admin-dashboard-box">
+        <div class="site-admin-circleClientOverview">
 
-            <div class="general-table-layout" id="circle-overview-dashboard">
+            <div class="general-table-layout">
                 <h5 class="table-header">All Care Circle<a class="float-right" th:href="@{/circles/new}">Create new Care Circle</a></h5>
 
-                <form id="circle-search-form">
-                    <input class="cato-form cato-text-field" oninput="circle_fire_ajax_submit()" id="circleKeywordsBox" type="text" placeholder="Search for care circles">
+                <form class="search-form" id="circle-search-form">
+                    <input class="cato-form cato-text-field keywordsBox" oninput="circle_fire_ajax_submit()" id="circleKeywordsBox" type="text" placeholder="Search for care circles">
                 </form>
                 <table id="circleResultTable">
                     <tbody>

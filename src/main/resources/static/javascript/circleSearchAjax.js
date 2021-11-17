@@ -1,29 +1,3 @@
-document.getElementById("deleteCircleModal").innerHTML =`
-    <div class="modal-content" id="deleteThisCircleModal">
-            <div class="modal-header">
-                <h2 class="modal-title">Warning!</h2>
-                <span class="close">&times;</span>
-            </div>
-            <div class="modal-body">
-                <p>Are you sure you want to delete:</p>
-                <span id="circleNameSpan" ></span>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="catoButton" id="noBtn">No</button>
-                <button type="button" class="btn btn-primary catoYesWarningButton" id="circleModalYesButton">Yes</button>
-            </div>
-        </div>`;
-
-var modal = document.getElementById("deleteThisCircleModal");
-
-var modalCloseBtn = document.getElementsByClassName("close")[0];
-
-var modalNoBtn = document.getElementById("noBtn");
-
-var circleModalYesBtn = document.getElementById("circleModalYesButton")
-
-
-
 $(document).ready(function () {
 
     $("#circle-search-form").submit(function (event) {
@@ -75,78 +49,36 @@ function fillTable(resultData) {
         new_tbody.append(tr);
     } else {
         resultData["responseJSON"]["circles"].forEach(circle => {
+            let clientList = circle["clientList"];
             let tr = document.createElement('tr');
             let tdName = document.createElement('td');
-            let tdEdit = document.createElement('td');
-            let tdDelete = document.createElement('td');
+            let tdClient = document.createElement('td');
+
+            if (clientList.length === 0) {
+              let liClient = document.createElement('li');
+              liClient.textContent = "No clients in this care circle found";
+              tdClient.appendChild(liClient)
+            } else {
+                clientList.forEach(client => {
+                let liClient = document.createElement('li');
+                liClient.textContent = client["userName"];
+                tdClient.appendChild(liClient);
+            })}
+
             let aCircle = document.createElement('a');
-            let aEdit = document.createElement('a');
-            let aDelete = document.createElement('a');
             let hrefCircle = document.createAttribute('href');
-            let hrefEdit = document.createAttribute('href');
-            let imgEdit = document.createElement('img');
-            let imgDelete = document.createElement('img');
-            let imgHeightEdit = document.createAttribute('height');
-            let imgWidthEdit = document.createAttribute('width');
-            let imgHeightDelete = document.createAttribute('height');
-            let imgWidthDelete = document.createAttribute('width');
-            let editSrc = document.createAttribute('src');
-            let deleteSrc = document.createAttribute('src');
-            editSrc.value = "/css/images/edit-icon.svg";
-            deleteSrc.value = "/css/images/delete-icon.svg";
-            imgHeightEdit.value = "20";
-            imgWidthEdit.value = "20";
-            imgHeightDelete.value = "20";
-            imgWidthDelete.value = "20";
-            imgEdit.setAttributeNode(editSrc);
-            imgEdit.setAttributeNode(imgHeightEdit);
-            imgEdit.setAttributeNode(imgWidthEdit);
-            imgDelete.setAttributeNode(deleteSrc);
-            imgDelete.setAttributeNode(imgHeightDelete);
-            imgDelete.setAttributeNode(imgWidthDelete);
+            tdName.classList.add('siteAdminLinks');
             hrefCircle.value = "/circles/" + circle["circleId"];  // edit url
-            hrefEdit.value = "/circles/options/edit/" + circle["circleId"];     // edit url
             aCircle.setAttributeNode(hrefCircle);
-            aEdit.setAttributeNode(hrefEdit);
-            aDelete.classList.add('pointer');
-            aDelete.onclick = function () {
-                circleModalYesBtn.onclick = function() {
-                    window.location = "/circles/delete/" + circle["circleId"];
-                }
-                $('#deleteCircleModal').modal('show');
-                document.getElementById("circleNameSpan").innerHTML=circle["circleName"];
-            }
             aCircle.text = circle["circleName"];
-            let editClass = document.createAttribute('class');
-            editClass.value = "edit";
-            let deleteClass = document.createAttribute('class');
-            deleteClass.value = "delete";
-            aEdit.appendChild(imgEdit);
-            aDelete.appendChild(imgDelete);
             tdName.appendChild(aCircle);
-            tdEdit.appendChild(aEdit);
-            tdDelete.appendChild(aDelete);
             tr.appendChild(tdName);
-            tr.appendChild(tdEdit);
-            tr.appendChild(tdDelete);
+            tr.appendChild(tdClient);
             new_tbody.append(tr);
+
         });
     }
 
     let old_tbody = document.getElementById("circleResultTable").tBodies.item(0);
     document.getElementById("circleResultTable").replaceChild(new_tbody, old_tbody);
-}
-
-modalCloseBtn.onclick = function() {
-    $('#deleteCircleModal').modal('hide');
-}
-
-modalNoBtn.onclick = function() {
-    $('#deleteCircleModal').modal('hide');
-}
-
-window.onclick = function(event) {
-    if (event.target === modal) {
-        $('#deleteCircleModal').modal('hide');
-    }
 }

@@ -122,6 +122,7 @@ function fillTable(resultData) {
             editClass.value = "edit";
             let deleteClass = document.createAttribute('class');
             deleteClass.value = "delete";
+            tdName.classList.add('siteAdminLinks');
             aEdit.appendChild(imgEdit);
             aDelete.appendChild(imgDelete);
             tdName.appendChild(aUser);

@@ -19,6 +19,7 @@
 
     <div class="container">
         <h1><span th:text="${thisCircle.circleName}"></span></h1>
+        <div th:if="${!error.equals('')}" class="alert alert-danger" th:text="${error}"></div>
         <br>
         <div class="cato-circle-dashboard-flex">
             <div class="gd-circlemembers">

@@ -8,17 +8,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.IOException;
 
 /**
  * @author Erwin Wegter <ewegter@gmail.com>
  *
- * Controls the site admin dashboard page
+ * Controls the site admin dashboard page.
  */
+
 @Controller
 public class SiteAdminController {
 
@@ -52,7 +50,6 @@ public class SiteAdminController {
 
     @GetMapping("/siteAdmin/circleClientOverview")
     protected String showSiteAdminCircleClientOverview(@ModelAttribute("error") String error, HttpSession session) {
-
         session.setAttribute("circleDeleteRedirect", "redirect:/siteAdmin/circleClientOverview");
         return "siteAdminCircleClientOverview";
     }
