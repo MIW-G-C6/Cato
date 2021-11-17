@@ -5,10 +5,11 @@ import java.io.Serializable;
 /**
  * @author Paul Romkes <p.r.romkes@gmail.com
  *
- * is a model to make sure the Member works together with User and Circle
+ * Is a model to make sure the Member works together with User and Circle.
  */
 
 public class MemberId implements Serializable {
+
     int user;
     int circle;
 }

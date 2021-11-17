@@ -19,7 +19,6 @@ public class MemberMapper {
 
     public MemberDTO toDTO(Member member) {
         MemberDTO result = new MemberDTO();
-
         result.setCircleRoleOptions(Member.getCircleRoleOptions());
         result.setUserId(member.getUser().getUserId());
         result.setUserName(member.getUser().getName());
@@ -36,9 +35,11 @@ public class MemberMapper {
 
     public Optional<MemberDTO> toDTO(Optional<Member> member) {
         Optional<MemberDTO> result = Optional.empty();
+
         if(member.isPresent()) {
             result = Optional.of(toDTO(member.get()));
         }
+
         return result;
     }
 

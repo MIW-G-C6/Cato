@@ -7,8 +7,9 @@ import org.springframework.stereotype.Component;
 /**
  * @author Erwin Wegter <ewegter@gmail.com>
  *
- * Maps Member models to MemberSiteAdminDTO's and back
+ * Maps Member models to MemberSiteAdminDTO's.
  */
+
 @Component
 public class MemberSiteAdminMapper {
 
@@ -18,6 +19,7 @@ public class MemberSiteAdminMapper {
         memberSiteAdminDTO.setCircleName(member.getCircle().getCircleName());
         memberSiteAdminDTO.setUserId(member.getUser().getUserId());
         memberSiteAdminDTO.setUserName(member.getUser().getName());
+
         return  memberSiteAdminDTO;
     }
 }

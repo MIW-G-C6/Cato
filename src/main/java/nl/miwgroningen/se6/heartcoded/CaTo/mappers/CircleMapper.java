@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 /**
  * @author Erwin Wegter <ewegter@gmail.com>
  *
- * Maps CircleDTO to Circle entities and back
+ * Maps CircleDTO to Circle entities and back.
  */
 
 @Component

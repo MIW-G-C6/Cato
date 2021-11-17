@@ -2,11 +2,10 @@ package nl.miwgroningen.se6.heartcoded.CaTo.model;
 
 import javax.persistence.*;
 
-
 /**
  * @author Paul Romkes <p.r.romkes@gmail.com
  *
- * Users in a specific circle that get a specific role for that circle
+ * Users in a specific circle that get a specific role for that circle.
  */
 
 @Entity
