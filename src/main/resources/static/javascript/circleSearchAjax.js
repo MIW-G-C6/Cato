@@ -67,7 +67,7 @@ function fillTable(resultData) {
 
             let aCircle = document.createElement('a');
             let hrefCircle = document.createAttribute('href');
-            tdName.classList.add('circleLink');
+            tdName.classList.add('siteAdminLinks');
             hrefCircle.value = "/circles/" + circle["circleId"];  // edit url
             aCircle.setAttributeNode(hrefCircle);
             aCircle.text = circle["circleName"];
