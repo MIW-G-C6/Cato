@@ -187,7 +187,7 @@ public class MemberController {
     }
 
     @GetMapping("/options/{circleId}/delete/{userId}")
-    protected String deleteUserFromCircle(@PathVariable("circleId") Integer circleId,
+    protected String doDeleteUserFromCircle(@PathVariable("circleId") Integer circleId,
                                           @PathVariable("userId") Integer userId,
                                           RedirectAttributes redirectAttributes) {
 
@@ -197,6 +197,11 @@ public class MemberController {
             return "redirect:/403";
         }
 
+        return deleteUserFromCircle(circleId, userId, redirectAttributes, currentUserIsTargetUser);
+    }
+
+    private String deleteUserFromCircle(Integer circleId, Integer userId, RedirectAttributes redirectAttributes,
+                                        boolean currentUserIsTargetUser) {
         // checks first if the circle member isn't the last circle admin. If so, it can't be removed from the circle.
         Optional<MemberDTO> member = memberService.findByUserIdAndCircleId(userId, circleId);
         if (member.isPresent()) {
@@ -207,10 +212,17 @@ public class MemberController {
             }
         }
 
-        if (currentUserIsTargetUser && !redirectAttributes.containsAttribute("error")) {
-            return "redirect:/circles";
-        } else if (currentUserIsTargetUser && redirectAttributes.containsAttribute("error")) {
-            return "redirect:/circles/{circleId}";
+        return handleRedirectFromDeleteUserFromCircle(redirectAttributes, currentUserIsTargetUser);
+    }
+
+    private String handleRedirectFromDeleteUserFromCircle(RedirectAttributes redirectAttributes,
+                                                          boolean currentUserIsTargetUser) {
+        if (currentUserIsTargetUser) {
+            if (redirectAttributes.containsAttribute("error")) {
+                return "redirect:/circles/{circleId}";
+            } else {
+                return "redirect:/circles";
+            }
         }
         return "redirect:/circles/options/{circleId}";
     }
