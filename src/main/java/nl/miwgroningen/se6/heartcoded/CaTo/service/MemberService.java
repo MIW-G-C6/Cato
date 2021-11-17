@@ -1,3 +1,4 @@
+
 package nl.miwgroningen.se6.heartcoded.CaTo.service;
 
 import nl.miwgroningen.se6.heartcoded.CaTo.dto.*;
@@ -130,8 +131,8 @@ public class MemberService {
 
     public boolean userInCircleExists(MemberDTO member) {
         if (findByUserIdAndCircleId(member.getUserId(), member.getCircleId()).isPresent()) {
-                return true;
-            }
+            return true;
+        }
         return false;
     }
 
