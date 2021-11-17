@@ -17,41 +17,56 @@
     </div>
 
     <div class="container">
-        <div class="profile-page-box">
-            <div>
-                <h1><span th:text="${user.name}"></span></h1>
-                <br>
-                <div class="profileInfoBar">
-                    <div class="profileIcon">
-                        <i class="fa fa-user"></i>
+        <div class="cato-edit-flex">
+            <div class="profile-page-box">
+                <div>
+                    <h1><span th:text="${user.name}"></span></h1>
+                    <br>
+                    <div class="profileInfoBar">
+                        <div class="profileIcon">
+                            <i class="fa fa-user"></i>
+                        </div>
+                        <div class="stackedHeaderAndInfo">
+                            <span style="color: grey">Name</span>
+                            <h5><span th:text="${user.name}"></span></h5>
+                        </div>
                     </div>
-                    <div class="stackedHeaderAndInfo">
-                        <span style="color: grey">Name</span>
-                        <h5><span th:text="${user.name}"></span></h5>
+                    <br>
+                    <div class="profileInfoBar">
+                        <div class="profileIcon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-envelope" viewBox="0 0 16 16">
+                                <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2zm13 2.383-4.758 2.855L15 11.114v-5.73zm-.034 6.878L9.271 8.82 8 9.583 6.728 8.82l-5.694 3.44A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.739zM1 11.114l4.758-2.876L1 5.383v5.73z"/>
+                            </svg>
+                        </div>
+                        <div class="stackedHeaderAndInfo">
+                            <span style="color: grey">Email</span>
+                            <h5><span th:text="${user.email}"></span></h5>
+                        </div>
                     </div>
+                    <br>
+                    <a th:if="${userIsCurrentUser || currentUserIsSiteAdmin}" th:href="@{'/users/edit/' + ${user.userId}}"><button class="catoButton">Edit</button></a>
+                    <a th:if="${userIsCurrentUser || currentUserIsSiteAdmin}" th:href="@{'/users/edit/password/' + ${user.userId}}"><button class="catoButton">Change password</button></a>
                 </div>
-                <br>
-                <div class="profileInfoBar">
-                    <div class="profileIcon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-envelope" viewBox="0 0 16 16">
-                            <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2zm13 2.383-4.758 2.855L15 11.114v-5.73zm-.034 6.878L9.271 8.82 8 9.583 6.728 8.82l-5.694 3.44A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.739zM1 11.114l4.758-2.876L1 5.383v5.73z"/>
-                        </svg>
-                    </div>
-                    <div class="stackedHeaderAndInfo">
-                        <span style="color: grey">Email</span>
-                        <h5><span th:text="${user.email}"></span></h5>
-                    </div>
+                <div>
+                    <img th:unless="${profilePicture} == ''" th:src="@{'data:image/jpeg;base64,'+${profilePicture}}" class="profile-picture"/>
                 </div>
-                <br>
-                <a th:if="${userIsCurrentUser || currentUserIsSiteAdmin}" th:href="@{'/users/edit/' + ${user.userId}}"><button class="catoButton">Edit</button></a>
-                <a th:if="${userIsCurrentUser || currentUserIsSiteAdmin}" th:href="@{'/users/edit/password/' + ${user.userId}}"><button class="catoButton">Change password</button></a>
             </div>
-            <div>
-                <img th:unless="${profilePicture} == ''" th:src="@{'data:image/jpeg;base64,'+${profilePicture}}" class="profile-picture"/>
+            <div th:if="${userIsCurrentUser || currentUserIsSiteAdmin}" class="cato-table">
+                <h5>My Care Circles</h5>
+                <hr>
+                <table>
+                    <tr th:if="${allCircles.isEmpty()}">You are not a member of a Care Circle yet</tr><br>
+                    <tr th:if="${allCircles.isEmpty()}">Create a new Care Circle or ask a circle admin to add you to a Care Circle</tr>
+                    <tr th:each="circle : ${allCircles}">
+                        <td><span th:if="${circle.currentUserIsCircleAdmin}"><i class="fa fa-key"></i></span>
+                            <span th:text="${circle.currentUserIsCircleAdmin} ? '' : '&emsp;'"></span>
+                            <span><a th:href="@{/circles/{circleId}(circleId=${circle.circleId})}" th:text="${circle.circleName}"></a></span>
+                        </td>
+                    </tr>
+                </table>
             </div>
         </div>
     </div>
-
 </div>
 
 <div th:replace="fragments/general :: footer"></div>

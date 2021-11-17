@@ -594,6 +594,11 @@ input[type=email], input[type=password], input[type=text] {
 
 .cato-table {
     width: 50%;
+    padding-top: 60px;
+}
+
+.cato-table br {
+    display: none;
 }
 
 .group-options-table {
