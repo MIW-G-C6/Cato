@@ -332,6 +332,20 @@ a.nav-link{
     cursor: pointer;
 }
 
+.custom-file-label {
+    border: 1px solid black;
+    /*padding-bottom: 10px;*/
+}
+
+.custom-file-label::after {
+    background-color: ghostwhite;
+}
+
+.custom-file-input:focus~.custom-file-label {
+    border-color: black;
+    box-shadow: 0 0 0 0.2rem rgba(202, 250, 217, 1);
+}
+
 .catoYesWarningButton {
     text-decoration: none;
     display: inline-block;
