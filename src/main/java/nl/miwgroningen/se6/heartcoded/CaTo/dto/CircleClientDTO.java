@@ -4,23 +4,20 @@ import java.util.List;
 
 /**
  * @author Remco Lantinga <remco_lantinga@hotmail.com>
- * DTO version of model Circle
+ *
+ * DTO version of model Circle.
  */
+
 public class CircleClientDTO {
 
     private Integer circleId;
-
     private String circleName;
-
     private List<MemberDTO> clientList;
 
     public CircleClientDTO(Integer circleId, String circleName, List<MemberDTO> clientList) {
         this.circleId = circleId;
         this.circleName = circleName;
         this.clientList = clientList;
-    }
-
-    public CircleClientDTO() {
     }
 
     public Integer getCircleId() {

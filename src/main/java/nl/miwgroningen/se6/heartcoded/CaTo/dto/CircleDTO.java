@@ -2,14 +2,14 @@ package nl.miwgroningen.se6.heartcoded.CaTo.dto;
 
 /**
  * @author Remco Lantinga <remco_lantinga@hotmail.com>
- * DTO version of model Circle
+ *
+ * DTO version of model Circle.
  */
+
 public class CircleDTO {
 
     private Integer circleId;
-
     private String circleName;
-
     private Boolean currentUserIsCircleAdmin;
 
     public CircleDTO(String circleName) {
