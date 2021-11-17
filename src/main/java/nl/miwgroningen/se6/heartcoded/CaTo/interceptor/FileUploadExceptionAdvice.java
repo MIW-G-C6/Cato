@@ -10,8 +10,9 @@ import javax.servlet.http.HttpSession;
 /**
  * @author Erwin Wegter <ewegter@gmail.com>
  *
- * Handles the exception for *********************
+ * Handles the exception for exceeded file size limit.
  */
+
 @ControllerAdvice
 public class FileUploadExceptionAdvice {
 
@@ -20,6 +21,6 @@ public class FileUploadExceptionAdvice {
                                                        RedirectAttributes redirectAttributes, HttpSession session) {
         redirectAttributes.addAttribute("error", "File too large");
         Integer userId = (Integer) session.getAttribute("currentUserId");
-        return "redirect:/users/edit/" + userId;        //Exception redirects back to the users edit profile page by default.
+        return "redirect:/users/edit/" + userId;   //Exception redirects back to the users edit profile page by default.
     }
 }
