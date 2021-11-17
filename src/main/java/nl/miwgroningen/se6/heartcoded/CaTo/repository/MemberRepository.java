@@ -21,4 +21,8 @@ public interface MemberRepository extends JpaRepository <Member, Integer> {
     List<Member> getAllByCircleCircleId(Integer circleId);
 
     Optional<Member> findMemberByUserUserIdAndCircleCircleId(Integer userId, Integer circleId);
+
+    List<Member> getMemberByCircle_CircleIdAndUserRoleContains(Integer circleId, String client);
+
+    Member getMemberByUserUserIdAndUserRoleContains(Integer userId, String client);
 }

@@ -9,7 +9,7 @@ import java.util.List;
 public class CircleSearchResponseBody {
 
     private String msg;
-    private List<CircleDTO> circles;
+    private List<CircleClientDTO> circles;
 
     public String getMsg() {
         return msg;
@@ -19,11 +19,11 @@ public class CircleSearchResponseBody {
         this.msg = msg;
     }
 
-    public List<CircleDTO> getCircles() {
+    public List<CircleClientDTO> getCircles() {
         return circles;
     }
 
-    public void setCircles(List<CircleDTO> circles) {
+    public void setCircles(List<CircleClientDTO> circles) {
         this.circles = circles;
     }
 }

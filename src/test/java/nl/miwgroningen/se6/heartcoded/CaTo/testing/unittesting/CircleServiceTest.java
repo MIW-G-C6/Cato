@@ -1,11 +1,13 @@
 package nl.miwgroningen.se6.heartcoded.CaTo.testing.unittesting;
 
 import nl.miwgroningen.se6.heartcoded.CaTo.dto.CircleDTO;
+import nl.miwgroningen.se6.heartcoded.CaTo.mappers.MemberMapper;
 import nl.miwgroningen.se6.heartcoded.CaTo.model.Circle;
 import nl.miwgroningen.se6.heartcoded.CaTo.model.Member;
 import nl.miwgroningen.se6.heartcoded.CaTo.model.User;
 import nl.miwgroningen.se6.heartcoded.CaTo.repository.CircleRepository;
 import nl.miwgroningen.se6.heartcoded.CaTo.repository.MemberRepository;
+import nl.miwgroningen.se6.heartcoded.CaTo.repository.UserRepository;
 import nl.miwgroningen.se6.heartcoded.CaTo.service.CircleService;
 import nl.miwgroningen.se6.heartcoded.CaTo.mappers.CircleMapper;
 import org.junit.jupiter.api.BeforeEach;
@@ -22,17 +24,23 @@ class CircleServiceTest {
 
     private MemberRepository memberRepository;
     private CircleRepository circleRepository;
+    private UserRepository userRepository;
 
     private CircleMapper circleMapper;
+    private MemberMapper memberMapper;
     private CircleService circleService;
 
     @BeforeEach
     void setUp() {
         memberRepository = Mockito.mock(MemberRepository.class);
         circleRepository = Mockito.mock(CircleRepository.class);
-        circleMapper = new CircleMapper();
+        userRepository = Mockito.mock(UserRepository.class);
 
-        circleService = new CircleService(memberRepository, circleRepository, circleMapper);
+        circleMapper = new CircleMapper();
+        memberMapper = new MemberMapper();
+
+        circleService = new CircleService(memberRepository, circleRepository, userRepository,
+                circleMapper, memberMapper);
     }
 
     @Test

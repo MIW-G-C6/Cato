@@ -16,7 +16,6 @@ import java.util.stream.Collectors;
  *
  * Controls the search function response on the siteAdminDashboard page
  */
-
 @RestController
 public class SiteAdminSearchController {
 
@@ -47,7 +46,6 @@ public class SiteAdminSearchController {
         }
 
         result.setUsers(userList);
-
         return ResponseEntity.ok(result);
     }
 
@@ -61,16 +59,15 @@ public class SiteAdminSearchController {
             return ResponseEntity.badRequest().body(result);
         }
 
-        List<CircleDTO> circleList = circleService.findWithNameContains(keywords.getKeywords());
+        List<CircleClientDTO> circleClientList = circleService.findWithNameContains(keywords.getKeywords());
 
-        if (circleList.isEmpty()) {
+        if (circleClientList.isEmpty()) {
             result.setMsg("No care circles found");
         } else {
             result.setMsg("Succes");
         }
 
-        result.setCircles(circleList);
-
+        result.setCircles(circleClientList);
         return ResponseEntity.ok(result);
     }
 }
