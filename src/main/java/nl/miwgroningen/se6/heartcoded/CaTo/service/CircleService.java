@@ -23,7 +23,8 @@ public class CircleService {
     private final CircleRepository circleRepository;
     private final CircleMapper circleMapper;
 
-    public CircleService(MemberRepository memberRepository, CircleRepository circleRepository, CircleMapper circleMapper) {
+    public CircleService(MemberRepository memberRepository, CircleRepository circleRepository,
+                         CircleMapper circleMapper) {
         this.memberRepository = memberRepository;
         this.circleRepository = circleRepository;
         this.circleMapper = circleMapper;
@@ -36,6 +37,10 @@ public class CircleService {
             result.add(circleMapper.toDTO(circle));
         }
         return result;
+    }
+
+    public Long totalNumberOfCircles() {
+        return circleRepository.count();
     }
 
     public void deleteCircleById(Integer circleId) {

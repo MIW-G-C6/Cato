@@ -51,6 +51,10 @@ public class MemberService {
         return memberMapper.toDTO(memberRepository.findAll());
     }
 
+    public Integer totalNumberOfClients() {
+        return memberRepository.countAllByUserRoleIs("Client");
+    }
+
     public void saveMember(MemberDTO memberDTO) {
         Member member = memberMapper.toMember(memberDTO);
         member.setUser(userRepository.getById(memberDTO.getUserId()));

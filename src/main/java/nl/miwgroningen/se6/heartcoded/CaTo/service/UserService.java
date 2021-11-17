@@ -58,6 +58,10 @@ public class UserService {
         return userMapper.toDTO(userRepository.findAll());
     }
 
+    public Integer totalNumberOfUsers() {
+        return userRepository.countAllByUserRoleIsNot("ROLE_ADMIN");
+    }
+
     public List<UserDTO> findAllRegisteredUsers() {
         List<User> allUsers = userRepository.findAll();
         removeSiteAdminFromList(allUsers);
