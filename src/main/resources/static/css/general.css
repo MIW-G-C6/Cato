@@ -372,6 +372,10 @@ a.nav-link{
     box-shadow: 0 0 0 0.2rem rgba(202, 250, 217, 1);
 }
 
+#pp-edit-button {
+    padding-left: 40px;
+}
+
 /*contains layout for columns on about page*/
 .flex-column {
     float: left;
@@ -406,7 +410,12 @@ html, body {
     display: flex;
 }
 
-
+.profile-information {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-right: 100px;
+}
 
 .stackedHeaderAndInfo {
     display: flex;
@@ -653,6 +662,10 @@ input[type=email], input[type=password], input[type=text] {
     height: fit-content;
 }
 
+.general-table-layout br {
+    display: none;
+}
+
 .table-header {
     padding-left: 10px;
     padding-top: 10px;
@@ -678,6 +691,10 @@ input[type=email], input[type=password], input[type=text] {
 
 #task-description {
     width: 40%;
+}
+
+#overview-circles {
+    width: 30%;
 }
 
 .title-taskdetails {
@@ -747,15 +764,17 @@ input[type=email], input[type=password], input[type=text] {
 
 .profile-picture {
     width: auto;
+    min-height: 175px;
+    min-width: 175px;
     max-width: 250px;
-    max-height: 290px;
+    max-height: 210px;
     margin-right: 50px;
     box-shadow: 0 0 11px rgba(33,33,33,.4);
     border-radius: 4px;
 }
 
 .profile-picture-box {
-    min-width: 300px;
+    min-width: 250px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -764,6 +783,7 @@ input[type=email], input[type=password], input[type=text] {
 .profile-page-box {
     display: flex;
     flex-flow: row;
+    align-items: flex-start;
 }
 
 .last-three-circle-header {
