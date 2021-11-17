@@ -1,6 +1,8 @@
+
 package nl.miwgroningen.se6.heartcoded.CaTo.service;
 
 import nl.miwgroningen.se6.heartcoded.CaTo.dto.*;
+import nl.miwgroningen.se6.heartcoded.CaTo.model.Circle;
 import nl.miwgroningen.se6.heartcoded.CaTo.model.Member;
 import nl.miwgroningen.se6.heartcoded.CaTo.model.User;
 import nl.miwgroningen.se6.heartcoded.CaTo.repository.MemberRepository;
@@ -129,8 +131,8 @@ public class MemberService {
 
     public boolean userInCircleExists(MemberDTO member) {
         if (findByUserIdAndCircleId(member.getUserId(), member.getCircleId()).isPresent()) {
-                return true;
-            }
+            return true;
+        }
         return false;
     }
 
@@ -216,4 +218,77 @@ public class MemberService {
         }
         return result;
     }
+
+    private List<Integer> getLastThreeCircleIdByUserId(Integer userId) {
+        User user = userRepository.getById(userId);
+        List<Integer> result = new ArrayList<>();
+        result.add(0, user.getCircleOne());
+        result.add(1, user.getCircleTwo());
+        result.add(2, user.getCircleThree());
+        return result;
+    }
+
+    public List<CircleDTO> getLastThreeCirclesByUserId(Integer userId) {
+        List<CircleDTO> result = new ArrayList<>();
+        List<Integer> circleList = getLastThreeCircleIdByUserId(userId);
+        for (Integer circleId : circleList) {
+            if(!(circleId == 0)) {
+                CircleDTO circleDTO = circleMapper.toDTO(circleRepository.getById(circleId));
+                if (userIsCircleAdmin(circleDTO.getCircleId())) {
+                    circleDTO.setCurrentUserIsCircleAdmin(true);
+                }
+                result.add(circleDTO);
+            } else {
+                CircleDTO circleZero = new CircleDTO();
+                circleZero.setCircleId(0);
+                circleZero.setCircleName("Non-existing circle");
+                result.add(circleZero);
+            }
+        }
+        return result;
+    }
+
+    public void addCircleToLastThreeCircles(Integer circleId) {
+        User user = userRepository.getById(getCurrentUser().getUserId());
+        List<Integer> lastThreeCircleList = getLastThreeCircleIdByUserId(user.getUserId());
+        if(lastThreeCircleList.contains(circleId)) {
+            if (lastThreeCircleList.get(1).equals(circleId)) {
+                user.setCircleTwo(lastThreeCircleList.get(0));
+                user.setCircleOne(circleId);
+            } else if (lastThreeCircleList.get(2).equals(circleId)) {
+                user.setCircleThree(lastThreeCircleList.get(1));
+                user.setCircleTwo(lastThreeCircleList.get(0));
+                user.setCircleOne(circleId);
+            }
+        } else {
+            user.setAllThreeCircles(lastThreeCircleList, circleId);
+        }
+        userRepository.save(user);
+    }
+
+    public void ifCircleIsDeletedSetCircles(User user, Integer circleId) {
+        if(user.getCircleOne() == circleId) {
+            user.setCircleOne(user.getCircleTwo());
+            user.setCircleTwo(user.getCircleThree());
+            user.setCircleThree(0);
+        } else if(user.getCircleTwo() == circleId) {
+            user.setCircleTwo(user.getCircleThree());
+            user.setCircleThree(0);
+        } else if(user.getCircleThree() == circleId) {
+            user.setCircleThree(0);
+        }
+    }
+
+    public void checkForCircleDeletion() {
+        User user = userRepository.getById(getCurrentUser().getUserId());
+        List<Integer> circleList = getLastThreeCircleIdByUserId(user.getUserId());
+        for (Integer circleId : circleList) {
+            Optional<Circle> circle = circleRepository.findById(circleId);
+            if (circle.isEmpty()) {
+                ifCircleIsDeletedSetCircles(user, circleId);
+            }
+        }
+        userRepository.save(user);
+    }
+
 }

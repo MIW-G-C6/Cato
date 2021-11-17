@@ -96,7 +96,6 @@ public class UserController {
     @PostMapping("users/edit/{userId}")
     protected String editUser(@ModelAttribute("user") UserDTO user,
                               BindingResult result) {
-        UserDTO currentUser = userService.getCurrentUser();
         if (!userService.getCurrentUser().getUserId().equals(user.getUserId())
                 && !userService.currentUserIsSiteAdmin()) {
             return "redirect:/403";
@@ -115,7 +114,7 @@ public class UserController {
 
     @PostMapping("users/edit/password/{userId}")
     protected String editUserPassword(@ModelAttribute("user") UserEditPasswordDTO user,
-                              BindingResult result) {
+                              BindingResult result, Model model) {
 
         if (!userService.getCurrentUser().getUserId().equals(user.getUserId())
                 && !userService.currentUserIsSiteAdmin()) {
@@ -133,6 +132,8 @@ public class UserController {
             result.addError(error);
         }
         if (result.hasErrors()) {
+            model.addAttribute("userIsCurrentUser",
+                    userService.getCurrentUser().getUserId().equals(user.getUserId()));
             return "editPasswordForm";
         }
         userService.editPassword(user);
