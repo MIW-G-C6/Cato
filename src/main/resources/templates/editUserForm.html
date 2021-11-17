@@ -44,6 +44,7 @@
             <div class="custom-file mb-3" >
                 <input class="custom-file-input" type="file" th:object="${image}" name="image" id="image" accept="image/png, image/jpeg" />
                 <label class="custom-file-label" for="image">Choose profile picture</label>
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
             </div>
             <br>
             <br>

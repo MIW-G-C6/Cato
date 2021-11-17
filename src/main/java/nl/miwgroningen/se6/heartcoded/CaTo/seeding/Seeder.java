@@ -76,7 +76,7 @@ public class Seeder {
         userService.saveNewUser(new UserRegistrationDTO("Jaydn Wiggins", "H/V86P7s=v", "H/V86P7s=v", "eimear@outlook.com"));
         userService.saveNewUser(new UserRegistrationDTO("Farzana Meadows", "fmRL<3*9%^", "fmRL<3*9%^", "report@live.com"));
         userService.saveNewUser(new UserRegistrationDTO("Kareem Dalton", "H[jK!kR65m", "H[jK!kR65m", "kiddailey@yahoo.com"));
-        userService.saveNewUser(new UserRegistrationDTO("Nazia Barton", "rqf2!P.L8v", "rqf2!P.L8v", "sravani@gmail.com"));
+        userService.saveNewUser(new UserRegistrationDTO("Nasia Barton", "rqf2!P.L8v", "rqf2!P.L8v", "sravani@gmail.com"));
         userService.saveNewUser(new UserRegistrationDTO("Mea Irwin", "RAv]dt;Q9*", "RAv]dt;Q9*", "gavinls@yahoo.com"));
         userService.saveNewUser(new UserRegistrationDTO("Janae Dillon", "f=Xu/#9?Ze", "f=Xu/#9?Ze", "malvar@icloud.com"));
         userService.saveNewUser(new UserRegistrationDTO("Ayden Adkins", "Xh4H)]eYcq", "Xh4H)]eYcq", "peterhoeg@live.com"));
