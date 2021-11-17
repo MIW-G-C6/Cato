@@ -22,8 +22,6 @@
                 <img th:unless="${profilePicture} == ''" th:src="@{'data:image/jpeg;base64,'+${profilePicture}}" class="profile-picture"/>
             </div>
             <div>
-                <h1><span th:text="${user.name}"></span></h1>
-                <br>
                 <div class="profileInfoBar">
                     <div class="profileIcon">
                         <i class="fa fa-user"></i>
@@ -48,6 +46,19 @@
                 <br>
                 <a th:if="${userIsCurrentUser || currentUserIsSiteAdmin}" th:href="@{'/users/edit/' + ${user.userId}}"><button class="catoButton">Edit</button></a>
                 <a th:if="${userIsCurrentUser || currentUserIsSiteAdmin}" th:href="@{'/users/edit/password/' + ${user.userId}}"><button class="catoButton">Change password</button></a>
+            </div>
+            <div th:if="${userIsCurrentUser || currentUserIsSiteAdmin}" class="general-table-layout">
+                <h5 class="table-header">My Care Circles</h5>
+                <table>
+                    <tr th:if="${allCircles.isEmpty()}">You are not a member of a Care Circle yet</tr><br>
+                    <tr th:if="${allCircles.isEmpty()}">Create a new Care Circle or ask a circle admin to add you to a Care Circle</tr>
+                    <tr th:each="circle : ${allCircles}">
+                        <td><span th:if="${circle.currentUserIsCircleAdmin}"><i class="fa fa-key"></i></span>
+                            <span th:text="${circle.currentUserIsCircleAdmin} ? '' : '&emsp;'"></span>
+                            <span><a th:href="@{/circles/{circleId}(circleId=${circle.circleId})}" th:text="${circle.circleName}"></a></span>
+                        </td>
+                    </tr>
+                </table>
             </div>
         </div>
     </div>
