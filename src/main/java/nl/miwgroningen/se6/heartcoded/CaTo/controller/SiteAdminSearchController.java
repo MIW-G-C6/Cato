@@ -1,8 +1,7 @@
 package nl.miwgroningen.se6.heartcoded.CaTo.controller;
 
-import nl.miwgroningen.se6.heartcoded.CaTo.dto.UserDTO;
-import nl.miwgroningen.se6.heartcoded.CaTo.dto.UserSearchAjaxResponseBody;
-import nl.miwgroningen.se6.heartcoded.CaTo.dto.UserSearchDTO;
+import nl.miwgroningen.se6.heartcoded.CaTo.dto.*;
+import nl.miwgroningen.se6.heartcoded.CaTo.service.CircleService;
 import nl.miwgroningen.se6.heartcoded.CaTo.service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
@@ -21,13 +20,15 @@ import java.util.stream.Collectors;
 public class SiteAdminSearchController {
 
     private UserService userService;
+    private CircleService circleService;
 
-    public SiteAdminSearchController(UserService userService) {
+    public SiteAdminSearchController(UserService userService, CircleService circleService) {
         this.userService = userService;
+        this.circleService = circleService;
     }
 
-    @PostMapping("/siteAdminDashboard/searchList")
-    protected ResponseEntity<?> getSearchResult(@Valid @RequestBody UserSearchDTO keywords, Errors errors) {
+    @PostMapping("/siteAdmin/dashboard/searchList")
+    protected ResponseEntity<?> getUserSearchResult(@Valid @RequestBody UserSearchDTO keywords, Errors errors) {
 
         UserSearchAjaxResponseBody result = new UserSearchAjaxResponseBody();
 
@@ -49,4 +50,29 @@ public class SiteAdminSearchController {
 
         return ResponseEntity.ok(result);
     }
+
+    @PostMapping("/siteAdmin/circleClientOverview/searchList")
+    protected ResponseEntity<?> getCircleSearchResult(@Valid @RequestBody CircleSearchDTO keywords, Errors errors) {
+
+        CircleSearchResponseBody result = new CircleSearchResponseBody();
+
+        if (errors.hasErrors()) {
+            result.setMsg(errors.getAllErrors().stream().map(x -> x.getDefaultMessage())
+                    .collect(Collectors.joining(",")));
+
+            return ResponseEntity.badRequest().body(result);
+        }
+
+        List<CircleDTO> circleList = circleService.findWithNameContains(keywords.getKeywords());
+
+        if (circleList.isEmpty()) {
+            result.setMsg("No care circles found");
+        } else {
+            result.setMsg("Succes");
+        }
+        result.setCircles(circleList);
+
+        return ResponseEntity.ok(result);
+    }
+
 }

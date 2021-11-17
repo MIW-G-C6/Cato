@@ -8,6 +8,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.io.IOException;
+
 /**
  * @author Erwin Wegter <ewegter@gmail.com>
  *
@@ -36,10 +40,10 @@ public class SiteAdminController {
         return "siteAdminUserOverview";
     }
 
-    @GetMapping("/siteAdmin/CircleClientOverview")
-    protected String showSiteAdminCircleClientOverview(@ModelAttribute("error") String error, Model model) {
-        model.addAttribute("allClients", memberService.findAllClientsForSiteAdmin());
-        model.addAttribute("allCircles", circleService.findAllCircles());
-        return "siteAdminCircle";
+    @GetMapping("/siteAdmin/circleClientOverview")
+    protected String showSiteAdminCircleClientOverview(@ModelAttribute("error") String error, HttpSession session) {
+
+        session.setAttribute("circleDeleteRedirect", "redirect:/siteAdmin/circleClientOverview");
+        return "siteAdminCircleClientOverview";
     }
 }

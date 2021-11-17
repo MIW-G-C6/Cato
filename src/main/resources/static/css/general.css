@@ -90,7 +90,7 @@ a.nav-link{
     font-weight: bold;
 }
 
-#modalYesButton {
+#ModalYesButton {
     background-color: red;
     border-color: red;
 }
@@ -740,10 +740,25 @@ input[type=email], input[type=password], input[type=text] {
     background-color: #fafafa;
 }
 
+.profile-container {
+    float: left;
+    margin-left: 50px;
+}
+
 .profile-picture {
-    width: 250px;
-    padding-top: 60px;
-    padding-left: 50px;
+    width: auto;
+    max-width: 250px;
+    max-height: 290px;
+    margin-right: 50px;
+    box-shadow: 0 0 11px rgba(33,33,33,.4);
+    border-radius: 4px;
+}
+
+.profile-picture-box {
+    min-width: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .profile-page-box {

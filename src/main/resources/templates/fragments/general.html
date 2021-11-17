@@ -64,6 +64,7 @@
 
         <a class="nav-link" sec:authorize="hasAuthority('ROLE_ADMIN')" th:href="@{/siteAdmin/dashboard}">Site admin dashboard</a>
         <a class="nav-link" sec:authorize="hasAuthority('ROLE_ADMIN')" th:href="@{/siteAdmin/userOverview}">User overview</a>
+        <a class="nav-link" sec:authorize="hasAuthority('ROLE_ADMIN')" th:href="@{/siteAdmin/circleClientOverview}">Care circle overview</a>
         <a class="nav-link" th:href="@{/about}">About</a>
         <a class="nav-link" th:href="@{/contact}">Contact</a>
 
