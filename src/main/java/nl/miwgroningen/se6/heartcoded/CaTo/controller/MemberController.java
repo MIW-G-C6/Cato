@@ -62,10 +62,12 @@ public class MemberController {
 
     @GetMapping("/options/{circleId}")
     protected String showCircleOptions(@PathVariable("circleId") Integer circleId,
-                                      @ModelAttribute("error") String error, Model model) {
+                                      @ModelAttribute("error") String error, Model model,
+                                       HttpSession session) {
         if (isNotCircleAdmin(circleId) && isNotSiteAdmin()) {
             return "redirect:/403";
         }
+        session.setAttribute("circleDeleteRedirect", "redirect:/circles");
         model.addAttribute("thisCircle", circleService.getById(circleId));
         model.addAttribute("allMembersByCircleId", memberService.getAllByCircleId(circleId));
         return "circleOptions";

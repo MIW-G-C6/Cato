@@ -43,8 +43,7 @@ public class UserController {
     }
 
     @GetMapping("/users/delete/{userId}")
-    protected String deleteUser(@PathVariable("userId") Integer userId,
-                                @ModelAttribute("returnPageString") String returnString, RedirectAttributes redirectAttributes) {
+    protected String deleteUser(@PathVariable("userId") Integer userId, RedirectAttributes redirectAttributes) {
         if (!userService.currentUserIsSiteAdmin()) {
             return "redirect:/403";
         }

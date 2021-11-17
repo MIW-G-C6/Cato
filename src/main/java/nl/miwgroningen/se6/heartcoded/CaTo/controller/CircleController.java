@@ -62,15 +62,17 @@ public class CircleController {
     }
 
     @GetMapping("/circles/delete/{circleId}")
-    protected String deleteCircleById(@PathVariable("circleId") Integer circleId) {
+    protected String deleteCircleById(@PathVariable("circleId") Integer circleId,
+                                      HttpSession session) {
 
         if (!memberService.userIsCircleAdmin(circleId) && !userService.currentUserIsSiteAdmin()) {
             return "redirect:/403";
         }
 
+        String circleDeleteRedirect = (String)session.getAttribute("circleDeleteRedirect");
         taskListService.deleteByCircleId(circleId);
         circleService.deleteCircleById(circleId);
-        return "redirect:/circleId";
+        return circleDeleteRedirect;
     }
 
     @PostMapping("/circles/new")

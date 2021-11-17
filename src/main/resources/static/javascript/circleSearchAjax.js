@@ -1,42 +1,43 @@
-document.getElementById("deleteUserModal").innerHTML =`
-    <div class="modal-content" id="deleteThisUserModal">
+document.getElementById("deleteCircleModal").innerHTML =`
+    <div class="modal-content" id="deleteThisCircleModal">
             <div class="modal-header">
                 <h2 class="modal-title">Warning!</h2>
                 <span class="close">&times;</span>
             </div>
             <div class="modal-body">
                 <p>Are you sure you want to delete:</p>
-                <span id="userNameSpan" ></span>
+                <span id="circleNameSpan" ></span>
             </div>
             <div class="modal-footer">
                 <button type="button" class="catoButton" id="noBtn">No</button>
-                <button type="button" class="btn btn-primary catoYesWarningButton" id="userModalYesButton">Yes</button>
+                <button type="button" class="btn btn-primary catoYesWarningButton" id="circleModalYesButton">Yes</button>
             </div>
         </div>`;
 
-var modal = document.getElementById("deleteThisUserModal");
+var modal = document.getElementById("deleteThisCircleModal");
 
 var modalCloseBtn = document.getElementsByClassName("close")[0];
 
 var modalNoBtn = document.getElementById("noBtn");
 
-var userModalYesBtn = document.getElementById("userModalYesButton")
+var circleModalYesBtn = document.getElementById("circleModalYesButton")
 
 
 
 $(document).ready(function () {
 
-    $("#search-form").submit(function (event) {
+    $("#circle-search-form").submit(function (event) {
         event.preventDefault();
-        fire_ajax_submit();
+
+        circle_fire_ajax_submit();
     });
-    fire_ajax_submit(); // Calls the function after loading the page to fill the table with all users
+    circle_fire_ajax_submit(); // Calls the function after loading the page to fill the table with all care circles
 });
 
-function fire_ajax_submit() {
+function circle_fire_ajax_submit() {
 
     var searchData = {};
-    searchData["keywords"] = $("#keywordsBox").val();
+    searchData["keywords"] = $('#circleKeywordsBox').val();
 
     var csrfToken = $("meta[name='_csrf']").attr('content');
     var csrfHeader = $("meta[name='_csrf_header']").attr('content');
@@ -45,7 +46,7 @@ function fire_ajax_submit() {
         {
             type: "POST",
             contentType : "application/json",
-            url: "/siteAdmin/dashboard/searchList",
+            url: "/siteAdmin/circleClientOverview/searchList",
             data: JSON.stringify(searchData),
             dataType: "json",
             cache: false,
@@ -66,23 +67,22 @@ function fire_ajax_submit() {
 function fillTable(resultData) {
     let new_tbody = document.createElement('tbody');
 
-    if (resultData["responseJSON"]["users"].length === 0) {
+    if (resultData["responseJSON"]["circles"].length === 0) {
         let td = document.createElement('td');
         let tr = document.createElement('tr');
-        td.textContent = "No users found";
+        td.textContent = "No care circles found";
         tr.appendChild(td);
         new_tbody.append(tr);
     } else {
-        resultData["responseJSON"]["users"].forEach(user => {
+        resultData["responseJSON"]["circles"].forEach(circle => {
             let tr = document.createElement('tr');
             let tdName = document.createElement('td');
-            let tdEmail = document.createElement('td');
             let tdEdit = document.createElement('td');
             let tdDelete = document.createElement('td');
-            let aUser = document.createElement('a');
+            let aCircle = document.createElement('a');
             let aEdit = document.createElement('a');
             let aDelete = document.createElement('a');
-            let hrefUser = document.createAttribute('href');
+            let hrefCircle = document.createAttribute('href');
             let hrefEdit = document.createAttribute('href');
             let imgEdit = document.createElement('img');
             let imgDelete = document.createElement('img');
@@ -104,51 +104,49 @@ function fillTable(resultData) {
             imgDelete.setAttributeNode(deleteSrc);
             imgDelete.setAttributeNode(imgHeightDelete);
             imgDelete.setAttributeNode(imgWidthDelete);
-            hrefUser.value = "/profilepage/" + user["userId"];
-            hrefEdit.value = "/users/edit/" + user["userId"];
-            aUser.setAttributeNode(hrefUser);
+            hrefCircle.value = "/circles/" + circle["circleId"];  // edit url
+            hrefEdit.value = "/circles/options/edit/" + circle["circleId"];     // edit url
+            aCircle.setAttributeNode(hrefCircle);
             aEdit.setAttributeNode(hrefEdit);
             aDelete.classList.add('pointer');
             aDelete.onclick = function () {
-                userModalYesBtn.onclick = function() {
-                    window.location = "/users/delete/" + user["userId"];
+                circleModalYesBtn.onclick = function() {
+                    window.location = "/circles/delete/" + circle["circleId"];
                 }
-                $('#deleteUserModal').modal('show');
-                document.getElementById("userNameSpan").innerHTML=user["name"];
+                $('#deleteCircleModal').modal('show');
+                document.getElementById("circleNameSpan").innerHTML=circle["circleName"];
             }
-            aUser.text = user["name"];
-            tdEmail.textContent = user["email"];
+            aCircle.text = circle["circleName"];
             let editClass = document.createAttribute('class');
             editClass.value = "edit";
             let deleteClass = document.createAttribute('class');
             deleteClass.value = "delete";
             aEdit.appendChild(imgEdit);
             aDelete.appendChild(imgDelete);
-            tdName.appendChild(aUser);
+            tdName.appendChild(aCircle);
             tdEdit.appendChild(aEdit);
             tdDelete.appendChild(aDelete);
             tr.appendChild(tdName);
-            tr.appendChild(tdEmail);
             tr.appendChild(tdEdit);
             tr.appendChild(tdDelete);
             new_tbody.append(tr);
         });
     }
 
-    let old_tbody = document.getElementById("resultTable").tBodies.item(0);
-    document.getElementById("resultTable").replaceChild(new_tbody, old_tbody);
+    let old_tbody = document.getElementById("circleResultTable").tBodies.item(0);
+    document.getElementById("circleResultTable").replaceChild(new_tbody, old_tbody);
 }
 
-    modalCloseBtn.onclick = function() {
-        $('#deleteUserModal').modal('hide');
-    }
+modalCloseBtn.onclick = function() {
+    $('#deleteCircleModal').modal('hide');
+}
 
-    modalNoBtn.onclick = function() {
-        $('#deleteUserModal').modal('hide');
-    }
+modalNoBtn.onclick = function() {
+    $('#deleteCircleModal').modal('hide');
+}
 
-    window.onclick = function(event) {
-        if (event.target === modal) {
-            $('#deleteUserModal').modal('hide');
-        }
+window.onclick = function(event) {
+    if (event.target === modal) {
+        $('#deleteCircleModal').modal('hide');
     }
+}
