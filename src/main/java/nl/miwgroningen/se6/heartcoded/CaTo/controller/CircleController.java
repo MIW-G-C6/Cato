@@ -41,6 +41,7 @@ public class CircleController {
         userService.checkForCircleDeletion();
         Integer currentUser = userService.getCurrentUser().getUserId();
         session.setAttribute("navbarCircles", memberService.getAllCirclesByUserId(currentUser));
+        session.setAttribute("currentUserId", userService.getCurrentUser().getUserId());
         model.addAttribute("clientsCircleOne",
                 memberService.findAllClientsInCircle(userService.getCircleOne(currentUser)));
         model.addAttribute("clientsCircleTwo",

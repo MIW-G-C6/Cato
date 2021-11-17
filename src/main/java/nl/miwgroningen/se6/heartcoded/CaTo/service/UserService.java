@@ -81,6 +81,9 @@ public class UserService {
 
         result.setName(user.getName());
         result.setEmail(user.getEmail());
+        if (user.getProfilePicture().length != 0) {
+            result.setProfilePicture(user.getProfilePicture());
+        }
 
         userRepository.save(result);
     }

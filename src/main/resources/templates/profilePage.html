@@ -16,8 +16,11 @@
         </div>
     </div>
 
-    <div class="container">
+    <div class="container profile-container">
         <div class="profile-page-box">
+            <div class="profile-picture-box">
+                <img th:unless="${profilePicture} == ''" th:src="@{'data:image/jpeg;base64,'+${profilePicture}}" class="profile-picture"/>
+            </div>
             <div>
                 <h1><span th:text="${user.name}"></span></h1>
                 <br>
@@ -45,9 +48,6 @@
                 <br>
                 <a th:if="${userIsCurrentUser || currentUserIsSiteAdmin}" th:href="@{'/users/edit/' + ${user.userId}}"><button class="catoButton">Edit</button></a>
                 <a th:if="${userIsCurrentUser || currentUserIsSiteAdmin}" th:href="@{'/users/edit/password/' + ${user.userId}}"><button class="catoButton">Change password</button></a>
-            </div>
-            <div>
-                <img th:unless="${profilePicture} == ''" th:src="@{'data:image/jpeg;base64,'+${profilePicture}}" class="profile-picture"/>
             </div>
         </div>
     </div>
