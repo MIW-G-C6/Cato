@@ -108,21 +108,7 @@ public class MemberController {
             return "redirect:/403";
         }
 
-        if (email != null) {
-            Optional<Integer> userId = userService.findUserIdByEmail(email);
-
-            checkIfAccountExists(circleId, addMember, result, userId);
-
-            if (!result.hasErrors()) {
-                memberService.saveMember(addMember);
-                return "redirect:/circles/options/{circleId}";
-            }
-        }
-
-        model.addAttribute("circleUserRole", new MemberDTO());
-        model.addAttribute("thisCircle", circleService.getById(circleId));
-        model.addAttribute("member", memberService.getAllByCircleId(circleId));
-        return "circleAddMember";
+        return handleAddUserToCircle(circleId, model, email, addMember, result);
     }
 
     @GetMapping("/options/{circleId}/updatemember/{userId}")
@@ -133,42 +119,18 @@ public class MemberController {
             return "redirect:/403";
         }
 
-        Optional<MemberDTO> member = memberService.findByUserIdAndCircleId(userId, circleId);
-        if (member.isEmpty()) {
-            return "redirect:/circles/options/{circleId}";
-        }
-
-        model.addAttribute("circle", circleService.getById(circleId));
-        model.addAttribute("member", member.get());
-        return "circleUpdateMember";
+        return handleShowCircleUpdateMember(userId, circleId, model);
     }
 
     @PostMapping("/options/{circleId}/updatemember/{userId}")
-    protected String updateCircleMember(@PathVariable("circleId") Integer circleId,
+    protected String doUpdateCircleMember(@PathVariable("circleId") Integer circleId,
                                         @ModelAttribute("member") MemberDTO member,
                                         BindingResult result, Model model, RedirectAttributes redirectAttributes) {
         if (isNotCircleAdmin(circleId) && isNotSiteAdmin()) {
             return "redirect:/403";
         }
 
-        checkForErrorsUpdateCircleMember(circleId, member, result);
-        if (result.hasErrors()) {
-            model.addAttribute("circle", circleService.getById(circleId));
-            model.addAttribute("member", member);
-            return "circleUpdateMember";
-        }
-
-        if (isNotSiteAdmin() && circleAdminRemoveOwnRights(member)) {
-            redirectAttributes.addFlashAttribute("member", member);
-            return "redirect:/circles/options/{circleId}/updatemember/{userId}/changeAdminRole";
-        }
-
-        memberService.saveMember(member);
-
-        if (!member.isAdmin() && member.getUserId().equals(userService.getCurrentUser().getUserId())) {
-            return "redirect:/circles/{circleId}";
-        }
-        return "redirect:/circles/options/{circleId}";
+        return handleUpdateCircleMemberErrors(circleId, member, result, model, redirectAttributes);
     }
 
     @GetMapping("/options/{circleId}/updatemember/{userId}/changeAdminRole")
@@ -199,7 +161,68 @@ public class MemberController {
 
         return deleteUserFromCircle(circleId, userId, redirectAttributes, currentUserIsTargetUser);
     }
+    
+    private String handleAddUserToCircle(Integer circleId, Model model, String email, MemberDTO addMember,
+                                         BindingResult result) {
+        if (email != null) {
+            Optional<Integer> userId = userService.findUserIdByEmail(email);
 
+            checkIfAccountExists(circleId, addMember, result, userId);
+
+            if (!result.hasErrors()) {
+                memberService.saveMember(addMember);
+                return "redirect:/circles/options/{circleId}";
+            }
+        }
+
+        model.addAttribute("circleUserRole", new MemberDTO());
+        model.addAttribute("thisCircle", circleService.getById(circleId));
+        model.addAttribute("member", memberService.getAllByCircleId(circleId));
+        return "circleAddMember";
+    }
+
+    private String handleUpdateCircleMemberErrors(Integer circleId, MemberDTO member, BindingResult result, Model model,
+                                                  RedirectAttributes redirectAttributes) {
+        checkForErrorsUpdateCircleMember(circleId, member, result);
+        if (result.hasErrors()) {
+            model.addAttribute("circle", circleService.getById(circleId));
+            model.addAttribute("member", member);
+            return "circleUpdateMember";
+        }
+
+        return handleUpdateCircleMember(member, redirectAttributes);
+    }
+
+    private String handleUpdateCircleMember(MemberDTO member, RedirectAttributes redirectAttributes) {
+        if (isNotSiteAdmin() && circleAdminRemoveOwnRights(member)) {
+            redirectAttributes.addFlashAttribute("member", member);
+            return "redirect:/circles/options/{circleId}/updatemember/{userId}/changeAdminRole";
+        }
+
+        memberService.saveMember(member);
+
+        return handleRedirectFromUpdateCircleMember(member);
+    }
+
+    private String handleRedirectFromUpdateCircleMember(MemberDTO member) {
+        if (!member.isAdmin() && member.getUserId().equals(userService.getCurrentUser().getUserId())) {
+            return "redirect:/circles/{circleId}";
+        }
+        return "redirect:/circles/options/{circleId}";
+    }
+
+
+    private String handleShowCircleUpdateMember(Integer userId, Integer circleId, Model model) {
+        Optional<MemberDTO> member = memberService.findByUserIdAndCircleId(userId, circleId);
+        if (member.isEmpty()) {
+            return "redirect:/circles/options/{circleId}";
+        }
+
+        model.addAttribute("circle", circleService.getById(circleId));
+        model.addAttribute("member", member.get());
+        return "circleUpdateMember";
+    }
+    
     private String deleteUserFromCircle(Integer circleId, Integer userId, RedirectAttributes redirectAttributes,
                                         boolean currentUserIsTargetUser) {
         // checks first if the circle member isn't the last circle admin. If so, it can't be removed from the circle.
