@@ -16,6 +16,7 @@ import java.util.stream.Collectors;
  *
  * Controls the search function response on the siteAdminDashboard page
  */
+
 @RestController
 public class SiteAdminSearchController {
 
@@ -29,13 +30,11 @@ public class SiteAdminSearchController {
 
     @PostMapping("/siteAdmin/dashboard/searchList")
     protected ResponseEntity<?> getUserSearchResult(@Valid @RequestBody UserSearchDTO keywords, Errors errors) {
-
         UserSearchAjaxResponseBody result = new UserSearchAjaxResponseBody();
 
         if (errors.hasErrors()) {
             result.setMsg(errors.getAllErrors().stream().map(x -> x.getDefaultMessage())
                     .collect(Collectors.joining(",")));
-
             return ResponseEntity.badRequest().body(result);
         }
 
@@ -46,6 +45,7 @@ public class SiteAdminSearchController {
         } else {
             result.setMsg("Succes");
         }
+
         result.setUsers(userList);
 
         return ResponseEntity.ok(result);
@@ -53,13 +53,11 @@ public class SiteAdminSearchController {
 
     @PostMapping("/siteAdmin/circleClientOverview/searchList")
     protected ResponseEntity<?> getCircleSearchResult(@Valid @RequestBody CircleSearchDTO keywords, Errors errors) {
-
         CircleSearchResponseBody result = new CircleSearchResponseBody();
 
         if (errors.hasErrors()) {
             result.setMsg(errors.getAllErrors().stream().map(x -> x.getDefaultMessage())
                     .collect(Collectors.joining(",")));
-
             return ResponseEntity.badRequest().body(result);
         }
 
@@ -70,9 +68,9 @@ public class SiteAdminSearchController {
         } else {
             result.setMsg("Succes");
         }
+
         result.setCircles(circleList);
 
         return ResponseEntity.ok(result);
     }
-
 }
