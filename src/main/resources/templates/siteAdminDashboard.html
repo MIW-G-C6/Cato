@@ -11,13 +11,24 @@
     <div th:replace="fragments/general :: previousButton"></div>
 
     <div class="container">
-        <h1>Site admin dashboard</h1>
-        <div>
-            <p>Total number of users: <span th:text="${numberOfUsers}"></span></p>
-            <p>Total number of Care Circles: <span th:text="${numberOfCircles}"></span></p>
-            <p>Total number of clients: <span th:text="${numberOfClients}"></span></p>
-            <p>Total number of tasks: <span th:text="${numberOfTasks}"></span></p>
-            <p>Total number of reserved tasks: <span th:text="${numberOfReservedTasks}"></span></p>
+        <h1>Site statistics</h1>
+        <div class="site-admin-dashboard-box">
+            <div>
+                <table class="general-table-layout">
+                    <tr><td><h5>Total number of users:</h5><hr> </td><td class="h4" th:text="'&emsp;&emsp;&emsp;' + ${numberOfUsers}"></td></tr>
+                    <tr><td><h5>Total number of Care Circles:</h5><hr></td> <td class="h4" th:text="'&emsp;&emsp;&emsp;' + ${numberOfCircles}"></td></tr>
+                    <tr><td><h5>Total number of clients:</h5> <hr></td><td class="h4" th:text="'&emsp;&emsp;&emsp;' + ${numberOfClients}"></td></tr>
+                    <tr><td><h5>Total number of tasks:</h5><hr></td> <td class="h4" th:text="'&emsp;&emsp;&emsp;' + ${numberOfTasks}"></td></tr>
+                    <tr><td><h5>Total number of reserved tasks:</h5> <hr></td><td class="h4" th:text="'&emsp;&emsp;&emsp;' + ${numberOfReservedTasks}"></td></tr>
+                </table>
+            </div>
+            <div>
+                <ul class="cato-ul">
+                    <li><a th:href="@{/siteAdmin/userOverview}">User overview</a> </li>
+                    <li><hr></li>
+                    <li><a th:href="@{/siteAdmin/circleClientOverview}">Circle overview</a></li>
+                </ul>
+            </div>
         </div>
     </div>
 </div>
