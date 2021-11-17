@@ -28,6 +28,7 @@ class CircleServiceTest {
 
     private CircleMapper circleMapper;
     private MemberMapper memberMapper;
+    
     private CircleService circleService;
 
     @BeforeEach

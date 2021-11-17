@@ -27,6 +27,7 @@ class TaskServiceTest {
     private UserRepository userRepository;
 
     private TaskMapper taskMapper;
+
     private TaskService taskService;
 
     @BeforeEach

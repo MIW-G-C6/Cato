@@ -13,6 +13,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class MemberSiteAdminMapperTest {
 
     private MemberSiteAdminMapper memberSiteAdminMapper;
+
     @BeforeEach
     void setUp() {
         memberSiteAdminMapper = new MemberSiteAdminMapper();

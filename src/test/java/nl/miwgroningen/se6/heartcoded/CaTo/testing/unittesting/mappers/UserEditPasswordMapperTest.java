@@ -19,6 +19,7 @@ class UserEditPasswordMapperTest {
     @BeforeEach
     void setUp() {
         userEditPasswordMapper = new UserEditPasswordMapper();
+
         user1 = new User();
         user1.setUserId(1);
         user1.setName("First");

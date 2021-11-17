@@ -28,9 +28,9 @@ class CircleMapperTest {
         testCircle.setMemberList(new ArrayList<>());
 
         CircleDTO circleDTO = circleMapper.toDTO(testCircle);
+
         assertEquals("TESTCIRCLE", circleDTO.getCircleName());
         assertEquals(1, circleDTO.getCircleId());
-
     }
 
     @Test
@@ -40,6 +40,7 @@ class CircleMapperTest {
         circleDTO.setCircleName("TESTCIRCLE");
 
         Circle circle = circleMapper.toCircle(circleDTO);
+
         Assertions.assertEquals("TESTCIRCLE", circle.getCircleName());
         Assertions.assertEquals(1, circle.getCircleId());
     }
