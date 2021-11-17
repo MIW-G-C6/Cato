@@ -29,7 +29,7 @@ public class SiteAdminSearchController {
     }
 
     @PostMapping("/siteAdmin/dashboard/searchList")
-    protected ResponseEntity<?> getUserSearchResult(@Valid @RequestBody UserSearchDTO keywords, Errors errors) {
+    protected ResponseEntity<?> getUserSearchResult(@Valid @RequestBody SearchDTO keywords, Errors errors) {
         UserSearchAjaxResponseBody result = new UserSearchAjaxResponseBody();
 
         if (errors.hasErrors()) {
@@ -51,7 +51,7 @@ public class SiteAdminSearchController {
     }
 
     @PostMapping("/siteAdmin/circleClientOverview/searchList")
-    protected ResponseEntity<?> getCircleSearchResult(@Valid @RequestBody CircleSearchDTO keywords, Errors errors) {
+    protected ResponseEntity<?> getCircleSearchResult(@Valid @RequestBody SearchDTO keywords, Errors errors) {
         CircleSearchResponseBody result = new CircleSearchResponseBody();
 
         if (errors.hasErrors()) {
