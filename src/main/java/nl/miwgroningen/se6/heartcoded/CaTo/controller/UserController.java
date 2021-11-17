@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpSession;
+
 /**
  * @author Shalena Omapersad <shalenao@hotmail.com>
  *
@@ -59,7 +61,8 @@ public class UserController {
 
     @GetMapping("/users/edit/{userId}")
     protected String showEditUserForm(@PathVariable("userId") Integer userId, @ModelAttribute("error") String error,
-                                      Model model) {
+                                      Model model, HttpSession session) {
+        session.setAttribute("lastUserId", userId);
         if (!userService.getCurrentUser().getUserId().equals(userId) && !userService.currentUserIsSiteAdmin()) {
             return "redirect:/403";
         }

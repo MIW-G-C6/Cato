@@ -20,7 +20,7 @@ public class FileUploadExceptionAdvice {
     public String handleFileSizeLimitExceededException(MaxUploadSizeExceededException exc,
                                                        RedirectAttributes redirectAttributes, HttpSession session) {
         redirectAttributes.addAttribute("error", "File too large");
-        Integer userId = (Integer) session.getAttribute("currentUserId");
+        Integer userId = (Integer) session.getAttribute("lastUserId");
         return "redirect:/users/edit/" + userId;   //Exception redirects back to the users edit profile page by default.
     }
 }
