@@ -431,7 +431,8 @@ html, body {
 .profile-information {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    min-height: 210px;
+    justify-content: space-between;
     padding-right: 100px;
 }
 
