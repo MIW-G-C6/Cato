@@ -104,7 +104,7 @@ public class UserController {
     }
 
     @PostMapping("users/edit/{userId}")
-    protected String editUser (@ModelAttribute("user") UserDTO user, @ModelAttribute("image") MultipartFile image,
+    protected String editUser(@ModelAttribute("user") UserDTO user, @ModelAttribute("image") MultipartFile image,
                               BindingResult result) {
         try {
             byte[] imageContent = image.getBytes();
