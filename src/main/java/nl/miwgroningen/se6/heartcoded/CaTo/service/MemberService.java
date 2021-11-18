@@ -206,8 +206,8 @@ public class MemberService {
         return false;
     }
 
-    public boolean userIsCircleAdmin(Integer circleId) {
-        Integer userId = getCurrentUser().getUserId();
+    public boolean userIsCircleAdmin(Integer circleId, Integer userId) {
+//        Integer userId = getCurrentUser().getUserId();
         Optional<Member> member = memberRepository.findMemberByUserUserIdAndCircleCircleId(userId, circleId);
 
         if (member.isPresent()) {
@@ -234,13 +234,13 @@ public class MemberService {
         return (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     }
 
-    public List<CircleDTO> allCirclesByUserIdWithAdminCheck(Integer currentUserId) {
+    public List<CircleDTO> allCirclesByUserIdWithAdminCheck(Integer userId) {
         List<CircleDTO> result = new ArrayList<>();
-        List<CircleDTO> temp = getAllCirclesByUserId(currentUserId);
+        List<CircleDTO> temp = getAllCirclesByUserId(userId);
 
         for (CircleDTO circleDTO : temp) {
-            if (userIsCircleAdmin(circleDTO.getCircleId())) {
-                circleDTO.setCurrentUserIsCircleAdmin(true);
+            if (userIsCircleAdmin(circleDTO.getCircleId(), userId)) {
+                circleDTO.setUserIsCircleAdmin(true);
             }
             result.add(circleDTO);
         }
@@ -265,8 +265,8 @@ public class MemberService {
         for (Integer circleId : circleList) {
             if(!(circleId == 0)) {
                 CircleDTO circleDTO = circleMapper.toDTO(circleRepository.getById(circleId));
-                if (userIsCircleAdmin(circleDTO.getCircleId())) {
-                    circleDTO.setCurrentUserIsCircleAdmin(true);
+                if (userIsCircleAdmin(circleDTO.getCircleId(), userId)) {
+                    circleDTO.setUserIsCircleAdmin(true);
                 }
                 result.add(circleDTO);
             } else {

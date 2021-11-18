@@ -67,7 +67,9 @@ public class CircleController {
 
     @GetMapping("/circles/delete/{circleId}")
     protected String deleteCircleById(@PathVariable("circleId") Integer circleId, HttpSession session) {
-        if (!memberService.userIsCircleAdmin(circleId) && !userService.currentUserIsSiteAdmin()) {
+        Integer currentUserId = userService.getCurrentUser().getUserId();
+
+        if (!memberService.userIsCircleAdmin(circleId, currentUserId) && !userService.currentUserIsSiteAdmin()) {
             return "redirect:/403";
         }
 

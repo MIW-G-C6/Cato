@@ -59,7 +59,7 @@ public class MemberController {
         model.addAttribute("taskListId", taskListService.getByCircleId(circleId).getTaskListId());
         model.addAttribute("taskList", taskService.getAllTasksByCircleId(circleId));
         model.addAttribute("allCaregivers", memberService.findAllCaregiversByCircleId(circleId));
-        model.addAttribute("thisUserIsAdmin", memberService.userIsCircleAdmin(circleId));
+        model.addAttribute("thisUserIsAdmin", memberService.userIsCircleAdmin(circleId, currentUser));
         model.addAttribute("allClients", memberService.findAllClientsInCircle(circleId));
         model.addAttribute("currentUserIsSiteAdmin", userService.currentUserIsSiteAdmin());
         return "circleDashboard";
@@ -296,7 +296,9 @@ public class MemberController {
     }
 
     private boolean isNotCircleAdmin(Integer circleId) {
-        return !memberService.userIsCircleAdmin(circleId);
+        Integer currentUserId = userService.getCurrentUser().getUserId();
+
+        return !memberService.userIsCircleAdmin(circleId, currentUserId);
     }
 
     private boolean isNotSiteAdmin() {
