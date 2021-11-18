@@ -16,8 +16,11 @@ import org.mockito.Mockito;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.when;
 
 class TaskServiceTest {
@@ -84,5 +87,40 @@ class TaskServiceTest {
 
         assertNotNull(result);
         assertEquals(3, result);
+    }
+
+    @Test
+    void totalNumberOfTasksTest() {
+        List<Task> listOfTasks = new ArrayList<>();
+        listOfTasks.add(new Task(1, "testTask1", new TaskList(), "low", new User()));
+        listOfTasks.add(new Task(2, "testTask2", new TaskList(), "low", null));
+        listOfTasks.add(new Task(2, "testTask3", new TaskList(), "low", new User()));
+        listOfTasks.add(new Task(2, "testTask4", new TaskList(), "low", null));
+
+        when(taskRepository.count()).thenReturn((long) listOfTasks.size());
+
+        Long result = taskService.totalNumberOfTasks();
+
+        assertNotNull(result);
+        assertEquals(4, result);
+    }
+
+    @Test
+    void totalNumberOfReservedTasksTest() {
+        List<Task> listOfTasks = new ArrayList<>();
+        listOfTasks.add(new Task(1, "testTask1", new TaskList(), "low", new User()));
+        listOfTasks.add(new Task(2, "testTask2", new TaskList(), "low", null));
+        listOfTasks.add(new Task(2, "testTask3", new TaskList(), "low", new User()));
+        listOfTasks.add(new Task(2, "testTask4", new TaskList(), "low", null));
+
+        when(taskRepository.countAllByAssignedUserNotNull())
+                .thenReturn((int) listOfTasks.stream()
+                        .filter(a -> a.getAssignedUser() != null)
+                        .count());
+
+        Integer result = taskService.totalNumberOfReservedTasks();
+
+        assertNotNull(result);
+        assertEquals(2, result);
     }
 }
