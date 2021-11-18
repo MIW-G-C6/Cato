@@ -49,7 +49,7 @@
                     <a th:if="${userIsCurrentUser || currentUserIsSiteAdmin}" th:href="@{'/users/edit/password/' + ${user.userId}}"><button class="catoButton">Change password</button></a>
                 </div>
             </div>
-            <div th:if="${userIsCurrentUser || currentUserIsSiteAdmin}" class="general-table-layout" id="overview-circles">
+            <div th:if="${userIsCurrentUser || currentUserIsSiteAdmin}" class="cato-table" id="overview-circles">
                 <h5 class="table-header">My Care Circles</h5>
                 <table>
                     <tr th:if="${allCircles.isEmpty()}">&ensp;You are not a member of a Care Circle yet</tr><br>

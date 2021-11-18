@@ -711,6 +711,8 @@ input[type=email], input[type=password], input[type=text] {
 
 #overview-circles {
     width: 30%;
+    padding-top: 0;
+    border-left: 1px solid lightgrey;
 }
 
 .title-taskdetails {
