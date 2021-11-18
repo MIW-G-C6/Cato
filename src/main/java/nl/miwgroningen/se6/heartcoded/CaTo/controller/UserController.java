@@ -26,6 +26,7 @@ public class UserController {
 
     private static final String USER_IS_THE_LAST_ADMIN_IN_A_CIRCLE = "User is the last admin in a care circle";
     private static final String SITE_ADMIN_DELETE_ERROR = "Unable to delete site admin";
+    private static final int ONE_MEGABYTE = 1048576;
 
     private UserService userService;
     private MemberService memberService;
@@ -108,7 +109,7 @@ public class UserController {
                               BindingResult result) {
         try {
             byte[] imageContent = image.getBytes();
-            if (image.getSize() < 1048576) {
+            if (image.getSize() < ONE_MEGABYTE) {
                 user.setProfilePicture(imageContent);
             }
         } catch (Exception e) {
