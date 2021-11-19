@@ -1,5 +1,7 @@
 package nl.miwgroningen.se6.heartcoded.CaTo.testing.uitesting;
 
+import org.apache.commons.lang.SystemUtils;
+import org.assertj.core.api.Fail;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -24,7 +26,18 @@ public class UserInterfaceTest {
 
     @BeforeEach
     void setUp() {
-        System.setProperty("webdriver.chrome.driver", "chromedriver.exe");
+
+        if(SystemUtils.IS_OS_WINDOWS){
+            System.out.println("Selecting Windows Chrome driver");
+            System.setProperty("webdriver.chrome.driver", "chromedrivers\\chromedriver.exe");
+        }
+        else if(SystemUtils.IS_OS_LINUX){
+            System.out.println("Selecting Linux Chrome driver");
+            System.setProperty("webdriver.chrome.driver", "chromedrivers\\chromedriver");
+        }else{
+            throw new UnsupportedOperationException("Operating system not supported by available Chrome web drivers");
+        }
+        
         driver = new ChromeDriver();
     }
 
