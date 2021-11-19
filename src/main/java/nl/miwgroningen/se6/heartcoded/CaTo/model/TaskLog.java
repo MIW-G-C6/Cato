@@ -7,22 +7,14 @@ import java.time.LocalDateTime;
 
 /**
  * @author Remco Lantinga <remco_lantinga@hotmail.com>
- * hier komt wat het programma doet
+ *
+ * History model of task.
  */
+
 @Entity
 public class TaskLog {
 
     private static final String[] PRIORITY_OPTIONS = {"Low", "Medium", "High"};
-
-//    private static final String[] ACTIONS = {"CREATED", "UPDATED", "DELETED"};
-
-    public enum Actions {
-        CREATED, UPDATED, DELETED
-    }
-
-//    public enum Priorities {
-//        LOW, MEDIUM, HIGH
-//    }
 
     @Id
     @GeneratedValue
@@ -31,30 +23,20 @@ public class TaskLog {
     private LocalDateTime dateTime;
 
     private Integer taskId;
-//    Wat gebeurt er als je een Object verwijdert? Je history moet intact blijven.
-//    misschien daarom voor een String kiezen?
-//    private Task task;
 
-//    zijn userId's wel nodig?
     private Integer userId;
-//    private User user;
 
     private String userName;
 
-    private Actions action;
-//    Kun je hier beter voor een Enum kiezen of static final String array?
-//    private String action;
+    private TaskLogActions taskLogActions;
 
     private String description;
 
-//    private Priorities priority;
     private String priority;
 
     private Integer assignedUserid;
 
     private String assignedUser;
-//    private User assignedUser;
-
 
     public TaskLog() {
     }
@@ -103,12 +85,12 @@ public class TaskLog {
         this.userName = userName;
     }
 
-    public Actions getAction() {
-        return action;
+    public TaskLogActions getTaskLogActions() {
+        return taskLogActions;
     }
 
-    public void setAction(Actions action) {
-        this.action = action;
+    public void setTaskLogActions(TaskLogActions taskLogActions) {
+        this.taskLogActions = taskLogActions;
     }
 
     public String getDescription() {

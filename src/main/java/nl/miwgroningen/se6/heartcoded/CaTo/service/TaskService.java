@@ -3,6 +3,7 @@ package nl.miwgroningen.se6.heartcoded.CaTo.service;
 import nl.miwgroningen.se6.heartcoded.CaTo.dto.TaskDTO;
 import nl.miwgroningen.se6.heartcoded.CaTo.model.Task;
 import nl.miwgroningen.se6.heartcoded.CaTo.model.TaskLog;
+import nl.miwgroningen.se6.heartcoded.CaTo.model.TaskLogActions;
 import nl.miwgroningen.se6.heartcoded.CaTo.repository.*;
 import nl.miwgroningen.se6.heartcoded.CaTo.mappers.TaskMapper;
 import org.springframework.stereotype.Service;
@@ -57,24 +58,24 @@ public class TaskService {
 
         taskRepository.deleteById(taskId);
 
-        taskLogService.saveTaskLog(task, userId, TaskLog.Actions.DELETED);
+        taskLogService.saveTaskLog(task, userId, TaskLogActions.DELETED);
     }
 
     public void save(TaskDTO taskDTO, Integer taskListId, Integer userId) {
         Task task = taskMapper.toTask(taskDTO);
         task.setTaskList(taskListRepository.getById(taskListId));
 
-        TaskLog.Actions action;
+        TaskLogActions taskLogActions;
 
         if (task.getTaskId() == null) {
-            action = TaskLog.Actions.CREATED;
+            taskLogActions = TaskLogActions.CREATED;
         } else {
             task.setAssignedUser(taskRepository.getById(task.getTaskId()).getAssignedUser());
-            action = TaskLog.Actions.UPDATED;
+            taskLogActions = TaskLogActions.UPDATED_PROPERTIES;
         }
         taskRepository.save(task);
 
-        taskLogService.saveTaskLog(task, userId, action);
+        taskLogService.saveTaskLog(task, userId, taskLogActions);
     }
 
     public void assignUser(Integer taskId, Integer userId) {
@@ -83,7 +84,7 @@ public class TaskService {
 
         taskRepository.save(task);
 
-        taskLogService.saveTaskLog(task, userId, TaskLog.Actions.UPDATED);
+        taskLogService.saveTaskLog(task, userId, TaskLogActions.UPDATED_ASSIGNED_USER);
     }
 
     public void unassignUser(Integer taskId, Integer userId) {
@@ -92,7 +93,7 @@ public class TaskService {
 
         taskRepository.save(task);
 
-        taskLogService.saveTaskLog(task, userId, TaskLog.Actions.UPDATED);
+        taskLogService.saveTaskLog(task, userId, TaskLogActions.UPDATED_ASSIGNED_USER);
     }
 
     public Integer getTaskListIdByTaskId(Integer taskId) {

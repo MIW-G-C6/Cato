@@ -2,6 +2,7 @@ package nl.miwgroningen.se6.heartcoded.CaTo.service;
 
 import nl.miwgroningen.se6.heartcoded.CaTo.model.Task;
 import nl.miwgroningen.se6.heartcoded.CaTo.model.TaskLog;
+import nl.miwgroningen.se6.heartcoded.CaTo.model.TaskLogActions;
 import nl.miwgroningen.se6.heartcoded.CaTo.repository.TaskLogRepository;
 import nl.miwgroningen.se6.heartcoded.CaTo.repository.UserRepository;
 import org.springframework.stereotype.Component;
@@ -28,14 +29,14 @@ public class TaskLogService {
     }
 
     @Transactional
-    public void saveTaskLog(Task task, Integer userId, TaskLog.Actions action) {
+    public void saveTaskLog(Task task, Integer userId, TaskLogActions taskLogActions) {
         TaskLog result = new TaskLog();
 
         result.setDateTime(LocalDateTime.now());
         result.setTaskId(task.getTaskId());
         result.setUserId(userId);
         result.setUserName(userRepository.getById(userId).getName());
-        result.setAction(action);
+        result.setTaskLogActions(taskLogActions);
         result.setDescription(task.getDescription());
         result.setPriority(task.getPriority());
 
