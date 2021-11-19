@@ -71,7 +71,7 @@ public class TaskService {
             taskLogActions = TaskLogActions.CREATED;
         } else {
             task.setAssignedUser(taskRepository.getById(task.getTaskId()).getAssignedUser());
-            taskLogActions = TaskLogActions.UPDATED_PROPERTIES;
+            taskLogActions = TaskLogActions.UPDATED;
         }
         taskRepository.save(task);
 
@@ -84,7 +84,7 @@ public class TaskService {
 
         taskRepository.save(task);
 
-        taskLogService.saveTaskLog(task, userId, TaskLogActions.UPDATED_ASSIGNED_USER);
+        taskLogService.saveTaskLog(task, userId, TaskLogActions.UPDATED);
     }
 
     public void unassignUser(Integer taskId, Integer userId) {
@@ -93,7 +93,7 @@ public class TaskService {
 
         taskRepository.save(task);
 
-        taskLogService.saveTaskLog(task, userId, TaskLogActions.UPDATED_ASSIGNED_USER);
+        taskLogService.saveTaskLog(task, userId, TaskLogActions.UPDATED);
     }
 
     public Integer getTaskListIdByTaskId(Integer taskId) {

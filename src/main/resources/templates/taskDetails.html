@@ -63,6 +63,20 @@
             </div>
         </div>
 
+        <div>
+            <table>
+                <tr th:each="taskLog : ${AllTaskLogs}">
+                    <td>
+                        <span th:text="${taskLog.userName}" style="font-weight: bold"></span>
+                        <span th:if="${taskLog.taskLogActions.toString().equals('CREATED')}">created task</span>
+                        <span th:if="${taskLog.taskLogActions.toString().equals('UPDATED')}">updated</span>
+                        
+                        <span th:text="${taskLog.dateTime}"></span>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
     </div>
 </div>
 

@@ -2,6 +2,7 @@ package nl.miwgroningen.se6.heartcoded.CaTo.controller;
 
 import nl.miwgroningen.se6.heartcoded.CaTo.dto.TaskDTO;
 import nl.miwgroningen.se6.heartcoded.CaTo.dto.TaskListDTO;
+import nl.miwgroningen.se6.heartcoded.CaTo.repository.TaskLogRepository;
 import nl.miwgroningen.se6.heartcoded.CaTo.service.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,14 +28,16 @@ public class TaskController {
     private CircleService circleService;
     private MemberService memberService;
     private UserService userService;
+    private TaskLogService taskLogService;
 
     public TaskController(TaskService taskService, TaskListService taskListService, CircleService circleService,
-                          MemberService memberService, UserService userService) {
+                          MemberService memberService, UserService userService, TaskLogService taskLogService) {
         this.taskService = taskService;
         this.taskListService = taskListService;
         this.circleService = circleService;
         this.memberService = memberService;
         this.userService = userService;
+        this.taskLogService = taskLogService;
     }
 
     @GetMapping("/circles/{circleId}/taskLists/{taskListId}/{taskId}")
@@ -49,6 +52,7 @@ public class TaskController {
             return "redirect:/circles/" + circleId;
         }
 
+        model.addAttribute("AllTaskLogs", taskLogService.getAllByTaskId(taskId));
         model.addAttribute("circleName", circleService.getById(circleId).getCircleName());
         return "taskDetails";
     }

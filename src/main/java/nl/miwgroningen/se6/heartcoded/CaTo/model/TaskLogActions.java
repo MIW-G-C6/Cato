@@ -9,8 +9,7 @@ package nl.miwgroningen.se6.heartcoded.CaTo.model;
 public enum TaskLogActions {
 
     CREATED,
-    UPDATED_ASSIGNED_USER,
-    UPDATED_PROPERTIES,
+    UPDATED,
     DELETED
 
 }
