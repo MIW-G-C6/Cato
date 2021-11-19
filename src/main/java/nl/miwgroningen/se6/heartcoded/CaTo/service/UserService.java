@@ -188,4 +188,14 @@ public class UserService {
     public boolean passwordMatches(String oldPassword, Integer userId) {
         return passwordEncoder.matches(oldPassword, userRepository.getById(userId).getPassword());
     }
+
+    public Integer getAdminId(String role) {
+        Optional<User> admin = userRepository.findByUserRole(role);
+        Integer adminId = 0;
+        if (admin.isPresent()) {
+            adminId = admin.get().getUserId();
+        }
+        return adminId;
+    }
+
 }

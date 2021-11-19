@@ -1,6 +1,9 @@
 package nl.miwgroningen.se6.heartcoded.CaTo.seeding;
 
 import nl.miwgroningen.se6.heartcoded.CaTo.dto.*;
+import nl.miwgroningen.se6.heartcoded.CaTo.mappers.UserMapper;
+import nl.miwgroningen.se6.heartcoded.CaTo.mappers.UserRegistrationMapper;
+import nl.miwgroningen.se6.heartcoded.CaTo.model.User;
 import nl.miwgroningen.se6.heartcoded.CaTo.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.ContextRefreshedEvent;
@@ -8,6 +11,7 @@ import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author Shalena Omapersad <shalenao@hotmail.com>
@@ -23,6 +27,9 @@ public class Seeder {
     private MemberService memberService;
     private TaskService taskService;
     private TaskListService taskListService;
+    private TaskLogService taskLogService;
+
+    private UserRegistrationMapper userRegistrationMapper;
 
     @Autowired
     public Seeder(UserService userService, CircleService circleService, MemberService memberService,
@@ -40,6 +47,10 @@ public class Seeder {
             seedUser();
         }
 
+        if (!userService.emailInUse("admin@admin.com")) {
+            userService.saveAdmin();
+        }
+
         if (circleService.findAllCircles().size() == 0) {
             seedCircles();
             if (taskListService.findAllTaskLists().size() == 0) {
@@ -55,9 +66,6 @@ public class Seeder {
             seedTasks();
         }
 
-        if (!userService.emailInUse("admin@admin.com")) {
-            userService.saveAdmin();
-        }
     }
 
     private void seedUser() {
@@ -162,16 +170,18 @@ public class Seeder {
     private void seedTasks() {
         List<TaskListDTO> allTaskLists = taskListService.findAllTaskLists();
 
+        Integer adminId = userService.getAdminId("ROLE_ADMIN");
+
         for (TaskListDTO taskList : allTaskLists) {
-            taskService.save(new TaskDTO("high", "Grocery shopping", taskList.getTaskListId()), taskList.getTaskListId());
-            taskService.save(new TaskDTO("medium", "Vacuum the living room", taskList.getTaskListId()), taskList.getTaskListId());
-            taskService.save(new TaskDTO("low", "Walk the dog", taskList.getTaskListId()), taskList.getTaskListId());
-            taskService.save(new TaskDTO("low", "Change bed linens", taskList.getTaskListId()), taskList.getTaskListId());
-            taskService.save(new TaskDTO("medium", "Wash the dishes", taskList.getTaskListId()), taskList.getTaskListId());
-            taskService.save(new TaskDTO("low", "Give daily medicine", taskList.getTaskListId()), taskList.getTaskListId());
-            taskService.save(new TaskDTO("high", "Get medicine from pharmacy", taskList.getTaskListId()), taskList.getTaskListId());
-            taskService.save(new TaskDTO("low", "Check blood pressure", taskList.getTaskListId()), taskList.getTaskListId());
-            taskService.save(new TaskDTO("medium", "Prepare dinner", taskList.getTaskListId()), taskList.getTaskListId());
+            taskService.save(new TaskDTO("high", "Grocery shopping", taskList.getTaskListId()), taskList.getTaskListId(), adminId);
+            taskService.save(new TaskDTO("medium", "Vacuum the living room", taskList.getTaskListId()), taskList.getTaskListId(), adminId);
+            taskService.save(new TaskDTO("low", "Walk the dog", taskList.getTaskListId()), taskList.getTaskListId(), adminId);
+            taskService.save(new TaskDTO("low", "Change bed linens", taskList.getTaskListId()), taskList.getTaskListId(), adminId);
+            taskService.save(new TaskDTO("medium", "Wash the dishes", taskList.getTaskListId()), taskList.getTaskListId(), adminId);
+            taskService.save(new TaskDTO("low", "Give daily medicine", taskList.getTaskListId()), taskList.getTaskListId(), adminId);
+            taskService.save(new TaskDTO("high", "Get medicine from pharmacy", taskList.getTaskListId()), taskList.getTaskListId(), adminId);
+            taskService.save(new TaskDTO("low", "Check blood pressure", taskList.getTaskListId()), taskList.getTaskListId(), adminId);
+            taskService.save(new TaskDTO("medium", "Prepare dinner", taskList.getTaskListId()), taskList.getTaskListId(), adminId);
         }
     }
 }
