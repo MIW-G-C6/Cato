@@ -840,7 +840,6 @@ input[type=email], input[type=password], input[type=text] {
 .profile-picture {
     width: auto;
     min-height: 175px;
-    min-width: 175px;
     max-width: 250px;
     max-height: 210px;
     margin-right: 50px;
