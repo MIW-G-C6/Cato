@@ -27,8 +27,6 @@ public class HomepageUITest {
     @BeforeEach
     void setUp() {
         WebDriverFactory webDriverFactory = new WebDriverFactory();
-        webDriverFactory.getWebDriver();
-
         driver = webDriverFactory.getWebDriver();
 
     }

@@ -26,8 +26,6 @@ public class CircleOverviewUITest {
     @BeforeEach
     void setUp() {
         WebDriverFactory webDriverFactory = new WebDriverFactory();
-        webDriverFactory.getWebDriver();
-
         driver = webDriverFactory.getWebDriver();
 
         driver.findElement(By.id("username")).sendKeys("klaas@example.com");
