@@ -25,16 +25,8 @@ public class CircleOverviewUITest {
 
     @BeforeEach
     void setUp() {
-        if(SystemUtils.IS_OS_WINDOWS){
-            System.out.println("Selecting Windows Chrome driver");
-            System.setProperty("webdriver.chrome.driver", "chromedrivers\\chromedriver.exe");
-        }
-        else if(SystemUtils.IS_OS_LINUX){
-            System.out.println("Selecting Linux Chrome driver");
-            System.setProperty("webdriver.chrome.driver", "chromedrivers\\chromedriver");
-        }else{
-            throw new UnsupportedOperationException("Operating system not supported by available Chrome web drivers");
-        }
+        WebDriverFactory webDriverFactory = new WebDriverFactory();
+        webDriverFactory.getWebDriver();
 
         driver = new ChromeDriver();
         driver.manage().window().maximize();
