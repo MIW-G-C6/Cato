@@ -191,30 +191,46 @@ a.nav-link{
     padding-top: 0;
     box-shadow: 0 0 11px rgba(33,33,33,.2);
     list-style-type: none;
-    max-height: 500px;
-    overflow-y: auto;
+    z-index: 1;
 }
 
 .notification-dropdown-content tr{
     padding: 0 0;
+    border: solid #a7a7a7 1px;
 }
 
 .notification-dropdown-content td a {
-    margin: 10px;
+    margin: 30px 10px;
     padding: 0 0;
 }
 
 .notification-dropdown-content td {
-    min-width: 100px;
+    /*min-width: 100px;*/
+    max-width: 200px;
     height: 10px;
     font-size: 16px;
     text-align-all: left;
     padding: 0 0;
 }
 
+.notification-dropdown-content .notAssignedIcon {
+    width: 30px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.notification-dropdown-content .circle-name-cell {
+    vertical-align: bottom;
+}
+
+.notification-dropdown-content .circle-name-cell a {
+    font-size: smaller;
+    font-style: italic;
+    color: #8d8d8d;
+}
+
 .notification-dropdown-content tr:hover {
     background-color: #cafad9;
-    color: ghostwhite;
 }
 
 .topnavbar a {

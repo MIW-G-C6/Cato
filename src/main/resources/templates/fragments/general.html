@@ -103,7 +103,7 @@
     </div>
 
     <div id="menuIcons">
-        <div id="notifications" sec:authorize="isAuthenticated()">
+        <div id="notifications" sec:authorize="isAuthenticated()" th:if="${session.allNotificationTasks} != null">
             <a href="javascript:void(0)" class="notificationIcon" onclick="notificationMenuExtend()">
                 <i th:unless="${session.allNotificationTasks.size()} == 0" class="fa fa-bell"></i>
                 <i th:if="${session.allNotificationTasks.size()} == 0" class="fa fa-bell-slash"></i>
@@ -133,8 +133,9 @@
     <div id="notification-drop-down" class="notification-dropdown-content">
         <table>
             <tr th:each="task : ${session.allNotificationTasks}">
-                <td><a id="notification" th:href="@{/circles/{circleId}(circleId=${task.circleId})}" th:text="${task.circleName}"></a></td>
+                <td><i th:unless="${task.isAssigned()}" class="fa fa-user-times notAssignedIcon"></i></td>
                 <td><a th:href="@{/circles/{circleId}/taskLists/{taskListId}/{taskId}(circleId=${task.circleId}, taskListId=${task.taskListId}, taskId=${task.taskId})}" th:text="${task.description}"></a></td>
+                <td class="circle-name-cell"><a id="notification" th:href="@{/circles/{circleId}(circleId=${task.circleId})}" th:text="'~' + ${task.circleName}"></a></td>
             </tr>
         </table>
     </div>

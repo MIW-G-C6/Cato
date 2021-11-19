@@ -147,13 +147,17 @@ public class TaskController {
         if (!startTimeInput.isEmpty()) {
             task.setStartTime(LocalDateTime.parse(startTimeInput));
         } else {
-            task.setStartTime(taskService.findById(task.getTaskId()).get().getStartTime()); //TODO fix bug for new task created without filling in a start or end date, taskservice.findbyid(taskID) --> taskId == null
+            if (task.getTaskId() != null) {
+                task.setStartTime(taskService.findById(task.getTaskId()).get().getStartTime());
+            }
         }
 
         if (!endTimeInput.isEmpty()) {
             task.setEndTime(LocalDateTime.parse(endTimeInput));
         } else {
-            task.setEndTime(taskService.findById(task.getTaskId()).get().getEndTime());
+            if (task.getTaskId() != null) {
+                task.setEndTime(taskService.findById(task.getTaskId()).get().getEndTime());
+            }
         }
     }
 

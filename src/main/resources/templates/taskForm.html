@@ -28,10 +28,13 @@
             <div>
                 <input class="cato-text-field" type="text" placeholder="Description" id="description" required th:field="*{description}">
             </div>
+            <br>
             <div>
+                <label for="startTimeInput">Start date:</label>
                 <input type="datetime-local" id="startTimeInput" th:object="${startTimeInput}" name="startTimeInput">
             </div>
             <div>
+                <label for="endTimeInput">End date:</label>
                 <input type="datetime-local" id="endTimeInput" th:object="${endTimeInput}" name="endTimeInput">
             </div>
             <br>
