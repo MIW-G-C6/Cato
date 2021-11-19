@@ -28,6 +28,12 @@
             <div>
                 <input class="cato-text-field" type="text" placeholder="Description" id="description" required th:field="*{description}">
             </div>
+            <div>
+                <input type="datetime-local" id="startTimeInput" th:object="${startTimeInput}" name="startTimeInput">
+            </div>
+            <div>
+                <input type="datetime-local" id="endTimeInput" th:object="${endTimeInput}" name="endTimeInput">
+            </div>
             <br>
             <div>
                 <ul class="cato-radio">
