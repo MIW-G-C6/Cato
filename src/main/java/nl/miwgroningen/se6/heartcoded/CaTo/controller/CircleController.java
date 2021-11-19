@@ -3,10 +3,7 @@ package nl.miwgroningen.se6.heartcoded.CaTo.controller;
 import nl.miwgroningen.se6.heartcoded.CaTo.dto.CircleDTO;
 import nl.miwgroningen.se6.heartcoded.CaTo.dto.MemberDTO;
 import nl.miwgroningen.se6.heartcoded.CaTo.dto.UserDTO;
-import nl.miwgroningen.se6.heartcoded.CaTo.service.MemberService;
-import nl.miwgroningen.se6.heartcoded.CaTo.service.CircleService;
-import nl.miwgroningen.se6.heartcoded.CaTo.service.TaskListService;
-import nl.miwgroningen.se6.heartcoded.CaTo.service.UserService;
+import nl.miwgroningen.se6.heartcoded.CaTo.service.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -27,13 +24,15 @@ public class CircleController {
     private MemberService memberService;
     private UserService userService;
     private TaskListService taskListService;
+    private TaskService taskService;
 
     public CircleController(CircleService circleService, MemberService memberService, UserService userService,
-                            TaskListService taskListService) {
+                            TaskListService taskListService, TaskService taskService) {
         this.circleService = circleService;
         this.memberService = memberService;
         this.userService = userService;
         this.taskListService = taskListService;
+        this.taskService = taskService;
     }
 
     @GetMapping("/circles")
@@ -44,6 +43,7 @@ public class CircleController {
 
         session.setAttribute("navbarCircles", memberService.getAllCirclesByUserId(currentUser));
         session.setAttribute("currentUserId", userService.getCurrentUser().getUserId());
+        session.setAttribute("allNotificationTasks", taskService.getAllNotificationTasksByUserId(currentUser));
 
         model.addAttribute("clientsCircleOne",
                 memberService.findAllClientsInCircle(userService.getCircleOne(currentUser)));

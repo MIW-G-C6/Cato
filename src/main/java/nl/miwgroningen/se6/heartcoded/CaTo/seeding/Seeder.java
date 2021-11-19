@@ -163,15 +163,15 @@ public class Seeder {
         List<TaskListDTO> allTaskLists = taskListService.findAllTaskLists();
 
         for (TaskListDTO taskList : allTaskLists) {
-            taskService.save(new TaskDTO("high", "Grocery shopping", taskList.getTaskListId()), taskList.getTaskListId());
-            taskService.save(new TaskDTO("medium", "Vacuum the living room", taskList.getTaskListId()), taskList.getTaskListId());
-            taskService.save(new TaskDTO("low", "Walk the dog", taskList.getTaskListId()), taskList.getTaskListId());
-            taskService.save(new TaskDTO("low", "Change bed linens", taskList.getTaskListId()), taskList.getTaskListId());
-            taskService.save(new TaskDTO("medium", "Wash the dishes", taskList.getTaskListId()), taskList.getTaskListId());
-            taskService.save(new TaskDTO("low", "Give daily medicine", taskList.getTaskListId()), taskList.getTaskListId());
-            taskService.save(new TaskDTO("high", "Get medicine from pharmacy", taskList.getTaskListId()), taskList.getTaskListId());
-            taskService.save(new TaskDTO("low", "Check blood pressure", taskList.getTaskListId()), taskList.getTaskListId());
-            taskService.save(new TaskDTO("medium", "Prepare dinner", taskList.getTaskListId()), taskList.getTaskListId());
+            taskService.save(new TaskDTO("High", "Grocery shopping", taskList.getTaskListId()), taskList.getTaskListId());
+            taskService.save(new TaskDTO("Medium", "Vacuum the living room", taskList.getTaskListId()), taskList.getTaskListId());
+            taskService.save(new TaskDTO("Low", "Walk the dog", taskList.getTaskListId()), taskList.getTaskListId());
+            taskService.save(new TaskDTO("Low", "Change bed linens", taskList.getTaskListId()), taskList.getTaskListId());
+            taskService.save(new TaskDTO("Medium", "Wash the dishes", taskList.getTaskListId()), taskList.getTaskListId());
+            taskService.save(new TaskDTO("Low", "Give daily medicine", taskList.getTaskListId()), taskList.getTaskListId());
+            taskService.save(new TaskDTO("High", "Get medicine from pharmacy", taskList.getTaskListId()), taskList.getTaskListId());
+            taskService.save(new TaskDTO("Low", "Check blood pressure", taskList.getTaskListId()), taskList.getTaskListId());
+            taskService.save(new TaskDTO("Medium", "Prepare dinner", taskList.getTaskListId()), taskList.getTaskListId());
         }
     }
 }

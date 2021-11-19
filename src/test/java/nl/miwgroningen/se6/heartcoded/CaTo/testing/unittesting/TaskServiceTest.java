@@ -1,9 +1,11 @@
 package nl.miwgroningen.se6.heartcoded.CaTo.testing.unittesting;
 
 import nl.miwgroningen.se6.heartcoded.CaTo.dto.TaskDTO;
+import nl.miwgroningen.se6.heartcoded.CaTo.mappers.TaskNotificationMapper;
 import nl.miwgroningen.se6.heartcoded.CaTo.model.Task;
 import nl.miwgroningen.se6.heartcoded.CaTo.model.TaskList;
 import nl.miwgroningen.se6.heartcoded.CaTo.model.User;
+import nl.miwgroningen.se6.heartcoded.CaTo.repository.MemberRepository;
 import nl.miwgroningen.se6.heartcoded.CaTo.repository.TaskListRepository;
 import nl.miwgroningen.se6.heartcoded.CaTo.repository.TaskRepository;
 import nl.miwgroningen.se6.heartcoded.CaTo.repository.UserRepository;
@@ -28,8 +30,11 @@ class TaskServiceTest {
     private TaskRepository taskRepository;
     private TaskListRepository taskListRepository;
     private UserRepository userRepository;
+    private MemberRepository memberRepository;
 
     private TaskMapper taskMapper;
+
+    private TaskNotificationMapper taskNotificationMapper;
 
     private TaskService taskService;
 
@@ -38,9 +43,11 @@ class TaskServiceTest {
         taskRepository = Mockito.mock(TaskRepository.class);
         taskListRepository = Mockito.mock(TaskListRepository.class);
         userRepository = Mockito.mock(UserRepository.class);
+        memberRepository = Mockito.mock(MemberRepository.class);
         taskMapper = new TaskMapper();
+        taskNotificationMapper = new TaskNotificationMapper();
 
-        taskService = new TaskService(taskRepository, taskListRepository, userRepository, taskMapper);
+        taskService = new TaskService(taskRepository, taskListRepository, userRepository, memberRepository, taskMapper, taskNotificationMapper);
     }
 
     @Test
