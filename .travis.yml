@@ -12,6 +12,8 @@ services:
 before_install:
   - mysql -u root --password="" < sql/initdb.sql
 
-script: 
-    - >
-        bash scripts/build.sh
+script:
+  - >
+    bash scripts/build.sh &&
+    bash scripts/componenttests.sh &&
+    bash scripts/integrationtests.sh
