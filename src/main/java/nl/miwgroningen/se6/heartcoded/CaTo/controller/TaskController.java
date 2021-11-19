@@ -107,7 +107,7 @@ public class TaskController {
             return "redirect:/403";
         }
 
-        taskService.unassignUser(taskId);
+        taskService.unassignUser(taskId, userService.getCurrentUser().getUserId());
         return "redirect:/circles/{circleId}";
     }
 
@@ -120,7 +120,7 @@ public class TaskController {
         }
 
         if (!result.hasErrors()) {
-            taskService.save(task, taskListId);
+            taskService.save(task, taskListId, userService.getCurrentUser().getUserId());
         }
 
         return "redirect:/circles/{circleId}";
@@ -134,7 +134,7 @@ public class TaskController {
             return "redirect:/403";
         }
 
-        taskService.deleteById(taskId);
+        taskService.deleteById(taskId, userService.getCurrentUser().getUserId());
         return "redirect:/circles/" + circleId;
     }
 

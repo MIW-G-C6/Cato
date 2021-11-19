@@ -13,4 +13,6 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     Integer countAllByUserRoleIsNot(String userRole);
 
     List<User> findByNameContains(String keyword);
+
+    Optional<User> findByUserRole(String role);
 }

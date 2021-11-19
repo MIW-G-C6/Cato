@@ -7,6 +7,7 @@ import nl.miwgroningen.se6.heartcoded.CaTo.model.User;
 import nl.miwgroningen.se6.heartcoded.CaTo.repository.TaskListRepository;
 import nl.miwgroningen.se6.heartcoded.CaTo.repository.TaskRepository;
 import nl.miwgroningen.se6.heartcoded.CaTo.repository.UserRepository;
+import nl.miwgroningen.se6.heartcoded.CaTo.service.TaskLogService;
 import nl.miwgroningen.se6.heartcoded.CaTo.service.TaskService;
 import nl.miwgroningen.se6.heartcoded.CaTo.mappers.TaskMapper;
 import org.junit.jupiter.api.BeforeEach;
@@ -28,6 +29,7 @@ class TaskServiceTest {
     private TaskRepository taskRepository;
     private TaskListRepository taskListRepository;
     private UserRepository userRepository;
+    private TaskLogService taskLogService;
 
     private TaskMapper taskMapper;
 
@@ -38,9 +40,12 @@ class TaskServiceTest {
         taskRepository = Mockito.mock(TaskRepository.class);
         taskListRepository = Mockito.mock(TaskListRepository.class);
         userRepository = Mockito.mock(UserRepository.class);
+
+        taskLogService = Mockito.mock(TaskLogService.class);
+
         taskMapper = new TaskMapper();
 
-        taskService = new TaskService(taskRepository, taskListRepository, userRepository, taskMapper);
+        taskService = new TaskService(taskRepository, taskListRepository, userRepository, taskLogService, taskMapper);
     }
 
     @Test
