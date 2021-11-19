@@ -28,10 +28,9 @@ public class HomepageUITest {
     void setUp() {
         WebDriverFactory webDriverFactory = new WebDriverFactory();
         webDriverFactory.getWebDriver();
-        
-        driver = new ChromeDriver();
-        driver.manage().window().maximize();
-        driver.get("http://localhost:8080/");
+
+        driver = webDriverFactory.getWebDriver();
+
     }
 
     @AfterEach

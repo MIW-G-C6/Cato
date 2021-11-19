@@ -28,9 +28,7 @@ public class CircleOverviewUITest {
         WebDriverFactory webDriverFactory = new WebDriverFactory();
         webDriverFactory.getWebDriver();
 
-        driver = new ChromeDriver();
-        driver.manage().window().maximize();
-        driver.get("http://localhost:8080/");
+        driver = webDriverFactory.getWebDriver();
 
         driver.findElement(By.id("username")).sendKeys("klaas@example.com");
         driver.findElement(By.id("password")).sendKeys("a");

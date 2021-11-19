@@ -26,11 +26,7 @@ public class RegistrationUITest {
     @BeforeEach
     void setUp() {
         WebDriverFactory webDriverFactory = new WebDriverFactory();
-        webDriverFactory.getWebDriver();
-
-        driver = new ChromeDriver();
-        driver.manage().window().maximize();
-        driver.get("http://localhost:8080/registration");
+        driver = webDriverFactory.getWebDriver("http://localhost:8080/registration");
     }
 
     @AfterEach
