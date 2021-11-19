@@ -6,6 +6,7 @@ import nl.miwgroningen.se6.heartcoded.CaTo.mappers.TaskNotificationMapper;
 import nl.miwgroningen.se6.heartcoded.CaTo.model.Circle;
 import nl.miwgroningen.se6.heartcoded.CaTo.model.Member;
 import nl.miwgroningen.se6.heartcoded.CaTo.model.Task;
+import nl.miwgroningen.se6.heartcoded.CaTo.model.TaskLog;
 import nl.miwgroningen.se6.heartcoded.CaTo.repository.*;
 import nl.miwgroningen.se6.heartcoded.CaTo.mappers.TaskMapper;
 import org.springframework.stereotype.Service;
@@ -26,6 +27,7 @@ public class TaskService {
     private final TaskRepository taskRepository;
     private final TaskListRepository taskListRepository;
     private final UserRepository userRepository;
+    private final TaskLogService taskLogService;
     private final MemberRepository memberRepository;
 
     private final TaskMapper taskMapper;
@@ -33,11 +35,12 @@ public class TaskService {
 
     public TaskService(TaskRepository taskRepository, TaskListRepository taskListRepository,
                        UserRepository userRepository, MemberRepository memberRepository, TaskMapper taskMapper,
-                       TaskNotificationMapper taskNotificationMapper) {
+                       TaskNotificationMapper taskNotificationMapper, TaskLogService taskLogService) {
         this.taskRepository = taskRepository;
         this.taskListRepository = taskListRepository;
         this.userRepository = userRepository;
         this.memberRepository = memberRepository;
+        this.taskLogService = taskLogService;
         this.taskMapper = taskMapper;
         this.taskNotificationMapper = taskNotificationMapper;
     }
@@ -58,15 +61,29 @@ public class TaskService {
         return taskMapper.toDTO(taskRepository.findById(taskId));
     }
 
-    public void deleteById(Integer taskId) {
+    public void deleteById(Integer taskId, Integer userId) {
+        Task task = taskRepository.getById(taskId);
+
         taskRepository.deleteById(taskId);
+
+        taskLogService.saveTaskLog(task, userId, TaskLog.Actions.DELETED);
     }
 
-    public void save(TaskDTO taskDTO, Integer taskListId) {
+    public void save(TaskDTO taskDTO, Integer taskListId, Integer userId) {
         Task task = taskMapper.toTask(taskDTO);
         task.setTaskList(taskListRepository.getById(taskListId));
 
+        TaskLog.Actions action;
+
+        if (task.getTaskId() == null) {
+            action = TaskLog.Actions.CREATED;
+        } else {
+            task.setAssignedUser(taskRepository.getById(task.getTaskId()).getAssignedUser());
+            action = TaskLog.Actions.UPDATED;
+        }
         taskRepository.save(task);
+
+        taskLogService.saveTaskLog(task, userId, action);
     }
 
     public void assignUser(Integer taskId, Integer userId) {
@@ -74,13 +91,17 @@ public class TaskService {
         task.setAssignedUser(userRepository.getById(userId));
 
         taskRepository.save(task);
+
+        taskLogService.saveTaskLog(task, userId, TaskLog.Actions.UPDATED);
     }
 
-    public void unassignUser(Integer taskId) {
+    public void unassignUser(Integer taskId, Integer userId) {
         Task task = taskRepository.getById(taskId);
         task.setAssignedUser(null);
 
         taskRepository.save(task);
+
+        taskLogService.saveTaskLog(task, userId, TaskLog.Actions.UPDATED);
     }
 
     public Integer getTaskListIdByTaskId(Integer taskId) {

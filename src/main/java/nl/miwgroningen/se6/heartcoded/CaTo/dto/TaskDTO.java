@@ -20,9 +20,7 @@ public class TaskDTO {
     private Integer taskListId;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
-    //nodig om op te slaan wie de taak reserveert (voor nu alleen currentUser --> later ook anderen kunnen assignen)
     private Integer assignedUserId;
-    //nodig om te laten zien in de view (default lege string? --> view laat knopje zien: assign)
     private String assignedUserName;
 
     public TaskDTO(String[] priorityOptions, String priority, String description, Integer taskListId) {
