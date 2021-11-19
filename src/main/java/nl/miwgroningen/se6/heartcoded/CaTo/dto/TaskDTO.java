@@ -1,6 +1,9 @@
 package nl.miwgroningen.se6.heartcoded.CaTo.dto;
 
 import nl.miwgroningen.se6.heartcoded.CaTo.model.Task;
+import org.apache.tomcat.jni.Local;
+
+import java.time.LocalDateTime;
 
 /**
  * @author Erwin Wegter <ewegter@gmail.com>
@@ -15,6 +18,8 @@ public class TaskDTO {
     private String priority;
     private String description;
     private Integer taskListId;
+    private LocalDateTime startTime;
+    private LocalDateTime endTime;
     private Integer assignedUserId;
     private String assignedUserName;
 
@@ -74,6 +79,22 @@ public class TaskDTO {
 
     public void setTaskListId(Integer taskListId) {
         this.taskListId = taskListId;
+    }
+
+    public LocalDateTime getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(LocalDateTime startTime) {
+        this.startTime = startTime;
+    }
+
+    public LocalDateTime getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(LocalDateTime endTime) {
+        this.endTime = endTime;
     }
 
     public Integer getAssignedUserId() {

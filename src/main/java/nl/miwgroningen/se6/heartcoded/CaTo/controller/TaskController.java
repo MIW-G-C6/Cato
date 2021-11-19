@@ -4,6 +4,7 @@ import nl.miwgroningen.se6.heartcoded.CaTo.dto.TaskDTO;
 import nl.miwgroningen.se6.heartcoded.CaTo.dto.TaskListDTO;
 import nl.miwgroningen.se6.heartcoded.CaTo.repository.TaskLogRepository;
 import nl.miwgroningen.se6.heartcoded.CaTo.service.*;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -12,6 +13,12 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import javax.servlet.http.HttpSession;
+import java.text.SimpleDateFormat;
+import java.time.Duration;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
 /**
@@ -43,7 +50,9 @@ public class TaskController {
     @GetMapping("/circles/{circleId}/taskLists/{taskListId}/{taskId}")
     protected String showTaskDetails(@PathVariable("circleId") Integer circleId,
                                      @PathVariable("taskListId") Integer taskListId,
-                                     @PathVariable("taskId") Integer taskId, Model model) {
+                                     @PathVariable("taskId") Integer taskId, Model model, HttpSession session) {
+        session.setAttribute("allNotificationTasks",
+                taskService.getAllNotificationTasksByUserId(userService.getCurrentUser().getUserId()));
         if (!memberService.userIsMemberOfCircle(circleId) && !userService.currentUserIsSiteAdmin()) {
             return "redirect:/403";
         }
@@ -60,7 +69,8 @@ public class TaskController {
     @GetMapping("/circles/{circleId}/taskLists/{taskListId}/update/{taskId}")
     protected String showUpdateTaskForm(@PathVariable("circleId") Integer circleId,
                                         @PathVariable("taskListId") Integer taskListId,
-                                        @PathVariable("taskId") Integer taskId, Model model) {
+                                        @PathVariable("taskId") Integer taskId,
+                                        Model model) {
 
         if (!memberService.userIsMemberOfCircle(circleId) && !userService.currentUserIsSiteAdmin()) {
             return "redirect:/403";
@@ -88,6 +98,8 @@ public class TaskController {
         }
 
         model.addAttribute("task", new TaskDTO());
+        model.addAttribute("startTimeInput", "");
+        model.addAttribute("endTimeInput", "");
         model.addAttribute("circleName", circleService.getById(circleId).getCircleName());
         model.addAttribute("taskList", taskListService.getById(taskListId));
         return "taskForm";
@@ -118,16 +130,35 @@ public class TaskController {
     @PostMapping("/circles/{circleId}/taskLists/{taskListId}/new")
     protected String saveOrUpdateTask(@PathVariable ("taskListId") Integer taskListId,
                                       @PathVariable("circleId") Integer circleId,
-                                      @ModelAttribute("task") TaskDTO task, BindingResult result) {
+                                      @ModelAttribute("task") TaskDTO task,
+                                      @ModelAttribute("startTimeInput") String startTimeInput,
+                                      @ModelAttribute("endTimeInput") String endTimeInput,
+                                      BindingResult result) {
         if (!memberService.userIsMemberOfCircle(circleId) && !userService.currentUserIsSiteAdmin()) {
             return "redirect:/403";
         }
+        setTaskTimes(task, startTimeInput, endTimeInput);
 
         if (!result.hasErrors()) {
             taskService.save(task, taskListId, userService.getCurrentUser().getUserId());
         }
 
         return "redirect:/circles/{circleId}";
+    }
+
+    private void setTaskTimes(TaskDTO task, String startTimeInput, String endTimeInput) {
+
+        if (!startTimeInput.isEmpty()) {
+            task.setStartTime(LocalDateTime.parse(startTimeInput));
+        } else {
+            task.setStartTime(taskService.findById(task.getTaskId()).get().getStartTime()); //TODO fix bug for new task created without filling in a start or end date, taskservice.findbyid(taskID) --> taskId == null
+        }
+
+        if (!endTimeInput.isEmpty()) {
+            task.setEndTime(LocalDateTime.parse(endTimeInput));
+        } else {
+            task.setEndTime(taskService.findById(task.getTaskId()).get().getEndTime());
+        }
     }
 
     @GetMapping("/task/delete/{taskId}")

@@ -51,6 +51,26 @@
                             <span th:unless="${task.assignedUserName} == ''" th:text="${task.assignedUserName}"></span>
                         </div>
                     </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <h6 class="mb-0">Start time</h6>
+                        </div>
+                        <div class="col-sm-9 text-secondary">
+                            <span th:if="${task.startTime} == null">-</span>
+                            <span th:unless="${task.startTime} == null" th:text="${task.startTime}"></span>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <h6 class="mb-0">End time</h6>
+                        </div>
+                        <div class="col-sm-9 text-secondary">
+                            <span th:if="${task.endTime} == null">-</span>
+                            <span th:unless="${task.endTime} == null" th:text="${task.endTime}"></span>
+                        </div>
+                    </div>
             </div>
             <div class="cato-option-row">
                 <ul class="cato-ul">

@@ -54,6 +54,7 @@ public class MemberController {
 
         Integer currentUser = userService.getCurrentUser().getUserId();
         session.setAttribute("navbarCircles", memberService.getAllCirclesByUserId(currentUser));
+        session.setAttribute("allNotificationTasks", taskService.getAllNotificationTasksByUserId(currentUser));
 
         model.addAttribute("thisCircle", circleService.getById(circleId));
         model.addAttribute("taskListId", taskListService.getByCircleId(circleId).getTaskListId());
