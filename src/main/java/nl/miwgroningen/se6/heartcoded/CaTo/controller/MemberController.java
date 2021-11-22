@@ -50,6 +50,7 @@ public class MemberController {
         if (!isCircleMember(circleId) && isNotSiteAdmin()) {
             return "redirect:/403";
         }
+        memberService.addCircleToLastThreeCircles(circleId);
 
         Integer currentUser = userService.getCurrentUser().getUserId();
         session.setAttribute("navbarCircles", memberService.getAllCirclesByUserId(currentUser));
@@ -60,9 +61,7 @@ public class MemberController {
         model.addAttribute("thisCircle", circleService.getById(circleId));
         model.addAttribute("taskListId", taskListService.getByCircleId(circleId).getTaskListId());
         model.addAttribute("taskList", taskService.getAllTasksByCircleId(circleId));
-//        model.addAttribute("allCaregivers", memberService.findAllCaregiversByCircleId(circleId));
         model.addAttribute("thisUserIsAdmin", memberService.userIsCircleAdmin(circleId, currentUser));
-        model.addAttribute("allClients", memberService.findAllClientsInCircle(circleId));
         model.addAttribute("currentUserIsSiteAdmin", userService.currentUserIsSiteAdmin());
         return "circleDashboard";
     }
