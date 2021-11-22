@@ -908,13 +908,14 @@ input[type=email], input[type=password], input[type=text] {
 }
 
 .circle-members-grid {
+    padding-left: 5px;
+    padding-bottom: 10px;
     display: inline-flex;
     flex-flow: row wrap;
 }
 
 .member-pictures-container {
     width: 75px;
-    /*height: 75px;*/
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -922,7 +923,6 @@ input[type=email], input[type=password], input[type=text] {
 }
 
 .member-pictures {
-    /*height: 100px;*/
     width: 60px;
     border-radius: 4px;
     object-fit: cover;
