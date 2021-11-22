@@ -84,6 +84,16 @@
             </div>
         </div>
 
+        <div>
+            <tr th:each="taskLog : ${AllTaskLogs}">
+                <td>
+                    <span th:text="${taskLog.userName}" style="font-weight: bold"></span>
+                    <span th:text="${taskLog.action.toString()}"></span>
+                    <span>Hier komt de target</span>
+                </td>
+            </tr>
+        </div>
+
     </div>
 </div>
 

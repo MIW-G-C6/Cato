@@ -40,27 +40,47 @@ public class TaskLog {
         return taskLogId;
     }
 
+    public void setTaskLogId(Integer taskLogId) {
+        this.taskLogId = taskLogId;
+    }
+
+    public LocalDateTime getDateTime() {
+        return dateTime;
+    }
+
     public void setDateTime(LocalDateTime dateTime) {
         this.dateTime = dateTime;
+    }
+
+    public Integer getTaskId() {
+        return taskId;
     }
 
     public void setTaskId(Integer taskId) {
         this.taskId = taskId;
     }
 
+    public Integer getUserId() {
+        return userId;
+    }
+
     public void setUserId(Integer userId) {
         this.userId = userId;
+    }
+
+    public String getUserName() {
+        return userName;
     }
 
     public void setUserName(String userName) {
         this.userName = userName;
     }
 
-    public void setAction(TaskLogActions action) {
-        this.action = action;
-    }
-
     public TaskLogActions getAction() {
         return action;
+    }
+
+    public void setAction(TaskLogActions action) {
+        this.action = action;
     }
 }
