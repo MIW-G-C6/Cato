@@ -2,6 +2,7 @@
 package nl.miwgroningen.se6.heartcoded.CaTo.service;
 
 import nl.miwgroningen.se6.heartcoded.CaTo.dto.*;
+import nl.miwgroningen.se6.heartcoded.CaTo.mappers.MemberWithProfilePicMapper;
 import nl.miwgroningen.se6.heartcoded.CaTo.model.Circle;
 import nl.miwgroningen.se6.heartcoded.CaTo.model.Member;
 import nl.miwgroningen.se6.heartcoded.CaTo.model.User;
@@ -15,10 +16,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * @author Paul Romkes <p.r.romkes@gmail.com
@@ -30,6 +28,7 @@ import java.util.Optional;
 public class MemberService {
 
     private final MemberMapper memberMapper;
+    private final MemberWithProfilePicMapper memberWithProfilePicMapper;
     private final CircleMapper circleMapper;
 
     private final MemberSiteAdminMapper memberSiteAdminMapper;
@@ -37,10 +36,15 @@ public class MemberService {
     private final UserRepository userRepository;
     private final MemberRepository memberRepository;
 
-    public MemberService(MemberMapper memberMapper, CircleMapper circleMapper,
-                         MemberSiteAdminMapper memberSiteAdminMapper, CircleRepository circleRepository,
-                         UserRepository userRepository, MemberRepository memberRepository) {
+    public MemberService(MemberMapper memberMapper,
+                         MemberWithProfilePicMapper memberWithProfilePicMapper,
+                         CircleMapper circleMapper,
+                         MemberSiteAdminMapper memberSiteAdminMapper,
+                         CircleRepository circleRepository,
+                         UserRepository userRepository,
+                         MemberRepository memberRepository) {
         this.memberMapper = memberMapper;
+        this.memberWithProfilePicMapper = memberWithProfilePicMapper;
         this.circleMapper = circleMapper;
         this.memberSiteAdminMapper = memberSiteAdminMapper;
         this.circleRepository = circleRepository;
@@ -107,6 +111,35 @@ public class MemberService {
             }
         }
 
+        return result;
+    }
+
+    public List<MemberWithProfilePicDTO> findAllCaregiversAndPhotoByCircleId(Integer circleId) {
+        List<Member> memberList =
+                memberRepository.getMemberByCircle_CircleIdAndUserRoleContains(circleId, "Caregiver");
+        return getMemberWithProfileFromMemberList(memberList);
+    }
+
+    public List<MemberWithProfilePicDTO> findAllClientsAndPhotoByCircleId(Integer circleId) {
+        List<Member> memberList =
+                memberRepository.getMemberByCircle_CircleIdAndUserRoleContains(circleId, "Client");
+        return getMemberWithProfileFromMemberList(memberList);
+    }
+
+    private List<MemberWithProfilePicDTO> getMemberWithProfileFromMemberList(List<Member> memberList) {
+        List<MemberWithProfilePicDTO> result = new ArrayList<>();
+        for (Member member : memberList) {
+            User thisUser = userRepository.getById(
+                    member.getUser().getUserId());
+            String profilePicture;
+            if (thisUser.getUserRole().equals("ROLE_ADMIN")) {
+                profilePicture = "";
+            } else {
+                profilePicture = Base64.getEncoder().encodeToString(thisUser.getProfilePicture());
+            }
+
+            result.add(memberWithProfilePicMapper.toDTO(member, profilePicture));
+        }
         return result;
     }
 
