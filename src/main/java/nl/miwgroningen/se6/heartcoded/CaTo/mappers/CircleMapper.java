@@ -20,6 +20,7 @@ public class CircleMapper {
         CircleDTO circleDTO = new CircleDTO();
         circleDTO.setCircleId(circle.getCircleId());
         circleDTO.setCircleName(circle.getCircleName());
+        circleDTO.setCirclePhoto(circle.getCirclePhoto());
 
         return circleDTO;
     }
@@ -32,6 +33,7 @@ public class CircleMapper {
         Circle circle = new Circle();
         circle.setCircleId(circleDTO.getCircleId());
         circle.setCircleName(circleDTO.getCircleName());
+        circle.setCirclePhoto(circleDTO.getCirclePhoto());
 
         return circle;
     }

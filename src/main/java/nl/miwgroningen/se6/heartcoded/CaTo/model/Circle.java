@@ -18,6 +18,9 @@ public class Circle {
 
     private String circleName;
 
+    @Lob
+    private byte[] circlePhoto;
+
     @OneToMany(mappedBy = "circle", cascade = CascadeType.ALL)
     private List<Member> memberList;
 
@@ -44,6 +47,14 @@ public class Circle {
 
     public void setCircleName(String circleName) {
         this.circleName = circleName;
+    }
+
+    public byte[] getCirclePhoto() {
+        return circlePhoto;
+    }
+
+    public void setCirclePhoto(byte[] circlePhoto) {
+        this.circlePhoto = circlePhoto;
     }
 
     public List<Member> getMemberList() {

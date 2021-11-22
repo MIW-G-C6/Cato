@@ -13,11 +13,11 @@ import static org.junit.jupiter.api.Assertions.*;
 /**
  * @author Shalena Omapersad <shalenao@hotmail.com>
  *
- * Tests the circle overview page user interface of the WebApp.
+ * Tests the circle dashboard page user interface of the WebApp.
  */
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
-public class CircleOverviewUITest {
+public class CircleDashboardUITest {
 
     private WebDriver driver;
 
@@ -37,34 +37,50 @@ public class CircleOverviewUITest {
     }
 
     @Test
-    void toCareCircleTest() {
+    void toCareCircleDashboardTest() {
         WebElement careCircleLink = driver.findElement(By.linkText("Sunrise Home Care"));
         careCircleLink.click();
 
         String expectedUrl = "http://localhost:8080/circles/46";
         assertEquals(expectedUrl, driver.getCurrentUrl());
         assertEquals("Circle dashboard", driver.getTitle());
-
-        WebElement careCircleBreadCrumb = driver.findElement(By.linkText("Care Circles"));
-        careCircleBreadCrumb.click();
-
-        assertEquals("My circles", driver.getTitle());
     }
 
     @Test
-    void createNewCircleTest() {
-        WebElement newCircleLink = driver.findElement(By.linkText("Create new Care Circle"));
-        newCircleLink.click();
+    void addNewTaskTest() {
+        driver.get("http://localhost:8080/circles/46");
+        WebElement addNewTaskLink = driver.findElement(By.linkText("Add new task"));
+        addNewTaskLink.click();
 
-        String expectedUrl = "http://localhost:8080/circles/new";
+        String expectedUrl = "http://localhost:8080/circles/46/taskLists/56/new";
         assertEquals(expectedUrl, driver.getCurrentUrl());
+        assertEquals("Add task", driver.getTitle());
 
-        WebElement circleName = driver.findElement(By.id("circleName"));
-        circleName.sendKeys("test_group");
+        WebElement description = driver.findElement(By.id("description"));
+        description.sendKeys("Do the dishes");
 
-        WebElement saveCircle = driver.findElement(By.id("save_circle"));
-        saveCircle.click();
+        WebElement startTime = driver.findElement(By.id("startTimeInput"));
+        startTime.sendKeys("1112002021t1234");
+
+        WebElement endTime = driver.findElement(By.id("endTimeInput"));
+        endTime.sendKeys("12120020211854");
+
+        WebElement saveTask = driver.findElement(By.id("saveNewTask"));
+        saveTask.click();
 
         assertEquals("Circle dashboard", driver.getTitle());
+        assertTrue(driver.findElement(By.linkText("Do the dishes")).isDisplayed());
+    }
+
+    @Test
+    void goToCircleSettingsTest() {
+        driver.get("http://localhost:8080/circles/46");
+
+        WebElement settingsLink = driver.findElement(By.linkText("Circle settings"));
+        settingsLink.click();
+
+        String expectedUrl = "http://localhost:8080/circles/options/46";
+        assertEquals(expectedUrl, driver.getCurrentUrl());
+        assertEquals("Circle settings", driver.getTitle());
     }
 }

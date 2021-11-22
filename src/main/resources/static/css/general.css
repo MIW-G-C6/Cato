@@ -861,6 +861,7 @@ input[type=email], input[type=password], input[type=text] {
     margin-right: 50px;
     box-shadow: 0 0 11px rgba(33,33,33,.4);
     border-radius: 4px;
+    object-fit: cover;
 }
 
 .profile-picture-box {
@@ -874,6 +875,32 @@ input[type=email], input[type=password], input[type=text] {
     display: flex;
     flex-flow: row;
     align-items: flex-start;
+}
+
+.circle-photo {
+    width: auto;
+    height: 105px;
+    width: 105px;
+    /*min-height: 150px;*/
+    /*max-width: 200px;*/
+    /*max-height: 170px;*/
+    /*margin-right: 50px;*/
+    box-shadow: 0 0 11px rgba(33,33,33,.4);
+    border-radius: 4px;
+    object-fit: cover;
+}
+
+.circle-photo-box {
+    display: flex;
+    flex-flow: row;
+    /*justify-content: flex-end;*/
+    /*justify-content: space-between;*/
+    /*align-items: flex-start;*/
+}
+
+.circle-dashboard-title {
+    margin: 0;
+    align-self: center;
 }
 
 .circle-members-box {
