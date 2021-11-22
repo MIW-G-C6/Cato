@@ -74,35 +74,37 @@ public class TaskService {
         Task task = taskMapper.toTask(taskDTO);
         task.setTaskList(taskListRepository.getById(taskListId));
 
-        TaskLogActions taskLogActions;
-
         if (task.getTaskId() == null) {
-            taskLogActions = TaskLogActions.CREATED;
+            taskRepository.save(task);
+            taskLogService.saveTaskLog(task, userId, TaskLogActions.CREATED);
         } else {
+            Task oldTask = getOldTask(task.getTaskId());
             task.setAssignedUser(taskRepository.getById(task.getTaskId()).getAssignedUser());
-            taskLogActions = TaskLogActions.UPDATED;
+            taskLogService.saveTaskLogUpdate(task, userId, oldTask);
+            taskRepository.save(task);
         }
-        taskRepository.save(task);
-
-        taskLogService.saveTaskLog(task, userId, taskLogActions);
     }
 
     public void assignUser(Integer taskId, Integer userId) {
         Task task = taskRepository.getById(taskId);
+
+        Task oldTask = getOldTask(taskId);
+
         task.setAssignedUser(userRepository.getById(userId));
 
+        taskLogService.saveTaskLogUpdate(task, userId, oldTask);
         taskRepository.save(task);
-
-        taskLogService.saveTaskLog(task, userId, TaskLogActions.UPDATED);
     }
 
     public void unassignUser(Integer taskId, Integer userId) {
         Task task = taskRepository.getById(taskId);
+
+        Task oldTask = getOldTask(taskId);
+
         task.setAssignedUser(null);
 
+        taskLogService.saveTaskLogUpdate(task, userId, oldTask);
         taskRepository.save(task);
-
-        taskLogService.saveTaskLog(task, userId, TaskLogActions.UPDATED);
     }
 
     public Integer getTaskListIdByTaskId(Integer taskId) {
@@ -138,5 +140,18 @@ public class TaskService {
         return task.getPriority().equals("High") &&
                 (task.getAssignedUser() == null || Objects.equals(task.getAssignedUser().getUserId(), userId)) &&
                 task.getEndTime() != null;
+    }
+
+    private Task getOldTask(Integer taskId) {
+        Task task = taskRepository.getById(taskId);
+        Task oldTask = new Task();
+        oldTask.setTaskId(task.getTaskId());
+        oldTask.setAssignedUser(task.getAssignedUser());
+        oldTask.setTaskList(task.getTaskList());
+        oldTask.setDescription(task.getDescription());
+        oldTask.setPriority(task.getPriority());
+        oldTask.setStartTime(task.getStartTime());
+        oldTask.setEndTime(task.getEndTime());
+        return oldTask;
     }
 }

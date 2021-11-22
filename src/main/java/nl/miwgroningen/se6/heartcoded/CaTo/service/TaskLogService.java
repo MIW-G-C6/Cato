@@ -22,31 +22,41 @@ public class TaskLogService {
 
     private final TaskLogRepository taskLogRepository;
     private final UserRepository userRepository;
+    private final TaskLogEntryService taskLogEntryService;
 
-    public TaskLogService(TaskLogRepository taskLogRepository,
-                          UserRepository userRepository) {
+    public TaskLogService(TaskLogRepository taskLogRepository, UserRepository userRepository,
+                          TaskLogEntryService taskLogEntryService) {
         this.taskLogRepository = taskLogRepository;
         this.userRepository = userRepository;
+        this.taskLogEntryService = taskLogEntryService;
     }
 
     @Transactional
-    public void saveTaskLog(Task task, Integer userId, TaskLogActions taskLogActions) {
+    public void saveTaskLog(Task task, Integer userId, TaskLogActions action) {
         TaskLog result = new TaskLog();
 
         result.setDateTime(LocalDateTime.now());
         result.setTaskId(task.getTaskId());
         result.setUserId(userId);
         result.setUserName(userRepository.getById(userId).getName());
-        result.setTaskLogActions(taskLogActions);
-        result.setDescription(task.getDescription());
-        result.setPriority(task.getPriority());
-
-        if (task.getAssignedUser() != null) {
-            result.setAssignedUserid(task.getAssignedUser().getUserId());
-            result.setAssignedUser(task.getAssignedUser().getName());
-        }
+        result.setAction(action);
 
         taskLogRepository.save(result);
+    }
+
+    @Transactional
+    public void saveTaskLogUpdate(Task task, Integer userId, Task oldTask) {
+        TaskLog result = new TaskLog();
+
+        result.setDateTime(LocalDateTime.now());
+        result.setTaskId(task.getTaskId());
+        result.setUserId(userId);
+        result.setUserName(userRepository.getById(userId).getName());
+        result.setAction(TaskLogActions.UPDATED);
+
+        taskLogRepository.save(result);
+
+        taskLogEntryService.saveTaskLogEntry(task, result.getTaskLogId(), oldTask);
     }
 
     public List<TaskLog> getAllByTaskId(Integer taskId) {
