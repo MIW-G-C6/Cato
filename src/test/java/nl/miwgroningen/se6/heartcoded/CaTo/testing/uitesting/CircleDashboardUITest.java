@@ -3,10 +3,10 @@ package nl.miwgroningen.se6.heartcoded.CaTo.testing.uitesting;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import javax.validation.constraints.AssertTrue;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -70,6 +70,42 @@ public class CircleDashboardUITest {
 
         assertEquals("Circle dashboard", driver.getTitle());
         assertTrue(driver.findElement(By.linkText("Do the dishes")).isDisplayed());
+    }
+
+    @Test
+    void editTaskTest() {
+        driver.get("http://localhost:8080/circles/46");
+
+        WebElement taskLink = driver.findElement(By.linkText("Grocery shopping"));
+        taskLink.click();
+
+        String expectedUrl = "http://localhost:8080/circles/46/taskLists/56/134";
+        assertEquals(expectedUrl, driver.getCurrentUrl());
+        assertEquals("Task Details", driver.getTitle());
+
+        WebElement taskEditLink = driver.findElement(By.linkText("Edit task"));
+        taskEditLink.click();
+
+        expectedUrl = "http://localhost:8080/circles/46/taskLists/56/update/134";
+        assertEquals(expectedUrl, driver.getCurrentUrl());
+        assertEquals("Edit task", driver.getTitle());
+
+        WebElement description = driver.findElement(By.id("description"));
+        description.sendKeys(Keys.chord(Keys.CONTROL, "a"), Keys.DELETE, "Grocery shopping, don't forget the milk");
+
+        WebElement mediumPriorityRadio = driver.findElement(By.id("priority2"));
+        ((JavascriptExecutor) driver).executeScript("arguments[0].checked = true", mediumPriorityRadio);
+
+        WebElement saveButton = driver.findElement(By.xpath("//button[@type='submit']"));
+        saveButton.click();
+
+        assertEquals("Circle dashboard", driver.getTitle());
+        assertTrue(driver.findElement(By.linkText("Grocery shopping, don't forget the milk")).isDisplayed());
+
+        taskLink = driver.findElement(By.linkText("Grocery shopping, don't forget the milk"));
+        taskLink.click();
+
+        assertEquals("Medium", driver.findElement(By.id("priority")).getText());
     }
 
     @Test
