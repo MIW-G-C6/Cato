@@ -191,30 +191,46 @@ a.nav-link{
     padding-top: 0;
     box-shadow: 0 0 11px rgba(33,33,33,.2);
     list-style-type: none;
-    max-height: 500px;
-    overflow-y: auto;
+    z-index: 1;
 }
 
 .notification-dropdown-content tr{
     padding: 0 0;
+    border: solid #a7a7a7 1px;
 }
 
 .notification-dropdown-content td a {
-    margin: 10px;
+    margin: 30px 10px;
     padding: 0 0;
 }
 
 .notification-dropdown-content td {
-    min-width: 100px;
+    /*min-width: 100px;*/
+    max-width: 200px;
     height: 10px;
     font-size: 16px;
     text-align-all: left;
     padding: 0 0;
 }
 
+.notification-dropdown-content .notAssignedIcon {
+    width: 30px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.notification-dropdown-content .circle-name-cell {
+    vertical-align: bottom;
+}
+
+.notification-dropdown-content .circle-name-cell a {
+    font-size: smaller;
+    font-style: italic;
+    color: #8d8d8d;
+}
+
 .notification-dropdown-content tr:hover {
     background-color: #cafad9;
-    color: ghostwhite;
 }
 
 .topnavbar a {
@@ -743,7 +759,7 @@ input[type=email], input[type=password], input[type=text] {
 
 .gd-circlemembers {
     display: block;
-    width: 25%;
+    width: 250px;
     padding-right: 50px;
     border-radius: 4px;
 }
@@ -753,7 +769,7 @@ input[type=email], input[type=password], input[type=text] {
 }
 
 #gd-tasklist {
-    width: 60%;
+    width: 50%;
     display: block;
     word-break: break-word;
 }
@@ -858,6 +874,44 @@ input[type=email], input[type=password], input[type=text] {
     display: flex;
     flex-flow: row;
     align-items: flex-start;
+}
+
+.circle-members-box {
+    min-width: 270px;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+    background-color: #fafafa;
+    padding: 5px;
+}
+
+.circle-members-grid {
+    display: inline-flex;
+    flex-flow: row wrap;
+}
+
+.member-pictures-container {
+    max-width: 125px;
+    min-width: 125px;
+    max-height: 125px;
+    min-height: 125px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.member-pictures {
+    height: 100px;
+    width: 100px;
+    border-radius: 4px;
+    object-fit: cover;
+}
+
+.member-name-under-picture-box {
+    font-size: small;
+    text-decoration: underline;
+    text-decoration-color: #a7a7a7;
+    display: flex;
+    flex-direction: row;
 }
 
 .last-three-circle-header {

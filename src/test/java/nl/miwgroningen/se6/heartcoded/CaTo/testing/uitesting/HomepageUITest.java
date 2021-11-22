@@ -1,5 +1,7 @@
 package nl.miwgroningen.se6.heartcoded.CaTo.testing.uitesting;
 
+import org.apache.commons.lang.SystemUtils;
+import org.assertj.core.api.Fail;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -24,10 +26,9 @@ public class HomepageUITest {
 
     @BeforeEach
     void setUp() {
-        System.setProperty("webdriver.chrome.driver", "chromedriver.exe");
-        driver = new ChromeDriver();
-        driver.manage().window().maximize();
-        driver.get("http://localhost:8080/");
+        WebDriverFactory webDriverFactory = new WebDriverFactory();
+        driver = webDriverFactory.getWebDriver();
+
     }
 
     @AfterEach

@@ -175,4 +175,8 @@ public class User implements UserDetails {
     public void setUserRole(String userRole) {
         this.userRole = userRole;
     }
+
+    public String getUserRole() {
+        return userRole;
+    }
 }

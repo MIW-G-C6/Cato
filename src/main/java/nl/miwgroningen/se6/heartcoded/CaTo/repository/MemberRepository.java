@@ -22,7 +22,7 @@ public interface MemberRepository extends JpaRepository <Member, Integer> {
 
     Optional<Member> findMemberByUserUserIdAndCircleCircleId(Integer userId, Integer circleId);
 
-    List<Member> getMemberByCircle_CircleIdAndUserRoleContains(Integer circleId, String client);
+    List<Member> getMemberByCircle_CircleIdAndUserRoleContains(Integer circleId, String role);
 
     Integer countAllByUserRoleIs(String userRole);
 }

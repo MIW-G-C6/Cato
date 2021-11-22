@@ -25,6 +25,7 @@ import java.util.*;
 @Service
 public class TaskService {
 
+    public static final int MAX_NOTIFICATION_LIST_SIZE = 5;
     private final TaskRepository taskRepository;
     private final TaskListRepository taskListRepository;
     private final UserRepository userRepository;
@@ -131,8 +132,16 @@ public class TaskService {
             }
         }
 
-        allTasks.sort(Comparator.comparing(TaskNotificationDTO :: getEndTime)); //TODO set max limit of tasks to show
+        allTasks.sort(Comparator.comparing(TaskNotificationDTO :: getEndTime));
 
+        return sliceListToMax(allTasks);
+    }
+
+    private List<TaskNotificationDTO> sliceListToMax(List<TaskNotificationDTO> allTasks) {
+        int listSize = allTasks.size();
+        if (listSize > MAX_NOTIFICATION_LIST_SIZE) {
+             return allTasks.subList(0, MAX_NOTIFICATION_LIST_SIZE);
+        }
         return allTasks;
     }
 
