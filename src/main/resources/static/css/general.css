@@ -690,7 +690,7 @@ input[type=email], input[type=password], input[type=text] {
 
 .gd-circlemembers {
     display: block;
-    width: 25%;
+    width: 250px;
     padding-right: 50px;
     border-radius: 4px;
 }
@@ -700,7 +700,7 @@ input[type=email], input[type=password], input[type=text] {
 }
 
 #gd-tasklist {
-    width: 60%;
+    width: 50%;
     display: block;
     word-break: break-word;
 }
@@ -806,6 +806,44 @@ input[type=email], input[type=password], input[type=text] {
     display: flex;
     flex-flow: row;
     align-items: flex-start;
+}
+
+.circle-members-box {
+    min-width: 270px;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+    background-color: #fafafa;
+    padding: 5px;
+}
+
+.circle-members-grid {
+    display: inline-flex;
+    flex-flow: row wrap;
+}
+
+.member-pictures-container {
+    max-width: 125px;
+    min-width: 125px;
+    max-height: 125px;
+    min-height: 125px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.member-pictures {
+    height: 100px;
+    width: 100px;
+    border-radius: 4px;
+    object-fit: cover;
+}
+
+.member-name-under-picture-box {
+    font-size: small;
+    text-decoration: underline;
+    text-decoration-color: #a7a7a7;
+    display: flex;
+    flex-direction: row;
 }
 
 .last-three-circle-header {

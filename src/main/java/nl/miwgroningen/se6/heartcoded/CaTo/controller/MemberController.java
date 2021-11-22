@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
+import java.util.Base64;
 import java.util.Optional;
 
 /**
@@ -50,15 +51,15 @@ public class MemberController {
             return "redirect:/403";
         }
 
-        memberService.addCircleToLastThreeCircles(circleId);
-
         Integer currentUser = userService.getCurrentUser().getUserId();
         session.setAttribute("navbarCircles", memberService.getAllCirclesByUserId(currentUser));
 
+        model.addAttribute("photoClients", memberService.findAllClientsAndPhotoByCircleId(circleId));
+        model.addAttribute("photoCaregivers", memberService.findAllCaregiversAndPhotoByCircleId(circleId));
         model.addAttribute("thisCircle", circleService.getById(circleId));
         model.addAttribute("taskListId", taskListService.getByCircleId(circleId).getTaskListId());
         model.addAttribute("taskList", taskService.getAllTasksByCircleId(circleId));
-        model.addAttribute("allCaregivers", memberService.findAllCaregiversByCircleId(circleId));
+//        model.addAttribute("allCaregivers", memberService.findAllCaregiversByCircleId(circleId));
         model.addAttribute("thisUserIsAdmin", memberService.userIsCircleAdmin(circleId, currentUser));
         model.addAttribute("allClients", memberService.findAllClientsInCircle(circleId));
         model.addAttribute("currentUserIsSiteAdmin", userService.currentUserIsSiteAdmin());

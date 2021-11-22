@@ -1,6 +1,7 @@
 package nl.miwgroningen.se6.heartcoded.CaTo.testing.unittesting;
 
 import nl.miwgroningen.se6.heartcoded.CaTo.dto.MemberDTO;
+import nl.miwgroningen.se6.heartcoded.CaTo.mappers.MemberWithProfilePicMapper;
 import nl.miwgroningen.se6.heartcoded.CaTo.model.Circle;
 import nl.miwgroningen.se6.heartcoded.CaTo.model.Member;
 import nl.miwgroningen.se6.heartcoded.CaTo.model.User;
@@ -41,6 +42,8 @@ class MemberServiceTest {
         MemberMapper memberMapper = new MemberMapper();
         CircleMapper circleMapper = new CircleMapper();
         MemberSiteAdminMapper memberSiteAdminMapper = new MemberSiteAdminMapper();
+        MemberWithProfilePicMapper memberWithProfilePicMapper = new MemberWithProfilePicMapper();
+
 
         CircleRepository circleRepository = Mockito.mock(CircleRepository.class);
         UserRepository userRepository = Mockito.mock(UserRepository.class);
@@ -51,8 +54,7 @@ class MemberServiceTest {
 
         SecurityContextHolder.setContext(securityContext);
 
-
-        memberService = new MemberService(memberMapper, circleMapper, memberSiteAdminMapper,
+        memberService = new MemberService(memberMapper, memberWithProfilePicMapper, circleMapper, memberSiteAdminMapper,
                 circleRepository, userRepository, memberRepository);
     }
 
