@@ -881,10 +881,7 @@ input[type=email], input[type=password], input[type=text] {
     width: auto;
     height: 105px;
     width: 105px;
-    /*min-height: 150px;*/
-    /*max-width: 200px;*/
-    /*max-height: 170px;*/
-    /*margin-right: 50px;*/
+
     box-shadow: 0 0 11px rgba(33,33,33,.4);
     border-radius: 4px;
     object-fit: cover;
@@ -916,10 +913,8 @@ input[type=email], input[type=password], input[type=text] {
 }
 
 .member-pictures-container {
-    max-width: 125px;
-    min-width: 125px;
-    max-height: 125px;
-    min-height: 125px;
+    width: 75px;
+    /*height: 75px;*/
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -927,8 +922,8 @@ input[type=email], input[type=password], input[type=text] {
 }
 
 .member-pictures {
-    height: 100px;
-    width: 100px;
+    /*height: 100px;*/
+    width: 60px;
     border-radius: 4px;
     object-fit: cover;
 }
@@ -962,4 +957,8 @@ input[type=email], input[type=password], input[type=text] {
 
 #group-settings-name {
     width: 40%;
+}
+
+.font-hidden {
+    color: transparent;
 }
