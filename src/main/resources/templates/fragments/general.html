@@ -14,8 +14,12 @@
 
         function focusLoss(event) {
             let profile = document.getElementById("profile-drop-down");
+            let notifications = document.getElementById("notification-drop-down");
             if (event.target !== profile) {
                 profile.style.display = "none";
+            }
+            if (event.target != notifications) {
+                notifications.style.display = "none";
             }
         }
 
@@ -26,6 +30,16 @@
                 profile.style.display = "none";
             } else {
                 profile.style.display = "flex";
+            }
+        }
+
+        function notificationMenuExtend() {
+            let notifications = document.getElementById("notification-drop-down");
+
+            if (notifications.style.display === "flex") {
+                notifications.style.display = "none";
+            } else {
+                notifications.style.display = "flex";
             }
         }
 
@@ -88,27 +102,44 @@
         <a id="home" th:href="@{/}"><img th:src="@{/css/images/CaToLogo.jpg}" height="40" alt="Home"> Care Together</a>
     </div>
 
+    <div id="menuIcons">
+        <div id="notifications" sec:authorize="isAuthenticated()" th:if="${session.allNotificationTasks} != null">
+            <a href="javascript:void(0)" class="notificationIcon" onclick="notificationMenuExtend()">
+                <i th:unless="${session.allNotificationTasks.size()} == 0" class="fa fa-bell"></i>
+                <i th:if="${session.allNotificationTasks.size()} == 0" class="fa fa-bell-slash"></i>
+            </a>
+        </div>
         <div id="profileMenu">
             <a href="javascript:void(0)" class="profileIcon" onclick="profileMenuExtend()">
                 <i class="fa fa-user"></i>
             </a>
         </div>
-        <div id="profile-drop-down" class="profile-dropdown-content">
-                <li sec:authorize="isAnonymous()">
-                    <a th:href="@{/}">Log in</a>
-                </li>
-                <li  sec:authorize="isAuthenticated()">
-                    <a th:href="@{/profilepage/{userId}(userId =${#authentication.getPrincipal().getUserId()})}">My Profile</a>
-                </li>
-                <li  sec:authorize="isAuthenticated()">
-                    <a th:href="@{/logout}">Log out</a>
-                </li>
-                <li  sec:authorize="isAnonymous()">
-                    <a th:href="@{/registration}">Create account</a>
-                </li>
-
-        </div>
     </div>
+    <div id="profile-drop-down" class="profile-dropdown-content">
+            <li sec:authorize="isAnonymous()">
+                <a th:href="@{/}">Log in</a>
+            </li>
+            <li  sec:authorize="isAuthenticated()">
+                <a th:href="@{/profilepage/{userId}(userId =${#authentication.getPrincipal().getUserId()})}">My Profile</a>
+            </li>
+            <li sec:authorize="isAuthenticated()">
+                <a th:href="@{/logout}">Log out</a>
+            </li>
+            <li  sec:authorize="isAnonymous()">
+                <a th:href="@{/registration}">Create account</a>
+            </li>
+    </div>
+
+    <div id="notification-drop-down" class="notification-dropdown-content">
+        <table>
+            <tr th:each="task : ${session.allNotificationTasks}">
+                <td><i th:unless="${task.isAssigned()}" class="fa fa-user-times notAssignedIcon"></i></td>
+                <td><a th:href="@{/circles/{circleId}/taskLists/{taskListId}/{taskId}(circleId=${task.circleId}, taskListId=${task.taskListId}, taskId=${task.taskId})}" th:text="${task.description}"></a></td>
+                <td class="circle-name-cell"><a id="notification" th:href="@{/circles/{circleId}(circleId=${task.circleId})}" th:text="'~' + ${task.circleName}"></a></td>
+            </tr>
+        </table>
+    </div>
+</div>
 
     <div class="previousButton" th:fragment="previousButton">
         <button class="catoButton" onclick="javascript:history.back()">&laquo; Previous</button>

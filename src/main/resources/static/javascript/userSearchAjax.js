@@ -22,7 +22,9 @@ var modalNoBtn = document.getElementById("noBtn");
 
 var userModalYesBtn = document.getElementById("userModalYesButton")
 
-
+$( function() {
+    $( "#datepicker" ).datepicker();
+} );
 
 $(document).ready(function () {
 

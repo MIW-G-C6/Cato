@@ -24,6 +24,8 @@ public class TaskMapper {
         taskDTO.setDescription(task.getDescription());
         taskDTO.setPriority(task.getPriority());
         taskDTO.setTaskListId(task.getTaskList().getTaskListId());
+        taskDTO.setStartTime(task.getStartTime());
+        taskDTO.setEndTime(task.getEndTime());
 
         if (task.getAssignedUser() == null) {
             taskDTO.setAssignedUserId(0);
@@ -61,6 +63,8 @@ public class TaskMapper {
         task.setTaskId(taskDTO.getTaskId());
         task.setPriority(taskDTO.getPriority());
         task.setDescription(taskDTO.getDescription());
+        task.setStartTime(taskDTO.getStartTime());
+        task.setEndTime(taskDTO.getEndTime());
 
         return task;
     }

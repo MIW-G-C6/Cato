@@ -51,12 +51,33 @@
                             <span th:unless="${task.assignedUserName} == ''" th:text="${task.assignedUserName}"></span>
                         </div>
                     </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <h6 class="mb-0">Start time</h6>
+                        </div>
+                        <div class="col-sm-9 text-secondary">
+                            <span th:if="${task.startTime} == null">-</span>
+                            <span th:unless="${task.startTime} == null" th:text="${#temporals.format(task.startTime, 'dd-MM-yyyy HH:mm')}"></span>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <h6 class="mb-0">End time</h6>
+                        </div>
+                        <div class="col-sm-9 text-secondary">
+                            <span th:if="${task.endTime} == null">-</span>
+                            <span th:unless="${task.endTime} == null" th:text="${#temporals.format(task.endTime, 'dd-MM-yyyy HH:mm')}"></span>
+                        </div>
+                    </div>
             </div>
             <div class="cato-option-row">
                 <ul class="cato-ul">
                     <li><a th:href="@{/circles/{circleId}/taskLists/{taskListId}/update/{taskId}(circleId=${circleId}, taskListId=${taskList.taskListId}, taskId=${task.taskId})}">Edit task</a></li>
-                    <br th:unless="${task.assignedUserName} == ''">
+                    <br>
                     <li><a th:unless="${task.assignedUserName} == ''" th:href="@{/circles/{circleId}/task/{taskId}/unassign(circleId=${circleId}, taskId=${taskId})}">Unassign</a></li>
+                    <li><a th:if="${task.assignedUserName} == ''" th:href="@{/circles/{circleId}/task/{taskId}/assign(taskId=${task.taskId}, circleId=${circleId})}">Assign to me</a></li>
                     <li><hr></li>
                     <li><a id="cato-delete-link" th:href="@{'/task/delete/' + ${task.taskId}}">Delete task</a></li>
                 </ul>

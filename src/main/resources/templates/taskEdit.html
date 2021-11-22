@@ -28,6 +28,18 @@
       <input type="hidden" th:field="*{taskId}">
       <div>
         <input class="cato-text-field" type="text" placeholder="Description" id="description" required th:field="*{description}">
+        <div>
+          <br>
+          <label for="startTimeInput">Start date</label>
+          <br>
+          <input type="datetime-local" id="startTimeInput" th:object="${startTimeInput}" name="startTimeInput">
+        </div>
+        <br>
+        <div>
+          <label for="endTimeInput">End date</label>
+          <br>
+          <input type="datetime-local" id="endTimeInput" th:object="${endTimeInput}" name="endTimeInput">
+        </div>
       </div>
       <br>
       <div>

@@ -53,6 +53,7 @@ public class MemberController {
 
         Integer currentUser = userService.getCurrentUser().getUserId();
         session.setAttribute("navbarCircles", memberService.getAllCirclesByUserId(currentUser));
+        session.setAttribute("allNotificationTasks", taskService.getAllNotificationTasksByUserId(currentUser));
 
         model.addAttribute("photoClients", memberService.findAllClientsAndPhotoByCircleId(circleId));
         model.addAttribute("photoCaregivers", memberService.findAllCaregiversAndPhotoByCircleId(circleId));
