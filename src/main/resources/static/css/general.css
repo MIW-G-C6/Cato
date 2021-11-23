@@ -8,10 +8,6 @@ a.nav-link{
     justify-content: space-between;
 }
 
-.site-admin-circleClientOverview {
-
-}
-
 .cato-edit-flex {
     display: flex;
     flex-flow: row;
@@ -132,6 +128,10 @@ a.nav-link{
     box-shadow: 0 0 11px rgba(33,33,33,.2);
 }
 
+.circle-overview-circle-banner:hover {
+    background-color: #cafad9;
+    cursor: pointer;
+}
 .circle-overview-circle-banner:hover {
     background-color: #cafad9;
     cursor: pointer;

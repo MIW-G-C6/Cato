@@ -53,7 +53,9 @@ public class MemberService {
     }
 
     public List<MemberDTO> findAllMembers() {
-        return memberMapper.toDTO(memberRepository.findAll());
+        List<MemberDTO> result = memberMapper.toDTO(memberRepository.findAll());
+        sortMemberDTOOnRoleAndAlphabet(result);
+        return result;
     }
 
     public Integer totalNumberOfClients() {
@@ -70,7 +72,9 @@ public class MemberService {
     }
 
     public List<MemberDTO> getAllByCircleId(Integer circleId) {
-        return memberMapper.toDTO(memberRepository.getAllByCircleCircleId(circleId));
+        List<MemberDTO> result = memberMapper.toDTO(memberRepository.getAllByCircleCircleId(circleId));
+        sortMemberDTOOnRoleAndAlphabet(result);
+        return result;
     }
 
     @Transactional
@@ -110,7 +114,7 @@ public class MemberService {
                 result.add(memberMapper.toDTO(member));
             }
         }
-
+        sortMemberDTOOnRoleAndAlphabet(result);
         return result;
     }
 
@@ -140,6 +144,7 @@ public class MemberService {
 
             result.add(memberWithProfilePicMapper.toDTO(member, profilePicture));
         }
+        sortMemberWithProfilePicDTOOnRoleAndAlphabet(result);
         return result;
     }
 
@@ -151,7 +156,7 @@ public class MemberService {
                 result.add(memberMapper.toDTO(member));
             }
         }
-
+        sortMemberDTOOnRoleAndAlphabet(result);
         return result;
     }
 
@@ -164,7 +169,7 @@ public class MemberService {
                 result.add(member);
             }
         }
-
+        sortMemberDTOOnRoleAndAlphabet(result);
         return result;
     }
 
@@ -197,7 +202,7 @@ public class MemberService {
                 result.add(member);
             }
         }
-
+        sortMemberDTOOnRoleAndAlphabet(result);
         return result;
     }
 
@@ -358,5 +363,13 @@ public class MemberService {
         }
 
         userRepository.save(user);
+    }
+
+    private void sortMemberWithProfilePicDTOOnRoleAndAlphabet(List<MemberWithProfilePicDTO> list) {
+        list.sort(Comparator.comparing(MemberWithProfilePicDTO::isAdmin).reversed().thenComparing(MemberWithProfilePicDTO::getUserName));
+    }
+
+    private void sortMemberDTOOnRoleAndAlphabet(List<MemberDTO> list) {
+        list.sort(Comparator.comparing(MemberDTO::isAdmin).reversed().thenComparing(MemberDTO::getRole).thenComparing(MemberDTO::getUserName));
     }
 }

@@ -10,6 +10,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.Base64;
+import java.util.List;
 
 /**
  * @author Shalena Omapersad <shalenao@hotmail.com>
