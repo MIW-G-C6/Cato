@@ -56,6 +56,9 @@ public class ProfilePageUITest {
 
         expectedUrl = "http://localhost:8080/profilepage/1";
         assertEquals(expectedUrl, driver.getCurrentUrl());
+
+        WebElement nameUser = driver.findElement(By.id("nameUser"));
+        assertEquals("Pieter Bakker", nameUser.getText());
     }
 
     @Test
@@ -71,10 +74,10 @@ public class ProfilePageUITest {
         currentPassword.sendKeys("a");
 
         WebElement newPassword = driver.findElement(By.id("newPassword"));
-        newPassword.sendKeys("b");
+        newPassword.sendKeys("a");
 
         WebElement confirmNewPassword = driver.findElement(By.id("repeatNewPassword"));
-        confirmNewPassword.sendKeys("b");
+        confirmNewPassword.sendKeys("a");
 
         WebElement savePassword = driver.findElement(By.xpath("//button[@type='submit']"));
         savePassword.click();

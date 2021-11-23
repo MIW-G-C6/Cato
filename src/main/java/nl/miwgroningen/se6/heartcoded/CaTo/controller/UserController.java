@@ -63,10 +63,12 @@ public class UserController {
     @GetMapping("/users/edit/{userId}")
     protected String showEditUserForm(@PathVariable("userId") Integer userId, @ModelAttribute("error") String error,
                                       Model model, HttpSession session) {
-        session.setAttribute("lastUserId", userId);
         if (!userService.getCurrentUser().getUserId().equals(userId) && !userService.currentUserIsSiteAdmin()) {
             return "redirect:/403";
         }
+        session.setAttribute("editCircle", false);
+        session.setAttribute("editUser", true);
+        session.setAttribute("lastUserId", userId);
 
         UserDTO user = userService.getById(userId);
 

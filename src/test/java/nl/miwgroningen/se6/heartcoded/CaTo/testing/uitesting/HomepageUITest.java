@@ -50,6 +50,28 @@ public class HomepageUITest {
     }
 
     @Test
+    void logoutTest() {
+        WebElement email = driver.findElement(By.id("username"));
+        email.sendKeys("klaas@example.com");
+
+        WebElement password = driver.findElement(By.id("password"));
+        password.sendKeys("a");
+
+        WebElement login = driver.findElement(By.id("login-submit"));
+        login.click();
+
+        String expectedUrl = "http://localhost:8080/circles";
+
+        assertEquals(expectedUrl, driver.getCurrentUrl());
+
+        driver.findElement(By.xpath("//a[@class='profileIcon']")).click();
+        WebElement logoutLink = driver.findElement(By.linkText("Log out"));
+        logoutLink.click();
+
+        assertTrue(driver.findElement(By.id("login-submit")).isDisplayed());
+    }
+
+    @Test
     void loginTestFailed() {
         WebElement email = driver.findElement(By.id("username"));
         email.sendKeys("klaas@example.com");

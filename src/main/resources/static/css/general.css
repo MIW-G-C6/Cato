@@ -861,6 +861,7 @@ input[type=email], input[type=password], input[type=text] {
     margin-right: 50px;
     box-shadow: 0 0 11px rgba(33,33,33,.4);
     border-radius: 4px;
+    object-fit: cover;
 }
 
 .profile-picture-box {
@@ -876,6 +877,29 @@ input[type=email], input[type=password], input[type=text] {
     align-items: flex-start;
 }
 
+.circle-photo {
+    width: auto;
+    height: 105px;
+    width: 105px;
+
+    box-shadow: 0 0 11px rgba(33,33,33,.4);
+    border-radius: 4px;
+    object-fit: cover;
+}
+
+.circle-photo-box {
+    display: flex;
+    flex-flow: row;
+    /*justify-content: flex-end;*/
+    /*justify-content: space-between;*/
+    /*align-items: flex-start;*/
+}
+
+.circle-dashboard-title {
+    margin: 0;
+    align-self: center;
+}
+
 .circle-members-box {
     min-width: 270px;
     box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
@@ -884,15 +908,14 @@ input[type=email], input[type=password], input[type=text] {
 }
 
 .circle-members-grid {
+    padding-left: 5px;
+    padding-bottom: 10px;
     display: inline-flex;
     flex-flow: row wrap;
 }
 
 .member-pictures-container {
-    max-width: 125px;
-    min-width: 125px;
-    max-height: 125px;
-    min-height: 125px;
+    width: 75px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -900,8 +923,7 @@ input[type=email], input[type=password], input[type=text] {
 }
 
 .member-pictures {
-    height: 100px;
-    width: 100px;
+    width: 60px;
     border-radius: 4px;
     object-fit: cover;
 }
@@ -935,4 +957,8 @@ input[type=email], input[type=password], input[type=text] {
 
 #group-settings-name {
     width: 40%;
+}
+
+.font-hidden {
+    color: transparent;
 }

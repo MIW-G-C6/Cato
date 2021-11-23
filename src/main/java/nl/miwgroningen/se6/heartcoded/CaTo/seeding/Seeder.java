@@ -69,47 +69,49 @@ public class Seeder {
     }
 
     private void seedUser() {
-        userService.saveNewUser(new UserRegistrationDTO("Piet Bakker", "a", "a", "piet@example.com"));
-        userService.saveNewUser(new UserRegistrationDTO("Henk Janssen", "a", "a", "henk@example.com"));
-        userService.saveNewUser(new UserRegistrationDTO("Klaas Smit", "a", "a", "klaas@example.com"));
-        userService.saveNewUser(new UserRegistrationDTO("Willem Visser", "a", "a", "willem@example.com"));
-        userService.saveNewUser(new UserRegistrationDTO("Noah van den Berg", "a", "a", "noah@example.com"));
-        userService.saveNewUser(new UserRegistrationDTO("Bram Snor", "a", "a", "bram@example.com"));
-        userService.saveNewUser(new UserRegistrationDTO("Aart Lutjes", "a", "a", "aart@example.com"));
-        userService.saveNewUser(new UserRegistrationDTO("Steven van der Gracht", "a", "a", "steven@example.com"));
-        userService.saveNewUser(new UserRegistrationDTO("Niels Wolkers", "a", "a", "niels@example.com"));
-        userService.saveNewUser(new UserRegistrationDTO("Wouter Geestra", "a", "a", "wouter@example.com"));
 
-        userService.saveNewUser(new UserRegistrationDTO("Harry Carroll", "h3;#DvVwr[", "h3;#DvVwr[", "keijser@comcast.net"));
-        userService.saveNewUser(new UserRegistrationDTO("Jaydn Wiggins", "H/V86P7s=v", "H/V86P7s=v", "eimear@outlook.com"));
-        userService.saveNewUser(new UserRegistrationDTO("Farzana Meadows", "fmRL<3*9%^", "fmRL<3*9%^", "report@live.com"));
-        userService.saveNewUser(new UserRegistrationDTO("Kareem Dalton", "H[jK!kR65m", "H[jK!kR65m", "kiddailey@yahoo.com"));
-        userService.saveNewUser(new UserRegistrationDTO("Nasia Barton", "rqf2!P.L8v", "rqf2!P.L8v", "sravani@gmail.com"));
-        userService.saveNewUser(new UserRegistrationDTO("Mea Irwin", "RAv]dt;Q9*", "RAv]dt;Q9*", "gavinls@yahoo.com"));
-        userService.saveNewUser(new UserRegistrationDTO("Janae Dillon", "f=Xu/#9?Ze", "f=Xu/#9?Ze", "malvar@icloud.com"));
-        userService.saveNewUser(new UserRegistrationDTO("Ayden Adkins", "Xh4H)]eYcq", "Xh4H)]eYcq", "peterhoeg@live.com"));
-        userService.saveNewUser(new UserRegistrationDTO("Anabelle Hickman", "P6;H7Q%xz-", "P6;H7Q%xz-", "arandal@optonline.net"));
-        userService.saveNewUser(new UserRegistrationDTO("Rhona Bradshaw", "C2t(VE4^kK", "C2t(VE4^kK", "raides@gmail.com"));
-        userService.saveNewUser(new UserRegistrationDTO("Olivier Clay", "y9W>4grj]L%6!Je", "y9W>4grj]L%6!Je", "rkobes@verizon.net"));
-        userService.saveNewUser(new UserRegistrationDTO("Wilma Rasmussen", "v,:]PMc4eGS{gx9", "v,:]PMc4eGS{gx9",  "bockelboy@hotmail.com"));
-        userService.saveNewUser(new UserRegistrationDTO("Cathy Mcgee", "LHF/ngsc9r>D%68", "LHF/ngsc9r>D%68", "tsuruta@mac.com"));
-        userService.saveNewUser(new UserRegistrationDTO("Javan Valdez", "tWkD>5E@6F4an$,", "tWkD>5E@6F4an$,", "lamky@sbcglobal.net"));
-        userService.saveNewUser(new UserRegistrationDTO("Daanish Camacho", "Rr5;)QB8qS:3Z}7", "Rr5;)QB8qS:3Z}7", "ivoibs@aol.com"));
-        userService.saveNewUser(new UserRegistrationDTO("Shahid Norman", "Rg2H(FtX6@+]r8%", "Rg2H(FtX6@+]r8%", "aukjan@yahoo.ca"));
-        userService.saveNewUser(new UserRegistrationDTO("Tea Lucas", "UGXt*-b3_n~Ws5%", "UGXt*-b3_n~Ws5%", "hstiles@sbcglobal.net"));
-        userService.saveNewUser(new UserRegistrationDTO("Kinga Noel", "H~}q9P6vc)SC<TM", "H~}q9P6vc)SC<TM", "dsugal@verizon.net"));
-        userService.saveNewUser(new UserRegistrationDTO("Tania Bryant", "N{wb>^ky2}VsZ_L", "N{wb>^ky2}VsZ_L", "matty@comcast.net"));
-        userService.saveNewUser(new UserRegistrationDTO("Noel Valenzuela", "Z6ukdY#EG[HaBVf", "Z6ukdY#EG[HaBVf", "dsowsy@outlook.com"));
-        userService.saveNewUser(new UserRegistrationDTO("Nolan Kline", "F[yM%fUX9^qux+},)H.cTK!(t]eps~", "F[yM%fUX9^qux+},)H.cTK!(t]eps~", "birddog@att.net"));
-        userService.saveNewUser(new UserRegistrationDTO("Riley-Jay Handley", "s;~A7jLdUX9?p^/&%Fzf_Hn@[YD}C8", "s;~A7jLdUX9?p^/&%Fzf_Hn@[YD}C8", "kspiteri@hotmail.com"));
-        userService.saveNewUser(new UserRegistrationDTO("Braxton Matthews", "xG&[Nm@/_JqDTzc$9d{hb#}7M,;^]+", "xG&[Nm@/_JqDTzc$9d{hb#}7M,;^]+", "horrocks@comcast.net"));
-        userService.saveNewUser(new UserRegistrationDTO("Colleen Castro", "LG-j3^m9qRuc;{X=tUw?/ayMk),C~5", "LG-j3^m9qRuc;{X=tUw?/ayMk),C~5", "mjewell@msn.com"));
-        userService.saveNewUser(new UserRegistrationDTO("Aine Drake", "uTp@xjzQkEcnVsAUv>(;5aMeG.J]+_", "uTp@xjzQkEcnVsAUv>(;5aMeG.J]+_", "ilovelife55@aol.com"));
-        userService.saveNewUser(new UserRegistrationDTO("India Zhang", "H!hdk5r~(A=+GuS<7FbnV#Yc{sPZ2>", "H!hdk5r~(A=+GuS<7FbnV#Yc{sPZ2>", "metzzo@me.com"));
-        userService.saveNewUser(new UserRegistrationDTO("Avni Holman", "LJ}s;gKGX-)S2@]#m?z3nCB!7b+jqD", "LJ}s;gKGX-)S2@]#m?z3nCB!7b+jqD", "wayward@att.net"));
-        userService.saveNewUser(new UserRegistrationDTO("Fionnuala Burt", "fFEendJ,6XQc}xNU>9;k#m!wY~7%@R", "fFEendJ,6XQc}xNU>9;k#m!wY~7%@R", "geoffr@sbcglobal.net"));
-        userService.saveNewUser(new UserRegistrationDTO("Lennox Mendez", "QsUTv?<9E;GD*H{Afr-qX(B.uzZM4j", "QsUTv?<9E;GD*H{Afr-qX(B.uzZM4j", "martyloo@msn.com"));
-        userService.saveNewUser(new UserRegistrationDTO("Ralphy Meza", "xTkutzd];Hya$c.9fB2{:SM~ANpr)}", "xTkutzd];Hya$c.9fB2{:SM~ANpr)}", "yangyan@optonline.net"));
+        userService.saveSeederUser(new User("Piet Bakker", "a", "piet@example.com"), "man_1.jpg");
+        userService.saveSeederUser(new User("Henk Janssen", "a", "henk@example.com"), "man_2.jpg");
+        userService.saveSeederUser(new User("Klaas Smit", "a", "klaas@example.com"), "man_3.jpg");
+        userService.saveSeederUser(new User("Willem Visser", "a", "willem@example.com"), "man_4.jpg");
+        userService.saveSeederUser(new User("Noah van den Berg", "a", "noah@example.com"), "");
+        userService.saveSeederUser(new User("Bram Snor", "a", "bram@example.com"), "man_6.jpg");
+        userService.saveSeederUser(new User("Geert Keijzer", "a", "geert@example.com"), "man_7.jpg");
+        userService.saveSeederUser(new User("Aart Lutjes", "a", "aart@example.com"), "man_8.jpg");
+        userService.saveSeederUser(new User("Steven van der Gracht", "a", "steven@example.com"), "");
+        userService.saveSeederUser(new User("Niels Wolkers", "a", "niels@example.com"), "man_10.jpg");
+        userService.saveSeederUser(new User("Wouter Geestra", "a", "wouter@example.com"), "man_11.jpg");
+
+        userService.saveSeederUser(new User("Harry Carroll", "h3;#DvVwr[", "keijser@comcast.net"), "man_12.jpg");
+        userService.saveSeederUser(new User("Jaydn Wiggins", "H/V86P7s=v", "eimear@outlook.com"), "woman_1.jpg");
+        userService.saveSeederUser(new User("Farzana Meadows", "fmRL<3*9%^", "report@live.com"), "woman_2.jpg");
+        userService.saveSeederUser(new User("Kareem Dalton", "H[jK!kR65m", "kiddailey@yahoo.com"), "man_13.jpg");
+        userService.saveSeederUser(new User("Nasia Barton", "rqf2!P.L8v", "sravani@gmail.com"), "");
+        userService.saveSeederUser(new User("Mea Irwin", "RAv]dt;Q9*", "gavinls@yahoo.com"), "woman_4.jpg");
+        userService.saveSeederUser(new User("Janae Dillon", "f=Xu/#9?Ze", "malvar@icloud.com"), "woman_5.jpg");
+        userService.saveSeederUser(new User("Ayden Adkins", "Xh4H)]eYcq", "peterhoeg@live.com"), "");
+        userService.saveSeederUser(new User("Anabelle Hickman", "P6;H7Q%xz-", "arandal@optonline.net"), "woman_6.jpg");
+        userService.saveSeederUser(new User("Rhona Bradshaw", "C2t(VE4^kK", "raides@gmail.com"), "woman_7.jpg");
+        userService.saveSeederUser(new User("Olivier Clay", "y9W>4grj]L%6!Je", "rkobes@verizon.net"), "");
+        userService.saveSeederUser(new User("Wilma Rasmussen", "v,:]PMc4eGS{gx9","bockelboy@hotmail.com"), "woman_8.jpg");
+        userService.saveSeederUser(new User("Cathy Mcgee", "LHF/ngsc9r>D%68", "tsuruta@mac.com"), "woman_9.jpg");
+        userService.saveSeederUser(new User("Javan Valdez", "tWkD>5E@6F4an$,",  "lamky@sbcglobal.net"), "man_14.jpg");
+        userService.saveSeederUser(new User("Daanish Camacho", "Rr5;)QB8qS:3Z}7", "ivoibs@aol.com"), "man_15.jpg");
+        userService.saveSeederUser(new User("Shahid Norman", "Rg2H(FtX6@+]r8%", "aukjan@yahoo.ca"), "man_16.jpg");
+        userService.saveSeederUser(new User("Tea Lucas", "UGXt*-b3_n~Ws5%", "hstiles@sbcglobal.net"), "woman_10.jpg");
+        userService.saveSeederUser(new User("Kinga Noel", "H~}q9P6vc)SC<TM", "dsugal@verizon.net"), "woman_11.jpg");
+        userService.saveSeederUser(new User("Tania Bryant", "N{wb>^ky2}VsZ_L", "matty@comcast.net"), "woman_12.jpg");
+        userService.saveSeederUser(new User("Noel Valenzuela", "Z6ukdY#EG[HaBVf", "dsowsy@outlook.com"), "man_17.jpg");
+        userService.saveSeederUser(new User("Nolan Kline", "F[yM%fUX9^qux+},)H.cTK!(t]eps~", "birddog@att.net"), "");
+        userService.saveSeederUser(new User("Riley-Jay Handley", "s;~A7jLdUX9?p^/&%Fzf_Hn@[YD}C8", "kspiteri@hotmail.com"), "woman_13.jpg");
+        userService.saveSeederUser(new User("Braxton Matthews", "xG&[Nm@/_JqDTzc$9d{hb#}7M,;^]+",  "horrocks@comcast.net"), "man_5.jpg");
+        userService.saveSeederUser(new User("Colleen Castro", "LG-j3^m9qRuc;{X=tUw?/ayMk),C~5", "mjewell@msn.com"), "woman_14.jpg");
+        userService.saveSeederUser(new User("Aine Drake", "uTp@xjzQkEcnVsAUv>(;5aMeG.J]+_", "ilovelife55@aol.com"), "");
+        userService.saveSeederUser(new User("India Zhang", "H!hdk5r~(A=+GuS<7FbnV#Yc{sPZ2>", "metzzo@me.com"), "woman_16.jpg");
+        userService.saveSeederUser(new User("Avni Holman", "LJ}s;gKGX-)S2@]#m?z3nCB!7b+jqD", "wayward@att.net"), "woman_15.jpg");
+        userService.saveSeederUser(new User("Fionnuala Burt", "fFEendJ,6XQc}xNU>9;k#m!wY~7%@R", "geoffr@sbcglobal.net"), "woman_17.jpg");
+        userService.saveSeederUser(new User("Lennox Mendez", "QsUTv?<9E;GD*H{Afr-qX(B.uzZM4j", "martyloo@msn.com"), "man_18.jpg");
+        userService.saveSeederUser(new User("Ralphy Meza", "xTkutzd];Hya$c.9fB2{:SM~ANpr)}", "yangyan@optonline.net"), "man_19.jpg");
     }
 
     private void seedCircles() {

@@ -10,6 +10,7 @@ public class CircleDTO {
 
     private Integer circleId;
     private String circleName;
+    private byte[] circlePhoto;
     private Boolean UserIsCircleAdmin;
 
     public CircleDTO(String circleName) {
@@ -33,6 +34,14 @@ public class CircleDTO {
 
     public void setCircleName(String circleName) {
         this.circleName = circleName;
+    }
+
+    public byte[] getCirclePhoto() {
+        return circlePhoto;
+    }
+
+    public void setCirclePhoto(byte[] circlePhoto) {
+        this.circlePhoto = circlePhoto;
     }
 
     public Boolean getUserIsCircleAdmin() {

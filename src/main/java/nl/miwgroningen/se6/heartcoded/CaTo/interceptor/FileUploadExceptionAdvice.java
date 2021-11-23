@@ -21,6 +21,14 @@ public class FileUploadExceptionAdvice {
                                                        RedirectAttributes redirectAttributes, HttpSession session) {
         redirectAttributes.addAttribute("error", "File too large");
         Integer userId = (Integer) session.getAttribute("lastUserId");
-        return "redirect:/users/edit/" + userId;   //Exception redirects back to the users edit profile page by default.
+        Integer circleId = (Integer) session.getAttribute("lastCircleId");
+
+        if ((boolean) session.getAttribute("editUser")) {
+            return "redirect:/users/edit/" + userId;
+        }
+        if ((boolean) session.getAttribute("editCircle")) {
+            return "redirect:/circles/options/edit/" + circleId;
+        }
+        return "";
     }
 }

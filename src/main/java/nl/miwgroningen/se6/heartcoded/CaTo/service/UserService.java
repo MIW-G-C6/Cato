@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 import static org.aspectj.bridge.MessageUtil.fail;
@@ -105,10 +106,33 @@ public class UserService {
             } catch (IOException ioException) {
                 System.out.println(ioException.getMessage());
             }
-
             userRepository.save(user);
         }
-        //TODO maybe this needs an exception throw??
+    }
+
+    public void saveSeederUser(User user, String profilePictureFileName) {
+        user.setUserRole("ROLE_USER");
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        String inputStreamString;
+        if (profilePictureFileName.equals("")){
+            inputStreamString = "static/css/images/Default-Profile-Picture.png";
+        } else {
+            inputStreamString = "static/seederProfilePictures/" + profilePictureFileName;
+        }
+        try {
+            InputStream inputStream = getClass()
+                    .getClassLoader()
+                    .getResourceAsStream(inputStreamString);
+
+            if (inputStream == null) {
+                fail("Unable to find resource");
+            } else {
+                user.setProfilePicture(IOUtils.toByteArray(inputStream));
+            }
+        } catch (IOException ioException) {
+            System.out.println(ioException.getMessage());
+        }
+        userRepository.save(user);
     }
 
     public void saveAdmin() {

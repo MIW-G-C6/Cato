@@ -11,10 +11,15 @@ import nl.miwgroningen.se6.heartcoded.CaTo.repository.CircleRepository;
 import nl.miwgroningen.se6.heartcoded.CaTo.repository.MemberRepository;
 import nl.miwgroningen.se6.heartcoded.CaTo.mappers.CircleMapper;
 import nl.miwgroningen.se6.heartcoded.CaTo.repository.UserRepository;
+import org.apache.commons.io.IOUtils;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.aspectj.bridge.MessageUtil.fail;
 
 /**
  * @author Paul Romkes <p.r.romkes@gmail.com
@@ -61,6 +66,21 @@ public class CircleService {
     }
 
     public void saveCircle(CircleDTO circleDTO) {
+        if (circleDTO.getCircleId() == null) {
+            try {
+                InputStream inputStream = getClass()
+                        .getClassLoader()
+                        .getResourceAsStream("static/css/images/Default-Group-Picture.png");
+
+                if (inputStream == null) {
+                    fail("Unable to find resource");
+                } else {
+                    circleDTO.setCirclePhoto(IOUtils.toByteArray(inputStream));
+                }
+            } catch (IOException ioException) {
+                System.out.println(ioException.getMessage());
+            }
+        }
         Circle result = circleMapper.toCircle(circleDTO);
         result.setMemberList(memberRepository.getAllByCircleCircleId(result.getCircleId()));
 

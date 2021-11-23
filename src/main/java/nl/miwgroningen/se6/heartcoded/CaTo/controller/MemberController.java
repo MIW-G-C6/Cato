@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
@@ -28,6 +29,7 @@ public class MemberController {
     private static final String NO_ACCOUNT_WITH_EMAIL_ERROR = "No existing account found with this email address";
     private static final String SAME_USER_TWICE_ERROR = "Not able to add the same user twice";
     private static final String ALREADY_CLIENT_ERROR = "User is already a client in another circle";
+    private static final int ONE_MEGABYTE = 1048576;
 
     private CircleService circleService;
     private MemberService memberService;
@@ -50,19 +52,28 @@ public class MemberController {
         if (!isCircleMember(circleId) && isNotSiteAdmin()) {
             return "redirect:/403";
         }
+        memberService.addCircleToLastThreeCircles(circleId);
 
         Integer currentUser = userService.getCurrentUser().getUserId();
         session.setAttribute("navbarCircles", memberService.getAllCirclesByUserId(currentUser));
         session.setAttribute("allNotificationTasks", taskService.getAllNotificationTasksByUserId(currentUser));
 
+
+        CircleDTO thisCircle = circleService.getById(circleId);
+
         model.addAttribute("photoClients", memberService.findAllClientsAndPhotoByCircleId(circleId));
         model.addAttribute("photoCaregivers", memberService.findAllCaregiversAndPhotoByCircleId(circleId));
-        model.addAttribute("thisCircle", circleService.getById(circleId));
+
+        if (thisCircle.getCirclePhoto() == null) {
+            model.addAttribute("circlePhoto", "");
+        } else {
+            model.addAttribute("circlePhoto", Base64.getEncoder().encodeToString(thisCircle.getCirclePhoto()));
+        }
+
+        model.addAttribute("thisCircle", thisCircle);
         model.addAttribute("taskListId", taskListService.getByCircleId(circleId).getTaskListId());
         model.addAttribute("taskList", taskService.getAllTasksByCircleId(circleId));
-//        model.addAttribute("allCaregivers", memberService.findAllCaregiversByCircleId(circleId));
         model.addAttribute("thisUserIsAdmin", memberService.userIsCircleAdmin(circleId, currentUser));
-        model.addAttribute("allClients", memberService.findAllClientsInCircle(circleId));
         model.addAttribute("currentUserIsSiteAdmin", userService.currentUserIsSiteAdmin());
         return "circleDashboard";
     }
@@ -82,25 +93,34 @@ public class MemberController {
     }
 
     @GetMapping("/options/edit/{circleId}")
-    protected String showCircleEdit(@PathVariable("circleId") Integer circleId, Model model) {
+    protected String showCircleEdit(@PathVariable("circleId") Integer circleId, Model model, @ModelAttribute("error") String error, HttpSession session) {
         if (isNotCircleAdmin(circleId) && isNotSiteAdmin()) {
             return "redirect:/403";
         }
+
+        session.setAttribute("editCircle", true);
+        session.setAttribute("editUser", false);
+        session.setAttribute("lastCircleId", circleId);
 
         model.addAttribute("thisCircle", circleService.getById(circleId));
         return "circleEdit";
     }
 
     @PostMapping("/options/edit/{circleId}")
-    protected String updateCircle(@ModelAttribute("circle") CircleDTO circle, BindingResult result) {
+    protected String updateCircle(@ModelAttribute("circle") CircleDTO circle,
+                                  @ModelAttribute("circlePhotoInput") MultipartFile circlePhotoInput, BindingResult result) {
         if (isNotCircleAdmin(circle.getCircleId()) && isNotSiteAdmin()) {
             return "redirect:/403";
         }
 
+        setCirclePhoto(circle, circlePhotoInput);
+
         if (!result.hasErrors()) {
             circleService.saveCircle(circle);
+            return "redirect:/circles/options/{circleId}";
         }
-        return "redirect:/circles/options/{circleId}";
+        return "circleEdit";
+
     }
 
     @RequestMapping(value = "/options/{circleId}/addmember")
@@ -317,5 +337,17 @@ public class MemberController {
             return true;
         }
         return false;
+    }
+
+    private void setCirclePhoto(CircleDTO circle, MultipartFile circlePhotoInput) {
+        try {
+            byte[] imageContent = circlePhotoInput.getBytes();
+
+            if (circlePhotoInput.getSize() < ONE_MEGABYTE) {
+                circle.setCirclePhoto(imageContent);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

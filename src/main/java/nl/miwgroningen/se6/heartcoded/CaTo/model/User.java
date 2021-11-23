@@ -58,6 +58,13 @@ public class User implements UserDetails {
         this.circleThree = 0;
     }
 
+    public User(String name, String password, String email) {
+        this.name = name;
+        this.email = email;
+        this.password = password;
+
+    }
+
     public User() {
     }
 
