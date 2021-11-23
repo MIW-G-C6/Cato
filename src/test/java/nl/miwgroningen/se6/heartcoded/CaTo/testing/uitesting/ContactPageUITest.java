@@ -9,10 +9,11 @@ import org.openqa.selenium.WebElement;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.junit.jupiter.api.Assertions.*;
+
 /**
  * @author Erwin Wegter <ewegter@gmail.com>
  *
- * Tests the contact page user interface of the WebApp
+ * Tests the contact page user interface of the WebApp.
  */
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
