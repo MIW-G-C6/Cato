@@ -84,7 +84,50 @@
             </div>
         </div>
 
+        <button id="historyBtn" class="catoButton" style="margin-left: 20px">History</button>
+
+        <div id="history" style="display: none">
+            <div th:each="taskLog : ${AllTaskLogs}" style="margin-left: 20px">
+                <div style="display: flex; flex-direction: column; padding-top: 10px; padding-bottom: 10px">
+                    <span><hr></span>
+                    <div class="mainEntry">
+                        <span th:text="${taskLog.userName}" style="font-weight: bold"></span>
+                        <span th:text="${taskLog.action.toString()}"></span>
+                        <span th:if="${taskLog.action.toString().equals('CREATED')}" th:text="'this task'" style="font-weight: bold"></span>
+                        <span th:if="${taskLog.action.toString().equals('UPDATED')}" th:text="'properties'" style="font-weight: bold"></span>
+                        <span th:unless="${taskLog.dateTime} == null" th:text="${#temporals.format(taskLog.dateTime, 'dd-MM-yyyy HH:mm')}" style="color: #8d8d8d;"></span>
+                    </div>
+                    <div style="color: #8d8d8d; padding-left: 20px;">
+                        <div class="subEntries" th:each="taskLogEntry : *{taskLog.taskLogEntries}" style="padding-top: 10px">
+                            <div>
+                                <span th:text="${taskLogEntry.changedProperty}" style="font-weight: bold; padding-top: 5px"></span>
+                                <br>
+                                <span th:text="${taskLogEntry.oldValue}"></span>
+                                <span>&emsp;&#8594;&emsp;</span>
+                                <span th:text="${taskLogEntry.newValue}"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+
+    <script>
+
+        var btn = document.getElementById("historyBtn");
+
+        var div = document.getElementById("history")
+
+        btn.onclick = function () {
+            if(div.style.display === "none") {
+                div.style.display = "block";
+            } else {
+                div.style.display = "none";
+            }
+        }
+
+    </script>
 </div>
 
 <div th:replace="fragments/general :: footer"></div>

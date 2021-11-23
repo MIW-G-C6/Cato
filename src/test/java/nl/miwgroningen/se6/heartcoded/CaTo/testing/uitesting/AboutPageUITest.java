@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.*;
 /**
  * @author Erwin Wegter <ewegter@gmail.com>
  *
- * Tests the about page user interface of the WebApp
+ * Tests the about page user interface of the WebApp.
  */
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
