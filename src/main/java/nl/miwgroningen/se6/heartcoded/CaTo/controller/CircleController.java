@@ -49,11 +49,11 @@ public class CircleController {
         session.setAttribute("allNotificationTasks", taskService.getAllNotificationTasksByUserId(currentUser));
 
         model.addAttribute("clientsCircleOne",
-                memberService.findAllClientsInCircle(userService.getCircleOne(currentUser)));
+                memberService.findAllClientsAndPhotoByCircleId(userService.getCircleOne(currentUser)));
         model.addAttribute("clientsCircleTwo",
-                memberService.findAllClientsInCircle(userService.getCircleTwo(currentUser)));
+                memberService.findAllClientsAndPhotoByCircleId(userService.getCircleTwo(currentUser)));
         model.addAttribute("clientsCircleThree",
-                memberService.findAllClientsInCircle(userService.getCircleThree(currentUser)));
+                memberService.findAllClientsAndPhotoByCircleId(userService.getCircleThree(currentUser)));
         model.addAttribute("lastThreeCircles", memberService.getLastThreeCirclesByUserId(currentUser));
         model.addAttribute("allCircles", memberService.allCirclesByUserIdWithAdminCheck(currentUser));
         return "circleOverview";
