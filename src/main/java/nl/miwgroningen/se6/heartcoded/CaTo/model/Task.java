@@ -106,7 +106,7 @@ public class Task {
         return assignedUser;
     }
 
-    public void setAssignedUser(User reservedByUser) {
-        this.assignedUser = reservedByUser;
+    public void setAssignedUser(User assignedUser) {
+        this.assignedUser = assignedUser;
     }
 }

@@ -1,74 +1,48 @@
 package nl.miwgroningen.se6.heartcoded.CaTo.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * @author Remco Lantinga <remco_lantinga@hotmail.com>
- * hier komt wat het programma doet
+ *
+ * Container for changes made to model Task.
  */
+
 @Entity
 public class TaskLog {
 
-    private static final String[] PRIORITY_OPTIONS = {"Low", "Medium", "High"};
-
-//    private static final String[] ACTIONS = {"CREATED", "UPDATED", "DELETED"};
-
-    public enum Actions {
-        CREATED, UPDATED, DELETED
-    }
-
-//    public enum Priorities {
-//        LOW, MEDIUM, HIGH
-//    }
-
     @Id
     @GeneratedValue
-    private Integer taskOperationsLogId;
+    private Integer taskLogId;
 
+    @Basic
+    @DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss")
     private LocalDateTime dateTime;
 
     private Integer taskId;
-//    Wat gebeurt er als je een Object verwijdert? Je history moet intact blijven.
-//    misschien daarom voor een String kiezen?
-//    private Task task;
 
-//    zijn userId's wel nodig?
     private Integer userId;
-//    private User user;
 
     private String userName;
 
-    private Actions action;
-//    Kun je hier beter voor een Enum kiezen of static final String array?
-//    private String action;
+    private TaskLogActions action;
 
-    private String description;
-
-//    private Priorities priority;
-    private String priority;
-
-    private Integer assignedUserid;
-
-    private String assignedUser;
-//    private User assignedUser;
-
+    @OneToMany(mappedBy = "taskLog", cascade = CascadeType.ALL)
+    private List<TaskLogEntry> taskLogEntries;
 
     public TaskLog() {
     }
 
-    public static String[] getPriorityOptions() {
-        return PRIORITY_OPTIONS;
+    public Integer getTaskLogId() {
+        return taskLogId;
     }
 
-    public Integer getTaskOperationsLogId() {
-        return taskOperationsLogId;
-    }
-
-    public void setTaskOperationsLogId(Integer taskOperationsLogId) {
-        this.taskOperationsLogId = taskOperationsLogId;
+    public void setTaskLogId(Integer taskLogId) {
+        this.taskLogId = taskLogId;
     }
 
     public LocalDateTime getDateTime() {
@@ -103,43 +77,19 @@ public class TaskLog {
         this.userName = userName;
     }
 
-    public Actions getAction() {
+    public TaskLogActions getAction() {
         return action;
     }
 
-    public void setAction(Actions action) {
+    public void setAction(TaskLogActions action) {
         this.action = action;
     }
 
-    public String getDescription() {
-        return description;
+    public List<TaskLogEntry> getTaskLogEntries() {
+        return taskLogEntries;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getPriority() {
-        return priority;
-    }
-
-    public void setPriority(String priority) {
-        this.priority = priority;
-    }
-
-    public Integer getAssignedUserid() {
-        return assignedUserid;
-    }
-
-    public void setAssignedUserid(Integer assignedUserid) {
-        this.assignedUserid = assignedUserid;
-    }
-
-    public String getAssignedUser() {
-        return assignedUser;
-    }
-
-    public void setAssignedUser(String assignedUser) {
-        this.assignedUser = assignedUser;
+    public void setTaskLogEntries(List<TaskLogEntry> taskLogEntries) {
+        this.taskLogEntries = taskLogEntries;
     }
 }

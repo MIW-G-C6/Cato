@@ -41,7 +41,7 @@ public class CircleOverviewUITest {
         WebElement careCircleLink = driver.findElement(By.linkText("Sunrise Home Care"));
         careCircleLink.click();
 
-        String expectedUrl = "http://localhost:8080/circles/46";
+        String expectedUrl = "http://localhost:8080/circles/47";
         assertEquals(expectedUrl, driver.getCurrentUrl());
         assertEquals("Circle dashboard", driver.getTitle());
 

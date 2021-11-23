@@ -7,6 +7,7 @@ import nl.miwgroningen.se6.heartcoded.CaTo.model.Circle;
 import nl.miwgroningen.se6.heartcoded.CaTo.model.Member;
 import nl.miwgroningen.se6.heartcoded.CaTo.model.Task;
 import nl.miwgroningen.se6.heartcoded.CaTo.model.TaskLog;
+import nl.miwgroningen.se6.heartcoded.CaTo.model.TaskLogActions;
 import nl.miwgroningen.se6.heartcoded.CaTo.repository.*;
 import nl.miwgroningen.se6.heartcoded.CaTo.mappers.TaskMapper;
 import org.springframework.stereotype.Service;
@@ -67,42 +68,44 @@ public class TaskService {
 
         taskRepository.deleteById(taskId);
 
-        taskLogService.saveTaskLog(task, userId, TaskLog.Actions.DELETED);
+        taskLogService.saveTaskLog(task, userId, TaskLogActions.DELETED);
     }
 
     public void save(TaskDTO taskDTO, Integer taskListId, Integer userId) {
         Task task = taskMapper.toTask(taskDTO);
         task.setTaskList(taskListRepository.getById(taskListId));
 
-        TaskLog.Actions action;
-
         if (task.getTaskId() == null) {
-            action = TaskLog.Actions.CREATED;
+            taskRepository.save(task);
+            taskLogService.saveTaskLog(task, userId, TaskLogActions.CREATED);
         } else {
+            Task oldTask = getOldTask(task.getTaskId());
             task.setAssignedUser(taskRepository.getById(task.getTaskId()).getAssignedUser());
-            action = TaskLog.Actions.UPDATED;
+            taskLogService.saveTaskLogUpdate(task, userId, oldTask);
+            taskRepository.save(task);
         }
-        taskRepository.save(task);
-
-        taskLogService.saveTaskLog(task, userId, action);
     }
 
     public void assignUser(Integer taskId, Integer userId) {
         Task task = taskRepository.getById(taskId);
+
+        Task oldTask = getOldTask(taskId);
+
         task.setAssignedUser(userRepository.getById(userId));
 
+        taskLogService.saveTaskLogUpdate(task, userId, oldTask);
         taskRepository.save(task);
-
-        taskLogService.saveTaskLog(task, userId, TaskLog.Actions.UPDATED);
     }
 
     public void unassignUser(Integer taskId, Integer userId) {
         Task task = taskRepository.getById(taskId);
+
+        Task oldTask = getOldTask(taskId);
+
         task.setAssignedUser(null);
 
+        taskLogService.saveTaskLogUpdate(task, userId, oldTask);
         taskRepository.save(task);
-
-        taskLogService.saveTaskLog(task, userId, TaskLog.Actions.UPDATED);
     }
 
     public Integer getTaskListIdByTaskId(Integer taskId) {
@@ -146,5 +149,18 @@ public class TaskService {
         return task.getPriority().equals("High") &&
                 (task.getAssignedUser() == null || Objects.equals(task.getAssignedUser().getUserId(), userId)) &&
                 task.getEndTime() != null;
+    }
+
+    private Task getOldTask(Integer taskId) {
+        Task task = taskRepository.getById(taskId);
+        Task oldTask = new Task();
+        oldTask.setTaskId(task.getTaskId());
+        oldTask.setAssignedUser(task.getAssignedUser());
+        oldTask.setTaskList(task.getTaskList());
+        oldTask.setDescription(task.getDescription());
+        oldTask.setPriority(task.getPriority());
+        oldTask.setStartTime(task.getStartTime());
+        oldTask.setEndTime(task.getEndTime());
+        return oldTask;
     }
 }
