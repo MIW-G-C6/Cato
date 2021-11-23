@@ -20,6 +20,7 @@
         <div class="profile-page-box">
             <div class="profile-picture-box">
                 <img th:unless="${profilePicture} == ''" th:src="@{'data:image/jpeg;base64,'+${profilePicture}}" class="profile-picture"/>
+<!--                <img th:if="${profilePicture} == ''" src="../static/css/images/Default-Profile-Picture.png">-->
             </div>
             <div class="profile-information">
                 <div class="profileInfoBar">

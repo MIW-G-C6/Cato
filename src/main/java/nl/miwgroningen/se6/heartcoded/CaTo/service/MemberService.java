@@ -2,16 +2,13 @@
 package nl.miwgroningen.se6.heartcoded.CaTo.service;
 
 import nl.miwgroningen.se6.heartcoded.CaTo.dto.*;
-import nl.miwgroningen.se6.heartcoded.CaTo.mappers.MemberWithProfilePicMapper;
+import nl.miwgroningen.se6.heartcoded.CaTo.mappers.*;
 import nl.miwgroningen.se6.heartcoded.CaTo.model.Circle;
 import nl.miwgroningen.se6.heartcoded.CaTo.model.Member;
 import nl.miwgroningen.se6.heartcoded.CaTo.model.User;
 import nl.miwgroningen.se6.heartcoded.CaTo.repository.MemberRepository;
 import nl.miwgroningen.se6.heartcoded.CaTo.repository.CircleRepository;
 import nl.miwgroningen.se6.heartcoded.CaTo.repository.UserRepository;
-import nl.miwgroningen.se6.heartcoded.CaTo.mappers.CircleMapper;
-import nl.miwgroningen.se6.heartcoded.CaTo.mappers.MemberMapper;
-import nl.miwgroningen.se6.heartcoded.CaTo.mappers.MemberSiteAdminMapper;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,6 +27,7 @@ public class MemberService {
     private final MemberMapper memberMapper;
     private final MemberWithProfilePicMapper memberWithProfilePicMapper;
     private final CircleMapper circleMapper;
+    private final UserMapper userMapper;
 
     private final MemberSiteAdminMapper memberSiteAdminMapper;
     private final CircleRepository circleRepository;
@@ -42,7 +40,8 @@ public class MemberService {
                          MemberSiteAdminMapper memberSiteAdminMapper,
                          CircleRepository circleRepository,
                          UserRepository userRepository,
-                         MemberRepository memberRepository) {
+                         MemberRepository memberRepository,
+                         UserMapper userMapper) {
         this.memberMapper = memberMapper;
         this.memberWithProfilePicMapper = memberWithProfilePicMapper;
         this.circleMapper = circleMapper;
@@ -50,6 +49,7 @@ public class MemberService {
         this.circleRepository = circleRepository;
         this.userRepository = userRepository;
         this.memberRepository = memberRepository;
+        this.userMapper = userMapper;
     }
 
     public List<MemberDTO> findAllMembers() {
@@ -133,14 +133,9 @@ public class MemberService {
     private List<MemberWithProfilePicDTO> getMemberWithProfileFromMemberList(List<Member> memberList) {
         List<MemberWithProfilePicDTO> result = new ArrayList<>();
         for (Member member : memberList) {
-            User thisUser = userRepository.getById(
-                    member.getUser().getUserId());
-            String profilePicture;
-            if (thisUser.getUserRole().equals("ROLE_ADMIN")) {
-                profilePicture = "";
-            } else {
-                profilePicture = Base64.getEncoder().encodeToString(thisUser.getProfilePicture());
-            }
+            UserDTO thisUser = userMapper.toDTO(userRepository.getById(member.getUser().getUserId()));
+
+            String profilePicture = Base64.getEncoder().encodeToString(thisUser.getProfilePicture());;
 
             result.add(memberWithProfilePicMapper.toDTO(member, profilePicture));
         }
