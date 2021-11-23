@@ -104,9 +104,9 @@ class MemberServiceTest {
         testUser2.setUserId(2);
 
         memberList.add(new Member(testCircle, new User() , "Caregiver", true));
-        memberList.add(new Member(testCircle, testUser1, "Client", false));
+        memberList.add(new Member(testCircle, testUser1, "Client", true));
         memberList.add(new Member(testCircle, new User(), "Caregiver", false));
-        memberList.add(new Member(testCircle, testUser2, "Client", true));
+        memberList.add(new Member(testCircle, testUser2, "Client", false));
 
         when(memberRepository.getAllByCircleCircleId(1)).thenReturn(memberList);
 
