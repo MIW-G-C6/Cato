@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
+import java.util.Base64;
 
 /**
  * @author Shalena Omapersad <shalenao@hotmail.com>
@@ -73,6 +74,8 @@ public class UserController {
         UserDTO user = userService.getById(userId);
 
         model.addAttribute("userIsCurrentUser", userService.getCurrentUser().getUserId().equals(userId));
+        model.addAttribute("currentProfilePicture", Base64.getEncoder().encodeToString(user.getProfilePicture()));
+//        Base64.getEncoder().encodeToString(user.getProfilePicture())
         model.addAttribute("user", user);
         return "editUserForm";
     }
@@ -88,6 +91,16 @@ public class UserController {
         model.addAttribute("userIsCurrentUser", userService.getCurrentUser().getUserId().equals(userId));
         model.addAttribute("user", user);
         return "editPasswordForm";
+    }
+
+    @GetMapping("/users/edit/{userId}/deleteProfilePicture")
+    protected String deleteProfilePicture(@PathVariable("userId") Integer userId) {
+        if (!userService.getCurrentUser().getUserId().equals(userId) && !userService.currentUserIsSiteAdmin()) {
+            return "redirect:/403";
+        }
+        userService.deleteProfilePicture(userId);
+
+        return "redirect:/users/edit/" + userId;
     }
 
     @PostMapping("/registration")

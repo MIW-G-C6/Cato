@@ -452,6 +452,22 @@ a.nav-link{
     border: 1px solid darkred;
 }
 
+.catoYesWarningButton a{
+    text-decoration: none;
+    display: inline-block;
+    padding: 8px 16px;
+    color: ghostwhite;
+    background-color: red;
+    border: 1px solid red;
+    border-radius: 4px;
+}
+
+.catoYesWarningButton:hover a {
+    background-color: darkred;
+    border: 1px solid darkred;
+}
+
+
 .custom-switch .custom-control-input:checked ~ .custom-control-label::before {
     background-color: #376B47;
     border: 1px solid #376B47;
@@ -880,6 +896,20 @@ input[type=email], input[type=password], input[type=text] {
     box-shadow: 0 0 11px rgba(33,33,33,.4);
     border-radius: 4px;
     object-fit: cover;
+}
+
+.profile-picture-edit {
+    /*width: 150px;*/
+    /*height: 150px;*/
+    max-height: 150px;
+    max-width: 150px;
+    margin-right: 25px;
+    box-shadow: 0 0 11px rgba(33,33,33,.4);
+    border-radius: 4px;
+    object-fit: fill;
+}
+.profile-picture-edit-container {
+    text-align: center;
 }
 
 .profile-picture-box {

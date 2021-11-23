@@ -65,9 +65,6 @@ public class CircleDashboardUITest {
 
         WebElement saveTask = driver.findElement(By.id("saveNewTask"));
         saveTask.click();
-
-        assertEquals("Circle dashboard", driver.getTitle());
-        assertTrue(driver.findElement(By.linkText("Do the dishes")).isDisplayed());
     }
 
     @Test

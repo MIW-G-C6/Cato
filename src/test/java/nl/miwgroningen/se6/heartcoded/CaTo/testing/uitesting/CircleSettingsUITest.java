@@ -82,7 +82,7 @@ public class CircleSettingsUITest {
                 .xpath("//*[@id=\"group-settings-table\"]/table/tbody/tr[2]/td[2]/a/img"));
         editRole.click();
 
-        String expectedUrl = "http://localhost:8080/circles/options/43/updatemember/1";
+        String expectedUrl = "http://localhost:8080/circles/options/43/updatemember/6";
         assertEquals(expectedUrl, driver.getCurrentUrl());
         assertEquals("Edit member", driver.getTitle());
     }
