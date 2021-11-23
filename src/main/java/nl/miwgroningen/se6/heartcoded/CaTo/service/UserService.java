@@ -5,7 +5,6 @@ import nl.miwgroningen.se6.heartcoded.CaTo.dto.UserEditPasswordDTO;
 import nl.miwgroningen.se6.heartcoded.CaTo.dto.UserRegistrationDTO;
 import nl.miwgroningen.se6.heartcoded.CaTo.mappers.*;
 import nl.miwgroningen.se6.heartcoded.CaTo.model.User;
-import nl.miwgroningen.se6.heartcoded.CaTo.repository.CircleRepository;
 import nl.miwgroningen.se6.heartcoded.CaTo.repository.UserRepository;
 import org.apache.commons.io.IOUtils;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -15,7 +14,6 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 import static org.aspectj.bridge.MessageUtil.fail;
@@ -28,6 +26,8 @@ import static org.aspectj.bridge.MessageUtil.fail;
 
 @Service
 public class UserService {
+
+    private static final String DEFAULT_PROFILE_PICTURE_PATH = "static/css/images/Default-Profile-Picture.png";
 
     private final UserRepository userRepository;
 
@@ -93,36 +93,15 @@ public class UserService {
             User user = userRegistrationMapper.toUser(userDTO);
             user.setUserRole("ROLE_USER");
 
-            try {
-                InputStream inputStream = getClass()
-                        .getClassLoader()
-                        .getResourceAsStream("static/css/images/Default-Profile-Picture.png");
-
-                if (inputStream == null) {
-                    fail("Unable to find resource");
-                } else {
-                    user.setProfilePicture(IOUtils.toByteArray(inputStream));
-                }
-            } catch (IOException ioException) {
-                System.out.println(ioException.getMessage());
-            }
             userRepository.save(user);
         }
     }
 
-    public void saveSeederUser(User user, String profilePictureFileName) {
-        user.setUserRole("ROLE_USER");
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        String inputStreamString;
-        if (profilePictureFileName.equals("")){
-            inputStreamString = "static/css/images/Default-Profile-Picture.png";
-        } else {
-            inputStreamString = "static/seederProfilePictures/" + profilePictureFileName;
-        }
+    private void setProfilePictureFromPath(User user, String s) {
         try {
             InputStream inputStream = getClass()
                     .getClassLoader()
-                    .getResourceAsStream(inputStreamString);
+                    .getResourceAsStream(s);
 
             if (inputStream == null) {
                 fail("Unable to find resource");
@@ -131,6 +110,23 @@ public class UserService {
             }
         } catch (IOException ioException) {
             System.out.println(ioException.getMessage());
+        }
+    }
+
+    public void deleteProfilePicture(Integer userId) {
+        User user = userRepository.getById(userId);
+        user.setProfilePicture(null);
+        userRepository.save(user);
+    }
+
+    public void saveSeederUser(User user, String profilePictureFileName) {
+        user.setUserRole("ROLE_USER");
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        String inputStreamString;
+
+        if (!profilePictureFileName.equals("")) {
+            inputStreamString = "static/seederProfilePictures/" + profilePictureFileName;
+            setProfilePictureFromPath(user, inputStreamString);
         }
         userRepository.save(user);
     }

@@ -1,7 +1,7 @@
 package nl.miwgroningen.se6.heartcoded.CaTo.testing.unittesting;
 
 import nl.miwgroningen.se6.heartcoded.CaTo.dto.MemberDTO;
-import nl.miwgroningen.se6.heartcoded.CaTo.mappers.MemberWithProfilePicMapper;
+import nl.miwgroningen.se6.heartcoded.CaTo.mappers.*;
 import nl.miwgroningen.se6.heartcoded.CaTo.model.Circle;
 import nl.miwgroningen.se6.heartcoded.CaTo.model.Member;
 import nl.miwgroningen.se6.heartcoded.CaTo.model.User;
@@ -9,9 +9,6 @@ import nl.miwgroningen.se6.heartcoded.CaTo.repository.CircleRepository;
 import nl.miwgroningen.se6.heartcoded.CaTo.repository.MemberRepository;
 import nl.miwgroningen.se6.heartcoded.CaTo.repository.UserRepository;
 import nl.miwgroningen.se6.heartcoded.CaTo.service.MemberService;
-import nl.miwgroningen.se6.heartcoded.CaTo.mappers.CircleMapper;
-import nl.miwgroningen.se6.heartcoded.CaTo.mappers.MemberMapper;
-import nl.miwgroningen.se6.heartcoded.CaTo.mappers.MemberSiteAdminMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -41,6 +38,7 @@ class MemberServiceTest {
     void setUp() {
         MemberMapper memberMapper = new MemberMapper();
         CircleMapper circleMapper = new CircleMapper();
+        UserMapper userMapper = new UserMapper();
         MemberSiteAdminMapper memberSiteAdminMapper = new MemberSiteAdminMapper();
         MemberWithProfilePicMapper memberWithProfilePicMapper = new MemberWithProfilePicMapper();
 
@@ -55,7 +53,7 @@ class MemberServiceTest {
         SecurityContextHolder.setContext(securityContext);
 
         memberService = new MemberService(memberMapper, memberWithProfilePicMapper, circleMapper, memberSiteAdminMapper,
-                circleRepository, userRepository, memberRepository);
+                circleRepository, userRepository, memberRepository, userMapper);
     }
 
     @Test
