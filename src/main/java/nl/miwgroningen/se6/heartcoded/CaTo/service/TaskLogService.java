@@ -60,6 +60,6 @@ public class TaskLogService {
     }
 
     public List<TaskLog> getAllByTaskId(Integer taskId) {
-        return taskLogRepository.getAllByTaskId(taskId);
+        return taskLogRepository.getAllByTaskIdOrderByDateTimeDesc(taskId);
     }
 }

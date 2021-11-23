@@ -7,6 +7,6 @@ import java.util.List;
 
 public interface TaskLogRepository extends JpaRepository<TaskLog, Integer> {
 
-    List<TaskLog> getAllByTaskId(Integer taskId);
+    List<TaskLog> getAllByTaskIdOrderByDateTimeDesc(Integer taskId);
 
 }

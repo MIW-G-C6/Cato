@@ -3,6 +3,7 @@ package nl.miwgroningen.se6.heartcoded.CaTo.model;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 /**
  * @author Remco Lantinga <remco_lantinga@hotmail.com>
@@ -15,9 +16,10 @@ public class TaskLogEntry {
 
     @Id
     @GeneratedValue
-    private Integer TaskLogEntryId;
+    private Integer taskLogEntryId;
 
-    private Integer TaskLogId;
+    @ManyToOne
+    private TaskLog taskLog;
 
     private String changedProperty;
 
@@ -30,19 +32,19 @@ public class TaskLogEntry {
     private String newValue;
 
     public Integer getTaskLogEntryId() {
-        return TaskLogEntryId;
+        return taskLogEntryId;
     }
 
     public void setTaskLogEntryId(Integer taskLogEntryId) {
-        TaskLogEntryId = taskLogEntryId;
+        this.taskLogEntryId = taskLogEntryId;
     }
 
-    public Integer getTaskLogId() {
-        return TaskLogId;
+    public TaskLog getTaskLog() {
+        return taskLog;
     }
 
-    public void setTaskLogId(Integer taskLogId) {
-        TaskLogId = taskLogId;
+    public void setTaskLog(TaskLog taskLog) {
+        this.taskLog = taskLog;
     }
 
     public String getChangedProperty() {

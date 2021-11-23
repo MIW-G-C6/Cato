@@ -2,6 +2,7 @@ package nl.miwgroningen.se6.heartcoded.CaTo.controller;
 
 import nl.miwgroningen.se6.heartcoded.CaTo.dto.TaskDTO;
 import nl.miwgroningen.se6.heartcoded.CaTo.dto.TaskListDTO;
+import nl.miwgroningen.se6.heartcoded.CaTo.model.TaskLog;
 import nl.miwgroningen.se6.heartcoded.CaTo.repository.TaskLogRepository;
 import nl.miwgroningen.se6.heartcoded.CaTo.service.*;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -19,6 +20,7 @@ import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Optional;
 
 /**

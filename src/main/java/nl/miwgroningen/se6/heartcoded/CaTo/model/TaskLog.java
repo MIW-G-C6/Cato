@@ -2,11 +2,9 @@ package nl.miwgroningen.se6.heartcoded.CaTo.model;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.Basic;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * @author Remco Lantinga <remco_lantinga@hotmail.com>
@@ -32,6 +30,9 @@ public class TaskLog {
     private String userName;
 
     private TaskLogActions action;
+
+    @OneToMany(mappedBy = "taskLog", cascade = CascadeType.ALL)
+    private List<TaskLogEntry> taskLogEntries;
 
     public TaskLog() {
     }
@@ -82,5 +83,13 @@ public class TaskLog {
 
     public void setAction(TaskLogActions action) {
         this.action = action;
+    }
+
+    public List<TaskLogEntry> getTaskLogEntries() {
+        return taskLogEntries;
+    }
+
+    public void setTaskLogEntries(List<TaskLogEntry> taskLogEntries) {
+        this.taskLogEntries = taskLogEntries;
     }
 }
