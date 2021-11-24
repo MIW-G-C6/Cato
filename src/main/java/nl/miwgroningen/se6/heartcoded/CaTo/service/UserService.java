@@ -194,7 +194,7 @@ public class UserService {
         List<User> userList = userRepository.findByNameContains(keyword);
         removeSiteAdminFromList(userList);
 
-        return userMapper.toDTO(userList);
+        return userMapper.toDTONoProfilePicture(userList);
     }
 
     private void removeSiteAdminFromList(List<User> userList) {

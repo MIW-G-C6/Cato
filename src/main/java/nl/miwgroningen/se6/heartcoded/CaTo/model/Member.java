@@ -15,11 +15,11 @@ public class Member {
     private static final String[] CIRCLE_ROLE_OPTIONS = {"Caregiver", "Client"};
 
     @Id
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Circle circle;
 
     @Id
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private User user;
 
     private String userRole;
