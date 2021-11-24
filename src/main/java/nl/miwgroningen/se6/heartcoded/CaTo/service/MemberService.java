@@ -218,7 +218,6 @@ public class MemberService {
                 break;
             }
         }
-
         return result;
     }
 
@@ -235,18 +234,15 @@ public class MemberService {
                 return true;
             }
         }
-
         return false;
     }
 
     public boolean userIsCircleAdmin(Integer circleId, Integer userId) {
-//        Integer userId = getCurrentUser().getUserId();
         Optional<Member> member = memberRepository.findMemberByUserUserIdAndCircleCircleId(userId, circleId);
 
         if (member.isPresent()) {
             return member.get().isAdmin();
         }
-
         return false;
     }
 
@@ -259,7 +255,6 @@ public class MemberService {
                 return true;
             }
         }
-
         return false;
     }
 
