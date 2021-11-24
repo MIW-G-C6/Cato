@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class ForbiddenController {
 
     @GetMapping("/403")
-    protected String showForbidden(Model model) {
+    protected String showForbidden() {
         return "forbiddenPage";
     }
 }
