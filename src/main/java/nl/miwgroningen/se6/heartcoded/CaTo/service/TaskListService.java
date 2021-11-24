@@ -1,6 +1,7 @@
 package nl.miwgroningen.se6.heartcoded.CaTo.service;
 
 import nl.miwgroningen.se6.heartcoded.CaTo.dto.CircleDTO;
+import nl.miwgroningen.se6.heartcoded.CaTo.dto.TaskDTO;
 import nl.miwgroningen.se6.heartcoded.CaTo.dto.TaskListDTO;
 import nl.miwgroningen.se6.heartcoded.CaTo.model.Circle;
 import nl.miwgroningen.se6.heartcoded.CaTo.model.TaskList;
@@ -9,8 +10,7 @@ import nl.miwgroningen.se6.heartcoded.CaTo.repository.TaskListRepository;
 import nl.miwgroningen.se6.heartcoded.CaTo.mappers.TaskListMapper;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * @author Paul Romkes <p.r.romkes@gmail.com
@@ -67,5 +67,47 @@ public class TaskListService {
         Optional<TaskList> taskList = taskListRepository.findByCircleCircleId(circleId);
         taskList.ifPresent(list -> taskListRepository.deleteById(list.getTaskListId()));
      }
+
+     public List<TaskDTO> sortListByPriority(List<TaskDTO> unorderedList) {
+        List<TaskDTO> result = unorderedList;
+        sortTaskListByPriority(result);
+        return result;
+     }
+
+
+    public List<TaskDTO> sortTaskListByPriority(List<TaskDTO> unorderedList) {
+        List<TaskDTO> result = new ArrayList<>();
+
+        int highCounter = 0;
+        int mediumCounter = 0;
+
+        for (TaskDTO taskDTO : unorderedList) {
+            if(taskDTO.getPriority().equals("High")) {
+                highCounter++;
+                result.add(0, taskDTO);
+            } else if (taskDTO.getPriority().equals("Medium")) {
+                mediumCounter++;
+                result.add(highCounter, taskDTO);
+            } else {
+                result.add((highCounter + mediumCounter), taskDTO);
+            }
+        }
+        return result;
+    }
+
+    public List<TaskDTO> sortTaskListByEndDate(List<TaskDTO> list) {
+        List<TaskDTO> result = new ArrayList<>();
+        List<TaskDTO> nullResult = new ArrayList<>();
+        for (TaskDTO taskDTO : list) {
+            if (taskDTO.getEndTime() != null) {
+                result.add(taskDTO);
+            } else {
+                nullResult.add(taskDTO);
+            }
+        }
+        result.sort(Comparator.comparing(TaskDTO::getEndTime));
+        result.addAll(nullResult);
+        return result;
+    }
 }
 

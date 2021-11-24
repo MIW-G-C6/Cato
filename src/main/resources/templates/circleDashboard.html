@@ -30,17 +30,18 @@
                     <h5 class="table-header">Clients</h5>
                     <div class="circle-members-grid" th:each="client : ${photoClients}">
                         <div th:title="${client.userName}" th:onclick="|window.location.href='@{/profilepage/{userId}(userId=${client.userId})}'|" class="member-pictures-container pointer">
-                            <div class="member-pictures">
-                                <img th:unless="${client.profilePicture} == ''" th:src="@{'data:image/jpeg;base64,'+${client.profilePicture}}" class="member-pictures"/>
+                            <div>
+                                <div th:if="${client.admin}">
+                                    <img th:unless="${client.profilePicture} == ''" th:src="@{'data:image/jpeg;base64,'+${client.profilePicture}}" class="admin-pictures"/>
+                                </div>
+                                <div  th:unless="${client.admin}">
+                                    <img th:unless="${client.profilePicture} == ''" th:src="@{'data:image/jpeg;base64,'+${client.profilePicture}}" class="member-pictures"/>
+                                </div>
                             </div>
                             <div class="member-name-under-picture-box">
-                                <div class="admin-key-box">
-                                    <span th:if="${client.admin}"><i class="fa fa-key"></i></span>
-                                </div>
                                 <div class="member-name-box">
                                     <span th:text="${client.userName}"></span>
                                 </div>
-                                <br>
                             </div>
                         </div>
                     </div>
@@ -50,14 +51,15 @@
                     <h5 class="table-header">Caregivers</h5>
                     <div class="circle-members-grid" th:each="thisCaregiver : ${photoCaregivers}">
                         <div th:title="${thisCaregiver.userName}" th:onclick="|window.location.href='@{/profilepage/{userId}(userId=${thisCaregiver.userId})}'|" class="member-pictures-container pointer">
-                            <div class="member-pictures">
-                                <img th:unless="${thisCaregiver.profilePicture} == ''" th:src="@{'data:image/jpeg;base64,'+${thisCaregiver.profilePicture}}" class="member-pictures"/>
+                            <div>
+                                <div  th:if="${thisCaregiver.admin}">
+                                    <img th:unless="${thisCaregiver.profilePicture} == ''" th:src="@{'data:image/jpeg;base64,'+${thisCaregiver.profilePicture}}" class="admin-pictures"/>
+                                </div>
+                                <div  th:unless="${thisCaregiver.admin}">
+                                    <img th:unless="${thisCaregiver.profilePicture} == ''" th:src="@{'data:image/jpeg;base64,'+${thisCaregiver.profilePicture}}" class="member-pictures"/>
+                                </div>
                             </div>
                             <div class="member-name-under-picture-box">
-                                <div class="admin-key-box">
-                                    <span th:if="${thisCaregiver.admin}"><i class="fa fa-key"></i></span>
-                                    <span th:unless="${thisCaregiver.admin}"><i class="fa fa-key font-hidden" ></i> </span>
-                                </div>
                                 <div class="member-name-box">
                                     <span th:text="${thisCaregiver.userName}"></span>
                                 </div>
@@ -66,29 +68,96 @@
                     </div>
                 </div>
             </div>
+
             <div class="general-table-layout" id="gd-tasklist">
-                <h5 class="table-header">Task List</h5>
-                <table>
-                    <tr th:if="${taskList.isEmpty()}">
-                        <td>There are no tasks yet, <a class="cato-hyperlink" th:href="@{/circles/{circleId}/taskLists/{taskListId}/new(circleId=${circleId}, taskListId=${taskListId})}">click here</a> to add a new task</td>
-                    </tr>
-                    <tr th:each="task : ${taskList}">
-                        <td id="task-description">
-                            <a th:href="@{/circles/{circleId}/taskLists/{taskListId}/{taskId} (circleId=${circleId}, taskListId=${taskListId}, taskId=${task.taskId})}" th:text="${task.description}" title="show task details"></a>
-                        </td>
-                        <td>
-                            <span th:text="${task.priority}"></span>
-                            <span th:text="priority"></span>
-                        </td>
-                        <td title="assigned to">
+                <div>
+                    <div class="taskList-header">
+                        <h5 class="table-header">Task List</h5>
+                    </div>
+                    <div class="taskList-buttons">
+                        <div><button id="sortOnPriorityBtn" class="catoButtonSmall" onclick="sortOnPriority()">Sort by priority</button></div>
+                        <div><button id="sortOnEndDateBtn" class="catoButtonSmall" onclick="sortOnEndDate()">Sort by end date</button></div>
+                    </div>
+                </div>
+
+                <div id="taskListByPriority">
+                    <table>
+                        <tr th:if="${taskList.isEmpty()}">
+                            <td>There are no tasks yet, <a class="cato-hyperlink" th:href="@{/circles/{circleId}/taskLists/{taskListId}/new(circleId=${circleId}, taskListId=${taskListId})}">click here</a> to add a new task</td>
+                        </tr>
+                        <tr th:each="task : ${taskList}">
+                            <td>
+                                <div class="flex-column">
+                                    <div>
+                                        <a th:href="@{/circles/{circleId}/taskLists/{taskListId}/{taskId} (circleId=${circleId}, taskListId=${taskListId}, taskId=${task.taskId})}" th:text="${task.description}" title="show task details"></a>
+                                    </div>
+                                    <div>
+                                        <span class="date-light-grey" th:if="${task.endTime != null}" th:text="${#temporals.format(task.endTime, 'dd-MM-yyyy')}"></span>
+                                        <span class="date-light-grey" th:unless="${task.endTime}" th:text="'-'"></span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div th:if="${task.priority.equals('High')}" class="priorityBanner" style="background-color: #ff4f42">
+                                    <span th:text="${task.priority}"></span>
+                                </div>
+                                <div th:if="${task.priority.equals('Medium')}" class="priorityBanner" style="background-color: #ffb145">
+                                    <span th:text="${task.priority}"></span>
+                                </div>
+                                <div th:if="${task.priority.equals('Low')}" class="priorityBanner" style="background-color: #fff759">
+                                    <span th:text="${task.priority}"></span>
+                                </div>
+                            </td>
+                            <td title="assigned to">
                             <span th:if="${task.assignedUserName == ''}">
                                 <a th:href="@{/circles/{circleId}/task/{taskId}/assign(taskId=${task.taskId}, circleId=${circleId})}">Assign to me</a>
                             </span>
-                            <span th:unless="${task.assignedUserName == ''}" th:text="${task.assignedUserName}"></span>
-                        </td>
-                        <td class="delete"><a th:href="@{'/task/delete/' + ${task.taskId}}"><img th:src="@{/css/images/checkmark-icon.svg}" height="20" width="20" title="Task completed"></a></td>
-                    </tr>
-                </table>
+                                <span th:unless="${task.assignedUserName == ''}" th:text="${task.assignedUserName}"></span>
+                            </td>
+                            <td class="delete"><a th:href="@{'/task/delete/' + ${task.taskId}}"><img th:src="@{/css/images/checkmark-icon.svg}" height="20" width="20" title="Task completed"></a></td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div id="taskListByEndDate">
+                    <table>
+                        <tr th:if="${taskListByEndDate.isEmpty()}">
+                            <td>There are no tasks yet, <a class="cato-hyperlink" th:href="@{/circles/{circleId}/taskLists/{taskListId}/new(circleId=${circleId}, taskListId=${taskListId})}">click here</a> to add a new task</td>
+                        </tr>
+
+                        <tr th:each="task : ${taskListByEndDate}">
+                            <td>
+                                <div class="flex-column">
+                                    <div>
+                                        <a th:href="@{/circles/{circleId}/taskLists/{taskListId}/{taskId} (circleId=${circleId}, taskListId=${taskListId}, taskId=${task.taskId})}" th:text="${task.description}" title="show task details"></a>
+                                    </div>
+                                    <div>
+                                        <span class="date-light-grey" th:if="${task.endTime != null}" th:text="${#temporals.format(task.endTime, 'dd-MM-yyyy')}"></span>
+                                        <span class="date-light-grey" th:unless="${task.endTime}" th:text="'-'"></span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div th:if="${task.priority.equals('High')}" class="priorityBanner" style="background-color: #ff4f42">
+                                    <span th:text="${task.priority}"></span>
+                                </div>
+                                <div th:if="${task.priority.equals('Medium')}" class="priorityBanner" style="background-color: #ffb145">
+                                    <span th:text="${task.priority}"></span>
+                                </div>
+                                <div th:if="${task.priority.equals('Low')}" class="priorityBanner" style="background-color: #fff759">
+                                    <span th:text="${task.priority}"></span>
+                                </div>
+                            </td>
+                            <td title="assigned to">
+                            <span th:if="${task.assignedUserName == ''}">
+                                <a th:href="@{/circles/{circleId}/task/{taskId}/assign(taskId=${task.taskId}, circleId=${circleId})}">Assign to me</a>
+                            </span>
+                                <span th:unless="${task.assignedUserName == ''}" th:text="${task.assignedUserName}"></span>
+                            </td>
+                            <td class="delete"><a th:href="@{'/task/delete/' + ${task.taskId}}"><img th:src="@{/css/images/checkmark-icon.svg}" height="20" width="20" title="Task completed"></a></td>
+                        </tr>
+                    </table>
+                </div>
             </div>
             <br>
             <ul class="cato-ul">
@@ -148,10 +217,25 @@
 
     // When the user clicks anywhere outside of the modal, close it
     window.onclick = function(event) {
-        if (event.target == modal) {
+        if (event.target === modal) {
             modal.style.display = "none";
         }
     }
+
+    const priorityTarget = document.getElementById('taskListByPriority');
+    const endDateTarget = document.getElementById('taskListByEndDate');
+
+    function sortOnEndDate() {
+        endDateTarget.style.display = "block";
+        priorityTarget.style.display = "none";
+
+    }
+
+    function sortOnPriority() {
+        endDateTarget.style.display = "none";
+        priorityTarget.style.display = "block";
+    }
+
 </script>
 
 <div th:replace="fragments/general :: footer"></div>

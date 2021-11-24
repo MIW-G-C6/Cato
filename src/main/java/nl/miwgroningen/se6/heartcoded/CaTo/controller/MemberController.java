@@ -2,6 +2,7 @@ package nl.miwgroningen.se6.heartcoded.CaTo.controller;
 
 import nl.miwgroningen.se6.heartcoded.CaTo.dto.CircleDTO;
 import nl.miwgroningen.se6.heartcoded.CaTo.dto.MemberDTO;
+import nl.miwgroningen.se6.heartcoded.CaTo.dto.TaskDTO;
 import nl.miwgroningen.se6.heartcoded.CaTo.service.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,7 +13,9 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.Base64;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -70,9 +73,13 @@ public class MemberController {
             model.addAttribute("circlePhoto", Base64.getEncoder().encodeToString(thisCircle.getCirclePhoto()));
         }
 
+        List<TaskDTO> taskListByPriority = taskListService.sortTaskListByPriority(taskService.getAllTasksByCircleId(circleId));
+        List<TaskDTO> taskListByEndDate = taskListService.sortTaskListByEndDate(taskListByPriority);
+
         model.addAttribute("thisCircle", thisCircle);
         model.addAttribute("taskListId", taskListService.getByCircleId(circleId).getTaskListId());
-        model.addAttribute("taskList", taskService.getAllTasksByCircleId(circleId));
+        model.addAttribute("taskList", taskListByPriority);
+        model.addAttribute("taskListByEndDate", taskListByEndDate);
         model.addAttribute("thisUserIsAdmin", memberService.userIsCircleAdmin(circleId, currentUser));
         model.addAttribute("currentUserIsSiteAdmin", userService.currentUserIsSiteAdmin());
         return "circleDashboard";

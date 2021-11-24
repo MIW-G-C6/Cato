@@ -388,6 +388,24 @@ a.nav-link{
     cursor: pointer;
 }
 
+.catoButtonSmall {
+    font-size: small;
+    text-decoration: none;
+    display: inline-block;
+    padding: 2px 4px;
+    color: black;
+    background-color: transparent;
+    border: 1px solid black;
+    border-radius: 4px;
+}
+
+.catoButtonSmall:hover {
+    text-decoration: none;
+    background-color: #cafad9;
+    color: black;
+    cursor: pointer;
+}
+
 .catoButton-logIn{
     text-decoration: none;
     display: inline-block;
@@ -986,8 +1004,29 @@ input[type=email], input[type=password], input[type=text] {
     object-fit: cover;
 }
 
+.admin-pictures {
+    width: 60px;
+    border-radius: 4px;
+    object-fit: cover;
+    border: 4px solid cadetblue;
+}
+
+.co-member-pictures {
+    width: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.co-box {
+    display: flex;
+    flex-direction: row;
+    align-self: flex-start;
+    padding-left: 35px;
+}
+
 .member-name-under-picture-box {
     font-size: small;
+    text-align: center;
     text-decoration: underline;
     text-decoration-color: #a7a7a7;
     display: flex;
@@ -1019,4 +1058,39 @@ input[type=email], input[type=password], input[type=text] {
 
 .font-hidden {
     color: transparent;
+}
+
+.priorityBanner {
+    font-size: 14px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+}
+
+#taskListByEndDate {
+    display: none;
+}
+
+.date-light-grey {
+    color: #a7a7a7;
+}
+
+.taskList-buttons {
+    display: flex;
+    float: right;
+    gap: 10px;
+    padding-top: 10px;
+    padding-right: 10px;
+    padding-bottom: 10px;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+
+.taskList-header {
+    float: left;
+}
+
+#sortOnEndDateBtn,
+#sortOnPriorityBtn{
+    justify-self: flex-end;
 }
