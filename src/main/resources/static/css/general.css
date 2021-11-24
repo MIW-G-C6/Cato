@@ -898,18 +898,42 @@ input[type=email], input[type=password], input[type=text] {
     object-fit: cover;
 }
 
+.profile-picture-edit-container {
+    position: relative;
+    width: 150px;
+    max-height: 189px;
+}
+
 .profile-picture-edit {
-    /*width: 150px;*/
-    /*height: 150px;*/
-    max-height: 150px;
-    max-width: 150px;
-    margin-right: 25px;
+    height: auto;
+    max-height: 155px;
+    max-width:100%;
+    margin:auto;
+    display: block;
+    transition: .5s ease;
+    backface-visibility: hidden;
     box-shadow: 0 0 11px rgba(33,33,33,.4);
     border-radius: 4px;
-    object-fit: fill;
+    object-fit: contain;
 }
-.profile-picture-edit-container {
+
+.remove-button {
+    transition: .5s ease;
+    opacity: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
     text-align: center;
+}
+
+.profile-picture-edit-container:hover .profile-picture-edit {
+    opacity: 0.3;
+}
+
+.profile-picture-edit-container:hover .remove-button {
+    opacity: 1;
 }
 
 .profile-picture-box {
@@ -925,11 +949,15 @@ input[type=email], input[type=password], input[type=text] {
     align-items: flex-start;
 }
 
+.profile-edit-save-cancel-buttons {
+    margin-top: 35px;
+    float:right;
+}
+
 .circle-photo {
     width: auto;
     height: 105px;
     width: 105px;
-
     box-shadow: 0 0 11px rgba(33,33,33,.4);
     border-radius: 4px;
     object-fit: cover;
