@@ -96,21 +96,28 @@ public class CircleService {
     }
 
     public List<CircleClientDTO> findWithNameContains(String keyword) {
-        List<CircleClientDTO> findWithClientNameList = findWithClientName(keyword);
-        List<CircleClientDTO> findWithCircleNameList = findCircleWithName(keyword);
-        List<CircleClientDTO> result = new ArrayList<>();
-        result.addAll(findWithCircleNameList);
+        List<Integer> findWithClientNameList = findWithClientName(keyword);
+        List<Integer> findWithCircleNameList = findCircleWithName(keyword);
+        List<Integer> totalList = new ArrayList<>();
+        totalList.addAll(findWithClientNameList);
+        totalList.addAll(findWithCircleNameList);
 
-        if(!keyword.isEmpty()) {
-            result.addAll(findWithClientNameList);
-            Set<CircleClientDTO> circleClientDTOSet = new HashSet<>(result);
-            result.clear();
-            result.addAll(circleClientDTOSet);
-        }
+        Set<Integer> circleIdSet = new HashSet<>(totalList);
+        totalList.clear();
+        totalList.addAll(circleIdSet);
+
+        List<CircleClientDTO> result = new ArrayList<>();
+
+        for (Integer circleId : totalList) {
+            List <MemberDTO> clientList = getClientsByCircleId(circleId);
+            String circleName = circleRepository.getById(circleId).getCircleName();
+            result.add(new CircleClientDTO(circleId, circleName, clientList));
+            }
+
         return result;
     }
 
-    private List<CircleClientDTO> findWithClientName(String keyword) {
+    private List<Integer> findWithClientName(String keyword) {
         List<Member> clientList = new ArrayList<>();
         List<User> userList = userRepository.findByNameContains(keyword);
 
@@ -123,15 +130,14 @@ public class CircleService {
             }
         }
 
-        List<CircleClientDTO> result = new ArrayList<>();
+        List<Integer> result = new ArrayList<>();
         if(!clientList.isEmpty()) {
             for (Member client : clientList) {
-                Integer circleId = client.getCircle().getCircleId();
-                List<MemberDTO> clientDTOList = getClientsByCircleId(circleId);
-                result.add(new CircleClientDTO(circleId, client.getCircle().getCircleName(), clientDTOList));
+                result.add(client.getCircle().getCircleId());
             }
         }
-        Set<CircleClientDTO> circleClientDTOSet = new HashSet<>(result);
+
+        Set<Integer> circleClientDTOSet = new HashSet<>(result);
         result.clear();
         result.addAll(circleClientDTOSet);
 
@@ -143,13 +149,11 @@ public class CircleService {
                 memberRepository.getMemberByCircle_CircleIdAndUserRoleContains(circleId, "Client"));
     }
 
-    private List<CircleClientDTO> findCircleWithName(String keyword) {
+    private List<Integer> findCircleWithName(String keyword) {
         List<Circle> circleList = circleRepository.findByCircleNameContains(keyword);
-
-        List<CircleClientDTO> result = new ArrayList<>();
+        List<Integer> result = new ArrayList<>();
         for (Circle circle : circleList) {
-            List<MemberDTO> clientDTOList = getClientsByCircleId(circle.getCircleId());
-            result.add(new CircleClientDTO(circle.getCircleId(), circle.getCircleName(), clientDTOList));
+            result.add(circle.getCircleId());
         }
         return result;
     }
