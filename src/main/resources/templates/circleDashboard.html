@@ -87,6 +87,17 @@
                         </tr>
                         <tr th:each="task : ${taskList}">
                             <td>
+                                <div th:if="${task.priority.equals('High')}" >
+                                    <img th:src="@{/css/images/highPriority.png}" height="30" alt="High priority">
+                                </div>
+                                <div th:if="${task.priority.equals('Medium')}">
+                                    <img th:src="@{/css/images/mediumPriority.png}" height="30" alt="Medium priority">
+                                </div>
+                                <div th:if="${task.priority.equals('Low')}">
+                                    <img th:src="@{/css/images/lowPriority.png}" height="30" alt="Low priority">
+                                </div>
+                            </td>
+                            <td>
                                 <div class="flex-column">
                                     <div>
                                         <a th:href="@{/circles/{circleId}/taskLists/{taskListId}/{taskId} (circleId=${circleId}, taskListId=${taskListId}, taskId=${task.taskId})}" th:text="${task.description}" title="show task details"></a>
@@ -97,20 +108,10 @@
                                     </div>
                                 </div>
                             </td>
-                            <td>
-                                <div th:if="${task.priority.equals('High')}" class="priorityBanner" style="background-color: #ff4f42">
-                                    <span th:text="${task.priority}"></span>
-                                </div>
-                                <div th:if="${task.priority.equals('Medium')}" class="priorityBanner" style="background-color: #ffb145">
-                                    <span th:text="${task.priority}"></span>
-                                </div>
-                                <div th:if="${task.priority.equals('Low')}" class="priorityBanner" style="background-color: #fff759">
-                                    <span th:text="${task.priority}"></span>
-                                </div>
-                            </td>
+
                             <td title="assigned to">
                             <span th:if="${task.assignedUserName == ''}">
-                                <a th:href="@{/circles/{circleId}/task/{taskId}/assign(taskId=${task.taskId}, circleId=${circleId})}">Assign to me</a>
+                                <a th:href="@{/circles/{circleId}/task/{taskId}/assign(taskId=${task.taskId}, circleId=${circleId})}">Take on task</a>
                             </span>
                                 <span th:unless="${task.assignedUserName == ''}" th:text="${task.assignedUserName}"></span>
                             </td>
@@ -127,6 +128,17 @@
 
                         <tr th:each="task : ${taskListByEndDate}">
                             <td>
+                                <div th:if="${task.priority.equals('High')}" >
+                                    <img th:src="@{/css/images/highPriority.png}" height="30" alt="High priority">
+                                </div>
+                                <div th:if="${task.priority.equals('Medium')}">
+                                    <img th:src="@{/css/images/mediumPriority.png}" height="30" alt="Medium priority">
+                                </div>
+                                <div th:if="${task.priority.equals('Low')}">
+                                    <img th:src="@{/css/images/lowPriority.png}" height="30" alt="Low priority">
+                                </div>
+                            </td>
+                            <td>
                                 <div class="flex-column">
                                     <div>
                                         <a th:href="@{/circles/{circleId}/taskLists/{taskListId}/{taskId} (circleId=${circleId}, taskListId=${taskListId}, taskId=${task.taskId})}" th:text="${task.description}" title="show task details"></a>
@@ -137,20 +149,9 @@
                                     </div>
                                 </div>
                             </td>
-                            <td>
-                                <div th:if="${task.priority.equals('High')}" class="priorityBanner" style="background-color: #ff4f42">
-                                    <span th:text="${task.priority}"></span>
-                                </div>
-                                <div th:if="${task.priority.equals('Medium')}" class="priorityBanner" style="background-color: #ffb145">
-                                    <span th:text="${task.priority}"></span>
-                                </div>
-                                <div th:if="${task.priority.equals('Low')}" class="priorityBanner" style="background-color: #fff759">
-                                    <span th:text="${task.priority}"></span>
-                                </div>
-                            </td>
                             <td title="assigned to">
                             <span th:if="${task.assignedUserName == ''}">
-                                <a th:href="@{/circles/{circleId}/task/{taskId}/assign(taskId=${task.taskId}, circleId=${circleId})}">Assign to me</a>
+                                <a th:href="@{/circles/{circleId}/task/{taskId}/assign(taskId=${task.taskId}, circleId=${circleId})}">Take on task</a>
                             </span>
                                 <span th:unless="${task.assignedUserName == ''}" th:text="${task.assignedUserName}"></span>
                             </td>
@@ -235,6 +236,15 @@
         endDateTarget.style.display = "none";
         priorityTarget.style.display = "block";
     }
+
+    let msg = document.getElementById('highPriority').value;
+    let g = document.createElement('highPriorityIcon');
+    g.innerHTML = '&#x2B22;';
+    let z = g.innerHTML;
+
+    document.getElementById('highPriority').value = msg + '' + z;
+
+    delete(g);
 
 </script>
 
