@@ -25,42 +25,60 @@
                     <span class="circle-header-key" th:if="*{get(0).userIsCircleAdmin}"><i class="fa fa-key"></i></span>
                     <h1 th:text="*{get(0).circleName}"></h1>
                 </div>
-                <table >
-                    <tr>Clients</tr>
-                    <br>
-                    <tr class="tr-plain" th:if="${(clientsCircleOne.isEmpty())}">There are no clients in this circle</tr>
-                    <tr class="tr-plain" th:if="${!(clientsCircleOne.isEmpty())}" th:each="client : ${clientsCircleOne}">
-                        <td th:text="${client.userName}"></td>
-                    </tr>
-                </table>
+                <h6>Clients</h6>
+                <br>
+                <div th:if="${(clientsCircleOne.isEmpty())}"><p>There are no clients in this circle</p></div>
+                <div th:if="${!(clientsCircleOne.isEmpty())}" th:each="client : ${clientsCircleOne}">
+                    <div th:title="${client.userName}" th:onclick="|window.location.href='@{/profilepage/{userId}(userId=${client.userId})}'|">
+                        <div class="co-box">
+                            <div class="co-member-pictures">
+                                <img th:unless="${client.profilePicture} == ''" th:src="@{'data:image/jpeg;base64,'+${client.profilePicture}}" class="co-member-pictures"/>
+                            </div>
+                            <span th:text="${client.userName}" style="padding-left: 20px; align-self: center"></span>
+                        </div>
+                        <br>
+                    </div>
+                </div>
             </div>
             <div th:if="${!(lastThreeCircles.get(1).circleId == 0)}" class="circle-overview-circle-banner" th:onclick="|window.location.href='@{/circles/{circleId}(circleId=${lastThreeCircles.get(1).circleId})}'|">
                 <div class="last-three-circle-header">
                     <span class="circle-header-key" th:if="*{get(1).userIsCircleAdmin}"><i class="fa fa-key"></i></span>
                     <h1 th:text="*{get(1).circleName}"></h1>
                 </div>
-                <table >
-                    <tr>Clients</tr>
-                    <br>
-                    <tr class="tr-plain" th:if="${(clientsCircleTwo.isEmpty())}">There are no clients in this circle</tr>
-                    <tr class="tr-plain" th:if="${!(clientsCircleTwo.isEmpty())}" th:each="client : ${clientsCircleTwo}">
-                        <td th:text="${client.userName}"></td>
-                    </tr>
-                </table>
+                <h6>Clients</h6>
+                <br>
+                <div th:if="${(clientsCircleTwo.isEmpty())}"><p>There are no clients in this circle</p></div>
+                <div th:if="${!(clientsCircleTwo.isEmpty())}" th:each="client : ${clientsCircleTwo}">
+                    <div th:title="${client.userName}" th:onclick="|window.location.href='@{/profilepage/{userId}(userId=${client.userId})}'|">
+                        <div class="co-box">
+                            <div class="co-member-pictures">
+                                <img th:unless="${client.profilePicture} == ''" th:src="@{'data:image/jpeg;base64,'+${client.profilePicture}}" class="co-member-pictures"/>
+                            </div>
+                            <span th:text="${client.userName}" style="padding-left: 20px; align-self: center"></span>
+                        </div>
+                        <br>
+                    </div>
+                </div>
             </div>
             <div th:if="${!(lastThreeCircles.get(2).circleId == 0)}" class="circle-overview-circle-banner" th:onclick="|window.location.href='@{/circles/{circleId}(circleId=${lastThreeCircles.get(2).circleId})}'|">
                 <div class="last-three-circle-header">
                     <span class="circle-header-key" th:if="*{get(2).userIsCircleAdmin}"><i class="fa fa-key"></i></span>
                     <h1 th:text="*{get(2).circleName}"></h1>
                 </div>
-                <table >
-                    <tr>Clients</tr>
-                    <br>
-                    <tr class="tr-plain" th:if="${(clientsCircleThree.isEmpty())}">There are no clients in this circle</tr>
-                    <tr class="tr-plain" th:if="${!(clientsCircleThree.isEmpty())}" th:each="client : ${clientsCircleThree}">
-                        <td th:text="${client.userName}"></td>
-                    </tr>
-                </table>
+                <h6>Clients</h6>
+                <br>
+                <div th:if="${(clientsCircleThree.isEmpty())}"><p>There are no clients in this circle</p></div>
+                <div th:if="${!(clientsCircleThree.isEmpty())}" th:each="client : ${clientsCircleThree}">
+                    <div th:title="${client.userName}" th:onclick="|window.location.href='@{/profilepage/{userId}(userId=${client.userId})}'|">
+                        <div class="co-box">
+                            <div class="co-member-pictures">
+                                <img th:unless="${client.profilePicture} == ''" th:src="@{'data:image/jpeg;base64,'+${client.profilePicture}}" class="co-member-pictures"/>
+                            </div>
+                            <span th:text="${client.userName}" style="padding-left: 20px; align-self: center"></span>
+                        </div>
+                        <br>
+                    </div>
+                </div>
             </div>
         </div>
         <br>
@@ -70,8 +88,8 @@
                 <h5>My Care Circles</h5>
                 <hr>
                 <table>
-                    <tr th:if="${allCircles.isEmpty()}">You are not a member of a Care Circle yet</tr><br>
-                    <tr th:if="${allCircles.isEmpty()}">Create a new Care Circle or ask a circle admin to add you to a Care Circle</tr>
+                    <tr th:if="${allCircles.isEmpty()}">You are not a member of a Care Circle yet.</tr>
+                    <tr th:if="${allCircles.isEmpty()}">&ensp;Create a new Care Circle or ask a circle admin to add you to a Care Circle</tr>
                     <tr th:each="circle : ${allCircles}">
                         <td><span th:if="${circle.userIsCircleAdmin}"><i class="fa fa-key"></i></span>
                             <span th:text="${circle.userIsCircleAdmin} ? '' : '&emsp;'"></span>

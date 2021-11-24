@@ -19,7 +19,6 @@
     </div>
   </div>
 
-
   <div class="container">
     <h1>Edit task</h1>
 
@@ -56,9 +55,6 @@
         <button type="submit" class="catoButton">Save</button>
         <a type="button" th:href="@{/circles/{circleId}/taskLists/{taskListId}/{taskId}(circleId=${circleId}, taskListId=${taskListId}, taskId=${taskId})}" class="catoButton">Cancel</a>
       </div>
-      <script>
-        document.getElementById("priority1").setAttribute("checked", "checked");
-      </script>
     </form>
   </div>
 </div>

@@ -12,6 +12,7 @@ public class UserDTO {
     private String name;
     private String email;
     private byte[] profilePicture;
+    private boolean customProfilePicture;
 
     public Integer getUserId() {
         return userId;
@@ -43,5 +44,13 @@ public class UserDTO {
 
     public void setProfilePicture(byte[] profilePicture) {
         this.profilePicture = profilePicture;
+    }
+
+    public boolean isCustomProfilePicture() {
+        return customProfilePicture;
+    }
+
+    public void setCustomProfilePicture(boolean customProfilePicture) {
+        this.customProfilePicture = customProfilePicture;
     }
 }

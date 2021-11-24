@@ -2,11 +2,16 @@ package nl.miwgroningen.se6.heartcoded.CaTo.mappers;
 
 import nl.miwgroningen.se6.heartcoded.CaTo.dto.UserDTO;
 import nl.miwgroningen.se6.heartcoded.CaTo.model.User;
+import org.apache.commons.io.IOUtils;
 import org.springframework.stereotype.Component;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
+import static org.aspectj.bridge.MessageUtil.fail;
 
 /**
  * @author Paul Romkes <p.r.romkes@gmail.com
@@ -17,12 +22,21 @@ import java.util.stream.Collectors;
 @Component
 public class UserMapper {
 
+    private static final String DEFAULT_PROFILE_PICTURE_PATH = "static/css/images/Default-Profile-Picture.png";
+
     public UserDTO toDTO(User user) {
         UserDTO result = new UserDTO();
         result.setUserId(user.getUserId());
         result.setName(user.getName());
         result.setEmail(user.getEmail());
-        result.setProfilePicture(user.getProfilePicture());
+
+        if (user.getProfilePicture() == null) {
+            result.setCustomProfilePicture(false);
+            setProfilePicture(result);
+        } else {
+            result.setCustomProfilePicture(true);
+            result.setProfilePicture(user.getProfilePicture());
+        }
 
         return result;
     }
@@ -49,5 +63,21 @@ public class UserMapper {
         result.setProfilePicture(userDTO.getProfilePicture());
 
         return result;
+    }
+
+    private void setProfilePicture(UserDTO result) {
+        try {
+            InputStream inputStream = getClass()
+                    .getClassLoader()
+                    .getResourceAsStream(DEFAULT_PROFILE_PICTURE_PATH);
+
+            if (inputStream == null) {
+                fail("Unable to find resource");
+            } else {
+                result.setProfilePicture(IOUtils.toByteArray(inputStream));
+            }
+        } catch (IOException ioException) {
+            System.out.println(ioException.getMessage());
+        }
     }
 }

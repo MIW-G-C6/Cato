@@ -31,7 +31,7 @@ public class CircleSettingsUITest {
         driver.findElement(By.id("password")).sendKeys("a");
         driver.findElement(By.id("login-submit")).click();
 
-        driver.get("http://localhost:8080/circles/options/42");
+        driver.get("http://localhost:8080/circles/options/43");
     }
 
     @AfterEach
@@ -44,7 +44,7 @@ public class CircleSettingsUITest {
         WebElement addCircleMemberLink = driver.findElement(By.linkText("Add circle member"));
         addCircleMemberLink.click();
 
-        String expectedUrl = "http://localhost:8080/circles/options/42/addmember";
+        String expectedUrl = "http://localhost:8080/circles/options/43/addmember";
         assertEquals(expectedUrl, driver.getCurrentUrl());
 
         WebElement email = driver.findElement(By.name("email"));
@@ -56,7 +56,7 @@ public class CircleSettingsUITest {
         WebElement saveMember = driver.findElement(By.id("saveMember"));
         saveMember.click();
 
-        expectedUrl = "http://localhost:8080/circles/options/42";
+        expectedUrl = "http://localhost:8080/circles/options/43";
         assertEquals(expectedUrl, driver.getCurrentUrl());
     }
 
@@ -65,14 +65,14 @@ public class CircleSettingsUITest {
         WebElement addCircleMemberLink = driver.findElement(By.linkText("Add circle member"));
         addCircleMemberLink.click();
 
-        String expectedUrl = "http://localhost:8080/circles/options/42/addmember";
+        String expectedUrl = "http://localhost:8080/circles/options/43/addmember";
         assertEquals(expectedUrl, driver.getCurrentUrl());
         assertEquals("Add a Care Circle member", driver.getTitle());
 
         WebElement cancelButton = driver.findElement(By.xpath("//a[@type='button']"));
         cancelButton.click();
 
-        expectedUrl = "http://localhost:8080/circles/options/42";
+        expectedUrl = "http://localhost:8080/circles/options/43";
         assertEquals(expectedUrl, driver.getCurrentUrl());
     }
 
@@ -82,7 +82,7 @@ public class CircleSettingsUITest {
                 .xpath("//*[@id=\"group-settings-table\"]/table/tbody/tr[2]/td[2]/a/img"));
         editRole.click();
 
-        String expectedUrl = "http://localhost:8080/circles/options/42/updatemember/1";
+        String expectedUrl = "http://localhost:8080/circles/options/43/updatemember/6";
         assertEquals(expectedUrl, driver.getCurrentUrl());
         assertEquals("Edit member", driver.getTitle());
     }
@@ -100,7 +100,7 @@ public class CircleSettingsUITest {
 
         noButton.click();
 
-        String expectedUrl = "http://localhost:8080/circles/options/42";
+        String expectedUrl = "http://localhost:8080/circles/options/43";
         assertEquals(expectedUrl, driver.getCurrentUrl());
     }
 }
