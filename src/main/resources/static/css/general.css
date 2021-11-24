@@ -2,19 +2,7 @@ a.nav-link{
     color: ghostwhite;
 }
 
-.site-admin-dashboard-box {
-    display: flex;
-    flex-flow: row;
-    justify-content: space-between;
-}
-
 .cato-edit-flex {
-    display: flex;
-    flex-flow: row;
-    justify-content: space-between;
-}
-
-.cato-circle-dashboard-flex {  /* Same as .cato-edit.flex */
     display: flex;
     flex-flow: row;
     justify-content: space-between;
@@ -42,13 +30,11 @@ a.nav-link{
     cursor: pointer;
 }
 
-
 .cato-hyperlink {
     font-size: 1rem;
 }
 
-/* The Modal (background) */
-
+/*contains general layout for the Modal*/
 /*the modal backdrop is the standard grey that greys out the rest of the site, dont change the z-index*/
 .modal-backdrop {
     z-index: 500;
@@ -68,11 +54,6 @@ a.nav-link{
     background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
 }
 
-.modal-header {
-    /*background-color: #ff3333;*/
-}
-
-/* Modal Content */
 .modal-content {
     background-color: #fefefe;
     margin: auto;
@@ -94,7 +75,7 @@ a.nav-link{
     background-color: red;
     border-color: red;
 }
-/* The Close Button */
+
 .close {
     color: #aaaaaa;
     float: right;
@@ -109,128 +90,13 @@ a.nav-link{
     cursor: pointer;
 }
 
-/*Circle Overview Page*/
-.cato-three-circles-placing {
-    display: flex;
-    flex-flow: row;
-    justify-content: space-around;
-}
-
-.circle-overview-circle-banner {
-    width: 30%;
-    min-height: 150px;
-    text-decoration: none;
-    display: inline-block;
-    padding: 8px 16px;
-    color: black;
-    background-color: #fafafa;
-    text-align: center;
-    box-shadow: 0 0 11px rgba(33,33,33,.2);
-}
-
-.circle-overview-circle-banner:hover {
-    background-color: #cafad9;
-    cursor: pointer;
-}
-.circle-overview-circle-banner:hover {
-    background-color: #cafad9;
-    cursor: pointer;
-}
-
 /*contains general layout for top navigation bar*/
 .topnavbar {
     display: flex;
-    /*flex-flow: wrap;*/
     position: relative;
     background-color: #e8ffef;
     justify-content: flex-start;
     height: 72px;
-}
-
-.profileIcon {
-    width: 90px;
-    padding: 10px 40px;
-    align-self: center;
-}
-.profile-dropdown-content {
-    flex-direction: column;
-    position: absolute;
-    top: 72px;
-    right: 0;
-    transition: 0.3s;
-    background-color: #e8ffef;
-    display: none;
-    padding-bottom: 0;
-    padding-top: 0;
-    box-shadow: 0 0 11px rgba(33,33,33,.2);
-    list-style-type: none;
-}
-
-.profile-dropdown-content li a {
-    min-width: 100px;
-    height: 10px;
-    font-size: 16px;
-    text-align-all: left;
-    padding: 0 0;
-}
-
-.profile-dropdown-content li:hover {
-    background-color: #cafad9;
-    color: ghostwhite;
-}
-
-.notification-dropdown-content {
-    flex-direction: column;
-    position: absolute;
-    top: 72px;
-    right: 0;
-    transition: 0.3s;
-    background-color: #e8ffef;
-    display: none;
-    padding-bottom: 0;
-    padding-top: 0;
-    box-shadow: 0 0 11px rgba(33,33,33,.2);
-    list-style-type: none;
-    z-index: 1;
-}
-
-.notification-dropdown-content tr{
-    padding: 0 0;
-    border: solid #a7a7a7 1px;
-}
-
-.notification-dropdown-content td a {
-    margin: 30px 10px;
-    padding: 0 0;
-}
-
-.notification-dropdown-content td {
-    /*min-width: 100px;*/
-    max-width: 200px;
-    height: 10px;
-    font-size: 16px;
-    text-align-all: left;
-    padding: 0 0;
-}
-
-.notification-dropdown-content .notAssignedIcon {
-    width: 30px;
-    padding-left: 10px;
-    padding-right: 10px;
-}
-
-.notification-dropdown-content .circle-name-cell {
-    vertical-align: bottom;
-}
-
-.notification-dropdown-content .circle-name-cell a {
-    font-size: smaller;
-    font-style: italic;
-    color: #8d8d8d;
-}
-
-.notification-dropdown-content tr:hover {
-    background-color: #cafad9;
 }
 
 .topnavbar a {
@@ -240,7 +106,6 @@ a.nav-link{
     text-decoration: none;
     font-size: 17px;
     display: block;
-
 }
 
 .topnavbar #menuIcons {
@@ -297,9 +162,95 @@ a.nav-link{
     font-size: 30px;
 }
 
+.profileIcon {
+    width: 90px;
+    padding: 10px 40px;
+    align-self: center;
+}
+
+/*contains layout for the profile dropdown*/
+.profile-dropdown-content {
+    flex-direction: column;
+    position: absolute;
+    top: 72px;
+    right: 0;
+    transition: 0.3s;
+    background-color: #e8ffef;
+    display: none;
+    padding-bottom: 0;
+    padding-top: 0;
+    box-shadow: 0 0 11px rgba(33,33,33,.2);
+    list-style-type: none;
+}
+
+.profile-dropdown-content li a {
+    min-width: 100px;
+    height: 10px;
+    font-size: 16px;
+    text-align-all: left;
+    padding: 0 0;
+}
+
+.profile-dropdown-content li:hover {
+    background-color: #cafad9;
+    color: ghostwhite;
+}
+
+/*contains layout for the notification dropdown*/
+.notification-dropdown-content {
+    flex-direction: column;
+    position: absolute;
+    top: 72px;
+    right: 0;
+    transition: 0.3s;
+    background-color: #e8ffef;
+    display: none;
+    padding-bottom: 0;
+    padding-top: 0;
+    box-shadow: 0 0 11px rgba(33,33,33,.2);
+    list-style-type: none;
+    z-index: 1;
+}
+
+.notification-dropdown-content tr{
+    padding: 0 0;
+    border: solid #a7a7a7 1px;
+}
+
+.notification-dropdown-content td a {
+    margin: 30px 10px;
+    padding: 0 0;
+}
+
+.notification-dropdown-content td {
+    max-width: 200px;
+    height: 10px;
+    font-size: 16px;
+    text-align-all: left;
+    padding: 0 0;
+}
+
+.notification-dropdown-content .notAssignedIcon {
+    width: 30px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.notification-dropdown-content .circle-name-cell {
+    vertical-align: bottom;
+}
+
+.notification-dropdown-content .circle-name-cell a {
+    font-size: smaller;
+    font-style: italic;
+    color: #8d8d8d;
+}
+
+.notification-dropdown-content tr:hover {
+    background-color: #cafad9;
+}
 
 /*!*contains general layout for side navigation bar*!*/
-
 .sidenav {
     height: 100%;
     width: 0;
@@ -346,6 +297,13 @@ a.nav-link{
     background-color: transparent;
 }
 
+#hamburger-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 93px;
+}
+
 /*contains design choices for breadcrumbs bar*/
 .breadCrumbsBar {
     display: flex;
@@ -353,7 +311,6 @@ a.nav-link{
     align-items: center;
 }
 
-/*Dit moet previousButton worden*/
 .previousButton {
     padding: 10px 10px;
 }
@@ -425,7 +382,6 @@ a.nav-link{
 
 .custom-file-label {
     border: 1px solid black;
-    /*padding-bottom: 10px;*/
 }
 
 .custom-file-label::after {
@@ -467,7 +423,6 @@ a.nav-link{
     border: 1px solid darkred;
 }
 
-
 .custom-switch .custom-control-input:checked ~ .custom-control-label::before {
     background-color: #376B47;
     border: 1px solid #376B47;
@@ -497,6 +452,13 @@ a.nav-link{
     padding-left: 40px;
 }
 
+button {
+    padding: 0px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
 /*contains layout for columns on about page*/
 .flex-column {
     float: left;
@@ -505,7 +467,6 @@ a.nav-link{
 
 #aboutContainer {
     display: flex;
-
 }
 
 .aboutHeader {
@@ -527,6 +488,7 @@ html, body {
     flex: 1;
 }
 
+/*contains general layout for profile page*/
 .profileInfoBar {
     display: flex;
 }
@@ -544,6 +506,83 @@ html, body {
     flex-direction: column;
 }
 
+#overview-circles {
+    width: 30%;
+    padding-top: 0;
+    border-left: 1px solid lightgrey;
+}
+
+.profile-container {
+    float: left;
+    margin-left: 50px;
+}
+
+.profile-picture {
+    width: auto;
+    min-height: 175px;
+    max-width: 250px;
+    max-height: 210px;
+    margin-right: 50px;
+    box-shadow: 0 0 11px rgba(33,33,33,.4);
+    border-radius: 4px;
+    object-fit: cover;
+}
+
+.profile-picture-edit-container {
+    position: relative;
+    width: 150px;
+    max-height: 189px;
+}
+
+.profile-picture-edit {
+    height: auto;
+    max-height: 155px;
+    max-width:100%;
+    margin:auto;
+    display: block;
+    transition: .5s ease;
+    backface-visibility: hidden;
+    box-shadow: 0 0 11px rgba(33,33,33,.4);
+    border-radius: 4px;
+    object-fit: contain;
+}
+
+.remove-button {
+    transition: .5s ease;
+    opacity: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.profile-picture-edit-container:hover .profile-picture-edit {
+    opacity: 0.3;
+}
+
+.profile-picture-edit-container:hover .remove-button {
+    opacity: 1;
+}
+
+.profile-picture-box {
+    min-width: 250px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.profile-page-box {
+    display: flex;
+    flex-flow: row;
+    align-items: flex-start;
+}
+
+.profile-edit-save-cancel-buttons {
+    margin-top: 35px;
+    float:right;
+}
 
 /*contains general layout for all tables*/
 table {
@@ -551,6 +590,22 @@ table {
     border-collapse: collapse;
     width: 100%;
     border-style: hidden;
+}
+
+.general-table-layout {
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+    background-color: #fafafa;
+    height: fit-content;
+    list-style-type: none;
+}
+
+.general-table-layout br {
+    display: none;
+}
+
+.table-header {
+    padding-left: 10px;
+    padding-top: 10px;
 }
 
 .iconheader {
@@ -594,6 +649,16 @@ th {
     border-bottom: 1px solid lightgrey;
 }
 
+.cato-table {
+    width: 50%;
+    padding-top: 60px;
+}
+
+.cato-table br {
+    display: none;
+}
+
+/*contains general layout for edit and delete images*/
 .edit {
     text-align: center;
 }
@@ -682,13 +747,7 @@ footer .copyright {
     margin-bottom: 0;
 }
 
-button {
-    padding: 0px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
+/*contains general layout for homepage*/
 .form-circle {
     width: 30%;
     display: block;
@@ -700,12 +759,6 @@ input[type=email], input[type=password], input[type=text] {
     padding: 12px 20px;
     margin: 8px 0;
     box-sizing: border-box;
-}
-
-.card-body {
-    /*box-shadow: 0 1px 3px 0 rgba(0,0,0,.1), 0 1px 2px 0 rgba(0,0,0,.06);*/
-    width: 50%;
-    word-wrap: break-word;
 }
 
 .logotext p {
@@ -723,74 +776,76 @@ input[type=email], input[type=password], input[type=text] {
     text-align: center;
 }
 
-.cato-table {
-    width: 50%;
-    padding-top: 60px;
-}
-
-.cato-table br {
-    display: none;
-}
-
-.group-options-table {
-    width: 40%;
-}
-
-.circle-overview {
-    width: 50%;
-}
-
-#circle-overview-dashboard {
-    width: 30%
-}
-
-.client-overview {
-    width: 50%;
-}
-
-#client-overview-dashboard {
-    width: 20%;
-}
-
-.circle-settings {
-    width: 50%;
-}
-
-.error {
-    color: red;
-}
-
-.cd-page {
+.home-page {
     display: flex;
     flex-flow: row;
 }
 
-.cd-circlemember {
-    width: 33%;
-    padding-right: 100px;
+.home-page-text {
+    width: 50%;
 }
 
-.cd-tasklist {
-    width: 40%;
+.home-page-text-wide {
+    width: 100%;
 }
 
-.general-table-layout {
-    box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+/*contains general layout for task details*/
+.card-body {
+    width: 50%;
+    word-wrap: break-word;
+}
+
+/*contains general layout for an error*/
+.error {
+    color: red;
+}
+
+/*contains layout for the circle overview page*/
+.cato-three-circles-placing {
+    display: flex;
+    flex-flow: row;
+    justify-content: space-around;
+}
+
+.circle-overview-circle-banner {
+    width: 30%;
+    min-height: 150px;
+    text-decoration: none;
+    display: inline-block;
+    padding: 8px 16px;
+    color: black;
     background-color: #fafafa;
-    height: fit-content;
-    list-style-type: none;
+    text-align: center;
+    box-shadow: 0 0 11px rgba(33,33,33,.2);
 }
 
-.general-table-layout br {
-    display: none;
+.circle-overview-circle-banner:hover {
+    background-color: #cafad9;
+    cursor: pointer;
 }
 
-.table-header {
-    padding-left: 10px;
-    padding-top: 10px;
+.co-member-pictures {
+    width: 40px;
+    border-radius: 50%;
+    object-fit: cover;
 }
 
+.co-box {
+    display: flex;
+    flex-direction: row;
+    align-self: flex-start;
+    padding-left: 58px;
+}
 
+.circle-header-key {
+    padding-right: 10px;
+}
+
+.circle-header-key i {
+    font-size: 23px;
+}
+
+/*contains layout for circle dashboard*/
 .gd-circlemembers {
     display: block;
     width: 250px;
@@ -812,148 +867,6 @@ input[type=email], input[type=password], input[type=text] {
     width: 40%;
 }
 
-#overview-circles {
-    width: 30%;
-    padding-top: 0;
-    border-left: 1px solid lightgrey;
-}
-
-.title-taskdetails {
-    width: 50%;
-}
-
-.cato-form {
-    width: 50%;
-}
-
-#circleName {
-    padding: 5px 10px;
-    border: none;
-    border-bottom: 1px solid black;
-}
-
-.cato-text-field {
-    padding: 5px 10px !important;
-    border: none;
-    border-bottom: 1px solid black;
-}
-
-.custom-select {
-    width: 50%;
-}
-
-.home-page {
-    display: flex;
-    flex-flow: row;
-}
-
-.home-page-text {
-    width: 50%;
-}
-
-.home-page-text-wide {
-    width: 100%;
-}
-
-#hamburger-icon {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 93px;
-}
-
-#circle-options-header {
-    padding: 10px 0 10px 0;
-    font-size: 30px;
-    text-decoration: none;
-    color: black;
-}
-
-.siteAdminLinks a{
-    font-size: medium;
-}
-
-.search-form {
-    width: 90%;
-    margin: auto;
-}
-
-.keywordsBox {
-    background-color: #fafafa;
-}
-
-.profile-container {
-    float: left;
-    margin-left: 50px;
-}
-
-.profile-picture {
-    width: auto;
-    min-height: 175px;
-    max-width: 250px;
-    max-height: 210px;
-    margin-right: 50px;
-    box-shadow: 0 0 11px rgba(33,33,33,.4);
-    border-radius: 4px;
-    object-fit: cover;
-}
-
-.profile-picture-edit-container {
-    position: relative;
-    width: 150px;
-    max-height: 189px;
-}
-
-.profile-picture-edit {
-    height: auto;
-    max-height: 155px;
-    max-width:100%;
-    margin:auto;
-    display: block;
-    transition: .5s ease;
-    backface-visibility: hidden;
-    box-shadow: 0 0 11px rgba(33,33,33,.4);
-    border-radius: 4px;
-    object-fit: contain;
-}
-
-.remove-button {
-    transition: .5s ease;
-    opacity: 0;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    -ms-transform: translate(-50%, -50%);
-    text-align: center;
-}
-
-.profile-picture-edit-container:hover .profile-picture-edit {
-    opacity: 0.3;
-}
-
-.profile-picture-edit-container:hover .remove-button {
-    opacity: 1;
-}
-
-.profile-picture-box {
-    min-width: 250px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.profile-page-box {
-    display: flex;
-    flex-flow: row;
-    align-items: flex-start;
-}
-
-.profile-edit-save-cancel-buttons {
-    margin-top: 35px;
-    float:right;
-}
-
 .circle-photo {
     width: auto;
     height: 105px;
@@ -966,9 +879,6 @@ input[type=email], input[type=password], input[type=text] {
 .circle-photo-box {
     display: flex;
     flex-flow: row;
-    /*justify-content: flex-end;*/
-    /*justify-content: space-between;*/
-    /*align-items: flex-start;*/
 }
 
 .circle-dashboard-title {
@@ -1011,19 +921,6 @@ input[type=email], input[type=password], input[type=text] {
     border: 4px solid cadetblue;
 }
 
-.co-member-pictures {
-    width: 40px;
-    border-radius: 50%;
-    object-fit: cover;
-}
-
-.co-box {
-    display: flex;
-    flex-direction: row;
-    align-self: flex-start;
-    padding-left: 58px;
-}
-
 .member-name-under-picture-box {
     font-size: small;
     text-align: center;
@@ -1031,33 +928,6 @@ input[type=email], input[type=password], input[type=text] {
     text-decoration-color: #a7a7a7;
     display: flex;
     flex-direction: row;
-}
-
-.last-three-circle-header {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-}
-
-.circle-header-key {
-    padding-right: 10px;
-}
-
-.circle-header-key i {
-    font-size: 23px;
-}
-
-#group-settings-table {
-    width: 50%;
-}
-
-#group-settings-name {
-    width: 40%;
-}
-
-.font-hidden {
-    color: transparent;
 }
 
 .priorityBanner {
@@ -1093,4 +963,73 @@ input[type=email], input[type=password], input[type=text] {
 #sortOnEndDateBtn,
 #sortOnPriorityBtn{
     justify-self: flex-end;
+}
+
+/*contains general layout for a form*/
+.cato-form {
+    width: 50%;
+}
+
+.cato-text-field {
+    padding: 5px 10px !important;
+    border: none;
+    border-bottom: 1px solid black;
+}
+
+/*contains layout for a circle form*/
+#circleName {
+    padding: 5px 10px;
+    border: none;
+    border-bottom: 1px solid black;
+}
+
+.custom-select {
+    width: 50%;
+}
+
+/*contains layout for circle settings*/
+#circle-options-header {
+    padding: 10px 0 10px 0;
+    font-size: 30px;
+    text-decoration: none;
+    color: black;
+}
+
+#group-settings-table {
+    width: 50%;
+}
+
+#group-settings-name {
+    width: 40%;
+}
+
+/*contains layout for site admin pages*/
+.site-admin-dashboard-box {
+    display: flex;
+    flex-flow: row;
+    justify-content: space-between;
+}
+
+.siteAdminLinks a{
+    font-size: medium;
+}
+
+.search-form {
+    width: 90%;
+    margin: auto;
+}
+
+.keywordsBox {
+    background-color: #fafafa;
+}
+
+.last-three-circle-header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.font-hidden {
+    color: transparent;
 }
