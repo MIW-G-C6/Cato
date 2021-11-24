@@ -135,7 +135,7 @@ public class MemberService {
         for (Member member : memberList) {
             UserDTO thisUser = userMapper.toDTO(userRepository.getById(member.getUser().getUserId()));
 
-            String profilePicture = Base64.getEncoder().encodeToString(thisUser.getProfilePicture());;
+            String profilePicture = Base64.getEncoder().encodeToString(thisUser.getProfilePicture());
 
             result.add(memberWithProfilePicMapper.toDTO(member, profilePicture));
         }
