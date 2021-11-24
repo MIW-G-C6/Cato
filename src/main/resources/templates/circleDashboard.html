@@ -219,23 +219,16 @@
     const endDateTarget = document.getElementById('taskListByEndDate');
 
     function sortOnEndDate() {
-        // if (endDateTarget.style.display !== "none") {
-        //     endDateTarget.style.display = "none";
-        //     priorityTarget.style.display = "block";
-        // } else {
         endDateTarget.style.display = "block";
         priorityTarget.style.display = "none";
-        // }
+
     }
 
     function sortOnPriority() {
         endDateTarget.style.display = "none";
         priorityTarget.style.display = "block";
     }
-    // endDateBtn.onclick() = function () {
-    //     endDateTarget.display = show;
-    //     priorityTarget.display = hide;
-    // }
+
 </script>
 
 <div th:replace="fragments/general :: footer"></div>
