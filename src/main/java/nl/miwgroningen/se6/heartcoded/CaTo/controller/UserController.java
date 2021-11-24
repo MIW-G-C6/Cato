@@ -73,7 +73,6 @@ public class UserController {
 
         UserDTO user = userService.getById(userId);
 
-        model.addAttribute("userIsCurrentUser", userService.getCurrentUser().getUserId().equals(userId));
         model.addAttribute("currentProfilePicture", Base64.getEncoder().encodeToString(user.getProfilePicture()));
         model.addAttribute("user", user);
         return "editUserForm";
@@ -120,7 +119,7 @@ public class UserController {
 
     @PostMapping("users/edit/{userId}")
     protected String editUser(@ModelAttribute("user") UserDTO user, @ModelAttribute("image") MultipartFile image,
-                              BindingResult result) {
+                              BindingResult result, Model model) {
 
         if (!userService.getCurrentUser().getUserId().equals(user.getUserId())
                 && !userService.currentUserIsSiteAdmin()) {
@@ -130,7 +129,7 @@ public class UserController {
         setNewProfilePicture(user, image);
         checkEmailErrors(user, result);
 
-        return handleReturnFromEdit(user, result);
+        return handleReturnFromEdit(user, result, model);
     }
 
     @PostMapping("users/edit/password/{userId}")
@@ -146,8 +145,11 @@ public class UserController {
         return handleReturnFromPasswordEdit(user, result, model);
     }
 
-    private String handleReturnFromEdit(UserDTO user, BindingResult result) {
+    private String handleReturnFromEdit(UserDTO user, BindingResult result, Model model) {
         if (result.hasErrors()) {
+            String userProfilePicture =
+                    Base64.getEncoder().encodeToString(userService.getById(user.getUserId()).getProfilePicture());
+            model.addAttribute("currentProfilePicture", userProfilePicture);
             return "editUserForm";
         }
 

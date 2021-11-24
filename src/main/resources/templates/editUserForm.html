@@ -26,11 +26,12 @@
             <div th:if="${#fields.hasErrors()}">
                 <p th:each="err : ${#fields.errors('global')}" th:text="${err}" class="alert alert-danger" />
             </div>
-            <div th:unless="${error} == '' ">
+            <div th:unless="${error} == '' or ${error} == null">
                 <p th:text="${error}" class="alert alert-danger"/>
             </div>
 
             <input type="hidden" th:field="*{userId}">
+            <input type="hidden" th:field="*{customProfilePicture}">
 
             <div>
                 <input class="cato-text-field" placeholder="Name" type="text" id="name" required pattern=".*\S+.*"
@@ -94,7 +95,7 @@
         </div>
         <div class="modal-footer">
             <button type="button" class="catoButton" id="noBtn">No</button>
-            <a th:href="@{'/users/edit/{userId}/deleteProfilePicture'(userId=${userId})}"><button type="button" class="catoYesWarningButton" id="modalYesButton">Yes</button></a>
+            <a th:href="@{'/users/edit/{userId}/deleteProfilePicture'(userId=${user.userId})}"><button type="button" class="catoYesWarningButton" id="modalYesButton">Yes</button></a>
         </div>
     </div>
 </div>
