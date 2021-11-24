@@ -98,8 +98,15 @@
                                 </div>
                             </td>
                             <td>
-                                <span th:text="${task.priority}"></span>
-                                <span th:text="priority"></span>
+                                <div th:if="${task.priority.equals('High')}" class="priorityBanner" style="background-color: #ff4f42">
+                                    <span th:text="${task.priority}"></span>
+                                </div>
+                                <div th:if="${task.priority.equals('Medium')}" class="priorityBanner" style="background-color: #ffb145">
+                                    <span th:text="${task.priority}"></span>
+                                </div>
+                                <div th:if="${task.priority.equals('Low')}" class="priorityBanner" style="background-color: #fff759">
+                                    <span th:text="${task.priority}"></span>
+                                </div>
                             </td>
                             <td title="assigned to">
                             <span th:if="${task.assignedUserName == ''}">
