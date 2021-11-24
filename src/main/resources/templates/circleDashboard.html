@@ -104,7 +104,6 @@
                                     </div>
                                     <div>
                                         <span class="date-light-grey" th:if="${task.endTime != null}" th:text="${#temporals.format(task.endTime, 'dd-MM-yyyy')}"></span>
-                                        <span class="date-light-grey" th:unless="${task.endTime}" th:text="'-'"></span>
                                     </div>
                                 </div>
                             </td>
@@ -145,7 +144,6 @@
                                     </div>
                                     <div>
                                         <span class="date-light-grey" th:if="${task.endTime != null}" th:text="${#temporals.format(task.endTime, 'dd-MM-yyyy')}"></span>
-                                        <span class="date-light-grey" th:unless="${task.endTime}" th:text="'-'"></span>
                                     </div>
                                 </div>
                             </td>

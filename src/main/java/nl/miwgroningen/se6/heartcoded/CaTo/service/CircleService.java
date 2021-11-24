@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.aspectj.bridge.MessageUtil.fail;
 
@@ -96,12 +97,15 @@ public class CircleService {
         List<CircleClientDTO> listFindByClientName = findWithClientName(keyword);
         List<CircleClientDTO> result = findCircleWithName(keyword);
 
-        for (CircleClientDTO DTOFromClientName : listFindByClientName) {
-            if(!result.contains(DTOFromClientName)) {
-                result.add(DTOFromClientName);
+        if (!keyword.isEmpty() && !listFindByClientName.isEmpty()) {
+            for (CircleClientDTO resultDTO : result) {
+                for (CircleClientDTO DTOFromClientName : listFindByClientName) {
+                    if (!resultDTO.getCircleId().equals(DTOFromClientName.getCircleId())) {
+                        result.add(DTOFromClientName);
+                    }
+                }
             }
         }
-
         return result;
     }
 
@@ -128,7 +132,6 @@ public class CircleService {
                 }
             }
         }
-
         return result;
     }
 
@@ -142,10 +145,9 @@ public class CircleService {
 
         List<CircleClientDTO> result = new ArrayList<>();
         for (Circle circle : circleList) {
-            List<MemberDTO> clientList = getClientsByCircleId(circle.getCircleId());
-            result.add(new CircleClientDTO(circle.getCircleId(), circle.getCircleName(), clientList));
+            List<MemberDTO> clientDTOList = getClientsByCircleId(circle.getCircleId());
+            result.add(new CircleClientDTO(circle.getCircleId(), circle.getCircleName(), clientDTOList));
         }
-
         return result;
     }
 }
