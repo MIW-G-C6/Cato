@@ -75,7 +75,6 @@ public class UserController {
 
         model.addAttribute("userIsCurrentUser", userService.getCurrentUser().getUserId().equals(userId));
         model.addAttribute("currentProfilePicture", Base64.getEncoder().encodeToString(user.getProfilePicture()));
-//        Base64.getEncoder().encodeToString(user.getProfilePicture())
         model.addAttribute("user", user);
         return "editUserForm";
     }
@@ -122,32 +121,16 @@ public class UserController {
     @PostMapping("users/edit/{userId}")
     protected String editUser(@ModelAttribute("user") UserDTO user, @ModelAttribute("image") MultipartFile image,
                               BindingResult result) {
-        try {
-            byte[] imageContent = image.getBytes();
-            if (image.getSize() < ONE_MEGABYTE) {
-                user.setProfilePicture(imageContent);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
 
         if (!userService.getCurrentUser().getUserId().equals(user.getUserId())
                 && !userService.currentUserIsSiteAdmin()) {
             return "redirect:/403";
         }
 
-        if (userService.emailInUse(user.getEmail())
-                && !user.getEmail().equals(userService.getById(user.getUserId()).getEmail())) {
-            ObjectError error = new ObjectError("globalError", "Email is already in use");
-            result.addError(error);
-        }
+        setNewProfilePicture(user, image);
+        checkEmailErrors(user, result);
 
-        if (result.hasErrors()) {
-            return "editUserForm";
-        }
-
-        userService.editUserInfo(user);
-        return "redirect:/profilepage/" + user.getUserId();
+        return handleReturnFromEdit(user, result);
     }
 
     @PostMapping("users/edit/password/{userId}")
@@ -158,6 +141,51 @@ public class UserController {
             return "redirect:/403";
         }
 
+        checkPasswordErrors(user, result);
+
+        return handleReturnFromPasswordEdit(user, result, model);
+    }
+
+    private String handleReturnFromEdit(UserDTO user, BindingResult result) {
+        if (result.hasErrors()) {
+            return "editUserForm";
+        }
+
+        userService.editUserInfo(user);
+        return "redirect:/profilepage/" + user.getUserId();
+    }
+
+    private void checkEmailErrors(UserDTO user, BindingResult result) {
+        if (userService.emailInUse(user.getEmail())
+                && !user.getEmail().equals(userService.getById(user.getUserId()).getEmail())) {
+            ObjectError error = new ObjectError("globalError", "Email is already in use");
+            result.addError(error);
+        }
+    }
+
+    private void setNewProfilePicture(UserDTO user, MultipartFile image) {
+        try {
+            byte[] imageContent = image.getBytes();
+            if (image.getSize() < ONE_MEGABYTE) {
+                user.setProfilePicture(imageContent);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private String handleReturnFromPasswordEdit(UserEditPasswordDTO user, BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            model.addAttribute("userIsCurrentUser",
+                    userService.getCurrentUser().getUserId().equals(user.getUserId()));
+            return "editPasswordForm";
+        }
+
+        userService.editPassword(user);
+        return "redirect:/profilepage/" + user.getUserId();
+    }
+
+    private void checkPasswordErrors(UserEditPasswordDTO user, BindingResult result) {
         if (!userService.currentUserIsSiteAdmin()) {
             if (!userService.passwordMatches(user.getOldPassword(), user.getUserId())) {
                 ObjectError error = new ObjectError("globalError", "Incorrect password");
@@ -169,14 +197,5 @@ public class UserController {
             ObjectError error = new ObjectError("globalError", "Passwords do not match");
             result.addError(error);
         }
-
-        if (result.hasErrors()) {
-            model.addAttribute("userIsCurrentUser",
-                    userService.getCurrentUser().getUserId().equals(user.getUserId()));
-            return "editPasswordForm";
-        }
-
-        userService.editPassword(user);
-        return "redirect:/profilepage/" + user.getUserId();
     }
 }
