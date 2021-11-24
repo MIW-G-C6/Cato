@@ -74,10 +74,10 @@
             </div>
             <div class="cato-option-row">
                 <ul class="cato-ul">
-                    <li><a th:href="@{/circles/{circleId}/taskLists/{taskListId}/update/{taskId}(circleId=${circleId}, taskListId=${taskList.taskListId}, taskId=${task.taskId})}">Edit task</a></li>
-                    <br>
                     <li><a th:unless="${task.assignedUserName} == ''" th:href="@{/circles/{circleId}/task/{taskId}/unassign(circleId=${circleId}, taskId=${taskId})}">Unassign</a></li>
-                    <li><a th:if="${task.assignedUserName} == ''" th:href="@{/circles/{circleId}/task/{taskId}/assign(taskId=${task.taskId}, circleId=${circleId})}">Assign to me</a></li>
+                    <li><a th:if="${task.assignedUserName} == ''" th:href="@{/circles/{circleId}/task/{taskId}/assign(taskId=${task.taskId}, circleId=${circleId})}">Take on this task</a></li>
+                    <br>
+                    <li><a th:href="@{/circles/{circleId}/taskLists/{taskListId}/update/{taskId}(circleId=${circleId}, taskListId=${taskList.taskListId}, taskId=${task.taskId})}">Edit task</a></li>
                     <li><hr></li>
                     <li><a id="cato-delete-link" th:href="@{'/task/delete/' + ${task.taskId}}">Delete task</a></li>
                 </ul>
