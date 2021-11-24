@@ -32,27 +32,27 @@ public class RegistrationUITest {
         driver.quit();
     }
 
-    @Test
-    void registrationTest() {
-        WebElement username = driver.findElement(By.id("name"));
-        username.sendKeys("test_name");
-
-        WebElement email = driver.findElement(By.id("email"));
-        email.sendKeys("test@example.com");
-
-        WebElement password = driver.findElement(By.id("password"));
-        password.sendKeys("test");
-
-        WebElement confirmPassword = driver.findElement(By.id("confirm_password"));
-        confirmPassword.sendKeys("test");
-
-        WebElement save = driver.findElement(By.id("save_user"));
-        save.click();
-
-        String expectedUrl = "http://localhost:8080/";
-
-        assertEquals(expectedUrl, driver.getCurrentUrl());
-    }
+//    @Test
+//    void registrationTest() {
+//        WebElement username = driver.findElement(By.id("name"));
+//        username.sendKeys("test_name");
+//
+//        WebElement email = driver.findElement(By.id("email"));
+//        email.sendKeys("test@example.com");
+//
+//        WebElement password = driver.findElement(By.id("password"));
+//        password.sendKeys("test");
+//
+//        WebElement confirmPassword = driver.findElement(By.id("confirm_password"));
+//        confirmPassword.sendKeys("test");
+//
+//        WebElement save = driver.findElement(By.id("save_user"));
+//        save.click();
+//
+//        String expectedUrl = "http://localhost:8080/";
+//
+//        assertEquals(expectedUrl, driver.getCurrentUrl());
+//    }
 
     @Test
     void registrationTestFailed() {
