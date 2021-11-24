@@ -86,7 +86,7 @@
                             <td>There are no tasks yet, <a class="cato-hyperlink" th:href="@{/circles/{circleId}/taskLists/{taskListId}/new(circleId=${circleId}, taskListId=${taskListId})}">click here</a> to add a new task</td>
                         </tr>
                         <tr th:each="task : ${taskList}">
-                            <td id="task-description">
+                            <td>
                                 <div class="flex-column">
                                     <div>
                                         <a th:href="@{/circles/{circleId}/taskLists/{taskListId}/{taskId} (circleId=${circleId}, taskListId=${taskListId}, taskId=${task.taskId})}" th:text="${task.description}" title="show task details"></a>
@@ -98,8 +98,15 @@
                                 </div>
                             </td>
                             <td>
-                                <span th:text="${task.priority}"></span>
-                                <span th:text="priority"></span>
+                                <div th:if="${task.priority.equals('High')}" class="priorityBanner" style="background-color: #ff4f42">
+                                    <span th:text="${task.priority}"></span>
+                                </div>
+                                <div th:if="${task.priority.equals('Medium')}" class="priorityBanner" style="background-color: #ffb145">
+                                    <span th:text="${task.priority}"></span>
+                                </div>
+                                <div th:if="${task.priority.equals('Low')}" class="priorityBanner" style="background-color: #fff759">
+                                    <span th:text="${task.priority}"></span>
+                                </div>
                             </td>
                             <td title="assigned to">
                             <span th:if="${task.assignedUserName == ''}">
