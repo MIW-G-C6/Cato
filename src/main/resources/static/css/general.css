@@ -825,6 +825,8 @@ input[type=email], input[type=password], input[type=text] {
 }
 
 .co-member-pictures {
+    max-width: 40px;
+    max-height: 40px;
     width: 40px;
     border-radius: 50%;
     object-fit: cover;
