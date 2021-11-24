@@ -11,7 +11,7 @@
         <div th:replace="fragments/general :: previousButton"></div>
         <div class="breadCrumbs">
             <li><a th:href="@{/}">Home</a></li>
-            <li sec:authorize="hasAuthority('ROLE_ADMIN')"><a th:href="@{/siteAdminDashboard}">Site Admin Dashboard</a></li>
+            <li sec:authorize="hasAuthority('ROLE_ADMIN')"><a th:href="@{/siteAdmin/dashboard}">Site Admin Dashboard</a></li>
             <li>Care Circles</li>
         </div>
     </div>
