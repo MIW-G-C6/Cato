@@ -39,8 +39,6 @@ public class SiteAdminController {
             return "redirect:/403";
         }
 
-        model.addAttribute("allClients", memberService.findAllClientsForSiteAdmin());
-        model.addAttribute("allCircles", circleService.findAllCircles());
         model.addAttribute("numberOfUsers", userService.totalNumberOfUsers());
         model.addAttribute("numberOfCircles", circleService.totalNumberOfCircles());
         model.addAttribute("numberOfClients", memberService.totalNumberOfClients());
