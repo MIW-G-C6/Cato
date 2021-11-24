@@ -19,7 +19,7 @@ public class FileUploadExceptionAdvice {
     @ExceptionHandler(MaxUploadSizeExceededException.class)
     public String handleFileSizeLimitExceededException(MaxUploadSizeExceededException exc,
                                                        RedirectAttributes redirectAttributes, HttpSession session) {
-        redirectAttributes.addAttribute("error", "File too large");
+        redirectAttributes.addAttribute("error", "File too large, maximum upload file size is 1 MB");
         Integer userId = (Integer) session.getAttribute("lastUserId");
         Integer circleId = (Integer) session.getAttribute("lastCircleId");
 
