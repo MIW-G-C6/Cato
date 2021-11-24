@@ -80,4 +80,18 @@ public class UserMapper {
             System.out.println(ioException.getMessage());
         }
     }
+
+    public UserDTO toDTONoProfilePicture(User user) {
+        UserDTO result = new UserDTO();
+        result.setUserId(user.getUserId());
+        result.setName(user.getName());
+        result.setEmail(user.getEmail());
+        result.setProfilePicture(null);
+
+        return result;
+    }
+
+    public List<UserDTO> toDTONoProfilePicture(List<User> userList) {
+        return userList.stream().map(this::toDTONoProfilePicture).collect(Collectors.toList());
+    }
 }

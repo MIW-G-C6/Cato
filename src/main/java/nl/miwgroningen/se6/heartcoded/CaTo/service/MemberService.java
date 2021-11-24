@@ -52,6 +52,7 @@ public class MemberService {
         this.userMapper = userMapper;
     }
 
+    @Transactional
     public List<MemberDTO> findAllMembers() {
         List<MemberDTO> result = memberMapper.toDTO(memberRepository.findAll());
         sortMemberDTOOnRoleAndAlphabet(result);
