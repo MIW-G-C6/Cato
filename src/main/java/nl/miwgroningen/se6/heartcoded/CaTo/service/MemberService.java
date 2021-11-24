@@ -356,10 +356,12 @@ public class MemberService {
     }
 
     private void sortMemberWithProfilePicDTOOnRoleAndAlphabet(List<MemberWithProfilePicDTO> list) {
-        list.sort(Comparator.comparing(MemberWithProfilePicDTO::isAdmin).reversed().thenComparing(MemberWithProfilePicDTO::getUserName));
+        list.sort(Comparator.comparing(MemberWithProfilePicDTO::isAdmin).reversed()
+                .thenComparing(MemberWithProfilePicDTO::getUserName));
     }
 
     private void sortMemberDTOOnRoleAndAlphabet(List<MemberDTO> list) {
-        list.sort(Comparator.comparing(MemberDTO::isAdmin).reversed().thenComparing(MemberDTO::getRole).thenComparing(MemberDTO::getUserName));
+        list.sort(Comparator.comparing(MemberDTO::isAdmin).reversed()
+                .thenComparing(MemberDTO::getRole).thenComparing(MemberDTO::getUserName));
     }
 }

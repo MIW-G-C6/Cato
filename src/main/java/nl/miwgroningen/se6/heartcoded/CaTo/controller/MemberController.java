@@ -13,7 +13,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
@@ -70,10 +69,12 @@ public class MemberController {
         if (thisCircle.getCirclePhoto() == null) {
             model.addAttribute("circlePhoto", "");
         } else {
-            model.addAttribute("circlePhoto", Base64.getEncoder().encodeToString(thisCircle.getCirclePhoto()));
+            model.addAttribute("circlePhoto",
+                    Base64.getEncoder().encodeToString(thisCircle.getCirclePhoto()));
         }
 
-        List<TaskDTO> taskListByPriority = taskListService.sortTaskListByPriority(taskService.getAllTasksByCircleId(circleId));
+        List<TaskDTO> taskListByPriority = taskListService.sortTaskListByPriority(
+                taskService.getAllTasksByCircleId(circleId));
         List<TaskDTO> taskListByEndDate = taskListService.sortTaskListByEndDate(taskListByPriority);
 
         model.addAttribute("thisCircle", thisCircle);
@@ -100,7 +101,8 @@ public class MemberController {
     }
 
     @GetMapping("/options/edit/{circleId}")
-    protected String showCircleEdit(@PathVariable("circleId") Integer circleId, Model model, @ModelAttribute("error") String error, HttpSession session) {
+    protected String showCircleEdit(@PathVariable("circleId") Integer circleId, Model model,
+                                    @ModelAttribute("error") String error, HttpSession session) {
         if (isNotCircleAdmin(circleId) && isNotSiteAdmin()) {
             return "redirect:/403";
         }
@@ -115,7 +117,8 @@ public class MemberController {
 
     @PostMapping("/options/edit/{circleId}")
     protected String updateCircle(@ModelAttribute("circle") CircleDTO circle,
-                                  @ModelAttribute("circlePhotoInput") MultipartFile circlePhotoInput, BindingResult result) {
+                                  @ModelAttribute("circlePhotoInput") MultipartFile circlePhotoInput,
+                                  BindingResult result) {
         if (isNotCircleAdmin(circle.getCircleId()) && isNotSiteAdmin()) {
             return "redirect:/403";
         }

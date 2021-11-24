@@ -71,9 +71,7 @@ public class TaskController {
     @GetMapping("/circles/{circleId}/taskLists/{taskListId}/update/{taskId}")
     protected String showUpdateTaskForm(@PathVariable("circleId") Integer circleId,
                                         @PathVariable("taskListId") Integer taskListId,
-                                        @PathVariable("taskId") Integer taskId,
-                                        Model model) {
-
+                                        @PathVariable("taskId") Integer taskId, Model model) {
         if (!memberService.userIsMemberOfCircle(circleId) && !userService.currentUserIsSiteAdmin()) {
             return "redirect:/403";
         }
@@ -120,7 +118,7 @@ public class TaskController {
 
     @GetMapping("/circles/{circleId}/task/{taskId}/unassign")
     protected String unassignTask(@PathVariable ("circleId") Integer circleId,
-                                @PathVariable ("taskId") Integer taskId) {
+                                  @PathVariable ("taskId") Integer taskId) {
         if (!memberService.userIsMemberOfCircle(circleId) && !userService.currentUserIsSiteAdmin()) {
             return "redirect:/403";
         }
@@ -134,8 +132,7 @@ public class TaskController {
                                       @PathVariable("circleId") Integer circleId,
                                       @ModelAttribute("task") TaskDTO task,
                                       @ModelAttribute("startTimeInput") String startTimeInput,
-                                      @ModelAttribute("endTimeInput") String endTimeInput,
-                                      BindingResult result) {
+                                      @ModelAttribute("endTimeInput") String endTimeInput, BindingResult result) {
         if (!memberService.userIsMemberOfCircle(circleId) && !userService.currentUserIsSiteAdmin()) {
             return "redirect:/403";
         }
@@ -144,12 +141,10 @@ public class TaskController {
         if (!result.hasErrors()) {
             taskService.save(task, taskListId, userService.getCurrentUser().getUserId());
         }
-
         return "redirect:/circles/{circleId}";
     }
 
     private void setTaskTimes(TaskDTO task, String startTimeInput, String endTimeInput) {
-
         if (!startTimeInput.isEmpty()) {
             task.setStartTime(LocalDateTime.parse(startTimeInput));
         } else {

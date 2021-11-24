@@ -7,8 +7,9 @@ import org.springframework.stereotype.Component;
 /**
  * @author Erwin Wegter <ewegter@gmail.com>
  *
- * Maps the task model to a taskNotification DTO and back
+ * Maps the task model to a taskNotification DTO and back.
  */
+
 @Component
 public class TaskNotificationMapper {
 

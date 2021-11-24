@@ -1,13 +1,8 @@
 package nl.miwgroningen.se6.heartcoded.CaTo.mappers;
 
-import nl.miwgroningen.se6.heartcoded.CaTo.dto.MemberDTO;
 import nl.miwgroningen.se6.heartcoded.CaTo.dto.MemberWithProfilePicDTO;
 import nl.miwgroningen.se6.heartcoded.CaTo.model.Member;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 /**
  * @author Shalena Omapersad <shalenao@hotmail.com>

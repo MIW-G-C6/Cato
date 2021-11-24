@@ -6,8 +6,9 @@ import java.time.LocalDateTime;
 /**
  * @author Erwin Wegter <ewegter@gmail.com>
  *
- * TaskDTO containing all information necessary for the notifications menu
+ * TaskDTO containing all information necessary for the notifications menu.
  */
+
 public class TaskNotificationDTO {
 
     private Integer taskId;
@@ -102,5 +103,4 @@ public class TaskNotificationDTO {
     public void setEndTime(LocalDateTime endTime) {
         this.endTime = endTime;
     }
-
 }

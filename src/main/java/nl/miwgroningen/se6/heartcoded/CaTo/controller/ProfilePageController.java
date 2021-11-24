@@ -33,7 +33,8 @@ public class ProfilePageController {
 
         model.addAttribute("user", userDTO);
 
-        if (userDTO.getProfilePicture() == null) { //TODO this check can be removed if default profile pic is set in UserDTO
+        if (userDTO.getProfilePicture() == null) {
+            //TODO this check can be removed if default profile pic is set in UserDTO
             model.addAttribute("profilePicture", "");
         } else {
             model.addAttribute("profilePicture",
