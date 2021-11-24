@@ -86,7 +86,7 @@
                             <td>There are no tasks yet, <a class="cato-hyperlink" th:href="@{/circles/{circleId}/taskLists/{taskListId}/new(circleId=${circleId}, taskListId=${taskListId})}">click here</a> to add a new task</td>
                         </tr>
                         <tr th:each="task : ${taskList}">
-                            <td id="task-description">
+                            <td>
                                 <div class="flex-column">
                                     <div>
                                         <a th:href="@{/circles/{circleId}/taskLists/{taskListId}/{taskId} (circleId=${circleId}, taskListId=${taskListId}, taskId=${task.taskId})}" th:text="${task.description}" title="show task details"></a>
