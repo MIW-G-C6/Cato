@@ -74,7 +74,7 @@
                     <div class="taskList-header">
                         <h5 class="table-header">Task List</h5>
                     </div>
-                    <div class="taskList-buttons">
+                    <div class="taskList-buttons" th:unless="${taskListByEndDate.isEmpty()}">
                         <div><button id="sortOnPriorityBtn" class="catoButtonSmall" onclick="sortOnPriority()">Sort by priority</button></div>
                         <div><button id="sortOnEndDateBtn" class="catoButtonSmall" onclick="sortOnEndDate()">Sort by end date</button></div>
                     </div>
