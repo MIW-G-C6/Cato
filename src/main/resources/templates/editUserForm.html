@@ -63,12 +63,6 @@
                         <label th:unless="${user.customProfilePicture}" class="custom-file-label" style="width: 100%;" for="image">Choose profile picture</label>
                         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
                     </div>
-
-<!--                    <br>-->
-<!--                    <div th:if="${user.customProfilePicture}" style="margin-left:-90px;">-->
-<!--                        <button  type="button" class="catoYesWarningButton" onclick="openModal()" >Remove profile picture</button>-->
-<!--                    </div>-->
-
                 </div>
             </div>
             <br>
