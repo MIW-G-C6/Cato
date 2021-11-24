@@ -17,7 +17,9 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import static org.aspectj.bridge.MessageUtil.fail;
@@ -94,17 +96,16 @@ public class CircleService {
     }
 
     public List<CircleClientDTO> findWithNameContains(String keyword) {
-        List<CircleClientDTO> listFindByClientName = findWithClientName(keyword);
-        List<CircleClientDTO> result = findCircleWithName(keyword);
+        List<CircleClientDTO> findWithClientNameList = findWithClientName(keyword);
+        List<CircleClientDTO> findWithCircleNameList = findCircleWithName(keyword);
+        List<CircleClientDTO> result = new ArrayList<>();
+        result.addAll(findWithCircleNameList);
 
-        if (!keyword.isEmpty() && !listFindByClientName.isEmpty()) {
-            for (CircleClientDTO resultDTO : result) {
-                for (CircleClientDTO DTOFromClientName : listFindByClientName) {
-                    if (!resultDTO.getCircleId().equals(DTOFromClientName.getCircleId())) {
-                        result.add(DTOFromClientName);
-                    }
-                }
-            }
+        if(!keyword.isEmpty()) {
+            result.addAll(findWithClientNameList);
+            Set<CircleClientDTO> circleClientDTOSet = new HashSet<>(result);
+            result.clear();
+            result.addAll(circleClientDTOSet);
         }
         return result;
     }
@@ -127,11 +128,13 @@ public class CircleService {
             for (Member client : clientList) {
                 Integer circleId = client.getCircle().getCircleId();
                 List<MemberDTO> clientDTOList = getClientsByCircleId(circleId);
-                if (!result.contains(clientDTOList)) {
-                    result.add(new CircleClientDTO(circleId, client.getCircle().getCircleName(), clientDTOList));
-                }
+                result.add(new CircleClientDTO(circleId, client.getCircle().getCircleName(), clientDTOList));
             }
         }
+        Set<CircleClientDTO> circleClientDTOSet = new HashSet<>(result);
+        result.clear();
+        result.addAll(circleClientDTOSet);
+
         return result;
     }
 
