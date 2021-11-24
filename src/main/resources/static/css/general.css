@@ -993,7 +993,7 @@ input[type=email], input[type=password], input[type=text] {
     display: flex;
     flex-direction: row;
     align-self: flex-start;
-    padding-left: 35px;
+    padding-left: 58px;
 }
 
 .member-name-under-picture-box {
