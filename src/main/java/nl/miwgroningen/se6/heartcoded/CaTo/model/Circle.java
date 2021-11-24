@@ -21,7 +21,7 @@ public class Circle {
     @Lob
     private byte[] circlePhoto;
 
-    @OneToMany(mappedBy = "circle", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "circle", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Member> memberList;
 
     public Circle(Integer circleId, String circleName, List<Member> memberList) {

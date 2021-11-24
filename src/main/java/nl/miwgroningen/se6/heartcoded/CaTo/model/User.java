@@ -3,6 +3,7 @@ package nl.miwgroningen.se6.heartcoded.CaTo.model;
 import javax.persistence.*;
 import java.util.List;
 
+import org.hibernate.annotations.Fetch;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -35,9 +36,10 @@ public class User implements UserDetails {
     private String email;
 
     @Lob
+    @Basic(fetch = FetchType.LAZY)
     private byte[] profilePicture;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Member> memberList;
 
     private int circleOne;

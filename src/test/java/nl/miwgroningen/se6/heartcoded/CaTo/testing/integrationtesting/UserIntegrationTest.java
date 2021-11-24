@@ -32,18 +32,23 @@ public class UserIntegrationTest {
     }
 
     @Test
-    void registerUserTest() {
+    void registerAndDeleteUserTest() {
         UserRegistrationDTO testUser = new UserRegistrationDTO("TEST", "TEST_PW",
                 "TEST_PW", "TEST@EXAMPLE.COM");
 
         userService.saveNewUser(testUser);
-
         Optional<User> found = userRepository.findByEmail("TEST@EXAMPLE.COM");
 
-        assertNotNull(found);
+        assertFalse(found.isEmpty());
         assertEquals("TEST", found.get().getName());
+        assertEquals("TEST@EXAMPLE.COM", found.get().getEmail());
 
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         assertTrue(passwordEncoder.matches("TEST_PW", found.get().getPassword()));
+
+        userService.deleteUserById(found.get().getUserId());
+        Optional<User> result = userRepository.findByEmail("TEST@EXAMPLE.COM");
+
+        assertTrue(result.isEmpty());
     }
 }
