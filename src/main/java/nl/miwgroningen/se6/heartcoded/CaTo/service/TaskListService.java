@@ -106,7 +106,9 @@ public class TaskListService {
             }
         }
         result.sort(Comparator.comparing(TaskDTO::getEndTime));
-        result.addAll(nullResult);
+        if (!result.isEmpty()) {
+            result.addAll(nullResult);
+        }
         return result;
     }
 }
