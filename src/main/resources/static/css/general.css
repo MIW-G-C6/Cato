@@ -911,7 +911,7 @@ input[type=email], input[type=password], input[type=text] {
 }
 
 .member-pictures {
-    min-height: 60px;
+    min-width: 60px;
     max-width: 60px;
     min-height: 60px;
     max-height: 60px;
