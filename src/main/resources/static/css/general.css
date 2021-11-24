@@ -962,3 +962,10 @@ input[type=email], input[type=password], input[type=text] {
 .font-hidden {
     color: transparent;
 }
+
+.priorityBanner {
+    font-size: 14px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+}
