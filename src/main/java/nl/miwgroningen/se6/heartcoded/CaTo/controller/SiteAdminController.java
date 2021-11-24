@@ -8,11 +8,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.IOException;
 
 /**
  * @author Erwin Wegter <ewegter@gmail.com>
@@ -42,8 +39,6 @@ public class SiteAdminController {
             return "redirect:/403";
         }
 
-        model.addAttribute("allClients", memberService.findAllClientsForSiteAdmin());
-        model.addAttribute("allCircles", circleService.findAllCircles());
         model.addAttribute("numberOfUsers", userService.totalNumberOfUsers());
         model.addAttribute("numberOfCircles", circleService.totalNumberOfCircles());
         model.addAttribute("numberOfClients", memberService.totalNumberOfClients());

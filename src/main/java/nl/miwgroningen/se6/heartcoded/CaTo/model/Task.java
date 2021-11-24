@@ -1,6 +1,5 @@
 package nl.miwgroningen.se6.heartcoded.CaTo.model;
 
-import org.springframework.data.jpa.repository.Temporal;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;

@@ -27,8 +27,6 @@ import static org.aspectj.bridge.MessageUtil.fail;
 @Service
 public class UserService {
 
-    private static final String DEFAULT_PROFILE_PICTURE_PATH = "static/css/images/Default-Profile-Picture.png";
-
     private final UserRepository userRepository;
 
     private final UserMapper userMapper;
@@ -84,7 +82,6 @@ public class UserService {
         result.setPassword(passwordEncoder.encode(user.getNewPassword()));
 
         userRepository.save(result);
-        //TODO maybe this needs an exception throw??
     }
 
     public void saveNewUser(UserRegistrationDTO userDTO) {
@@ -217,5 +214,4 @@ public class UserService {
         }
         return adminId;
     }
-
 }

@@ -8,8 +8,6 @@ import nl.miwgroningen.se6.heartcoded.CaTo.repository.*;
 import nl.miwgroningen.se6.heartcoded.CaTo.mappers.TaskMapper;
 import org.springframework.stereotype.Service;
 
-import java.time.Duration;
-import java.time.LocalDateTime;
 import java.util.*;
 
 /**

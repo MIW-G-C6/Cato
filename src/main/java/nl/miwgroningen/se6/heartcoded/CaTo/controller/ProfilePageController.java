@@ -32,14 +32,7 @@ public class ProfilePageController {
         UserDTO userDTO = userService.getById(userId);
 
         model.addAttribute("user", userDTO);
-
-        if (userDTO.getProfilePicture() == null) { //TODO this check can be removed if default profile pic is set in UserDTO
-            model.addAttribute("profilePicture", "");
-        } else {
-            model.addAttribute("profilePicture",
-                    Base64.getEncoder().encodeToString(userDTO.getProfilePicture()));
-        }
-
+        model.addAttribute("profilePicture", Base64.getEncoder().encodeToString(userDTO.getProfilePicture()));
         model.addAttribute("userIsCurrentUser", userService.getCurrentUser().getUserId().equals(userId));
         model.addAttribute("currentUserIsSiteAdmin", userService.currentUserIsSiteAdmin());
         model.addAttribute("allCircles", memberService.allCirclesByUserIdWithAdminCheck(userId));

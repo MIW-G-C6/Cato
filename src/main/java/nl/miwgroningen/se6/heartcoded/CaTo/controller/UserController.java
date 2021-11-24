@@ -57,7 +57,6 @@ public class UserController {
         } else {
             userService.deleteUserById(userId);
         }
-
         return "redirect:/siteAdmin/userOverview";
     }
 
@@ -96,8 +95,8 @@ public class UserController {
         if (!userService.getCurrentUser().getUserId().equals(userId) && !userService.currentUserIsSiteAdmin()) {
             return "redirect:/403";
         }
-        userService.deleteProfilePicture(userId);
 
+        userService.deleteProfilePicture(userId);
         return "redirect:/users/edit/" + userId;
     }
 
@@ -120,7 +119,6 @@ public class UserController {
     @PostMapping("users/edit/{userId}")
     protected String editUser(@ModelAttribute("user") UserDTO user, @ModelAttribute("image") MultipartFile image,
                               BindingResult result, Model model) {
-
         if (!userService.getCurrentUser().getUserId().equals(user.getUserId())
                 && !userService.currentUserIsSiteAdmin()) {
             return "redirect:/403";
@@ -128,7 +126,6 @@ public class UserController {
 
         setNewProfilePicture(user, image);
         checkEmailErrors(user, result);
-
         return handleReturnFromEdit(user, result, model);
     }
 
@@ -141,7 +138,6 @@ public class UserController {
         }
 
         checkPasswordErrors(user, result);
-
         return handleReturnFromPasswordEdit(user, result, model);
     }
 
