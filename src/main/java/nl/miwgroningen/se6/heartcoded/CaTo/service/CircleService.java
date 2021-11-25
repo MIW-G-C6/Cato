@@ -20,7 +20,6 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import static org.aspectj.bridge.MessageUtil.fail;
 
@@ -33,6 +32,7 @@ import static org.aspectj.bridge.MessageUtil.fail;
 @Service
 public class CircleService {
 
+    private static final String DEFAULT_GROUP_PICTURE_PATH = "static/css/images/Default-Group-Picture.png";
     private final MemberRepository memberRepository;
     private final CircleRepository circleRepository;
     private final UserRepository userRepository;
@@ -73,7 +73,7 @@ public class CircleService {
             try {
                 InputStream inputStream = getClass()
                         .getClassLoader()
-                        .getResourceAsStream("static/css/images/Default-Group-Picture.png");
+                        .getResourceAsStream(DEFAULT_GROUP_PICTURE_PATH);
 
                 if (inputStream == null) {
                     fail("Unable to find resource");
