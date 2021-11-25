@@ -87,34 +87,34 @@
                         </tr>
                         <tr th:each="task : ${taskList}">
                             <td class="tasklist-priority">
-                                <div th:if="${task.priority.equals('High')}" >
+                                <div th:if="${task.priority.equals('High')}" title="Priority: High">
                                     <img th:src="@{/css/images/highPriority.png}" height="30" alt="High priority">
                                 </div>
-                                <div th:if="${task.priority.equals('Medium')}">
+                                <div th:if="${task.priority.equals('Medium')}" title="Priority: Medium">
                                     <img th:src="@{/css/images/mediumPriority.png}" height="30" alt="Medium priority">
                                 </div>
-                                <div th:if="${task.priority.equals('Low')}">
+                                <div th:if="${task.priority.equals('Low')}" title="Priority: Low">
                                     <img th:src="@{/css/images/lowPriority.png}" height="30" alt="Low priority">
                                 </div>
                             </td>
                             <td class="tasklist-description">
                                 <div class="flex-column">
                                     <div>
-                                        <a th:href="@{/circles/{circleId}/taskLists/{taskListId}/{taskId} (circleId=${circleId}, taskListId=${taskListId}, taskId=${task.taskId})}" th:text="${task.description}" title="show task details"></a>
+                                        <a th:href="@{/circles/{circleId}/taskLists/{taskListId}/{taskId} (circleId=${circleId}, taskListId=${taskListId}, taskId=${task.taskId})}" th:text="${task.description}" title="Show task details"></a>
                                     </div>
                                     <div>
-                                        <span class="date-light-grey" th:if="${task.endTime != null}" th:text="${#temporals.format(task.endTime, 'dd-MM-yyyy')}"></span>
+                                        <span class="date-light-grey" th:if="${task.endTime != null}" th:text="${#temporals.format(task.endTime, 'dd-MM-yyyy')}" th:title="'Due to ' + ${#temporals.format(task.endTime, 'dd-MM-yyyy')}"></span>
                                     </div>
                                 </div>
                             </td>
 
-                            <td title="assigned to">
-                            <span th:if="${task.assignedUserName == ''}">
-                                <a th:href="@{/circles/{circleId}/task/{taskId}/assign(taskId=${task.taskId}, circleId=${circleId})}">Take on task</a>
+                            <td>
+                            <span th:if="${task.assignedUserName == ''}" title="Click here to take on this task">
+                                <a th:href="@{/circles/{circleId}/task/{taskId}/assign(taskId=${task.taskId}, circleId=${circleId})}">Take on this task</a>
                             </span>
-                                <span th:unless="${task.assignedUserName == ''}" th:text="${task.assignedUserName}"></span>
+                                <span th:unless="${task.assignedUserName == ''}" th:text="${task.assignedUserName}" title="Assigned to"></span>
                             </td>
-                            <td class="delete"><a th:href="@{'/task/delete/' + ${task.taskId}}"><img th:src="@{/css/images/checkmark-icon.svg}" height="20" width="20" title="Task completed"></a></td>
+                            <td class="delete"><a th:href="@{'/task/delete/' + ${task.taskId}}"><img th:src="@{/css/images/checkmark-icon.svg}" height="20" width="20" title="Complete this task"></a></td>
                         </tr>
                     </table>
                 </div>
@@ -127,33 +127,33 @@
 
                         <tr th:each="task : ${taskListByEndDate}">
                             <td class="tasklist-priority">
-                                <div th:if="${task.priority.equals('High')}" >
+                                <div th:if="${task.priority.equals('High')}" title="Priority: High">
                                     <img th:src="@{/css/images/highPriority.png}" height="30" alt="High priority">
                                 </div>
-                                <div th:if="${task.priority.equals('Medium')}">
+                                <div th:if="${task.priority.equals('Medium')}" title="Priority: Medium">
                                     <img th:src="@{/css/images/mediumPriority.png}" height="30" alt="Medium priority">
                                 </div>
-                                <div th:if="${task.priority.equals('Low')}">
+                                <div th:if="${task.priority.equals('Low')}" title="Priority: Low">
                                     <img th:src="@{/css/images/lowPriority.png}" height="30" alt="Low priority">
                                 </div>
                             </td>
                             <td class="tasklist-description">
                                 <div class="flex-column">
                                     <div>
-                                        <a th:href="@{/circles/{circleId}/taskLists/{taskListId}/{taskId} (circleId=${circleId}, taskListId=${taskListId}, taskId=${task.taskId})}" th:text="${task.description}" title="show task details"></a>
+                                        <a th:href="@{/circles/{circleId}/taskLists/{taskListId}/{taskId} (circleId=${circleId}, taskListId=${taskListId}, taskId=${task.taskId})}" th:text="${task.description}" title="Show task details"></a>
                                     </div>
                                     <div>
-                                        <span class="date-light-grey" th:if="${task.endTime != null}" th:text="${#temporals.format(task.endTime, 'dd-MM-yyyy')}"></span>
+                                        <span class="date-light-grey" th:if="${task.endTime != null}" th:text="${#temporals.format(task.endTime, 'dd-MM-yyyy')}" th:title="'Due to ' + ${#temporals.format(task.endTime, 'dd-MM-yyyy')}"></span>
                                     </div>
                                 </div>
                             </td>
-                            <td title="assigned to">
-                            <span th:if="${task.assignedUserName == ''}">
-                                <a th:href="@{/circles/{circleId}/task/{taskId}/assign(taskId=${task.taskId}, circleId=${circleId})}">Take on task</a>
+                            <td >
+                            <span th:if="${task.assignedUserName == ''}" title="Click here to take on this task">
+                                <a th:href="@{/circles/{circleId}/task/{taskId}/assign(taskId=${task.taskId}, circleId=${circleId})}">Take on this task</a>
                             </span>
-                                <span th:unless="${task.assignedUserName == ''}" th:text="${task.assignedUserName}"></span>
+                                <span th:unless="${task.assignedUserName == ''}" th:text="${task.assignedUserName}" title="Assigned to"></span>
                             </td>
-                            <td class="delete"><a th:href="@{'/task/delete/' + ${task.taskId}}"><img th:src="@{/css/images/checkmark-icon.svg}" height="20" width="20" title="Task completed"></a></td>
+                            <td class="delete"><a th:href="@{'/task/delete/' + ${task.taskId}}"><img th:src="@{/css/images/checkmark-icon.svg}" height="20" width="20" title="Complete this task"></a></td>
                         </tr>
                     </table>
                 </div>
