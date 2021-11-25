@@ -33,7 +33,7 @@ public class TaskDetailsPageUITest {
         driver.findElement(By.id("password")).sendKeys("a");
         driver.findElement(By.id("login-submit")).click();
 
-        driver.get("http://localhost:8080/circles/45/taskLists/55/111");
+        driver.get("http://localhost:8080/circles/43/taskLists/50/69");
     }
 
     @AfterEach
@@ -46,7 +46,7 @@ public class TaskDetailsPageUITest {
         WebElement edit = driver.findElement(By.linkText("Edit task"));
         edit.click();
 
-        String expectedUrl = "http://localhost:8080/circles/45/taskLists/55/update/111";
+        String expectedUrl = "http://localhost:8080/circles/43/taskLists/50/update/69";
         assertEquals(expectedUrl, driver.getCurrentUrl());
         assertEquals("Edit task", driver.getTitle());
 
@@ -56,10 +56,10 @@ public class TaskDetailsPageUITest {
         WebElement save = driver.findElement(By.xpath("//button[@type='submit']"));
         save.click();
 
-        expectedUrl = "http://localhost:8080/circles/45";
+        expectedUrl = "http://localhost:8080/circles/43";
         assertEquals(expectedUrl, driver.getCurrentUrl());
 
-        driver.get("http://localhost:8080/circles/45/taskLists/55/111");
+        driver.get("http://localhost:8080/circles/43/taskLists/50/69");
         description = driver.findElement(By.id("description"));
         assertEquals(description.getText(), "Get Medicine");
     }
