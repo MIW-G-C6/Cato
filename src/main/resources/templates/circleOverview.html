@@ -88,8 +88,10 @@
                 <h5>My Care Circles</h5>
                 <hr>
                 <table>
-                    <tr th:if="${allCircles.isEmpty()}">You are not a member of a Care Circle yet.</tr>
-                    <tr th:if="${allCircles.isEmpty()}">&ensp;Create a new Care Circle or ask a circle admin to add you to a Care Circle</tr>
+                    <tr th:if="${allCircles.isEmpty()}">
+                        <p>You are not a member of a Care Circle yet.</p>
+                        <p>Create a new Care Circle or ask a circle admin to add you to a Care Circle</p>
+                    </tr>
                     <tr th:each="circle : ${allCircles}">
                         <td><span th:if="${circle.userIsCircleAdmin}"><i class="fa fa-key"></i></span>
                             <span th:text="${circle.userIsCircleAdmin} ? '' : '&emsp;'"></span>

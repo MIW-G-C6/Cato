@@ -186,4 +186,10 @@ public class Seeder {
             taskService.save(new TaskDTO("Medium", "Prepare dinner", taskList.getTaskListId()), taskList.getTaskListId(), adminId);
         }
     }
+
+    private void seedDemoFamily() {
+
+        userService.saveSeederUser(new User(
+
+    }
 }
