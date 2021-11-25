@@ -1,0 +1,61 @@
+1. Introductie: (Paul)
+- Welkom aan werkgevers
+
+- Per persoon korte voorstel ronde
+
+- Uitleg klant behoefte en beoogd gebruik/doel van de WebApp
+
+2. Functionele demo: (Shalena)
+- Oma Geesje Jansen maakt een account (tweede wachtwoord matched niet)
+
+- Profiel foto toevoegen
+3. Functionele demo deel 2 (Remco)
+- Evert drukt per ongeluk op leave circle (modal laten zien)
+
+- Evert gaat oma toevoegen aan de groep (evert & marloes zijn circle admin)
+
+- Taak aanmaken (Opa naar de dokter brengen)
+
+- Taak priority/einddatum aanpassen
+
+- Sort by end date
+
+- Een taak assignen 
+
+- Taak completen
+
+- Belletje laten zien
+
+4. Site admin pagina�s: (Erwin)
+- Statistieken die later gebruikt kunnen worden voor eventuele grafieken
+
+- Circle overview: AJAX op twee manieren (circle naam, client naam)
+
+- Voor de oplettende kijker: de breadcrumbsbar heeft nu extra link die alleen zichtbaar is voor site admin
+
+
+
+
+
+
+Klaarzetten:
+Taken in de takenlijst (met assigned en einddatum)
+- Boodschappen doen
+- Stofzuigen
+- Medicijnen afhalen
+- Dex uitlaten
+- Oprit schoonmaken
+Circle naam: Familie Jansen
+
+Users: 
+Geesje + Ad
+Jan (+ Aukje Jansen-Hoekstra), Evert (vrijgezel), Marloes (& Thomas Postma)
+				Sjors (zoon evert), Sem Postma
+
+Evert moet al in 4 groepen zitten. (ook last visited even klaarzetten)
+
+
+
+- 
+
+
