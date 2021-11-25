@@ -30,6 +30,16 @@ public class TaskDTO {
         this.taskListId = taskListId;
     }
 
+    public TaskDTO(String priority, String description, Integer taskListId, LocalDateTime endTime,
+                   Integer assignedUserId, String assignedUserName) {
+        this.priority = priority;
+        this.description = description;
+        this.taskListId = taskListId;
+        this.endTime = endTime;
+        this.assignedUserId = assignedUserId;
+        this.assignedUserName = assignedUserName;
+    }
+
     public TaskDTO(String priority, String description, Integer taskListId) {
         this.priority = priority;
         this.description = description;

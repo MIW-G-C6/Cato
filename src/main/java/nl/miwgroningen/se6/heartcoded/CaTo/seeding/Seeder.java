@@ -3,15 +3,24 @@ package nl.miwgroningen.se6.heartcoded.CaTo.seeding;
 import nl.miwgroningen.se6.heartcoded.CaTo.dto.*;
 import nl.miwgroningen.se6.heartcoded.CaTo.mappers.UserMapper;
 import nl.miwgroningen.se6.heartcoded.CaTo.mappers.UserRegistrationMapper;
+import nl.miwgroningen.se6.heartcoded.CaTo.model.Circle;
 import nl.miwgroningen.se6.heartcoded.CaTo.model.User;
 import nl.miwgroningen.se6.heartcoded.CaTo.service.*;
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
+import static org.aspectj.bridge.MessageUtil.fail;
 
 /**
  * @author Shalena Omapersad <shalenao@hotmail.com>
@@ -42,7 +51,7 @@ public class Seeder {
     }
 
     @EventListener
-    public void seed(ContextRefreshedEvent event) {
+    public void seed(ContextRefreshedEvent event) throws IOException {
         if (userService.findAllUsers().size() == 0) {
             seedUser();
         }
@@ -65,6 +74,8 @@ public class Seeder {
         if (taskService.findAllTasks().size() == 0) {
             seedTasks();
         }
+
+        seedDemoFamily();
 
     }
 
@@ -187,9 +198,77 @@ public class Seeder {
         }
     }
 
-    private void seedDemoFamily() {
+    private void seedDemoFamily() throws IOException {
 
-        userService.saveSeederUser(new User(
+        List<User> familyList = new ArrayList<>();
+
+        User ad = new User("Ad Jansen", "cato123", "ad@example.com");
+        User aukje = new User("Aukje Jansen-Hoekstra", "cato123", "aukje@example.com");
+        User jan = new User("Jan Jansen", "cato123", "jan@example.com");
+        User evert = new User("Evert Jansen", "cato123", "evert@example.com");
+        User marloes = new User("Marloes Postma-Jansen", "cato123", "marloes@example.com");
+        User thomas = new User("Thomas Postma", "cato123", "Thomas@example.com");
+        User sjors = new User("Sjors Jansen", "cato123", "sjors@example.com");
+        User sem = new User("Sem Postma", "cato123", "sem@example.com");
+
+        familyList.add(ad);
+        familyList.add(aukje);
+        familyList.add(jan);
+        familyList.add(evert);
+        familyList.add(marloes);
+        familyList.add(thomas);
+        familyList.add(sjors);
+        familyList.add(sem);
+
+        userService.saveSeederUser(ad, "/demoFamilyPictures/Ad_Jansen.jpg");
+        userService.saveSeederUser(aukje, "/demoFamilyPictures/Aukje_Jansen.jpg");
+        userService.saveSeederUser(jan, "/demoFamilyPictures/Jan_Jansen.jpg");
+        userService.saveSeederUser(evert, "/demoFamilyPictures/Evert_Jansen.jpg");
+        userService.saveSeederUser(marloes, "/demoFamilyPictures/Marloes_Postma_Jansen.jpg");
+        userService.saveSeederUser(thomas, "/demoFamilyPictures/Thomas_Postma.jpg");
+        userService.saveSeederUser(sjors, "/demoFamilyPictures/Sjors_Jansen.jpg");
+        userService.saveSeederUser(sem, "/demoFamilyPictures/Sem_Postma.jpg");
+
+        CircleDTO familyJansen = new CircleDTO("Familie Jansen");
+        try {
+            InputStream inputStream = getClass()
+                    .getClassLoader()
+                    .getResourceAsStream("static/seederProfilePictures/demoFamilyPictures/Dex.jpg");
+
+            if (inputStream == null) {
+                fail("Unable to find resource");
+            } else {
+                familyJansen.setCirclePhoto(IOUtils.toByteArray(inputStream));
+            }
+        } catch (IOException ioException) {
+            System.out.println(ioException.getMessage());
+        }
+        circleService.saveCircle(familyJansen);
+        taskListService.saveNew(familyJansen);
+
+        TaskListDTO taskListJansen = taskListService.getByCircleId(familyJansen.getCircleId());
+
+        for (User user : familyList) {
+            if (user.getUserId().equals(evert.getUserId())) {
+                memberService.saveMember(new MemberDTO(user.getUserId(), user.getName(), familyJansen.getCircleId(), "Caregiver", true));
+            } else if (user.getUserId().equals(ad.getUserId())) {
+                memberService.saveMember(new MemberDTO(user.getUserId(), user.getName(), familyJansen.getCircleId(), "Client", false));
+            } else {
+                memberService.saveMember(new MemberDTO(user.getUserId(), user.getName(), familyJansen.getCircleId(), "Caregiver", false));
+            }
+        }
+
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+
+        taskService.save(new TaskDTO("Medium", "Boodschappen doen", taskListJansen.getTaskListId(), LocalDateTime.parse("2021-12-04 17:00", formatter), jan.getUserId(), jan.getName()), taskListJansen.getTaskListId(), ad.getUserId());
+        taskService.save(new TaskDTO("Low", "Stofzuigen", taskListJansen.getTaskListId()), taskListJansen.getTaskListId(), marloes.getUserId());
+        taskService.save(new TaskDTO("High", "Medicijnen afhalen", taskListJansen.getTaskListId(), LocalDateTime.parse("2021-12-10 12:30", formatter), evert.getUserId(), evert.getName()), taskListJansen.getTaskListId(), evert.getUserId());
+        taskService.save(new TaskDTO("Medium", "Dex uitlaten", taskListJansen.getTaskListId(), LocalDateTime.parse("2021-11-03 16:15", formatter), sem.getUserId(), sem.getName()), taskListJansen.getTaskListId(), sjors.getUserId());
+        taskService.save(new TaskDTO("Medium", "Oprit schoonmaken", taskListJansen.getTaskListId()), taskListJansen.getTaskListId(), ad.getUserId());
+
+
+
 
     }
 }
