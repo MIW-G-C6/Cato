@@ -865,6 +865,17 @@ input[type=email], input[type=password], input[type=text] {
     word-break: break-word;
 }
 
+
+.tasklist-priority {
+    width: 46px;
+    height: 100px;
+    padding: 0 0 0 1rem;
+}
+
+.tasklist-description {
+    padding-left: 0.5rem;
+}
+
 #task-description {
     width: 40%;
 }
