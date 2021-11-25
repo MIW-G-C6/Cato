@@ -53,25 +53,31 @@ public class Seeder {
     @EventListener
     public void seed(ContextRefreshedEvent event) throws IOException {
         if (userService.findAllUsers().size() == 0) {
+            System.out.println("Seeding users");
             seedUser();
         }
 
         if (!userService.emailInUse("admin@admin.com")) {
+            System.out.println("Seeding admin");
             userService.saveAdmin();
         }
 
         if (circleService.findAllCircles().size() == 0) {
+            System.out.println("Seeding circles");
             seedCircles();
             if (taskListService.findAllTaskLists().size() == 0) {
+                System.out.println("Seeding tasklists");
                 seedTaskLists();
             }
         }
 
         if (memberService.findAllMembers().size() == 0) {
+            System.out.println("Seeding members");
             seedMembers();
         }
 
         if (taskService.findAllTasks().size() == 0) {
+            System.out.println("Seeding tasks");
             seedTasks();
         }
 
@@ -128,13 +134,13 @@ public class Seeder {
     private void seedCircles() {
         circleService.saveCircle(new CircleDTO("The Caring Hand"));
         circleService.saveCircle(new CircleDTO("Happy At Home"));
-        circleService.saveCircle(new CircleDTO("House And Home"));
+//        circleService.saveCircle(new CircleDTO("House And Home"));
         circleService.saveCircle(new CircleDTO("Precise Care"));
         circleService.saveCircle(new CircleDTO("Sunrise Home Care"));
-        circleService.saveCircle(new CircleDTO("Helping Hands At Home"));
+//        circleService.saveCircle(new CircleDTO("Helping Hands At Home"));
         circleService.saveCircle(new CircleDTO("Custom Home Care Solutions"));
         circleService.saveCircle(new CircleDTO("Senior Serenity"));
-        circleService.saveCircle(new CircleDTO("Ease Of Effort"));
+//        circleService.saveCircle(new CircleDTO("Ease Of Effort"));
         circleService.saveCircle(new CircleDTO("Slick Home Care"));
     }
 
@@ -145,22 +151,44 @@ public class Seeder {
         List<UserDTO> extraUsers = allUsers.subList(10, allUsers.size() - 1);
 
         int i = 0;
+
         for (UserDTO user : mainUsers) {
             memberService.saveMember(new MemberDTO(user.getUserId(), user.getName(), allCircles.get(i).getCircleId(), "Caregiver", true));
             i = increment(allCircles, i);
             memberService.saveMember(new MemberDTO(user.getUserId(), user.getName(), allCircles.get(i).getCircleId(), "Caregiver", false));
             i = increment(allCircles, i);
-            memberService.saveMember(new MemberDTO(user.getUserId(), user.getName(), allCircles.get(i).getCircleId(), "Caregiver", false));
+            if (i % 3 == 0) {
+                memberService.saveMember(new MemberDTO(user.getUserId(), user.getName(), allCircles.get(i).getCircleId(), "Caregiver", false));
+                i = increment(allCircles, i);
+            }
         }
 
         i = 0;
-        for (UserDTO user : extraUsers) {
-            memberService.saveMember(new MemberDTO(user.getUserId(), user.getName(), allCircles.get(i).getCircleId(), "Caregiver", true));
+        for (CircleDTO circle : allCircles) {
+            UserDTO user = mainUsers.get(i);
+            memberService.saveMember(new MemberDTO(user.getUserId(), user.getName(), circle.getCircleId(), "Client", true));
             i = increment(allCircles, i);
-            memberService.saveMember(new MemberDTO(user.getUserId(), user.getName(), allCircles.get(i).getCircleId(), "Client", false));
+        }
+
+        i = 0;
+        while (extraUsers.size() > 0) {
+            CircleDTO circle = allCircles.get(i);
+            UserDTO user = extraUsers.get(0);
+            memberService.saveMember(new MemberDTO(user.getUserId(), user.getName(), circle.getCircleId(), "Caregiver", false));
             i = increment(allCircles, i);
-            memberService.saveMember(new MemberDTO(user.getUserId(), user.getName(), allCircles.get(i).getCircleId(), "Caregiver", false));
-            i = increment(allCircles, i);
+
+            if (allUsers.size()%3 == 0) {
+                circle = allCircles.get(i);
+                memberService.saveMember(new MemberDTO(user.getUserId(), user.getName(), circle.getCircleId(), "Caregiver", false));
+                i = increment(allCircles, i);
+            }
+
+            if (allUsers.size()%5 == 0) {
+                circle = allCircles.get(i);
+                memberService.saveMember(new MemberDTO(user.getUserId(), user.getName(), circle.getCircleId(), "Client", false));
+                i = increment(allCircles, i);
+            }
+            extraUsers.remove(0);
         }
     }
 
