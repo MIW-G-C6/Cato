@@ -86,7 +86,7 @@
                             <td>There are no tasks yet, <a class="cato-hyperlink" th:href="@{/circles/{circleId}/taskLists/{taskListId}/new(circleId=${circleId}, taskListId=${taskListId})}">click here</a> to add a new task</td>
                         </tr>
                         <tr th:each="task : ${taskList}">
-                            <td>
+                            <td class="tasklist-priority">
                                 <div th:if="${task.priority.equals('High')}" title="Priority: High">
                                     <img th:src="@{/css/images/highPriority.png}" height="30" alt="High priority">
                                 </div>
@@ -97,7 +97,7 @@
                                     <img th:src="@{/css/images/lowPriority.png}" height="30" alt="Low priority">
                                 </div>
                             </td>
-                            <td>
+                            <td class="tasklist-description">
                                 <div class="flex-column">
                                     <div>
                                         <a th:href="@{/circles/{circleId}/taskLists/{taskListId}/{taskId} (circleId=${circleId}, taskListId=${taskListId}, taskId=${task.taskId})}" th:text="${task.description}" title="Show task details"></a>
@@ -126,7 +126,7 @@
                         </tr>
 
                         <tr th:each="task : ${taskListByEndDate}">
-                            <td>
+                            <td class="tasklist-priority">
                                 <div th:if="${task.priority.equals('High')}" title="Priority: High">
                                     <img th:src="@{/css/images/highPriority.png}" height="30" alt="High priority">
                                 </div>
@@ -137,7 +137,7 @@
                                     <img th:src="@{/css/images/lowPriority.png}" height="30" alt="Low priority">
                                 </div>
                             </td>
-                            <td>
+                            <td class="tasklist-description">
                                 <div class="flex-column">
                                     <div>
                                         <a th:href="@{/circles/{circleId}/taskLists/{taskListId}/{taskId} (circleId=${circleId}, taskListId=${taskListId}, taskId=${task.taskId})}" th:text="${task.description}" title="Show task details"></a>
