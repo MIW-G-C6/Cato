@@ -81,8 +81,10 @@ public class Seeder {
             seedTasks();
         }
 
-        seedDemoFamily();
-
+        if (circleService.findWithNameContains("Familie Jansen").isEmpty()) {
+            System.out.println("Seeding familie Jansen");
+            seedDemoFamily();
+        }
     }
 
     private void seedUser() {
