@@ -31,6 +31,8 @@ import static org.aspectj.bridge.MessageUtil.fail;
 @Component
 public class Seeder {
 
+    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+
     private UserService userService;
     private CircleService circleService;
     private MemberService memberService;
@@ -216,15 +218,15 @@ public class Seeder {
         Integer adminId = userService.getAdminId("ROLE_ADMIN");
 
         for (TaskListDTO taskList : allTaskLists) {
-            taskService.save(new TaskDTO("High", "Grocery shopping", taskList.getTaskListId()), taskList.getTaskListId(), adminId);
-            taskService.save(new TaskDTO("Medium", "Vacuum the living room", taskList.getTaskListId()), taskList.getTaskListId(), adminId);
-            taskService.save(new TaskDTO("Low", "Walk the dog", taskList.getTaskListId()), taskList.getTaskListId(), adminId);
-            taskService.save(new TaskDTO("Low", "Change bed linens", taskList.getTaskListId()), taskList.getTaskListId(), adminId);
-            taskService.save(new TaskDTO("Medium", "Wash the dishes", taskList.getTaskListId()), taskList.getTaskListId(), adminId);
-            taskService.save(new TaskDTO("Low", "Give daily medicine", taskList.getTaskListId()), taskList.getTaskListId(), adminId);
-            taskService.save(new TaskDTO("High", "Get medicine from pharmacy", taskList.getTaskListId()), taskList.getTaskListId(), adminId);
-            taskService.save(new TaskDTO("Low", "Check blood pressure", taskList.getTaskListId()), taskList.getTaskListId(), adminId);
-            taskService.save(new TaskDTO("Medium", "Prepare dinner", taskList.getTaskListId()), taskList.getTaskListId(), adminId);
+            taskService.save(new TaskDTO("High", "Grocery shopping", taskList.getTaskListId(), LocalDateTime.parse("2021-12-19 17:00", formatter)), taskList.getTaskListId(), adminId);
+            taskService.save(new TaskDTO("Medium", "Vacuum the living room", taskList.getTaskListId(), LocalDateTime.parse("2021-12-25 17:00", formatter)), taskList.getTaskListId(), adminId);
+            taskService.save(new TaskDTO("Low", "Walk the dog", taskList.getTaskListId(), LocalDateTime.parse("2021-12-20 17:00", formatter)), taskList.getTaskListId(), adminId);
+            taskService.save(new TaskDTO("Low", "Change bed linens", taskList.getTaskListId(), LocalDateTime.parse("2022-01-02 17:00", formatter)), taskList.getTaskListId(), adminId);
+            taskService.save(new TaskDTO("Medium", "Wash the dishes", taskList.getTaskListId(), LocalDateTime.parse("2021-12-13 11:30", formatter)), taskList.getTaskListId(), adminId);
+            taskService.save(new TaskDTO("Low", "Give daily medicine", taskList.getTaskListId(), LocalDateTime.parse("2021-12-04 17:00", formatter)), taskList.getTaskListId(), adminId);
+            taskService.save(new TaskDTO("High", "Get medicine from pharmacy", taskList.getTaskListId(), LocalDateTime.parse("2021-12-07 17:00", formatter)), taskList.getTaskListId(), adminId);
+            taskService.save(new TaskDTO("Low", "Check blood pressure", taskList.getTaskListId(), LocalDateTime.parse("2021-12-10 12:00", formatter)), taskList.getTaskListId(), adminId);
+            taskService.save(new TaskDTO("Medium", "Prepare dinner", taskList.getTaskListId(), LocalDateTime.parse("2021-12-25 13:45", formatter)), taskList.getTaskListId(), adminId);
         }
     }
 
@@ -291,7 +293,7 @@ public class Seeder {
             }
         }
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+
 
         TaskDTO task1 = new TaskDTO("Medium", "Boodschappen doen", taskListJansen.getTaskListId(), LocalDateTime.parse("2021-12-04 17:00", formatter));
         taskService.save(task1,taskListJansen.getTaskListId(), ad.getUserId());
