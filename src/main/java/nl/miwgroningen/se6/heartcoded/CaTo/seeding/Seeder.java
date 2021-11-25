@@ -92,7 +92,7 @@ public class Seeder {
     private void seedUser() {
 
         userService.saveSeederUser(new User("Piet Bakker", "a", "piet@example.com"), "man_1.jpg");
-        userService.saveSeederUser(new User("Henk Janssen", "a", "henk@example.com"), "man_2.jpg");
+        userService.saveSeederUser(new User("Henk Bos", "a", "henk@example.com"), "man_2.jpg");
         userService.saveSeederUser(new User("Klaas Smit", "a", "klaas@example.com"), "man_3.jpg");
         userService.saveSeederUser(new User("Willem Visser", "a", "willem@example.com"), "man_4.jpg");
         userService.saveSeederUser(new User("Noah van den Berg", "a", "noah@example.com"), "");
@@ -262,6 +262,8 @@ public class Seeder {
         userService.saveSeederUser(sem, "/demoFamilyPictures/Sem_Postma.jpg");
 
         CircleDTO familyJansen = new CircleDTO("Familie Jansen");
+        circleService.saveCircle(familyJansen);
+
         try {
             InputStream inputStream = getClass()
                     .getClassLoader()
@@ -275,6 +277,7 @@ public class Seeder {
         } catch (IOException ioException) {
             System.out.println(ioException.getMessage());
         }
+
         circleService.saveCircle(familyJansen);
         taskListService.saveNew(familyJansen);
 
@@ -292,14 +295,20 @@ public class Seeder {
 
 
 
-        taskService.save(new TaskDTO("Medium", "Boodschappen doen", taskListJansen.getTaskListId(), LocalDateTime.parse("2021-12-04 17:00", formatter), jan.getUserId(), jan.getName()), taskListJansen.getTaskListId(), ad.getUserId());
+        TaskDTO task1 = new TaskDTO("Medium", "Boodschappen doen", taskListJansen.getTaskListId(), LocalDateTime.parse("2021-12-04 17:00", formatter));
+        taskService.save(task1,taskListJansen.getTaskListId(), ad.getUserId());
+        TaskDTO task2 = new TaskDTO("High", "Medicijnen afhalen", taskListJansen.getTaskListId(), LocalDateTime.parse("2021-12-10 12:30", formatter));
+        taskService.save(task2, taskListJansen.getTaskListId(), evert.getUserId());
+        TaskDTO task3 = new TaskDTO("Medium", "Dex uitlaten", taskListJansen.getTaskListId(), LocalDateTime.parse("2021-11-03 16:15", formatter));
+        taskService.save(task3, taskListJansen.getTaskListId(), sjors.getUserId());
         taskService.save(new TaskDTO("Low", "Stofzuigen", taskListJansen.getTaskListId()), taskListJansen.getTaskListId(), marloes.getUserId());
-        taskService.save(new TaskDTO("High", "Medicijnen afhalen", taskListJansen.getTaskListId(), LocalDateTime.parse("2021-12-10 12:30", formatter), evert.getUserId(), evert.getName()), taskListJansen.getTaskListId(), evert.getUserId());
-        taskService.save(new TaskDTO("Medium", "Dex uitlaten", taskListJansen.getTaskListId(), LocalDateTime.parse("2021-11-03 16:15", formatter), sem.getUserId(), sem.getName()), taskListJansen.getTaskListId(), sjors.getUserId());
         taskService.save(new TaskDTO("Medium", "Oprit schoonmaken", taskListJansen.getTaskListId()), taskListJansen.getTaskListId(), ad.getUserId());
 
+        List<CircleDTO> allCircles = circleService.findAllCircles();
 
-
+        memberService.saveMember(new MemberDTO(evert.getUserId(), evert.getName(), allCircles.get(0).getCircleId() , "Caregiver", false));
+        memberService.saveMember(new MemberDTO(evert.getUserId(), evert.getName(), allCircles.get(1).getCircleId() , "Caregiver", false));
+        memberService.saveMember(new MemberDTO(evert.getUserId(), evert.getName(), allCircles.get(2).getCircleId() , "Caregiver", true));
 
     }
 }
