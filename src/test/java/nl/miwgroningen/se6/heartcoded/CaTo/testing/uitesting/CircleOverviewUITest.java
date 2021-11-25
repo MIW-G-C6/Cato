@@ -38,10 +38,10 @@ public class CircleOverviewUITest {
 
     @Test
     void toCareCircleTest() {
-        WebElement careCircleLink = driver.findElement(By.linkText("Sunrise Home Care"));
+        WebElement careCircleLink = driver.findElement(By.linkText("Precise Care"));
         careCircleLink.click();
 
-        String expectedUrl = "http://localhost:8080/circles/47";
+        String expectedUrl = "http://localhost:8080/circles/45";
         assertEquals(expectedUrl, driver.getCurrentUrl());
         assertEquals("Circle dashboard", driver.getTitle());
 
