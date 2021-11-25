@@ -65,7 +65,6 @@ public class TaskMapper {
         task.setDescription(taskDTO.getDescription());
         task.setStartTime(taskDTO.getStartTime());
         task.setEndTime(taskDTO.getEndTime());
-
         return task;
     }
 }

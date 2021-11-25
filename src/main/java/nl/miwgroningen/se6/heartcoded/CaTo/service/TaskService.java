@@ -7,6 +7,7 @@ import nl.miwgroningen.se6.heartcoded.CaTo.model.*;
 import nl.miwgroningen.se6.heartcoded.CaTo.repository.*;
 import nl.miwgroningen.se6.heartcoded.CaTo.mappers.TaskMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
@@ -106,6 +107,7 @@ public class TaskService {
         return taskRepository.getById(taskId).getTaskList().getTaskListId();
     }
 
+    @Transactional
     public List<TaskDTO> getAllTasksByCircleId(Integer circleId) {
         List<Task> listOfTasks = taskListRepository.getByCircleCircleId(circleId).getTaskList();
         return taskMapper.toDTO(listOfTasks);
