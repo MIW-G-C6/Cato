@@ -239,7 +239,6 @@ public class Seeder {
         User jan = new User("Jan Jansen", "cato123", "jan@example.com");
         User evert = new User("Evert Jansen", "cato123", "evert@example.com");
         User marloes = new User("Marloes Postma", "cato123", "marloes@example.com");
-        User thomas = new User("Thomas Postma", "cato123", "Thomas@example.com");
         User sjors = new User("Sjors Jansen", "cato123", "sjors@example.com");
         User sem = new User("Sem Postma", "cato123", "sem@example.com");
 
@@ -248,7 +247,6 @@ public class Seeder {
         familyList.add(jan);
         familyList.add(evert);
         familyList.add(marloes);
-        familyList.add(thomas);
         familyList.add(sjors);
         familyList.add(sem);
 
@@ -257,7 +255,6 @@ public class Seeder {
         userService.saveSeederUser(jan, "/demoFamilyPictures/Jan_Jansen.jpg");
         userService.saveSeederUser(evert, "/demoFamilyPictures/Evert_Jansen.jpg");
         userService.saveSeederUser(marloes, "/demoFamilyPictures/Marloes_Postma_Jansen.jpg");
-        userService.saveSeederUser(thomas, "/demoFamilyPictures/Thomas_Postma.jpg");
         userService.saveSeederUser(sjors, "/demoFamilyPictures/Sjors_Jansen.jpg");
         userService.saveSeederUser(sem, "/demoFamilyPictures/Sem_Postma.jpg");
 
@@ -295,14 +292,12 @@ public class Seeder {
 
 
 
-        TaskDTO task1 = new TaskDTO("Medium", "Boodschappen doen", taskListJansen.getTaskListId(), LocalDateTime.parse("2021-12-04 17:00", formatter));
+        TaskDTO task1 = new TaskDTO("Medium", "Voor 17:00 boodschappen doen", taskListJansen.getTaskListId(), LocalDateTime.parse("2021-12-06 17:00", formatter));
         taskService.save(task1,taskListJansen.getTaskListId(), ad.getUserId());
-        TaskDTO task2 = new TaskDTO("High", "Medicijnen afhalen", taskListJansen.getTaskListId(), LocalDateTime.parse("2021-12-10 12:30", formatter));
+        TaskDTO task2 = new TaskDTO("High", "Medicijnen afhalen", taskListJansen.getTaskListId(), LocalDateTime.parse("2021-12-04 12:30", formatter));
         taskService.save(task2, taskListJansen.getTaskListId(), evert.getUserId());
-        TaskDTO task3 = new TaskDTO("Medium", "Dex uitlaten", taskListJansen.getTaskListId(), LocalDateTime.parse("2021-11-03 16:15", formatter));
+        TaskDTO task3 = new TaskDTO("Low", "Dex uitlaten", taskListJansen.getTaskListId(), LocalDateTime.parse("2021-12-03 16:15", formatter));
         taskService.save(task3, taskListJansen.getTaskListId(), sjors.getUserId());
-        taskService.save(new TaskDTO("Low", "Stofzuigen", taskListJansen.getTaskListId()), taskListJansen.getTaskListId(), marloes.getUserId());
-        taskService.save(new TaskDTO("Medium", "Oprit schoonmaken", taskListJansen.getTaskListId()), taskListJansen.getTaskListId(), ad.getUserId());
 
         List<CircleDTO> allCircles = circleService.findAllCircles();
 
