@@ -22,11 +22,11 @@
         <div class="site-admin-dashboard-box">
             <div>
                 <table class="general-table-layout">
-                    <tr><td><h5>Total number of users:</h5><hr> </td><td class="h4" th:text="'&emsp;&emsp;&emsp;' + ${numberOfUsers}"></td></tr>
-                    <tr><td><h5>Total number of Care Circles:</h5><hr></td> <td class="h4" th:text="'&emsp;&emsp;&emsp;' + ${numberOfCircles}"></td></tr>
-                    <tr><td><h5>Total number of clients:</h5> <hr></td><td class="h4" th:text="'&emsp;&emsp;&emsp;' + ${numberOfClients}"></td></tr>
-                    <tr><td><h5>Total number of tasks:</h5><hr></td> <td class="h4" th:text="'&emsp;&emsp;&emsp;' + ${numberOfTasks}"></td></tr>
-                    <tr><td><h5>Total number of reserved tasks:</h5> <hr></td><td class="h4" th:text="'&emsp;&emsp;&emsp;' + ${numberOfReservedTasks}"></td></tr>
+                    <tr><td class="h5 align-middle">Total number of users:</td><td class="h5 text-right" th:text="${numberOfUsers}"></td></tr>
+                    <tr><td class="h5 align-middle">Total number of Care Circles:</td><td class="h5 text-right" th:text="${numberOfCircles}"></td></tr>
+                    <tr><td class="h5 align-middle">Total number of clients:<td class="h5 text-right" th:text="${numberOfClients}"></td></tr>
+                    <tr><td class="h5 align-middle">Total number of tasks:</td> <td class="h5 text-right" th:text="${numberOfTasks}"></td></tr>
+                    <tr><td class="h5 align-middle">Total number of reserved tasks:</td><td class="h5 text-right" th:text="${numberOfReservedTasks}"></td></tr>
                 </table>
             </div>
             <div>

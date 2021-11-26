@@ -238,7 +238,7 @@ public class Seeder {
         User aukje = new User("Aukje Jansen-Hoekstra", "cato123", "aukje@example.com");
         User jan = new User("Jan Jansen", "cato123", "jan@example.com");
         User evert = new User("Evert Jansen", "cato123", "evert@example.com");
-        User marloes = new User("Marloes Postma-Jansen", "cato123", "marloes@example.com");
+        User marloes = new User("Marloes Postma", "cato123", "marloes@example.com");
         User thomas = new User("Thomas Postma", "cato123", "Thomas@example.com");
         User sjors = new User("Sjors Jansen", "cato123", "sjors@example.com");
         User sem = new User("Sem Postma", "cato123", "sem@example.com");

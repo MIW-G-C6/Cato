@@ -21,12 +21,15 @@
   <div class="container">
     <h1>User Overview</h1>
     <div th:if="${!error.equals('')}" class="alert alert-danger" th:text="${error}"></div>
-    <div >
-      <div  class="general-table-layout">
-        <h5 class="table-header">All users<a class="float-right" th:href="@{/registration}">Add new user</a></h5>
-        <form class="search-form" id="search-form">
-          <input class="cato-form cato-text-field keywordsBox" oninput="fire_ajax_submit()" id="keywordsBox" type="text" placeholder="Search for users">
-        </form>
+    <div>
+      <div class="general-table-layout">
+        <div class="table-header">
+          <h5><a class="float-right" th:href="@{/registration}">Add new user</a>
+            <form class="search-form float-left" style="width: 8our0%;" id="search-form">
+              <input class="cato-form cato-text-field keywordsBox" oninput="fire_ajax_submit()" id="keywordsBox" type="text" placeholder="Filter">
+            </form>
+          </h5>
+        </div>
         <table id="resultTable">
           <tbody>
           </tbody>

@@ -608,6 +608,10 @@ table {
     padding-top: 10px;
 }
 
+.table-header a {
+    margin-top: 10px;
+}
+
 .iconheader {
     width: 133px;
 }
