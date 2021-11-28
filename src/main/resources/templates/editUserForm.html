@@ -2,7 +2,6 @@
 <html lang="en" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org">
 <head th:replace="fragments/general :: baseHeader(~{:: title})" >
     <meta charset="UTF-8">
-
     <title>Edit personal information</title>
 </head>
 <body>
@@ -17,12 +16,9 @@
             <li>Edit information</li>
         </div>
     </div>
-
     <div class="container">
         <h1>Edit personal information</h1>
-
         <form class="cato-form"  method="post" th:object="${user}" enctype="multipart/form-data">
-
             <div th:if="${#fields.hasErrors()}">
                 <p th:each="err : ${#fields.errors('global')}" th:text="${err}" class="alert alert-danger" />
             </div>
@@ -44,9 +40,6 @@
                 <input class="cato-text-field" placeholder="Email" type="email" id="email" required th:field="*{email}">
             </div>
             <br>
-
-
-
             <div class="custom-file mb-3" style="display: flex; flex-direction: row; justify-content: space-between">
                 <div th:if="${user.customProfilePicture}">
                     <div class="profile-picture-edit-container">
@@ -56,7 +49,6 @@
                         </div>
                     </div>
                 </div>
-
                 <div style="display: flex; flex-direction: column">
                     <div>
                         <input class="custom-file-input" type="file" th:object="${image}" name="image" id="image" accept="image/png, image/jpeg" />
@@ -67,7 +59,6 @@
                 </div>
             </div>
             <br>
-
             <div>
                 <div th:if="${user.customProfilePicture}" class="profile-edit-save-cancel-buttons">
                     <button type="submit" class="catoButton">Save</button>
@@ -81,7 +72,6 @@
             <br>
         </form>
     </div>
-
 </div>
 
 <div id="deletePictureModal" class="modal">
