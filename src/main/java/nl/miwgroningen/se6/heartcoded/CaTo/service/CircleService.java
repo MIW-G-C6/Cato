@@ -13,6 +13,7 @@ import nl.miwgroningen.se6.heartcoded.CaTo.mappers.CircleMapper;
 import nl.miwgroningen.se6.heartcoded.CaTo.repository.UserRepository;
 import org.apache.commons.io.IOUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -95,6 +96,7 @@ public class CircleService {
         return circleMapper.toDTO(circleRepository.getById(circleId));
     }
 
+    @Transactional
     public List<CircleClientDTO> findWithNameContains(String keyword) {
         List<Integer> findWithClientNameList = findWithClientName(keyword);
         List<Integer> findWithCircleNameList = findCircleWithName(keyword);
