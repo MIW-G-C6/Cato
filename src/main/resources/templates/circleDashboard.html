@@ -223,18 +223,14 @@
         }
     }
 
-    const priorityTarget = document.getElementById('taskListByPriority');
-    const endDateTarget = document.getElementById('taskListByEndDate');
-
     function sortOnEndDate() {
-        endDateTarget.style.display = "block";
-        priorityTarget.style.display = "none";
-
+        document.getElementById('taskListByPriority').style.display = 'none';
+        document.getElementById('taskListByEndDate').style.display = 'block';
     }
 
     function sortOnPriority() {
-        endDateTarget.style.display = "none";
-        priorityTarget.style.display = "block";
+        document.getElementById('taskListByPriority').style.display = 'block';
+        document.getElementById('taskListByEndDate').style.display = 'none';
     }
 
 
