@@ -146,7 +146,7 @@ public class TaskController {
 
     private void setTaskTimes(TaskDTO task, String startTimeInput, String endTimeInput) {
         if (!startTimeInput.isEmpty()) {
-            task.setStartTime(LocalDateTime.parse(startTimeInput));
+            task.setStartTime(LocalDate.parse(startTimeInput));
         } else {
             if (task.getTaskId() != null) {
                 task.setStartTime(taskService.findById(task.getTaskId()).get().getStartTime());
@@ -154,7 +154,7 @@ public class TaskController {
         }
 
         if (!endTimeInput.isEmpty()) {
-            task.setEndTime(LocalDateTime.parse(endTimeInput));
+            task.setEndTime(LocalDate.parse(endTimeInput));
         } else {
             if (task.getTaskId() != null) {
                 task.setEndTime(taskService.findById(task.getTaskId()).get().getEndTime());

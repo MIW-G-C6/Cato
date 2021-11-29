@@ -3,6 +3,7 @@ package nl.miwgroningen.se6.heartcoded.CaTo.dto;
 import nl.miwgroningen.se6.heartcoded.CaTo.model.Task;
 import org.apache.tomcat.jni.Local;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 /**
@@ -18,8 +19,8 @@ public class TaskDTO {
     private String priority;
     private String description;
     private Integer taskListId;
-    private LocalDateTime startTime;
-    private LocalDateTime endTime;
+    private LocalDate startTime;
+    private LocalDate endTime;
     private Integer assignedUserId;
     private String assignedUserName;
 
@@ -30,7 +31,7 @@ public class TaskDTO {
         this.taskListId = taskListId;
     }
 
-    public TaskDTO(String priority, String description, Integer taskListId, LocalDateTime endTime) {
+    public TaskDTO(String priority, String description, Integer taskListId, LocalDate endTime) {
         this.priority = priority;
         this.description = description;
         this.taskListId = taskListId;
@@ -88,19 +89,19 @@ public class TaskDTO {
         this.taskListId = taskListId;
     }
 
-    public LocalDateTime getStartTime() {
+    public LocalDate getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(LocalDateTime startTime) {
+    public void setStartTime(LocalDate startTime) {
         this.startTime = startTime;
     }
 
-    public LocalDateTime getEndTime() {
+    public LocalDate getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(LocalDateTime endTime) {
+    public void setEndTime(LocalDate endTime) {
         this.endTime = endTime;
     }
 

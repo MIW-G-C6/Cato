@@ -123,14 +123,14 @@ public class TaskLogEntryService {
                 taskLogEntry.setOldValue("-");
             } else {
                 taskLogEntry.setOldValue(oldTask.getStartTime()
-                        .format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm")));
+                        .format(DateTimeFormatter.ofPattern("dd-MM-yyyy")));
             }
 
             if (task.getStartTime() == null) {
                 taskLogEntry.setNewValue("-");
             } else {
                 taskLogEntry.setNewValue(task.getStartTime()
-                        .format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm")));
+                        .format(DateTimeFormatter.ofPattern("dd-MM-yyyy")));
             }
 
             taskLogEntryRepository.save(taskLogEntry);
@@ -147,14 +147,14 @@ public class TaskLogEntryService {
                 taskLogEntry.setOldValue("-");
             } else {
                 taskLogEntry.setOldValue(oldTask.getEndTime()
-                        .format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm")));
+                        .format(DateTimeFormatter.ofPattern("dd-MM-yyyy")));
             }
 
             if (task.getEndTime() == null) {
                 taskLogEntry.setNewValue("-");
             } else {
                 taskLogEntry.setNewValue(task.getEndTime()
-                        .format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm")));
+                        .format(DateTimeFormatter.ofPattern("dd-MM-yyyy")));
             }
 
             taskLogEntryRepository.save(taskLogEntry);

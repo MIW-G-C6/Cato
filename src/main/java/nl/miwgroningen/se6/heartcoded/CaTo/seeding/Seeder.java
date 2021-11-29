@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -31,7 +32,7 @@ import static org.aspectj.bridge.MessageUtil.fail;
 @Component
 public class Seeder {
 
-    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
     private UserService userService;
     private CircleService circleService;
@@ -218,15 +219,15 @@ public class Seeder {
         Integer adminId = userService.getAdminId("ROLE_ADMIN");
 
         for (TaskListDTO taskList : allTaskLists) {
-            taskService.save(new TaskDTO("High", "Grocery shopping", taskList.getTaskListId(), LocalDateTime.parse("2021-12-19 17:00", formatter)), taskList.getTaskListId(), adminId);
-            taskService.save(new TaskDTO("Medium", "Vacuum the living room", taskList.getTaskListId(), LocalDateTime.parse("2021-12-25 17:00", formatter)), taskList.getTaskListId(), adminId);
-            taskService.save(new TaskDTO("Low", "Walk the dog", taskList.getTaskListId(), LocalDateTime.parse("2021-12-20 17:00", formatter)), taskList.getTaskListId(), adminId);
-            taskService.save(new TaskDTO("Low", "Change bed linens", taskList.getTaskListId(), LocalDateTime.parse("2022-01-02 17:00", formatter)), taskList.getTaskListId(), adminId);
-            taskService.save(new TaskDTO("Medium", "Wash the dishes", taskList.getTaskListId(), LocalDateTime.parse("2021-12-13 11:30", formatter)), taskList.getTaskListId(), adminId);
-            taskService.save(new TaskDTO("Low", "Give daily medicine", taskList.getTaskListId(), LocalDateTime.parse("2021-12-04 17:00", formatter)), taskList.getTaskListId(), adminId);
-            taskService.save(new TaskDTO("High", "Get medicine from pharmacy", taskList.getTaskListId(), LocalDateTime.parse("2021-12-07 17:00", formatter)), taskList.getTaskListId(), adminId);
-            taskService.save(new TaskDTO("Low", "Check blood pressure", taskList.getTaskListId(), LocalDateTime.parse("2021-12-10 12:00", formatter)), taskList.getTaskListId(), adminId);
-            taskService.save(new TaskDTO("Medium", "Prepare dinner", taskList.getTaskListId(), LocalDateTime.parse("2021-12-25 13:45", formatter)), taskList.getTaskListId(), adminId);
+            taskService.save(new TaskDTO("High", "Grocery shopping", taskList.getTaskListId(), LocalDate.parse("2021-12-19", formatter)), taskList.getTaskListId(), adminId);
+            taskService.save(new TaskDTO("Medium", "Vacuum the living room", taskList.getTaskListId(), LocalDate.parse("2021-12-25", formatter)), taskList.getTaskListId(), adminId);
+            taskService.save(new TaskDTO("Low", "Walk the dog", taskList.getTaskListId(), LocalDate.parse("2021-12-20", formatter)), taskList.getTaskListId(), adminId);
+            taskService.save(new TaskDTO("Low", "Change bed linens", taskList.getTaskListId(), LocalDate.parse("2022-01-02", formatter)), taskList.getTaskListId(), adminId);
+            taskService.save(new TaskDTO("Medium", "Wash the dishes", taskList.getTaskListId(), LocalDate.parse("2021-12-13", formatter)), taskList.getTaskListId(), adminId);
+            taskService.save(new TaskDTO("Low", "Give daily medicine", taskList.getTaskListId(), LocalDate.parse("2021-12-04", formatter)), taskList.getTaskListId(), adminId);
+            taskService.save(new TaskDTO("High", "Get medicine from pharmacy", taskList.getTaskListId(), LocalDate.parse("2021-12-07", formatter)), taskList.getTaskListId(), adminId);
+            taskService.save(new TaskDTO("Low", "Check blood pressure", taskList.getTaskListId(), LocalDate.parse("2021-12-10", formatter)), taskList.getTaskListId(), adminId);
+            taskService.save(new TaskDTO("Medium", "Prepare dinner", taskList.getTaskListId(), LocalDate.parse("2021-12-25", formatter)), taskList.getTaskListId(), adminId);
         }
     }
 
@@ -292,11 +293,11 @@ public class Seeder {
 
 
 
-        TaskDTO task1 = new TaskDTO("Medium", "Voor 17:00 boodschappen doen", taskListJansen.getTaskListId(), LocalDateTime.parse("2021-12-06 17:00", formatter));
+        TaskDTO task1 = new TaskDTO("Medium", "Voor 17:00 boodschappen doen", taskListJansen.getTaskListId(), LocalDate.parse("2021-12-06", formatter));
         taskService.save(task1,taskListJansen.getTaskListId(), ad.getUserId());
-        TaskDTO task2 = new TaskDTO("High", "Medicijnen afhalen", taskListJansen.getTaskListId(), LocalDateTime.parse("2021-12-04 12:30", formatter));
+        TaskDTO task2 = new TaskDTO("High", "Medicijnen afhalen", taskListJansen.getTaskListId(), LocalDate.parse("2021-12-04", formatter));
         taskService.save(task2, taskListJansen.getTaskListId(), evert.getUserId());
-        TaskDTO task3 = new TaskDTO("Low", "Dex uitlaten", taskListJansen.getTaskListId(), LocalDateTime.parse("2021-12-03 16:15", formatter));
+        TaskDTO task3 = new TaskDTO("Low", "Dex uitlaten", taskListJansen.getTaskListId(), LocalDate.parse("2021-12-03", formatter));
         taskService.save(task3, taskListJansen.getTaskListId(), sjors.getUserId());
 
         List<CircleDTO> allCircles = circleService.findAllCircles();

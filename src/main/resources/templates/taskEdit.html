@@ -29,17 +29,16 @@
         <input class="cato-text-field" type="text" placeholder="Description" id="description" required th:field="*{description}">
         <div>
           <br>
-<!--          <label for="startTimeInput">Start date &emsp;<span th:if="${task.startTime} != null" style="color: #8d8d8d;" th:text="${#temporals.format(task.startTime, 'dd-MM-yyyy HH:mm')}" ></span></label>-->
           <div style="display: flex; flex-direction: row; width: 217px; justify-content: space-between; margin-bottom: 0px;">
             <div>
               <label for="startTimeInput">Start date</label>
               </div>
             <div>
-              <span th:if="${task.startTime} != null" style="color: #8d8d8d;" th:text="${#temporals.format(task.startTime, 'dd-MM-yyyy HH:mm')}" ></span>
+              <span th:if="${task.startTime} != null" style="color: #8d8d8d;" th:text="${#temporals.format(task.startTime, 'dd-MM-yyyy')}" ></span>
             </div>
           </div>
 <!--          <br>-->
-          <input type="datetime-local" id="startTimeInput" th:object="${startTimeInput}" name="startTimeInput">
+          <input type="date" id="startTimeInput" th:object="${startTimeInput}" name="startTimeInput">
         </div>
         <br>
         <div>
@@ -48,10 +47,10 @@
               <label for="endTimeInput">End date</label>
             </div>
             <div>
-              <span th:if="${task.endTime} != null" style="color: #8d8d8d;" th:text="${#temporals.format(task.endTime, 'dd-MM-yyyy HH:mm')}" ></span>
+              <span th:if="${task.endTime} != null" style="color: #8d8d8d;" th:text="${#temporals.format(task.endTime, 'dd-MM-yyyy')}" ></span>
             </div>
           </div>
-          <input type="datetime-local" id="endTimeInput" th:object="${endTimeInput}" name="endTimeInput">
+          <input type="date" id="endTimeInput" th:object="${endTimeInput}" name="endTimeInput">
         </div>
       </div>
       <br>

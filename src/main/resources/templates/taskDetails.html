@@ -58,7 +58,7 @@
                         </div>
                         <div class="col-sm-9 text-secondary">
                             <span th:if="${task.startTime} == null">-</span>
-                            <span th:unless="${task.startTime} == null" th:text="${#temporals.format(task.startTime, 'dd-MM-yyyy HH:mm')}"></span>
+                            <span th:unless="${task.startTime} == null" th:text="${#temporals.format(task.startTime, 'dd-MM-yyyy')}"></span>
                         </div>
                     </div>
                     <br>
@@ -68,7 +68,7 @@
                         </div>
                         <div class="col-sm-9 text-secondary">
                             <span th:if="${task.endTime} == null">-</span>
-                            <span th:unless="${task.endTime} == null" th:text="${#temporals.format(task.endTime, 'dd-MM-yyyy HH:mm')}"></span>
+                            <span th:unless="${task.endTime} == null" th:text="${#temporals.format(task.endTime, 'dd-MM-yyyy')}"></span>
                         </div>
                     </div>
             </div>
